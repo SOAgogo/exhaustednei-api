@@ -1,1 +1,2 @@
-.gitkeep
+config/secrets.yml
+spec/fixtures/*
