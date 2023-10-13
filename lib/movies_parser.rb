@@ -45,17 +45,14 @@ def write_file(path,body)
 end
 
 begin
+    token = YAML.load_file('../config/secrets.yml')['token']
     verify_uri = "https://api.themoviedb.org/3/authentication"
-    token = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNzEzNDA1ODBmNTA3NTU3M2IyZjZiODhjM2E0MWVmZSIsInN1YiI6IjY1MjkxM2Q1Mzc4MDYyMDEzOWExOGZiNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Yqm6Vnogx8KWsk0mJ1nqlmoY6KzUHB5JKG7CnyJPK24'
     website_uri = "https://api.themoviedb.org/3/tv/95479"
     file_name = ARGV[0]
     path = File.expand_path(File.join(File.dirname(__FILE__), "../spec/fixtures/#{file_name}"))
-    puts path
+
     body = verifier_parser(verify_uri,website_uri,token)
     write_file(path,body)
 
     #puts body.instance_of? Hash
 end
-
-
-# binding.pry
