@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 .gitkeep
 _snippets/
 config/secrets.yml
 coverage/*
 !coverage/.resultset.json
+=======
+config/secrets.yml
+spec/fixtures
+>>>>>>> e527d7afc2800ca9a51f7620f3b740b1518fe10b
