@@ -1,0 +1,5 @@
+.gitkeep
+_snippets/
+config/secrets.yml
+coverage/*
+!coverage/.resultset.json
