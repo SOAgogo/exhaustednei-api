@@ -17,7 +17,7 @@ begin
     response = http.request(request)
 
     body = JSON.parse(response.read_body)
-    puts body
+    puts body[0 .. 20]
     #puts body.instance_of? Hash
 end
 
