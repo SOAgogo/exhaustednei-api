@@ -18,6 +18,4 @@ gem 'webmock', '~> 3'
 # Code Quality
 gem 'flog'
 gem 'reek'
-
-# Development
 gem 'rubocop'
