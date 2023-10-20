@@ -17,9 +17,14 @@ begin
     request = Net::HTTP::Get.new(url)
     request["accept"] = 'application/json'
     response = http.request(request)
+
     #response.
     body = JSON.parse(response.read_body)
     puts body
-    #puts body.instance_of? Hash
+
+    #body = JSON.parse(response.read_body)
+    
+
+
 end
 
