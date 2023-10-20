@@ -62,11 +62,16 @@ module shelter
         return pet.animal_kind
     end
 
-    def get_Variate(pet)
-        return pet.animal_variate
+    def how_many_animals_in_shelter(pet)
+        #temp
     end
-    def get_gender(pet)
-        return pet.animal_sex
+
+    def how_many_cats_in_shelter(pet)
+        #temp
+    end
+
+    def how_many_dogs_in_shelter(pet)
+        #temp
     end
 end
 
