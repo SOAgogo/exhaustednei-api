@@ -6,8 +6,8 @@ describe 'Tests Animal API ' do
   VCR.configure do |c|
     c.cassette_library_dir = CASSETTES_FOLDER
     c.hook_into :webmock
-    #c.filter_sensitive_data('<GITHUB_TOKEN>') { GITHUB_TOKEN }
-    #c.filter_sensitive_data('<GITHUB_TOKEN_ESC>') { CGI.escape(GITHUB_TOKEN) }
+    # c.filter_sensitive_data('<GITHUB_TOKEN>') { GITHUB_TOKEN }
+    # c.filter_sensitive_data('<GITHUB_TOKEN_ESC>') { CGI.escape(GITHUB_TOKEN) }
   end
 
   before do
@@ -21,11 +21,16 @@ describe 'Tests Animal API ' do
   end
 
   describe 'Animal information' do
-    it 'HAPPY: should provide correct animal attributes' do
-      project = CodePraise::GithubApi.new(GITHUB_TOKEN)
-                                     .project(USERNAME, PROJECT_NAME)
-      _(project.size).must_equal CORRECT['size']
-      _(project.git_url).must_equal CORRECT['git_url']
+    before do
+      @project = Info::Project.new(RESOURCE_PATH)
+      @project.conection
+      @project.parser
+    end
+    it 'HAPPY: should provide correct dog numbers' do
+      dog_number = Shelter.shelter.get_dog_number
+      cat_number = Shelter.shelter.get_cat_number
+      _(project).must_equal CORRECT['size']
+      # _(project.git_url).must_equal CORRECT['git_url']
     end
 
     it 'SAD: should raise exception on incorrect project' do

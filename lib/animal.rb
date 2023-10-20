@@ -5,8 +5,10 @@ require 'json'
 require 'yaml'
 # verify your identification
 
-module animal
+module Info
     class Cat
         def initialize()
         
-    class Dog 
+    class Dog
+        
+    
