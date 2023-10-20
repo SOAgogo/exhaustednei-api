@@ -4,8 +4,8 @@ require 'net/http'
 require 'json'
 require 'yaml'
 
-keyword = 'ive'
-config = YAML.safe_load_file('../config/secrets.yml')
+keyword = 'baseball'
+config = YAML.safe_load_file('config/secrets.yml')
 
 def make_giphy_request(path, config)
   base_url = 'http://api.giphy.com/v1'
@@ -36,4 +36,4 @@ result_search['data'].map do |gif|
 end
 
 sc_results.push(sg_results)
-File.write('../spec/fixtures/giphy_results.yml', sc_results.to_yaml)
+File.write('spec/fixtures/giphy_results.yml', sc_results.to_yaml)
