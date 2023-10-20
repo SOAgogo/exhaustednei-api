@@ -12,15 +12,33 @@ module Info
     def initialize
       @shelter_hash = {}
     end
-  end
 
-  class Shelter
-    def initialize(data)
-      
+    def howmanyshelters
+      @shelter_hash.size
     end
   end
 
-  def getHowManynumberInShelter(shelter_name)
-    ShelterList.shelter_hash[shelter_name].getAnimalNums
+  class Shelter
+    attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid,
+                :shelter_name, :shelter_address, :shelter_tel
+    attr_accessor :animal_object_hash
+
+    def initialize(data)
+      @animal_object_hash = {}
+      @animal_id = data['animal_id']
+      @animal_area_pkid = data['animal_area_pkid']
+      @animal_shelter_pkid = data['animal_shelter_pkid']
+      @shelter_name = data['shelter_name']
+      @shelter_address = data['shelter_address']
+      @shelter_tel = data['shelter_tel']
+    end
+
+    def animal_nums
+      @animal_object_hash.size
+    end
+  end
+
+  def get_how_many_number_animals_in_shelter(shelter_id)
+    ShelterList.shelter_hash[shelter_id].animal_nums
   end
 end
