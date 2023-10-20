@@ -6,5 +6,13 @@ require 'yaml'
 # verify your identification
 
 module Info
-    class shelter
+    class Cat
+        def initialize()
+        end
+    end
+    class Dog 
+        def initialize()
+        end
+    end
+    class Shelter_pkid
         def initialize()
