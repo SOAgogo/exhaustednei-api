@@ -19,4 +19,3 @@ gem 'webmock', '~> 3'
 gem 'flog'
 gem 'reek'
 gem 'rubocop'
-
