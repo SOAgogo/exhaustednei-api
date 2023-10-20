@@ -20,15 +20,22 @@ describe 'Tests Animal API ' do
     VCR.eject_cassette
   end
 
+
   describe 'Animal information' do
     before do
+      # update the DogCat_results every single day when do this tests
       @project = Info::Project.new(RESOURCE_PATH)
       @project.conection
       @project.parser
+      @project.
+    end
+    it 'HAPPY: should provide the same fields as same as the ones in CORRECT DATA' do
+      _(@project.request_body[0].keys).must_equal CORRECT[0].keys
+      # _(project.git_url).must_equal CORRECT['git_url']
     end
     it 'HAPPY: should provide correct dog numbers' do
-      dog_number = Shelter.shelter.get_dog_number
-      cat_number = Shelter.shelter.get_cat_number
+      dog_number = Info::Shelter.shelter.get_dog_number
+      cat_number = Info::Shelter.shelter.get_cat_number
       _(project).must_equal CORRECT['size']
       # _(project.git_url).must_equal CORRECT['git_url']
     end

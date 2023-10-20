@@ -1,18 +1,26 @@
 require 'uri'
-require "net/http"
+require 'net/http'
 require 'pry'
 require 'json'
 require 'yaml'
 # verify your identification
 
 module Info
-    class Cat
-        def initialize()
-        end
+  class ShelterList
+    attr_accessor :shelter_hash
+
+    def initialize
+      @shelter_hash = {}
     end
-    class Dog 
-        def initialize()
-        end
+  end
+
+  class Shelter
+    def initialize(data)
+      
     end
-    class Shelter_pkid
-        def initialize()
+  end
+
+  def getHowManynumberInShelter(shelter_name)
+    ShelterList.shelter_hash[shelter_name].getAnimalNums
+  end
+end
