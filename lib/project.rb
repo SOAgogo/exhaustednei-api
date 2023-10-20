@@ -16,8 +16,9 @@ begin
     request["accept"] = 'application/json'
     response = http.request(request)
 
-    body = JSON.parse(response.read_body)
-    puts body[0 .. 20]
+    #body = JSON.parse(response.read_body)
+    puts response.read_body.split
+
     #puts body.instance_of? Hash
 end
 
