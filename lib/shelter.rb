@@ -8,5 +8,11 @@ require 'yaml'
 module shelter
     class Cat
         def initialize()
-        
+        end
+    end
     class Dog 
+        def initialize()
+        end
+    end
+    class Shelter_pkid
+        def initialize()
