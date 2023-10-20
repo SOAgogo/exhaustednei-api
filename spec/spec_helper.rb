@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'simplecov'
 SimpleCov.start
 
@@ -11,7 +12,7 @@ require 'webmock'
 
 require_relative '../lib/github_api'
 
-json_file = File.read('./spec/fixtures/DogCat_results.json')
+json_file = File.read('spec/fixtures/DogCat_results.json')
 CORRECT = JSON.parse(json_file)
 
 CASSETTES_FOLDER = 'spec/fixtures/cassettes'

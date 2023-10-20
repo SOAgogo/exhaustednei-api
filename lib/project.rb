@@ -19,7 +19,7 @@ begin
     response = http.request(request)
     #response.
     body = JSON.parse(response.read_body)
-    puts body.size
+    puts body
     #puts body.instance_of? Hash
 end
 

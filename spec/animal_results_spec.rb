@@ -2,13 +2,12 @@
 
 require_relative 'spec_helper'
 
-describe 'Tests Github API library' do
+describe 'Tests Animal API ' do
   VCR.configure do |c|
     c.cassette_library_dir = CASSETTES_FOLDER
     c.hook_into :webmock
-
-    c.filter_sensitive_data('<GITHUB_TOKEN>') { GITHUB_TOKEN }
-    c.filter_sensitive_data('<GITHUB_TOKEN_ESC>') { CGI.escape(GITHUB_TOKEN) }
+    #c.filter_sensitive_data('<GITHUB_TOKEN>') { GITHUB_TOKEN }
+    #c.filter_sensitive_data('<GITHUB_TOKEN_ESC>') { CGI.escape(GITHUB_TOKEN) }
   end
 
   before do
@@ -21,8 +20,8 @@ describe 'Tests Github API library' do
     VCR.eject_cassette
   end
 
-  describe 'Project information' do
-    it 'HAPPY: should provide correct project attributes' do
+  describe 'Animal information' do
+    it 'HAPPY: should provide correct animal attributes' do
       project = CodePraise::GithubApi.new(GITHUB_TOKEN)
                                      .project(USERNAME, PROJECT_NAME)
       _(project.size).must_equal CORRECT['size']
@@ -42,7 +41,7 @@ describe 'Tests Github API library' do
     end
   end
 
-  describe 'Contributor information' do
+  describe 'Shelter information' do
     before do
       @project = CodePraise::GithubApi.new(GITHUB_TOKEN)
                                       .project(USERNAME, PROJECT_NAME)
