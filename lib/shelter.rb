@@ -38,7 +38,7 @@ module Info
     end
   end
 
-  def get_how_many_number_animals_in_shelter(shelter_id)
-    ShelterList.shelter_hash[shelter_id].animal_nums
+  def get_how_many_number_animals_in_shelter(animal_area_pkid)
+    ShelterList.shelter_hash[animal_area_pkid].animal_nums
   end
 end
