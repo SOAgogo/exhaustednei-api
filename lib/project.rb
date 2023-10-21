@@ -77,9 +77,23 @@ module Info
       end
       shelter_list.shelter_hash[shelter_data['animal_area_pkid']] = shelter
     end
+  end
 
-    # def shelterlist
-    #   @shelter_list
-    # end
+  class Response < SimpleDelegator
+    Unauthorized = Class.new(StandardError)
+    NotFound = Class.new(StandardError)
+
+    HTTP_ERROR = {
+      401 => Unauthorized,
+      404 => NotFound
+    }.freeze
+
+    def successful?
+      HTTP_ERROR.keys.none?(code)
+    end
+
+    def error
+      HTTP_ERROR[code]
+    end
   end
 end

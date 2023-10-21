@@ -17,11 +17,19 @@ module Info
       @shelter_hash.size
     end
 
-    def calculate_dog_cat_nums
+    def calculate_dog_nums
       # obj is a shelter object
       sum = 0
       @shelter_hash.each do |_, obj|
         sum += obj.dog_number
+      end
+      sum
+    end
+    def calculate_cat_nums
+      # obj is a shelter object
+      sum = 0
+      @shelter_hash.each do |_, obj|
+        sum += obj.cat_number
       end
       sum
     end
@@ -53,6 +61,4 @@ module Info
       @animal_object_hash.size
     end
   end
-
-  
 end
