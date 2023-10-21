@@ -16,12 +16,26 @@ module Info
     def howmanyshelters
       @shelter_hash.size
     end
+
+    def calculate_dog_cat_nums
+      # obj is a shelter object
+      sum = 0
+      @shelter_hash.each do |_, obj|
+        sum += obj.dog_number
+      end
+      sum
+    end
+
+    def get_how_many_number_animals_in_the_shelter(animal_area_pkid)
+      ShelterList.shelter_hash[animal_area_pkid].animal_nums
+    end
   end
 
   class Shelter
-    attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid,
-                :shelter_name, :shelter_address, :shelter_tel
-    attr_accessor :animal_object_hash
+    attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid, :shelter_name, :shelter_address, :shelter_tel,
+                :dog_number
+
+    attr_accessor :animal_object_hash, :cat_number, :dog_number
 
     def initialize(data)
       @animal_object_hash = {}
@@ -31,6 +45,8 @@ module Info
       @shelter_name = data['shelter_name']
       @shelter_address = data['shelter_address']
       @shelter_tel = data['shelter_tel']
+      @cat_number = 0
+      @dog_number = 0
     end
 
     def animal_nums
@@ -38,7 +54,5 @@ module Info
     end
   end
 
-  def get_how_many_number_animals_in_shelter(animal_area_pkid)
-    ShelterList.shelter_hash[animal_area_pkid].animal_nums
-  end
+  
 end

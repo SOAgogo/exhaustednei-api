@@ -28,7 +28,7 @@ describe 'Tests Animal API ' do
       # @project = Info::Project.new
       # @project.request_body = Info::Project.connection(RESOURCE_PATH)
       @project.connection
-
+      @project.shelter_list = @project.initiate_shelterlist
       # binding.pry
     end
     it 'HAPPY: should connect to api successfully' do
@@ -37,14 +37,14 @@ describe 'Tests Animal API ' do
     end
     it 'HAPPY: should provide the same fields as same as the ones in CORRECT DATA' do
       # @project.conection
-      _(@project.initiate_shelterlist.howmanyshelters).must_equal 6
+      _(@project.shelter_list.howmanyshelters).must_equal 6
       # _(project.git_url).must_equal CORRECT['git_url']
     end
-    # it 'HAPPY: should provide correct dog numbers' do
-    #   dog_number = Info::Shelter.shelter.get_dog_number
-    #   _(@project).must_equal CORRECT['size']
-    #   # _(project.git_url).must_equal CORRECT['git_url']
-    # end
+    it 'HAPPY: should provide correct dog numbers in all shelters' do
+      dog_number = @project.shelter_list.calculate_dog_cat_nums
+      _(dog_number).must_equal 10
+      # _(project.git_url).must_equal CORRECT['git_url']
+    end
     # it 'HAPPY: should provide correct cat numbers' do
     #   cat_number = Info::Shelter.shelter.get_cat_number
     #   _(@project).must_equal CORRECT['size']

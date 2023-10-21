@@ -9,13 +9,12 @@ require_relative 'animal'
 module Info
   # class Info::Project`
   class Project
-    attr_accessor :request_body
-    attr_reader :shelter_list
+    attr_accessor :request_body, :shelter_list
 
     def initialize(uri)
       @uri = uri
       @request_body = []
-      # @shelter_list = ShelterList.new
+      @shelter_list = nil
     end
 
     # def self.connection(uri)
@@ -36,7 +35,7 @@ module Info
       request = Net::HTTP::Get.new(url)
       request['accept'] = 'application/json'
       response = http.request(request)
-      @request_body = JSON.parse(response.read_body)
+      @request_body = JSON.parse(response.read_body)[1..20]
     end
 
     def parser(data)
@@ -56,12 +55,12 @@ module Info
     end
 
     def initiate_shelterlist
-      shelter_list = ShelterList.new
+      @shelter_list = ShelterList.new
       @request_body.each do |hash_value|
         animal_data, shelter_data = parser(hash_value)
-        shelter_initiator(shelter_list, animal_data, shelter_data)
+        shelter_initiator(@shelter_list, animal_data, shelter_data)
       end
-      shelter_list
+      @shelter_list
     end
 
     def shelter_initiator(shelter_list, animal_data, shelter_data)
@@ -70,15 +69,17 @@ module Info
       if animal_data['animal_kind'] == '狗'
         dog = Dog.new(animal_data)
         shelter.animal_object_hash['animal_id'] = dog
+        shelter.dog_number += 1
       else
         cat = Cat.new(animal_data)
         shelter.animal_object_hash['animal_id'] = cat
+        shelter.cat_number += 1
       end
       shelter_list.shelter_hash[shelter_data['animal_area_pkid']] = shelter
     end
 
-    def shelterlist
-      @shelter_list
-    end
+    # def shelterlist
+    #   @shelter_list
+    # end
   end
 end

@@ -13,7 +13,7 @@ begin
   request = Net::HTTP::Get.new(url)
   request['accept'] = 'application/json'
   response = http.request(request)
-  body = JSON.parse(response.read_body)
-  File.write('spec/fixtures/DogCat_results.json', body.to_json)
+  body = JSON.parse(response.read_body)[1..20].to_json
+  File.write('spec/fixtures/DogCat_results.json', body)
   # puts body.instance_of? Hash
 end
