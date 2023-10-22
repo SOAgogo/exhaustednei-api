@@ -26,7 +26,8 @@ describe 'Tests Animal API ' do
       # update the DogCat_results every single day when do this tests
       @project = Info::Project.new(RESOURCE_PATH)
       @project.connection
-      @project.shelter_list = @project.initiate_shelterlist
+      # @project.shelter_list = @project.initiate_shelterlist
+      @project.initiate_shelterlist
       # binding.pry
     end
 
@@ -62,11 +63,5 @@ describe 'Tests Animal API ' do
           project.connection
         end).must_raise Info::Response::NotFound
     end
-
-    # it 'SAD: should be wrong when existing some field is not correct ' do
-    #   _(proc do
-    #     CodePraise::GithubApi.new('BAD_TOKEN').project('soumyaray', 'foobar')
-    #   end).must_raise CodePraise::GithubApi::Response::Unauthorized
-    # end
   end
 end
