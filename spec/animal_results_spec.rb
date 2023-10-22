@@ -54,7 +54,7 @@ describe 'Tests Animal API ' do
       project = Info::Project.new(path)
       _(proc do
           project.connection
-        end).must_equal nil
+        end).must_raise Info::Response::NotFound
     end
 
     # it 'SAD: should be wrong when existing some field is not correct ' do
