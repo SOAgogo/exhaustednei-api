@@ -1,78 +1,64 @@
 require 'uri'
-require "net/http"
+require 'net/http'
 require 'pry'
 require 'json'
 require 'yaml'
 # verify your identification
 
-module shelter
-    class Cat
-        def initialize()
-        end
-    end
-    class Dog 
-        def initialize()
-        end
+module Info
+  class ShelterList
+    attr_accessor :shelter_hash
+
+    def initialize
+      @shelter_hash = {}
     end
 
-    
-    class Shelter
-        def Name(name)
-            @name = name
-        end
-        
-        def Shelter_pkid(Shelter_pkid)
-            @Shelter_pkid = Shelter_pkid
-        end
-
-        def Shelter_telephone_number(Shelter_telephone_number)
-            @Shelter_telephone_number = Shelter_telephone_number
-        end
-        
-        def array_animal_ID(animal_ID)
-            #temp
-        end
-        
-        def Shelter_name(Shelter_name)
-            @Shelter_name = Shelter_name
-        end
-        
-        def Shelter_Tel(Shelter_Tel)
-            @Shelter_Tel = Shelter_Tel
-        end
-
-        def Shelter_address(Shelter_address)
-            @Shelter_address = Shelter_address
-        end
-
-    def get_shelter_name(shelter)
-        shelter.Shelter_name
+    def howmanyshelters
+      @shelter_hash.size
     end
 
-
-    def query_all_animalid()
-        #temp
+    def calculate_dog_nums
+      # obj is a shelter object
+      sum = 0
+      @shelter_hash.each do |_, obj|
+        sum += obj.dog_number
+      end
+      sum
+    end
+    def calculate_cat_nums
+      # obj is a shelter object
+      sum = 0
+      @shelter_hash.each do |_, obj|
+        sum += obj.cat_number
+      end
+      sum
     end
 
-    def get_phone_number(shelter)
-        return shelter.Shelter_telephone_number
+    def get_how_many_number_animals_in_the_shelter(animal_area_pkid)
+      ShelterList.shelter_hash[animal_area_pkid].animal_nums
+    end
+  end
+
+  class Shelter
+    attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid, :shelter_name, :shelter_address, :shelter_tel,
+                :dog_number
+
+    attr_accessor :animal_object_hash, :cat_number, :dog_number
+
+    def initialize(data)
+      @animal_object_hash = {}
+      @animal_id = data['animal_id']
+      @animal_area_pkid = data['animal_area_pkid']
+      @animal_shelter_pkid = data['animal_shelter_pkid']
+      @shelter_name = data['shelter_name']
+      @shelter_address = data['shelter_address']
+      @shelter_tel = data['shelter_tel']
+      @cat_number = 0
+      @dog_number = 0
     end
 
-    def get_kind(pet)
-        return pet.animal_kind
+    def animal_nums
+      @animal_object_hash.size
     end
-
-    def how_many_animals_in_shelter(pet)
-        #temp
-    end
-
-    def how_many_cats_in_shelter(pet)
-        #temp
-    end
-
-    def how_many_dogs_in_shelter(pet)
-        #temp
-    end
+  end
 end
-
-
