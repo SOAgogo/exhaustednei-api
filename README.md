@@ -21,8 +21,7 @@ Animal adoption platform will pull data from the data source from agriculture bu
 
 ## Setup
 
-- Create a personal Github API access token with `public_repo` scope
-- Copy `config/secrets_example.yml` to `config/secrets.yml` and update token
+- Run `ruby lib/correct_data_init.rb` in rakefile once then you don't need to do that after that because the government would update data everyday
 - Ensure correct version of Ruby install (see `.ruby-version` for `rbenv`)
 - Run `bundle install`
 
