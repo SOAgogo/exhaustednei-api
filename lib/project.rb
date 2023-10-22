@@ -58,24 +58,28 @@ module Info
       @shelter_list = ShelterList.new
       @request_body.each do |hash_value|
         animal_data, shelter_data = parser(hash_value)
-        shelter_initiator(@shelter_list, animal_data, shelter_data)
+        shelter_initiator(animal_data, shelter_data)
+        # @shelter_list = shelter_initiator(@shelter_list, animal_data, shelter_data)
       end
-      @shelter_list
+      # @shelter_list
     end
 
-    def shelter_initiator(shelter_list, animal_data, shelter_data)
-      shelter = shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']]
+    # def shelter_initiator(shelter_list, animal_data, shelter_data)
+    def shelter_initiator(animal_data, shelter_data)
+      shelter = @shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']]
       shelter = Shelter.new(shelter_data) if shelter.nil?
       if animal_data['animal_kind'] == '狗'
         dog = Dog.new(animal_data)
-        shelter.animal_object_hash['animal_id'] = dog
+        shelter.animal_object_hash[animal_data['animal_id']] = dog
         shelter.dog_number += 1
       else
         cat = Cat.new(animal_data)
-        shelter.animal_object_hash['animal_id'] = cat
+        shelter.animal_object_hash[animal_data['animal_id']] = cat
         shelter.cat_number += 1
       end
-      shelter_list.shelter_hash[shelter_data['animal_area_pkid']] = shelter
+      # binding.pry
+      @shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']] = shelter
+      # shelter_list
     end
   end
 

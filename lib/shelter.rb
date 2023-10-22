@@ -27,6 +27,7 @@ module Info
 
       sum
     end
+
     def calculate_cat_nums
       # obj is a shelter object
       sum = 0

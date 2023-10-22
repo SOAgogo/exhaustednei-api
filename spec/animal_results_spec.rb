@@ -26,10 +26,11 @@ describe 'Tests Animal API ' do
       # update the DogCat_results every single day when do this tests
       @project = Info::Project.new(RESOURCE_PATH)
       @project.connection
-      @project.shelter_list = @project.initiate_shelterlist
+      # @project.shelter_list = @project.initiate_shelterlist
+      @project.initiate_shelterlist
       # binding.pry
     end
-    
+
     ans = File.read('spec/fixtures/DogCat_results.json')
     shelter_id_ans = JSON.parse(ans).map{ |n| n["animal_shelter_pkid"]}.uniq.size
     num_dog_ans = JSON.parse(ans).select{ |n| n["animal_kind"] == "狗"}.size
@@ -60,13 +61,7 @@ describe 'Tests Animal API ' do
       project = Info::Project.new(path)
       _(proc do
           project.connection
-        end).must_equal nil
+        end).must_raise Info::Response::NotFound
     end
-
-    # it 'SAD: should be wrong when existing some field is not correct ' do
-    #   _(proc do
-    #     CodePraise::GithubApi.new('BAD_TOKEN').project('soumyaray', 'foobar')
-    #   end).must_raise CodePraise::GithubApi::Response::Unauthorized
-    # end
   end
 end
