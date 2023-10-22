@@ -185,6 +185,8 @@
       },
       "/home/justinkao/SOA/exhaustednei/lib/animal.rb": {
         "lines": [
+          null,
+          null,
           1,
           1,
           1,
@@ -193,6 +195,7 @@
           null,
           null,
           1,
+          null,
           1,
           1,
           null,
@@ -244,6 +247,7 @@
           null,
           1,
           0,
+          null,
           null,
           null,
           null,
@@ -304,7 +308,7 @@
         ]
       }
     },
-    "timestamp": 1697953673
+    "timestamp": 1697954014
   },
   "Minitest": {
     "coverage": {

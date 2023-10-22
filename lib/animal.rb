@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'uri'
 require 'net/http'
 require 'pry'
@@ -6,12 +8,13 @@ require 'yaml'
 # verify your identification
 
 module Info
+  # class Info::Cat`
   class Cat
-    attr_reader :animal_ID, :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization,
+    attr_reader :animal_id, :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization,
                 :animal_bacterin, :animal_bodytype, :album_file, :animal_opendate
 
     def initialize(data)
-      @animal_ID = data['animal_id'].to_i
+      @animal_id = data['animal_id'].to_i
       @animal_place = data['animal_place']
       @animal_kind = data['animal_kind']
       @animal_variate = data['animal_Variety']
@@ -23,49 +26,46 @@ module Info
       @animal_opendate = data['animal_opendate']
     end
 
-    def get_ID
-      animal_ID
+    def id
+      animal_id
     end
 
-    def get_animal_place
+    def place
       animal_place
     end
 
-    def get_kind
+    def kind
       animal_kind
     end
 
-    def get_variate
-      animal_variate
-    end
-
-    def get_gender
+    def gender
       animal_sex
     end
 
-    def get_size
+    def size
       animal_size
     end
 
-    def is_sterilized
+    def sterilized?
       animal_sterilization
     end
 
-    def is_bacterin
+    def bacterin?
       animal_bacterin
     end
 
-    def get_variate(_pet)
+    def variate(_pet)
       animal_variate
     end
   end
 
+  # class Info::Dog`
   class Dog
-    attr_reader :animal_ID, :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization,
+    attr_reader :animal_id, :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization,
                 :animal_bacterin, :animal_bodytype, :album_file, :animal_opendate
 
     def initialize(data)
-      @animal_ID = data['animal_id'].to_i
+      @animal_id = data['animal_id'].to_i
       @animal_place = data['animal_place']
       @animal_kind = data['animal_kind']
       @animal_variate = data['animal_Variety']
@@ -77,39 +77,35 @@ module Info
       @animal_opendate = data['animal_opendate']
     end
 
-    def get_ID
-      animal_ID
+    def id
+      animal_id
     end
 
-    def get_animal_place
+    def place
       animal_place
     end
 
-    def get_kind
+    def kind
       animal_kind
     end
 
-    def get_variate
-      animal_variate
-    end
-
-    def get_gender
+    def gender
       animal_sex
     end
 
-    def get_size
+    def size
       animal_size
     end
 
-    def is_sterilized
+    def sterilized?
       animal_sterilization
     end
 
-    def is_bacterin
+    def bacterin?
       animal_bacterin
     end
 
-    def get_variate(_pet)
+    def variate(_pet)
       animal_variate
     end
   end
