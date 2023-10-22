@@ -70,7 +70,7 @@ describe 'Tests Animal API ' do
     ## TODO:
     it 'HAPPY: get the right animal id and its information' do
       shelter = @project.shelter_list.get_the_shelter(rand_shelter_id)
-      _(shelter.animal_object_hash[file[random]['animal_id']].animal_ID).must_equal file[random]['animal_id']
+      _(shelter.animal_object_hash[file[random]['animal_id']].animal_id).must_equal file[random]['animal_id']
       _(shelter.animal_object_hash[file[random]['animal_id']].animal_place).must_equal file[random]['animal_place']
       _(shelter.animal_object_hash[file[random]['animal_id']].animal_variate).must_equal file[random]['animal_Variety']
     end
