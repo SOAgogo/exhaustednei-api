@@ -35,8 +35,8 @@ module Info
       sum
     end
 
-    def get_how_many_number_animals_in_the_shelter(animal_area_pkid)
-      ShelterList.shelter_hash[animal_area_pkid].animal_nums
+    def get_the_shelter(animal_area_pkid)
+      @shelter_hash[animal_area_pkid]
     end
   end
 
