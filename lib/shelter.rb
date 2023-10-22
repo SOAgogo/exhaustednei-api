@@ -23,8 +23,6 @@ module Info
       @shelter_hash.each do |_, obj|
         sum += obj.dog_number
       end
-      puts @shelter_hash
-
       sum
     end
 
