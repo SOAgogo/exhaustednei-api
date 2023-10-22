@@ -45,7 +45,9 @@ module Info
 
   # class Info::Shelter`
   class Shelter
-    attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid, :shelter_name, :shelter_address, :shelter_tel
+    attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid, :shelter_name, :shelter_address, :shelter_tel,
+                :dog_number, :animal_object_hash
+
     attr_accessor :animal_object_hash, :cat_number, :dog_number
 
     def initialize(data)
