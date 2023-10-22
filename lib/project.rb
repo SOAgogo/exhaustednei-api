@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'uri'
 require 'net/http'
 require 'pry'
@@ -68,6 +70,7 @@ module Info
     def shelter_initiator(animal_data, shelter_data)
       shelter = @shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']]
       shelter = Shelter.new(shelter_data) if shelter.nil?
+      
       if animal_data['animal_kind'] == '狗'
         dog = Dog.new(animal_data)
         shelter.animal_object_hash[animal_data['animal_id']] = dog
@@ -83,6 +86,7 @@ module Info
     end
   end
 
+  # Response < SimpleDelegator
   class Response < SimpleDelegator
     Unauthorized = Class.new(StandardError)
     NotFound = Class.new(StandardError)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'uri'
 require 'net/http'
 require 'pry'
@@ -6,6 +8,7 @@ require 'yaml'
 # verify your identification
 
 module Info
+  # class Info::ShelterList`
   class ShelterList
     attr_accessor :shelter_hash
 
@@ -40,10 +43,9 @@ module Info
     end
   end
 
+  # class Info::Shelter`
   class Shelter
-    attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid, :shelter_name, :shelter_address, :shelter_tel,
-                :dog_number
-
+    attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid, :shelter_name, :shelter_address, :shelter_tel
     attr_accessor :animal_object_hash, :cat_number, :dog_number
 
     def initialize(data)

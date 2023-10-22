@@ -3,6 +3,8 @@
     "coverage": {
       "/home/justinkao/SOA/exhaustednei/lib/project.rb": {
         "lines": [
+          null,
+          null,
           1,
           1,
           1,
@@ -73,17 +75,19 @@
           1,
           120,
           120,
-          120,
-          108,
-          108,
-          108,
-          null,
-          12,
-          12,
-          12,
-          null,
           null,
           120,
+          108,
+          108,
+          108,
+          null,
+          12,
+          12,
+          12,
+          null,
+          null,
+          120,
+          null,
           null,
           null,
           null,
@@ -110,6 +114,8 @@
       },
       "/home/justinkao/SOA/exhaustednei/lib/shelter.rb": {
         "lines": [
+          null,
+          null,
           1,
           1,
           1,
@@ -118,6 +124,7 @@
           null,
           null,
           1,
+          null,
           1,
           1,
           null,
@@ -152,10 +159,9 @@
           null,
           null,
           null,
+          null,
           1,
           1,
-          null,
-          null,
           1,
           null,
           1,
@@ -298,7 +304,7 @@
         ]
       }
     },
-    "timestamp": 1697952396
+    "timestamp": 1697953673
   },
   "Minitest": {
     "coverage": {
