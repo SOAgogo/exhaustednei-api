@@ -30,8 +30,8 @@ module Info
 
   # `class Info::Dog`.
   class Dog
-    attr_reader :animal_id, :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization,
-                :animal_bacterin, :animal_bodytype, :album_file, :animal_opendate
+    attr_reader :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization, :animal_bacterin,
+                :animal_bodytype, :album_file, :animal_opendate, :animal_id
 
     def initialize(data)
       @animal_id = data['animal_id'].to_i
