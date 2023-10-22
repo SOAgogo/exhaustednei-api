@@ -1,0 +1,56 @@
+[33m31a84d9[m[33m ([m[1;36mHEAD -> [m[1;32mjustin[m[33m)[m HEAD@{0}: commit: ok
+[33m75473e3[m HEAD@{1}: reset: moving to 75473e3
+[33m3f3b91c[m[33m ([m[1;31morigin/justin[m[33m)[m HEAD@{2}: commit (merge): merge
+[33m82f4787[m HEAD@{3}: commit: temp
+[33m75473e3[m HEAD@{4}: commit: pass rubocup
+[33m80901ba[m HEAD@{5}: commit: pass rubocop
+[33m7959856[m HEAD@{6}: commit: add test about shelter animal
+[33m9911b84[m HEAD@{7}: commit: casest is the cause of error
+[33mcbf3555[m HEAD@{8}: commit: temp
+[33mc619659[m HEAD@{9}: commit (merge): Merge branch 'tony' of github.com:SOAgogo/exhaustednei into justin
+[33m17585ab[m HEAD@{10}: commit: temp
+[33m02b20b9[m HEAD@{11}: commit: rake file change
+[33mbbeb1fd[m HEAD@{12}: commit: test ans done
+[33m9d6048a[m HEAD@{13}: commit (merge): Merge branch 'tony' of github.com:SOAgogo/exhaustednei into justin
+[33m10a7cd4[m HEAD@{14}: commit: update
+[33mfa9f0e2[m HEAD@{15}: commit: shlter and animal update
+[33m2b2e0a1[m HEAD@{16}: commit: set basic animal and shelter item
+[33mce0c802[m[33m ([m[1;31morigin/test-tools[m[33m)[m HEAD@{17}: pull origin test-tools: Fast-forward
+[33m0bce0a4[m HEAD@{18}: checkout: moving from test-tools to justin
+[33m10ceea5[m[33m ([m[1;32mtest-tools[m[33m)[m HEAD@{19}: commit: change gemfile and gemlock
+[33m0bce0a4[m HEAD@{20}: checkout: moving from justin to test-tools
+[33m0bce0a4[m HEAD@{21}: checkout: moving from test-tools to justin
+[33m0bce0a4[m HEAD@{22}: commit: top 20
+[33mfb2d685[m HEAD@{23}: commit: add Instructions from Ministry of Agriculture
+[33m13d7b5d[m HEAD@{24}: pull origin test-tools: Fast-forward
+[33m899d988[m HEAD@{25}: commit (merge): update and create file
+[33me211869[m HEAD@{26}: checkout: moving from test-tools to test-tools
+[33me211869[m HEAD@{27}: checkout: moving from master to test-tools
+[33m42b9452[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{28}: checkout: moving from remote to master
+[33m09c9493[m[33m ([m[1;32mremote[m[33m)[m HEAD@{29}: checkout: moving from api_explore to remote
+[33md16cf57[m[33m ([m[1;31morigin/api_explore[m[33m, [m[1;32mapi_explore[m[33m)[m HEAD@{30}: checkout: moving from test-tools to api_explore
+[33me211869[m HEAD@{31}: checkout: moving from master to test-tools
+[33m42b9452[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{32}: checkout: moving from test-tools to master
+[33me211869[m HEAD@{33}: commit: update files for test-tools
+[33m09c9493[m[33m ([m[1;32mremote[m[33m)[m HEAD@{34}: checkout: moving from api_explore to test-tools
+[33md16cf57[m[33m ([m[1;31morigin/api_explore[m[33m, [m[1;32mapi_explore[m[33m)[m HEAD@{35}: checkout: moving from test-tools to api_explore
+[33m09c9493[m[33m ([m[1;32mremote[m[33m)[m HEAD@{36}: checkout: moving from master to test-tools
+[33m42b9452[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{37}: commit: new
+[33m2946686[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{38}: pull origin: Fast-forward
+[33m0380fe3[m HEAD@{39}: checkout: moving from test-tools to master
+[33m09c9493[m[33m ([m[1;32mremote[m[33m)[m HEAD@{40}: checkout: moving from api_explore to test-tools
+[33md16cf57[m[33m ([m[1;31morigin/api_explore[m[33m, [m[1;32mapi_explore[m[33m)[m HEAD@{41}: pull origin test-tools: Merge made by the 'ort' strategy.
+[33m76e1843[m HEAD@{42}: commit (merge): delete secrets.yml
+[33m09c9493[m[33m ([m[1;32mremote[m[33m)[m HEAD@{43}: commit: try google calander and chat gpt
+[33m1466d1c[m HEAD@{44}: pull origin api_explore: Fast-forward
+[33m5f4104f[m HEAD@{45}: reset: moving to 5f4104fd3b4c99bc5977996f4adb824e20c1f107
+[33m25d046d[m HEAD@{46}: checkout: moving from master to api_explore
+[33m0380fe3[m HEAD@{47}: checkout: moving from api_explore to master
+[33m25d046d[m HEAD@{48}: pull origin: Fast-forward
+[33mc8e4717[m HEAD@{49}: checkout: moving from master to api_explore
+[33m0380fe3[m HEAD@{50}: commit: delete README.md
+[33m843b967[m HEAD@{51}: checkout: moving from api_explore to master
+[33mc8e4717[m HEAD@{52}: checkout: moving from master to api_explore
+[33m843b967[m HEAD@{53}: reset: moving to 843b967b6c57d5e3776fcae83562cc8a300cb7af
+[33m843b967[m HEAD@{54}: commit: Starting project test justin
+[33m6b0c8ef[m HEAD@{55}: clone: from github.com:SOAgogo/exhaustednei.git
