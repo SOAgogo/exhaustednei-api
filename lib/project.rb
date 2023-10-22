@@ -35,6 +35,8 @@ module Info
       request = Net::HTTP::Get.new(url)
       request['accept'] = 'application/json'
       response = http.request(request)
+      raise 'not found' if response.read_body.include?('[]')
+
       @request_body = JSON.parse(response.read_body)[1..20]
     end
 
@@ -83,21 +85,4 @@ module Info
     end
   end
 
-  class Response < SimpleDelegator
-    Unauthorized = Class.new(StandardError)
-    NotFound = Class.new(StandardError)
-
-    HTTP_ERROR = {
-      401 => Unauthorized,
-      404 => NotFound
-    }.freeze
-
-    def successful?
-      HTTP_ERROR.keys.none?(code)
-    end
-
-    def error
-      HTTP_ERROR[code]
-    end
-  end
 end

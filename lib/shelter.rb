@@ -37,14 +37,14 @@ module Info
       sum
     end
 
-    def get_how_many_number_animals_in_the_shelter(animal_area_pkid)
-      ShelterList.shelter_hash[animal_area_pkid].animal_nums
+    def get_the_shelter(animal_area_pkid)
+      @shelter_hash[animal_area_pkid]
     end
   end
 
   class Shelter
     attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid, :shelter_name, :shelter_address, :shelter_tel,
-                :dog_number
+                :dog_number, :animal_object_hash
 
     attr_accessor :animal_object_hash, :cat_number, :dog_number
 
