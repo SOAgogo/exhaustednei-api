@@ -1,24 +1,19 @@
-# CodePraise
+# Animal adoption platform
 
-Application that allows *instructors* and *students* to guage how well individual students have contributed to *team projects*.
+Application that allows *some missing pets* can find its warm hosue and *other pets lovers* can adopt the pets from the original pets keepers
 
 ## Overview
 
-Codepraise will pull data from Github's API, as well as clone and analyze blame information.
-
-It will then generate *reports* to show how proportionately individual students have contributed to specific aspects of their project: testing, interface, infrastructure, etc. We call this a *praise* assessment: students should feel proud to have contributed to key parts of their project.
-
-We hope this tool will give instructors a fair sense of how well students have contributed, but also that it gives students a sense of how their contributions are perceived objectively. We do not want our reports to be the sole basis of asessing student performance on team projects. Instead, we intend our praise reports to be the beginning of a conversation between instructors and students, and between team members, on how their contributions are perceived by others. It is upto team members and instructors to find a common understanding of how much, and how well, each student has contributed.
+Animal adoption platform will pull data from the data source from agriculture burreau of Taiwanese goverment 
 
 ## Objectives
+* Offer the channels to inform the pet lovers to adopt the missing pets
 
 ### Short-term usability goals
 
-- Pull data from Github API, clone repos
-- Analyze blame data to generate praise reports
-- Display folder level praise reports
-- Project (Github repository for a course project)
-- Contributors (teammates/others contributing to a project)
+- the platform for adopting animals
+- Analyze data from goverment and try to send the notifications to the potential clients who want to adopt pets.
+
 
 ### Long-term goals
 
