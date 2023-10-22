@@ -36,6 +36,8 @@ describe 'Tests Animal API ' do
     shelter_id_ans = file.map { |n| n['animal_shelter_pkid'] }.uniq.size
     num_dog_ans = file.select { |n| n['animal_kind'] == '狗' }.size
     num_cat_ans = file.select { |n| n['animal_kind'] == '貓' }.size
+    rand_shelter_id = file[rand(1..20)]['animal_shelter_pkid']
+    num_aml_shelter_ans = file.select { |n| n['animal_shelter_pkid'] == rand_shelter_id }.size
 
     it 'HAPPY: should connect to api successfully' do
       _(@project.request_body[0].keys).must_equal CORRECT[0].keys
@@ -80,6 +82,17 @@ describe 'Tests Animal API ' do
           project.connection
         end).must_raise 'not found'
     end
-  end
 
+    it 'HAPPY: should provide correct animal numbers in each shelter' do
+      aml_number = @project.shelter_list.get_the_shelter(rand_shelter_id).animal_nums
+
+      _(aml_number).must_equal num_aml_shelter_ans
+    end
+
+    it 'HAPPY: should provide correct animal numbers in each shelter' do
+      aml_number = @project.shelter_list.get_the_shelter(rand_shelter_id).animal_nums
+
+      _(aml_number).must_equal num_aml_shelter_ans
+    end
+  end
 end
