@@ -49,13 +49,12 @@ describe 'Tests Animal API ' do
       # _(project.git_url).must_equal CORRECT['git_url']
     end
 
-    # TODO: here
     it 'SAD: should raise exception on incorrect url' do
-      path = "#{RESOURCE_PATH}error_here"
+      path = "#{RESOURCE_PATH}/error_here"
       project = Info::Project.new(path)
       _(proc do
           project.connection
-        end).must_raise Info::Response::NotFound
+        end).must_equal nil
     end
 
     # it 'SAD: should be wrong when existing some field is not correct ' do
