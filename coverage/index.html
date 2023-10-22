@@ -5,7 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <script src='./assets/0.12.3/application.js' type='text/javascript'></script>
     <link href='./assets/0.12.3/application.css' media='screen, projection, print' rel='stylesheet' type='text/css' />
-    <link rel="shortcut icon" type="image/png" href="./assets/0.12.3/favicon_yellow.png" />
+    <link rel="shortcut icon" type="image/png" href="./assets/0.12.3/favicon_red.png" />
     <link rel="icon" type="image/png" href="./assets/0.12.3/favicon.png" />
   </head>
 
@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2023-10-22T13:53:34+08:00">2023-10-22T13:53:34+08:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2023-10-22T14:37:41+08:00">2023-10-22T14:37:41+08:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -22,15 +22,15 @@
   <h2>
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
-      <span class="yellow">
-  87.8%
+      <span class="red">
+  53.85%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         82.38
+         1.08
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>164</b> relevant lines,
-    <span class="green"><b>144</b> lines covered</span> and
-    <span class="red"><b>20</b> lines missed. </span>
-    (<span class="yellow">
-  87.8%
+    <b>156</b> relevant lines,
+    <span class="green"><b>84</b> lines covered</span> and
+    <span class="red"><b>72</b> lines missed. </span>
+    (<span class="red">
+  53.85%
 </span>
 )
   </div>
@@ -72,34 +72,34 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#74969f7bf4db82e6ea3a441c5a90f586d56bd987" class="src_link" title="lib/animal.rb">lib/animal.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">73.53 %</td>
-            <td class="cell--number">120</td>
-            <td class="cell--number">68</td>
-            <td class="cell--number">50</td>
-            <td class="cell--number">18</td>
-            <td class="cell--number">18.09</td>
+            <td class="red strong cell--number t-file__coverage">43.75 %</td>
+            <td class="cell--number">112</td>
+            <td class="cell--number">64</td>
+            <td class="cell--number">28</td>
+            <td class="cell--number">36</td>
+            <td class="cell--number">0.44</td>
             
           </tr>
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#6d773c0a49ccfbddd10d4faee2ebce5e50d2f5f6" class="src_link" title="lib/project.rb">lib/project.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">96.49 %</td>
-            <td class="cell--number">107</td>
-            <td class="cell--number">57</td>
-            <td class="cell--number">55</td>
-            <td class="cell--number">2</td>
-            <td class="cell--number">206.02</td>
+            <td class="red strong cell--number t-file__coverage">69.81 %</td>
+            <td class="cell--number">103</td>
+            <td class="cell--number">53</td>
+            <td class="cell--number">37</td>
+            <td class="cell--number">16</td>
+            <td class="cell--number">2.21</td>
             
           </tr>
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#4a43d1a138b9e2fb38e6493e298213b043a63e0e" class="src_link" title="lib/shelter.rb">lib/shelter.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">100.00 %</td>
+            <td class="red strong cell--number t-file__coverage">48.72 %</td>
             <td class="cell--number">67</td>
             <td class="cell--number">39</td>
-            <td class="cell--number">39</td>
-            <td class="cell--number">0</td>
-            <td class="cell--number">13.77</td>
+            <td class="cell--number">19</td>
+            <td class="cell--number">20</td>
+            <td class="cell--number">0.62</td>
             
           </tr>
         
@@ -125,7 +125,7 @@
     <h3>lib/animal.rb</h3>
     <h4>
       <span class="red">
-  73.53%
+  43.75%
 </span>
 
       lines covered
@@ -134,9 +134,9 @@
     
 
     <div class="t-line-summary">
-      <b>68</b> relevant lines.
-      <span class="green"><b>50</b> lines covered</span> and
-      <span class="red"><b>18</b> lines missed.</span>
+      <b>64</b> relevant lines.
+      <span class="green"><b>28</b> lines covered</span> and
+      <span class="red"><b>36</b> lines missed.</span>
     </div>
 
     
@@ -285,7 +285,7 @@
 
             
 
-            <code class="ruby">    attr_reader :animal_ID, :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization,</code>
+            <code class="ruby">    attr_reader :animal_id, :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization,</code>
           </li>
         </div>
       
@@ -323,19 +323,19 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="17">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="17">
+            
             
 
             
 
-            <code class="ruby">      @animal_ID = data[&#39;animal_id&#39;].to_i</code>
+            <code class="ruby">      @animal_id = data[&#39;animal_id&#39;].to_i</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="18">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="18">
+            
             
 
             
@@ -345,8 +345,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="19">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="19">
+            
             
 
             
@@ -356,8 +356,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="20">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="20">
+            
             
 
             
@@ -367,8 +367,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="21">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="21">
+            
             
 
             
@@ -378,8 +378,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="22">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="22">
+            
             
 
             
@@ -389,8 +389,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="23">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="23">
+            
             
 
             
@@ -400,8 +400,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="24">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="24">
+            
             
 
             
@@ -411,8 +411,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="25">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="25">
+            
             
 
             
@@ -422,8 +422,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="26">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="26">
+            
             
 
             
@@ -461,7 +461,7 @@
 
             
 
-            <code class="ruby">    def ID</code>
+            <code class="ruby">    def id</code>
           </li>
         </div>
       
@@ -472,7 +472,7 @@
 
             
 
-            <code class="ruby">      animal_ID</code>
+            <code class="ruby">      animal_id</code>
           </li>
         </div>
       
@@ -505,7 +505,7 @@
 
             
 
-            <code class="ruby">    def animal_place</code>
+            <code class="ruby">    def place</code>
           </li>
         </div>
       
@@ -593,7 +593,7 @@
 
             
 
-            <code class="ruby">    def variate</code>
+            <code class="ruby">    def gender</code>
           </li>
         </div>
       
@@ -604,7 +604,7 @@
 
             
 
-            <code class="ruby">      animal_variate</code>
+            <code class="ruby">      animal_sex</code>
           </li>
         </div>
       
@@ -637,7 +637,7 @@
 
             
 
-            <code class="ruby">    def gender</code>
+            <code class="ruby">    def size</code>
           </li>
         </div>
       
@@ -648,7 +648,7 @@
 
             
 
-            <code class="ruby">      animal_sex</code>
+            <code class="ruby">      animal_size</code>
           </li>
         </div>
       
@@ -681,7 +681,7 @@
 
             
 
-            <code class="ruby">    def size</code>
+            <code class="ruby">    def sterilized?</code>
           </li>
         </div>
       
@@ -692,7 +692,7 @@
 
             
 
-            <code class="ruby">      animal_size</code>
+            <code class="ruby">      animal_sterilization</code>
           </li>
         </div>
       
@@ -725,7 +725,7 @@
 
             
 
-            <code class="ruby">    def sterilized?</code>
+            <code class="ruby">    def bacterin?</code>
           </li>
         </div>
       
@@ -736,7 +736,7 @@
 
             
 
-            <code class="ruby">      animal_sterilization</code>
+            <code class="ruby">      animal_bacterin</code>
           </li>
         </div>
       
@@ -769,7 +769,7 @@
 
             
 
-            <code class="ruby">    def bacterin?</code>
+            <code class="ruby">    def variate(_pet)</code>
           </li>
         </div>
       
@@ -780,7 +780,7 @@
 
             
 
-            <code class="ruby">      animal_bacterin</code>
+            <code class="ruby">      animal_variate</code>
           </li>
         </div>
       
@@ -802,56 +802,12 @@
 
             
 
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="61">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    def variate(_pet)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="62">
-            
-            
-
-            
-
-            <code class="ruby">      animal_variate</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="63">
-            
-            
-
-            
-
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="64">
-            
-            
-
-            
-
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="65">
+          <li class="never" data-hits="" data-linenumber="61">
             
             
 
@@ -862,7 +818,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="66">
+          <li class="never" data-hits="" data-linenumber="62">
             
             
 
@@ -873,7 +829,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="67">
+          <li class="covered" data-hits="1" data-linenumber="63">
             <span class="hits">1</span>
             
 
@@ -884,18 +840,18 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="68">
+          <li class="covered" data-hits="1" data-linenumber="64">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    attr_reader :animal_ID, :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization,</code>
+            <code class="ruby">    attr_reader :animal_id, :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization,</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="69">
+          <li class="never" data-hits="" data-linenumber="65">
             
             
 
@@ -906,7 +862,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="70">
+          <li class="never" data-hits="" data-linenumber="66">
             
             
 
@@ -917,7 +873,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="71">
+          <li class="covered" data-hits="1" data-linenumber="67">
             <span class="hits">1</span>
             
 
@@ -928,19 +884,19 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="72">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="68">
+            
             
 
             
 
-            <code class="ruby">      @animal_ID = data[&#39;animal_id&#39;].to_i</code>
+            <code class="ruby">      @animal_id = data[&#39;animal_id&#39;].to_i</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="73">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="69">
+            
             
 
             
@@ -950,8 +906,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="74">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="70">
+            
             
 
             
@@ -961,8 +917,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="75">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="71">
+            
             
 
             
@@ -972,8 +928,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="76">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="72">
+            
             
 
             
@@ -983,8 +939,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="77">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="73">
+            
             
 
             
@@ -994,8 +950,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="78">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="74">
+            
             
 
             
@@ -1005,8 +961,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="79">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="75">
+            
             
 
             
@@ -1016,8 +972,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="80">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="76">
+            
             
 
             
@@ -1027,13 +983,57 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="81">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="77">
+            
             
 
             
 
             <code class="ruby">      @animal_opendate = data[&#39;animal_opendate&#39;]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="78">
+            
+            
+
+            
+
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="79">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="80">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    def id</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="81">
+            
+            
+
+            
+
+            <code class="ruby">      animal_id</code>
           </li>
         </div>
       
@@ -1066,7 +1066,7 @@
 
             
 
-            <code class="ruby">    def ID</code>
+            <code class="ruby">    def place</code>
           </li>
         </div>
       
@@ -1077,7 +1077,7 @@
 
             
 
-            <code class="ruby">      animal_ID</code>
+            <code class="ruby">      animal_place</code>
           </li>
         </div>
       
@@ -1110,7 +1110,7 @@
 
             
 
-            <code class="ruby">    def animal_place</code>
+            <code class="ruby">    def kind</code>
           </li>
         </div>
       
@@ -1121,7 +1121,7 @@
 
             
 
-            <code class="ruby">      animal_place</code>
+            <code class="ruby">      animal_kind</code>
           </li>
         </div>
       
@@ -1154,7 +1154,7 @@
 
             
 
-            <code class="ruby">    def kind</code>
+            <code class="ruby">    def gender</code>
           </li>
         </div>
       
@@ -1165,7 +1165,7 @@
 
             
 
-            <code class="ruby">      animal_kind</code>
+            <code class="ruby">      animal_sex</code>
           </li>
         </div>
       
@@ -1198,7 +1198,7 @@
 
             
 
-            <code class="ruby">    def variate</code>
+            <code class="ruby">    def size</code>
           </li>
         </div>
       
@@ -1209,7 +1209,7 @@
 
             
 
-            <code class="ruby">      animal_variate</code>
+            <code class="ruby">      animal_size</code>
           </li>
         </div>
       
@@ -1242,7 +1242,7 @@
 
             
 
-            <code class="ruby">    def gender</code>
+            <code class="ruby">    def sterilized?</code>
           </li>
         </div>
       
@@ -1253,7 +1253,7 @@
 
             
 
-            <code class="ruby">      animal_sex</code>
+            <code class="ruby">      animal_sterilization</code>
           </li>
         </div>
       
@@ -1286,7 +1286,7 @@
 
             
 
-            <code class="ruby">    def size</code>
+            <code class="ruby">    def bacterin?</code>
           </li>
         </div>
       
@@ -1297,7 +1297,7 @@
 
             
 
-            <code class="ruby">      animal_size</code>
+            <code class="ruby">      animal_bacterin</code>
           </li>
         </div>
       
@@ -1330,7 +1330,7 @@
 
             
 
-            <code class="ruby">    def sterilized?</code>
+            <code class="ruby">    def variate(_pet)</code>
           </li>
         </div>
       
@@ -1341,7 +1341,7 @@
 
             
 
-            <code class="ruby">      animal_sterilization</code>
+            <code class="ruby">      animal_variate</code>
           </li>
         </div>
       
@@ -1363,100 +1363,12 @@
 
             
 
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="112">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    def bacterin?</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="113">
-            
-            
-
-            
-
-            <code class="ruby">      animal_bacterin</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="114">
-            
-            
-
-            
-
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="115">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="116">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    def variate(_pet)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="117">
-            
-            
-
-            
-
-            <code class="ruby">      animal_variate</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="118">
-            
-            
-
-            
-
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="119">
-            
-            
-
-            
-
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="120">
+          <li class="never" data-hits="" data-linenumber="112">
             
             
 
@@ -1475,8 +1387,8 @@
   <div class="header">
     <h3>lib/project.rb</h3>
     <h4>
-      <span class="green">
-  96.49%
+      <span class="red">
+  69.81%
 </span>
 
       lines covered
@@ -1485,9 +1397,9 @@
     
 
     <div class="t-line-summary">
-      <b>57</b> relevant lines.
-      <span class="green"><b>55</b> lines covered</span> and
-      <span class="red"><b>2</b> lines missed.</span>
+      <b>53</b> relevant lines.
+      <span class="green"><b>37</b> lines covered</span> and
+      <span class="red"><b>16</b> lines missed.</span>
     </div>
 
     
@@ -1674,8 +1586,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="17">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="6" data-linenumber="17">
+            <span class="hits">6</span>
             
 
             
@@ -1685,8 +1597,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="18">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="6" data-linenumber="18">
+            <span class="hits">6</span>
             
 
             
@@ -1696,8 +1608,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="19">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="6" data-linenumber="19">
+            <span class="hits">6</span>
             
 
             
@@ -1861,8 +1773,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="34">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="6" data-linenumber="34">
+            <span class="hits">6</span>
             
 
             
@@ -1872,8 +1784,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="35">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="6" data-linenumber="35">
+            <span class="hits">6</span>
             
 
             
@@ -1883,8 +1795,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="36">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="6" data-linenumber="36">
+            <span class="hits">6</span>
             
 
             
@@ -1894,8 +1806,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="37">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="6" data-linenumber="37">
+            <span class="hits">6</span>
             
 
             
@@ -1905,8 +1817,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="38">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="6" data-linenumber="38">
+            <span class="hits">6</span>
             
 
             
@@ -1916,8 +1828,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="39">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="6" data-linenumber="39">
+            <span class="hits">6</span>
             
 
             
@@ -1927,8 +1839,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="40">
-            <span class="hits">7</span>
+          <li class="covered" data-hits="6" data-linenumber="40">
+            <span class="hits">6</span>
             
 
             
@@ -1971,30 +1883,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="120" data-linenumber="44">
-            <span class="hits">120</span>
-            
-
-            
-
-            <code class="ruby">      animal_data_hash = {}</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="120" data-linenumber="45">
-            <span class="hits">120</span>
-            
-
-            
-
-            <code class="ruby">      shelter_data_hash = {}</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="120" data-linenumber="46">
-            <span class="hits">120</span>
+          <li class="covered" data-hits="6" data-linenumber="44">
+            <span class="hits">6</span>
             
 
             
@@ -2004,8 +1894,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3360" data-linenumber="47">
-            <span class="hits">3360</span>
+          <li class="covered" data-hits="6" data-linenumber="45">
+            <span class="hits">6</span>
             
 
             
@@ -2015,8 +1905,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="240" data-linenumber="48">
-            <span class="hits">240</span>
+          <li class="covered" data-hits="6" data-linenumber="46">
+            <span class="hits">6</span>
             
 
             
@@ -2026,8 +1916,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="240" data-linenumber="49">
-            <span class="hits">240</span>
+          <li class="missed" data-hits="0" data-linenumber="47">
+            
             
 
             
@@ -2037,29 +1927,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="3120" data-linenumber="50">
-            <span class="hits">3120</span>
-            
-
-            
-
-            <code class="ruby">        elsif %w[animal_area_pkid shelter_name shelter_address shelter_tel].include?(key)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="480" data-linenumber="51">
-            <span class="hits">480</span>
-            
-
-            
-
-            <code class="ruby">          shelter_data_hash[key] = value</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="52">
+          <li class="never" data-hits="" data-linenumber="48">
             
             
 
@@ -2070,18 +1938,18 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="2640" data-linenumber="53">
-            <span class="hits">2640</span>
+          <li class="missed" data-hits="0" data-linenumber="49">
+            
             
 
             
 
-            <code class="ruby">          animal_data_hash[key] = value</code>
+            <code class="ruby">          %w[animal_area_pkid shelter_name shelter_address shelter_tel].include?(key) ? shelter_data_hash[key] = value : animal_data_hash[key] = value</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="54">
+          <li class="never" data-hits="" data-linenumber="50">
             
             
 
@@ -2092,7 +1960,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="55">
+          <li class="never" data-hits="" data-linenumber="51">
             
             
 
@@ -2103,8 +1971,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="120" data-linenumber="56">
-            <span class="hits">120</span>
+          <li class="missed" data-hits="0" data-linenumber="52">
+            
             
 
             
@@ -2114,7 +1982,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="57">
+          <li class="never" data-hits="" data-linenumber="53">
             
             
 
@@ -2125,7 +1993,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="58">
+          <li class="never" data-hits="" data-linenumber="54">
             
             
 
@@ -2136,7 +2004,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="59">
+          <li class="covered" data-hits="1" data-linenumber="55">
             <span class="hits">1</span>
             
 
@@ -2147,7 +2015,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="60">
+          <li class="covered" data-hits="6" data-linenumber="56">
             <span class="hits">6</span>
             
 
@@ -2158,7 +2026,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="61">
+          <li class="covered" data-hits="6" data-linenumber="57">
             <span class="hits">6</span>
             
 
@@ -2169,8 +2037,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="120" data-linenumber="62">
-            <span class="hits">120</span>
+          <li class="covered" data-hits="6" data-linenumber="58">
+            <span class="hits">6</span>
             
 
             
@@ -2180,8 +2048,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="120" data-linenumber="63">
-            <span class="hits">120</span>
+          <li class="missed" data-hits="0" data-linenumber="59">
+            
             
 
             
@@ -2191,7 +2059,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="64">
+          <li class="never" data-hits="" data-linenumber="60">
             
             
 
@@ -2202,7 +2070,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="65">
+          <li class="never" data-hits="" data-linenumber="61">
             
             
 
@@ -2213,7 +2081,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="66">
+          <li class="never" data-hits="" data-linenumber="62">
             
             
 
@@ -2224,7 +2092,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="67">
+          <li class="never" data-hits="" data-linenumber="63">
             
             
 
@@ -2235,7 +2103,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="68">
+          <li class="never" data-hits="" data-linenumber="64">
             
             
 
@@ -2246,7 +2114,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="69">
+          <li class="never" data-hits="" data-linenumber="65">
             
             
 
@@ -2257,7 +2125,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="70">
+          <li class="covered" data-hits="1" data-linenumber="66">
             <span class="hits">1</span>
             
 
@@ -2268,8 +2136,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="120" data-linenumber="71">
-            <span class="hits">120</span>
+          <li class="missed" data-hits="0" data-linenumber="67">
+            
             
 
             
@@ -2279,8 +2147,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="120" data-linenumber="72">
-            <span class="hits">120</span>
+          <li class="missed" data-hits="0" data-linenumber="68">
+            
             
 
             
@@ -2290,19 +2158,19 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="73">
+          <li class="never" data-hits="" data-linenumber="69">
             
             
 
             
 
-            <code class="ruby">      </code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="120" data-linenumber="74">
-            <span class="hits">120</span>
+          <li class="missed" data-hits="0" data-linenumber="70">
+            
             
 
             
@@ -2312,8 +2180,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="75">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="71">
+            
             
 
             
@@ -2323,8 +2191,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="76">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="72">
+            
             
 
             
@@ -2334,8 +2202,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="108" data-linenumber="77">
-            <span class="hits">108</span>
+          <li class="missed" data-hits="0" data-linenumber="73">
+            
             
 
             
@@ -2345,7 +2213,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="78">
+          <li class="never" data-hits="" data-linenumber="74">
             
             
 
@@ -2356,8 +2224,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="79">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="75">
+            
             
 
             
@@ -2367,8 +2235,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="80">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="76">
+            
             
 
             
@@ -2378,8 +2246,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="12" data-linenumber="81">
-            <span class="hits">12</span>
+          <li class="missed" data-hits="0" data-linenumber="77">
+            
             
 
             
@@ -2389,7 +2257,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="82">
+          <li class="never" data-hits="" data-linenumber="78">
             
             
 
@@ -2400,7 +2268,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="83">
+          <li class="never" data-hits="" data-linenumber="79">
             
             
 
@@ -2411,8 +2279,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="120" data-linenumber="84">
-            <span class="hits">120</span>
+          <li class="missed" data-hits="0" data-linenumber="80">
+            
             
 
             
@@ -2422,7 +2290,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="85">
+          <li class="never" data-hits="" data-linenumber="81">
             
             
 
@@ -2433,7 +2301,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="86">
+          <li class="never" data-hits="" data-linenumber="82">
             
             
 
@@ -2444,7 +2312,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="87">
+          <li class="never" data-hits="" data-linenumber="83">
             
             
 
@@ -2455,7 +2323,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="88">
+          <li class="never" data-hits="" data-linenumber="84">
             
             
 
@@ -2466,7 +2334,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="89">
+          <li class="never" data-hits="" data-linenumber="85">
             
             
 
@@ -2477,7 +2345,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="90">
+          <li class="covered" data-hits="1" data-linenumber="86">
             <span class="hits">1</span>
             
 
@@ -2488,7 +2356,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="91">
+          <li class="covered" data-hits="1" data-linenumber="87">
             <span class="hits">1</span>
             
 
@@ -2499,7 +2367,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="92">
+          <li class="covered" data-hits="1" data-linenumber="88">
             <span class="hits">1</span>
             
 
@@ -2510,7 +2378,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="93">
+          <li class="never" data-hits="" data-linenumber="89">
             
             
 
@@ -2521,7 +2389,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="94">
+          <li class="never" data-hits="" data-linenumber="90">
             
             
 
@@ -2532,7 +2400,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="95">
+          <li class="covered" data-hits="1" data-linenumber="91">
             <span class="hits">1</span>
             
 
@@ -2543,7 +2411,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="96">
+          <li class="never" data-hits="" data-linenumber="92">
             
             
 
@@ -2554,13 +2422,57 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="97">
+          <li class="never" data-hits="" data-linenumber="93">
             
             
 
             
 
             <code class="ruby">    }.freeze</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="94">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="95">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    def successful?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="96">
+            
+            
+
+            
+
+            <code class="ruby">      HTTP_ERROR.keys.none?(code)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="97">
+            
+            
+
+            
+
+            <code class="ruby">    end</code>
           </li>
         </div>
       
@@ -2582,7 +2494,7 @@
 
             
 
-            <code class="ruby">    def successful?</code>
+            <code class="ruby">    def error</code>
           </li>
         </div>
       
@@ -2593,7 +2505,7 @@
 
             
 
-            <code class="ruby">      HTTP_ERROR.keys.none?(code)</code>
+            <code class="ruby">      HTTP_ERROR[code]</code>
           </li>
         </div>
       
@@ -2615,56 +2527,12 @@
 
             
 
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="103">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    def error</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="104">
-            
-            
-
-            
-
-            <code class="ruby">      HTTP_ERROR[code]</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="105">
-            
-            
-
-            
-
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="106">
-            
-            
-
-            
-
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="107">
+          <li class="never" data-hits="" data-linenumber="103">
             
             
 
@@ -2683,8 +2551,8 @@
   <div class="header">
     <h3>lib/shelter.rb</h3>
     <h4>
-      <span class="green">
-  100.0%
+      <span class="red">
+  48.72%
 </span>
 
       lines covered
@@ -2694,8 +2562,8 @@
 
     <div class="t-line-summary">
       <b>39</b> relevant lines.
-      <span class="green"><b>39</b> lines covered</span> and
-      <span class="red"><b>0</b> lines missed.</span>
+      <span class="green"><b>19</b> lines covered</span> and
+      <span class="red"><b>20</b> lines missed.</span>
     </div>
 
     
@@ -2915,8 +2783,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="20">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="20">
+            
             
 
             
@@ -2970,8 +2838,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="25">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="25">
+            
             
 
             
@@ -2981,8 +2849,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="26">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="26">
+            
             
 
             
@@ -2992,8 +2860,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="9" data-linenumber="27">
-            <span class="hits">9</span>
+          <li class="missed" data-hits="0" data-linenumber="27">
+            
             
 
             
@@ -3014,8 +2882,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="29">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="29">
+            
             
 
             
@@ -3069,8 +2937,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="34">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="34">
+            
             
 
             
@@ -3080,8 +2948,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="35">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="35">
+            
             
 
             
@@ -3091,8 +2959,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="9" data-linenumber="36">
-            <span class="hits">9</span>
+          <li class="missed" data-hits="0" data-linenumber="36">
+            
             
 
             
@@ -3113,8 +2981,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="38">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="38">
+            
             
 
             
@@ -3157,8 +3025,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="42">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="42">
+            
             
 
             
@@ -3267,8 +3135,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="54" data-linenumber="52">
-            <span class="hits">54</span>
+          <li class="missed" data-hits="0" data-linenumber="52">
+            
             
 
             
@@ -3278,8 +3146,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="54" data-linenumber="53">
-            <span class="hits">54</span>
+          <li class="missed" data-hits="0" data-linenumber="53">
+            
             
 
             
@@ -3289,8 +3157,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="54" data-linenumber="54">
-            <span class="hits">54</span>
+          <li class="missed" data-hits="0" data-linenumber="54">
+            
             
 
             
@@ -3300,8 +3168,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="54" data-linenumber="55">
-            <span class="hits">54</span>
+          <li class="missed" data-hits="0" data-linenumber="55">
+            
             
 
             
@@ -3311,8 +3179,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="54" data-linenumber="56">
-            <span class="hits">54</span>
+          <li class="missed" data-hits="0" data-linenumber="56">
+            
             
 
             
@@ -3322,8 +3190,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="54" data-linenumber="57">
-            <span class="hits">54</span>
+          <li class="missed" data-hits="0" data-linenumber="57">
+            
             
 
             
@@ -3333,8 +3201,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="54" data-linenumber="58">
-            <span class="hits">54</span>
+          <li class="missed" data-hits="0" data-linenumber="58">
+            
             
 
             
@@ -3344,8 +3212,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="54" data-linenumber="59">
-            <span class="hits">54</span>
+          <li class="missed" data-hits="0" data-linenumber="59">
+            
             
 
             
@@ -3355,8 +3223,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="54" data-linenumber="60">
-            <span class="hits">54</span>
+          <li class="missed" data-hits="0" data-linenumber="60">
+            
             
 
             
@@ -3399,8 +3267,8 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="64">
-            <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="64">
+            
             
 
             
