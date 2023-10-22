@@ -68,7 +68,11 @@ module Info
       # @shelter_list
     end
 
-    def animal_classifier(animal_data, shelter)
+    # def shelter_initiator(shelter_list, animal_data, shelter_data)
+    def shelter_initiator(animal_data, shelter_data)
+      shelter = @shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']]
+      shelter = Shelter.new(shelter_data) if shelter.nil?
+      
       if animal_data['animal_kind'] == '狗'
         dog = Dog.new(animal_data)
         shelter.animal_object_hash[animal_data['animal_id']] = dog
@@ -88,5 +92,19 @@ module Info
       shelter = animal_classifier(animal_data, shelter)
       @shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']] = shelter
     end
+
+    def animal_classifier(animal_data, shelter)
+      if animal_data['animal_kind'] == '狗'
+        dog = Dog.new(animal_data)
+        shelter.animal_object_hash[animal_data['animal_id']] = dog
+        shelter.dog_number += 1
+      else
+        cat = Cat.new(animal_data)
+        shelter.animal_object_hash[animal_data['animal_id']] = cat
+        shelter.cat_number += 1
+      end
+      shelter
+    end
+      
   end
 end
