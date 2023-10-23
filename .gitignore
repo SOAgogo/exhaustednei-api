@@ -1,4 +1,4 @@
 coverage/*
 !coverage/.resultset.json
-
-
+spec/fixtures/*
+config/secrets.yml

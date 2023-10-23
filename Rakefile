@@ -25,6 +25,7 @@ end
 
 namespace :quality do
   desc 'run all static-analysis quality checks'
+  # task all: %i[rubocop reek flog]
   task all: %i[rubocop reek flog]
 
   desc 'code style linter'
