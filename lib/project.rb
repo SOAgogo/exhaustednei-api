@@ -95,7 +95,7 @@ module Info
         dog = Dog.new(animal_data)
         shelter.animal_object_hash[animal_data['animal_id']] = dog
         shelter.dog_number += 1
-      else
+      elsif animal_data['animal_kind'] == '貓'
         cat = Cat.new(animal_data)
         shelter.animal_object_hash[animal_data['animal_id']] = cat
         shelter.cat_number += 1
@@ -116,7 +116,7 @@ module Info
         dog = Dog.new(animal_data)
         shelter.animal_object_hash[animal_data['animal_id']] = dog
         shelter.dog_number += 1
-      else
+      elsif animal_data['animal_kind'] == '貓'
         cat = Cat.new(animal_data)
         shelter.animal_object_hash[animal_data['animal_id']] = cat
         shelter.cat_number += 1
