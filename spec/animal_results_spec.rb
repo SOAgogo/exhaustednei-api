@@ -24,8 +24,8 @@ describe 'Tests Animal API ' do
   describe 'Shelter information' do
     before do
       # update the DogCat_results every single day when do this tests
-      @project = Info::Project.new(RESOURCE_PATH)
-      @project.connection
+      request_body = Info::Project.connection(RESOURCE_PATH)
+      @project = Info::Project.new(request_body)
       # @project.shelter_list = @project.initiate_shelterlist
       @project.initiate_shelterlist
       # binding.pry

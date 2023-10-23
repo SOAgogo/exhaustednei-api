@@ -11,35 +11,28 @@ require_relative 'animal'
 module Info
   # class Info::Project`
   class Project
-    attr_accessor :request_body, :shelter_list
+    # attr_accessor :request_body, :shelter_list
+    attr_reader :request_body, :shelter_list
 
-    def initialize(uri)
-      @uri = uri
-      @request_body = []
+    # def initialize(uri)
+    #   @uri = uri
+    #   @request_body = []
+    #   @shelter_list = nil
+    # end
+    def initialize(request_body)
+      @request_body = request_body
       @shelter_list = nil
     end
 
-    # def self.connection(uri)
-    #   # url.query = URI.encode_www_form(params)
-    #   url = URI(uri)
-    #   http = Net::HTTP.new(url.host, url.port)
-    #   http.use_ssl = true
-    #   request = Net::HTTP::Get.new(url)
-    #   request['accept'] = 'application/json'
-    #   response = http.request(request)
-    #   JSON.parse(response.read_body)
-    # end
-    def connection
+    def self.connection(uri)
       # url.query = URI.encode_www_form(params)
-      url = URI(@uri)
+      url = URI(uri)
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
       request = Net::HTTP::Get.new(url)
       request['accept'] = 'application/json'
       response = http.request(request)
-      raise 'not found' if response.read_body.include?('[]')
-
-      @request_body = JSON.parse(response.read_body)[1..20]
+      JSON.parse(response.read_body)[1..20]
     end
 
     # def animal_parser(data, animal_data_hash = {})
