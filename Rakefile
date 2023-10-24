@@ -10,7 +10,7 @@ end
 
 desc 'run tests'
 task :spec do
-  # sh 'ruby lib/correct_data_init.rb' # after first create json data, this line can be deleted
+  sh 'ruby lib/correct_data_init.rb'
   sh 'ruby spec/animal_results_spec.rb'
 end
 

@@ -8,7 +8,6 @@ require 'yaml'
 # verify your identification
 
 module Info
-  # `class Info::Cat`.
   class Cat
     # attr_reader :animal_id, :animal_place, :animal_kind, :animal_variate,
     #             :animal_sex, :animal_sterilization,
@@ -56,9 +55,44 @@ module Info
     def animal_opendate
       @data['animal_opendate']
     end
+
+    def get_ID
+      animal_ID
+    end
+
+    def get_animal_place
+      animal_place
+    end
+
+    def get_kind
+      animal_kind
+    end
+
+    def get_variate
+      animal_variate
+    end
+
+    def get_gender
+      animal_sex
+    end
+
+    def get_size
+      animal_size
+    end
+
+    def is_sterilized
+      animal_sterilization
+    end
+
+    def is_bacterin
+      animal_bacterin
+    end
+
+    def get_variate(_pet)
+      animal_variate
+    end
   end
 
-  # `class Info::Dog`.
   class Dog
     # attr_reader :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization, :animal_bacterin,
     #             :animal_bodytype, :album_file, :animal_opendate, :animal_id
@@ -105,6 +139,42 @@ module Info
 
     def animal_opendate
       @data['animal_opendate']
+    end
+
+    def get_ID
+      animal_ID
+    end
+
+    def get_animal_place
+      animal_place
+    end
+
+    def get_kind
+      animal_kind
+    end
+
+    def get_variate
+      animal_variate
+    end
+
+    def get_gender
+      animal_sex
+    end
+
+    def get_size
+      animal_size
+    end
+
+    def is_sterilized
+      animal_sterilization
+    end
+
+    def is_bacterin
+      animal_bacterin
+    end
+
+    def get_variate(_pet)
+      animal_variate
     end
   end
 end
