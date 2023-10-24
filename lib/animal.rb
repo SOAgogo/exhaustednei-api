@@ -55,42 +55,6 @@ module Info
     def animal_opendate
       @data['animal_opendate']
     end
-
-    def get_ID
-      animal_ID
-    end
-
-    def get_animal_place
-      animal_place
-    end
-
-    def get_kind
-      animal_kind
-    end
-
-    def get_variate
-      animal_variate
-    end
-
-    def get_gender
-      animal_sex
-    end
-
-    def get_size
-      animal_size
-    end
-
-    def is_sterilized
-      animal_sterilization
-    end
-
-    def is_bacterin
-      animal_bacterin
-    end
-
-    def get_variate(_pet)
-      animal_variate
-    end
   end
 
   class Dog
@@ -139,42 +103,6 @@ module Info
 
     def animal_opendate
       @data['animal_opendate']
-    end
-
-    def get_ID
-      animal_ID
-    end
-
-    def get_animal_place
-      animal_place
-    end
-
-    def get_kind
-      animal_kind
-    end
-
-    def get_variate
-      animal_variate
-    end
-
-    def get_gender
-      animal_sex
-    end
-
-    def get_size
-      animal_size
-    end
-
-    def is_sterilized
-      animal_sterilization
-    end
-
-    def is_bacterin
-      animal_bacterin
-    end
-
-    def get_variate(_pet)
-      animal_variate
     end
   end
 end
