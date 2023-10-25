@@ -24,11 +24,15 @@ module Info
       @shelter_list = nil
     end
 
-    def self.connection(uri)
-      # url.query = URI.encode_www_form(params)
+    def self.setup_url(uri)
       url = URI(uri)
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
+      [url, http]
+    end
+
+    def self.connection(uri)
+      url, http = setup_url(uri)
       request = Net::HTTP::Get.new(url)
       request['accept'] = 'application/json'
       response = http.request(request)
@@ -79,11 +83,14 @@ module Info
       # @shelter_list
     end
 
-    # def shelter_initiator(shelter_list, animal_data, shelter_data)
-    def shelter_initiator(animal_data, shelter_data)
+    def update_shelter(animal_data, shelter_data)
       shelter = @shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']]
       shelter = Shelter.new(shelter_data) if shelter.nil?
-      shelter = animal_classifier(animal_data, shelter)
+      animal_classifier(shelter, animal_data)
+    end
+
+    def shelter_initiator(animal_data, shelter_data)
+      shelter = update_shelter(animal_data, shelter_data)
       @shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']] = shelter
     end
 
@@ -97,14 +104,20 @@ module Info
       shelter
     end
 
-    def animal_classifier(animal_data, shelter)
-      if animal_data['animal_kind'] == '狗'
-        dog = Dog.new(animal_data)
-        shelter = put_the_animal_into_shelter(shelter, dog)
-      elsif animal_data['animal_kind'] == '貓'
-        cat = Cat.new(animal_data)
-        shelter = put_the_animal_into_shelter(shelter, cat)
-      end
+    def animal_classifier(shelter, animal_data)
+      # kind = animal_data['animal_kind']
+      # animal = nil
+      # animal =  if animal_data['animal_kind'] == '狗'? 'a' : 'b'
+      # animal = Dog.new(animal_data) if kind == '狗'
+      # animal = Cat.new(animal_data) if kind == '貓'
+      animal = animal_data['animal_kind'] == '狗' ? Dog.new(animal_data) : Cat.new(animal_data)
+      put_the_animal_into_shelter(shelter, animal)
+      #  shelter = put_the_animal_into_shelter(shelter, dog)
+      # elsif kind == '貓'
+      #   cat = Cat.new(animal_data)
+      #   shelter = put_the_animal_into_shelter(shelter, cat)
+      # end
+
       shelter
     end
   end
