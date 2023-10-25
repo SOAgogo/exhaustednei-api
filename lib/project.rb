@@ -8,6 +8,7 @@ require 'yaml'
 # verify your identification
 require_relative 'shelter'
 require_relative 'animal'
+require_relative 'util'
 module Info
   # class Info::Project`
   class Project
@@ -53,13 +54,6 @@ module Info
     #   end
     #   shelter_data_hash
     # end
-    def animal_parser(data)
-      animal_data_hash = {}
-      data.each do |key, value|
-        animal_data_hash[key] = value unless %w[animal_area_pkid shelter_name shelter_address shelter_tel].include?(key)
-      end
-      animal_data_hash
-    end
 
     def shelter_parser(data)
       shelter_data_hash = {}
@@ -74,7 +68,8 @@ module Info
     def initiate_shelterlist
       @shelter_list = ShelterList.new
       @request_body.each do |hash_value|
-        animal_data = animal_parser(hash_value)
+        # animal_data = Util.parser(hash_value)
+        animal_data = Util::Util.parser(hash_value)
         shelter_data = shelter_parser(hash_value)
         # animal_data, shelter_data = parser(hash_value)
         shelter_initiator(animal_data, shelter_data)
@@ -106,17 +101,10 @@ module Info
 
     def animal_classifier(shelter, animal_data)
       # kind = animal_data['animal_kind']
-      # animal = nil
-      # animal =  if animal_data['animal_kind'] == '狗'? 'a' : 'b'
       # animal = Dog.new(animal_data) if kind == '狗'
       # animal = Cat.new(animal_data) if kind == '貓'
       animal = animal_data['animal_kind'] == '狗' ? Dog.new(animal_data) : Cat.new(animal_data)
       put_the_animal_into_shelter(shelter, animal)
-      #  shelter = put_the_animal_into_shelter(shelter, dog)
-      # elsif kind == '貓'
-      #   cat = Cat.new(animal_data)
-      #   shelter = put_the_animal_into_shelter(shelter, cat)
-      # end
 
       shelter
     end
