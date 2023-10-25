@@ -87,9 +87,9 @@ module Info
       @shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']] = shelter
     end
 
-    def put_the_animal_into_shelter(shelter, animal_obj, dog_or_not = false)
+    def put_the_animal_into_shelter(shelter, animal_obj)
       shelter.animal_object_hash[animal_obj.animal_id] = animal_obj
-      if dog_or_not
+      if animal_obj.animal_kind == '狗'
         shelter.dog_number += 1
       else
         shelter.cat_number += 1
@@ -100,7 +100,7 @@ module Info
     def animal_classifier(animal_data, shelter)
       if animal_data['animal_kind'] == '狗'
         dog = Dog.new(animal_data)
-        shelter = put_the_animal_into_shelter(shelter, dog, true)
+        shelter = put_the_animal_into_shelter(shelter, dog)
       elsif animal_data['animal_kind'] == '貓'
         cat = Cat.new(animal_data)
         shelter = put_the_animal_into_shelter(shelter, cat)
