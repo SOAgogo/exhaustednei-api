@@ -10,7 +10,8 @@ end
 
 desc 'run tests'
 task :spec do
-  sh 'ruby spec/github_api_spec.rb'
+  # sh 'ruby lib/correct_data_init.rb' # after first create json data, this line can be deleted
+  sh 'ruby spec/animal_results_spec.rb'
 end
 
 namespace :vcr do
@@ -24,6 +25,7 @@ end
 
 namespace :quality do
   desc 'run all static-analysis quality checks'
+  # task all: %i[rubocop reek flog]
   task all: %i[rubocop reek flog]
 
   desc 'code style linter'
