@@ -8,42 +8,101 @@ require 'yaml'
 # verify your identification
 
 module Info
-  # `class Info::Cat`.
   class Cat
-    attr_reader :animal_id, :animal_place, :animal_kind, :animal_variate,
-                :animal_sex, :animal_sterilization,
-                :animal_bacterin, :animal_bodytype, :album_file, :animal_opendate
-
+    # attr_reader :animal_id, :animal_place, :animal_kind, :animal_variate,
+    #             :animal_sex, :animal_sterilization,
+    #             :animal_bacterin, :animal_bodytype, :album_file, :animal_opendate
     def initialize(data)
-      @animal_id = data['animal_id'].to_i
-      @animal_place = data['animal_place']
-      @animal_kind = data['animal_kind']
-      @animal_variate = data['animal_Variety']
-      @animal_sex = data['animal_sex']
-      @animal_sterilization = data['animal_sterilization'] == 'T'
-      @animal_bacterin = data['animal_bacterin'] == 'T'
-      @animal_bodytype = data['animal_bodytype']
-      @album_file = data['album_file']
-      @animal_opendate = data['animal_opendate']
+      @data = data
+    end
+
+    def animal_id
+      @data['animal_id'].to_i
+    end
+
+    def animal_place
+      @data['animal_place']
+    end
+
+    def animal_kind
+      @data['animal_kind']
+    end
+
+    def animal_variate
+      @data['animal_Variety']
+    end
+
+    def animal_sex
+      @data['animal_sex']
+    end
+
+    def animal_sterilization
+      @data['animal_sterilization']
+    end
+
+    def animal_bacterin
+      @data['animal_bacterin']
+    end
+
+    def animal_bodytype
+      @data['animal_bodytype']
+    end
+
+    def album_file
+      @data['album_file']
+    end
+
+    def animal_opendate
+      @data['animal_opendate']
     end
   end
 
-  # `class Info::Dog`.
   class Dog
-    attr_reader :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization, :animal_bacterin,
-                :animal_bodytype, :album_file, :animal_opendate, :animal_id
+    # attr_reader :animal_place, :animal_kind, :animal_variate, :animal_sex, :animal_sterilization, :animal_bacterin,
+    #             :animal_bodytype, :album_file, :animal_opendate, :animal_id
 
     def initialize(data)
-      @animal_id = data['animal_id'].to_i
-      @animal_place = data['animal_place']
-      @animal_kind = data['animal_kind']
-      @animal_variate = data['animal_Variety']
-      @animal_sex = data['animal_sex']
-      @animal_sterilization = data['animal_sterilization'] == 'T'
-      @animal_bacterin = data['animal_bacterin'] == 'T'
-      @animal_bodytype = data['animal_bodytype']
-      @album_file = data['album_file']
-      @animal_opendate = data['animal_opendate']
+      @data = data
+    end
+
+    def animal_id
+      @data['animal_id'].to_i
+    end
+
+    def animal_place
+      @data['animal_place']
+    end
+
+    def animal_kind
+      @data['animal_kind']
+    end
+
+    def animal_variate
+      @data['animal_Variety']
+    end
+
+    def animal_sex
+      @data['animal_sex']
+    end
+
+    def animal_sterilization
+      @data['animal_sterilization']
+    end
+
+    def animal_bacterin
+      @data['animal_bacterin']
+    end
+
+    def animal_bodytype
+      @data['animal_bodytype']
+    end
+
+    def album_file
+      @data['album_file']
+    end
+
+    def animal_opendate
+      @data['animal_opendate']
     end
   end
 end
