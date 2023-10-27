@@ -25,10 +25,9 @@ describe 'Tests Animal API ' do
     before do
       # update the DogCat_results every single day when do this tests
       @project = Info::Project.new(RESOURCE_PATH)
-      @animal_mapper = Info::Project::ShelterMapper.new(@project)
-      @project = Info::Project.new(request_body) # get the body from that request
+      @animal_shelter_mapper = Info::AnimalShelterMapper.new(@project)
       # @project.shelter_list = @project.initiate_shelterlist
-      @project.initiate_shelterlist
+      @animal_shelter_mapper.shelter_parser
     end
 
     ans = File.read('spec/fixtures/DogCat_results.json')

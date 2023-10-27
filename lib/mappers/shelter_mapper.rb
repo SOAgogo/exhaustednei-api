@@ -3,117 +3,41 @@
 # create an shelter object instance
 module Info
   # class Info::ShelterMapper`
+  # we should create more than one shelterMapper objects?
   class ShelterMapper
-    attr_reader :animal_obj_list
+    attr_reader :animal_obj_list, :animal_object_list
 
     # store the shelter hash that can access shelter object
 
     def initialize
-      @animal_obj_list = {}
+      # @shelter_info = shelter_data
+      @shelter_object_list = {}
       #   @shelter_list = ShelterList.shelter_animal_parser(@gateway_obj.request_body)
     end
 
+    def set_shelter_object
+      @shelter_object_list
+    end
 
-
-    # def initiate_shelterlist
-    #   @shelter_list = ShelterList.new
-    #   @request_body.each do |hash_value|
-    #     # animal_data = Util.parser(hash_value)
-    #     animal_data = Util::Util.animal_parser(hash_value)
-    #     shelter_data = Util::Util.shelter_parser(hash_value)
-    #     shelter_initiator(animal_data, shelter_data)
-    #     # @shelter_list = shelter_initiator(@shelter_list, animal_data, shelter_data)
-    #   end
-    #   # @shelter_list
-    # end
-
-    # def update_shelter(animal_data, shelter_data)
-    #   shelter = @temporary_shelter_hash[shelter_data['animal_shelter_pkid']]
-    #   shelter = Shelter.new if shelter.nil?
-    #   Util::Util.animal_classifier(shelter, animal_data)
-    # end
-
-    # def shelter_initiator(animal_data, shelter_data)
-    #   update_shelter(animal_data, shelter_data)
-    #   @shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']] = shelter
-    # end
-
-    def parse_animal_data
-      DataMapper.new(@animal_info).build_entity
+    def parse_shelter_data(shelter_info)
+      shelter_obj = DataMapper.new(shelter_info).build_entity
+      @shelter_object_list[shelter_obj.animal_area_pkid] = shelter_obj
+      shelter_obj
       # @animal_object_hash[animal_obj.animal_id] = animal_obj
     end
 
+    def set_animal_object_list(key, value)
+      @shelter_object_list[key] = value
+    end
+
     # AnimalMapper::DataMapper
-    class DataMapper
-      @animal_attributes = {
-        animal_id:,
-        animal_kind:,
-        animal_variate:,
-        animal_sex:,
-        animal_sterilization:,
-        animal_bacterin:,
-        animal_bodytype:,
-        album_file:,
-        animal_place:,
-        animal_opendate:
-      }
-      def initialize(animal_data)
-        @data = animal_data
-      end
-
-      def build_entity
-        Entity.animal.new(
-          @animal_attributes
-        )
-      end
-
-      private
-
-      def animal_id
-        @data['animal_id']
-      end
-
-      def animal_kind
-        @data['animal_kind']
-      end
-
-      def animal_variate
-        @data['animal_variate']
-      end
-
-      def animal_sex
-        @data['animal_sex']
-      end
-
-      def animal_sterilization
-        @data['animal_sterilization']
-      end
-
-      def animal_bacterin
-        @data['animal_bacterin']
-      end
-
-      def animal_bodytype
-        @data['animal_bodytype']
-      end
-
-      def album_file
-        @data['album_file']
-      end
-
-      def animal_place
-        @data['animal_place']
-      end
-
-      def animal_opendate
-        @data['animal_opendate']
-      end
     # ShelterMapper::DataMapper
     class DataMapper
-      @shelter_attributes = {
-        animal_object_hash:,
-        cat_number:,
-        dog_number:
+      @animal_attributes = {
+        animal_area_pkid:,
+        shelter_name:,
+        shelter_addr:,
+        shelter_tel:
       }
       def initialize(shelter_data)
         @data = shelter_data
@@ -121,23 +45,25 @@ module Info
 
       def build_entity
         Entity.shelter.new(
-          @shelter_attributes
+          @animal_attributes
         )
       end
+    end
 
-      private
+    def animal_area_pkid
+      @data['animal_area_pkid']
+    end
 
-      def animal_object_hash
-        {}
-      end
+    def shelter_name
+      @data['shelter_name']
+    end
 
-      def cat_number
-        0
-      end
+    def shelter_addr
+      @data['shelter_addr']
+    end
 
-      def dog_number
-        0
-      end
+    def shelter_tel
+      @data['shelter_tel']
     end
   end
 end

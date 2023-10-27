@@ -11,18 +11,15 @@ module Info
   module Entity
     # class Info::Shelter`
     class Shelter < Dry::Struct
-      attr_reader :animal_object_hash
+      attr_reader :animal_object_hash, :cat_number, :dog_number
 
       def initialize
         include Dry.Types
         super
-        attribute :animal_object_hash, Hash
-        attribute :cat_number, Strict::Integer
-        attribute :dog_number, Strict::Integer
-      end
-
-      def set_animal_object_hash
-        @animal_object_hash
+        attribute :animal_area_pkid, Strict::Integer
+        attribute :shelter_name, Strict::String
+        attribute :shelter_addr, Strict::String
+        attribute :shelter_tel, Strict::String
       end
     end
   end
