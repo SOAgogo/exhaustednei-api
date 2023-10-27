@@ -1,43 +1,41 @@
 # frozen_string_literal: true
 
+# create an animal object instance
 module Info
   # class Info::ShelterMapper`
   class AnimalMapper
     attr_reader :animal_object_hash
 
-    def initialize(animal_data)
-      @animal_object_hash = parse_animal_data(animal_data)
+    def initialize(data)
+      @animal_info = data
     end
 
-    def parse_animal_data(data)
-      #   animal_object_hash = {}
-      #   animal_data.each do |key, value|
-      #     animal_object_hash[key] = value unless %w[animal_area_pkid shelter_name shelter_address
-      #                                               shelter_tel].include?(key)
-      #   end
-      #   animal_object_hash
-      DataMapper.new(data).build_entity
-
-      animal_data_hash
+    def parse_animal_data
+      DataMapper.new(@animal_info).build_entity
+      # @animal_object_hash[animal_obj.animal_id] = animal_obj
     end
 
+    # AnimalMapper::DataMapper
     class DataMapper
+      @animal_attributes = {
+        animal_id:,
+        animal_kind:,
+        animal_variate:,
+        animal_sex:,
+        animal_sterilization:,
+        animal_bacterin:,
+        animal_bodytype:,
+        album_file:,
+        animal_place:,
+        animal_opendate:
+      }
       def initialize(animal_data)
         @data = animal_data
       end
 
       def build_entity
         Entity.animal.new(
-          animal_id:,
-          animal_kind:,
-          animal_variate:,
-          animal_sex:,
-          animal_sterilization:,
-          animal_bacterin:,
-          animal_bodytype:,
-          album_file:,
-          animal_place:,
-          animal_opendate:
+          @animal_attributes
         )
       end
 
@@ -53,6 +51,34 @@ module Info
 
       def animal_variate
         @data['animal_variate']
+      end
+
+      def animal_sex
+        @data['animal_sex']
+      end
+
+      def animal_sterilization
+        @data['animal_sterilization']
+      end
+
+      def animal_bacterin
+        @data['animal_bacterin']
+      end
+
+      def animal_bodytype
+        @data['animal_bodytype']
+      end
+
+      def album_file
+        @data['album_file']
+      end
+
+      def animal_place
+        @data['animal_place']
+      end
+
+      def animal_opendate
+        @data['animal_opendate']
       end
     end
   end

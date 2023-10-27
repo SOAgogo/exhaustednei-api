@@ -39,28 +39,5 @@ module Info
       response = http.request(request)
       JSON.parse(response.read_body)[1..20]
     end
-
-    def initiate_shelterlist
-      @shelter_list = ShelterList.new
-      @request_body.each do |hash_value|
-        # animal_data = Util.parser(hash_value)
-        animal_data = Util::Util.animal_parser(hash_value)
-        shelter_data = Util::Util.shelter_parser(hash_value)
-        shelter_initiator(animal_data, shelter_data)
-        # @shelter_list = shelter_initiator(@shelter_list, animal_data, shelter_data)
-      end
-      # @shelter_list
-    end
-
-    def update_shelter(animal_data, shelter_data)
-      shelter = @shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']]
-      shelter = Shelter.new if shelter.nil?
-      Util::Util.animal_classifier(shelter, animal_data)
-    end
-
-    def shelter_initiator(animal_data, shelter_data)
-      shelter = update_shelter(animal_data, shelter_data)
-      @shelter_list.shelter_hash[shelter_data['animal_shelter_pkid']] = shelter
-    end
   end
 end
