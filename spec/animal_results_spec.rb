@@ -40,7 +40,6 @@ describe 'Tests Animal API ' do
     rand_shelter_id = file[random]['animal_shelter_pkid']
     num_aml_shelter_ans = file.select { |n| n['animal_shelter_pkid'] == rand_shelter_id }.size
 
-
     it 'HAPPY: should connect to api successfully' do
       _(@project.request_body[0].keys).must_equal CORRECT[0].keys
       # _(project.git_url).must_equal CORRECT['git_url']
@@ -70,7 +69,7 @@ describe 'Tests Animal API ' do
 
     ## TODO:
     it 'HAPPY: get the right animal id and its information' do
-      shelter = @project.shelter_list.get_the_shelter(rand_shelter_id)
+      shelter = @shelter_mapper.get_the_shelter(rand_shelter_id)
       _(shelter.animal_object_hash[file[random]['animal_id']].animal_id).must_equal file[random]['animal_id']
       _(shelter.animal_object_hash[file[random]['animal_id']].animal_place).must_equal file[random]['animal_place']
       _(shelter.animal_object_hash[file[random]['animal_id']].animal_variate).must_equal file[random]['animal_Variety']
@@ -85,13 +84,7 @@ describe 'Tests Animal API ' do
     end
 
     it 'HAPPY: should provide correct animal numbers in each shelter' do
-      aml_number = @shelter.shelter_list.get_the_shelter(rand_shelter_id).animal_nums
-
-      _(aml_number).must_equal num_aml_shelter_ans
-    end
-
-    it 'HAPPY: should provide correct animal numbers in each shelter' do
-      aml_number = @project.shelter_list.get_the_shelter(rand_shelter_id).animal_nums
+      aml_number = @shelter_mapper.get_the_shelter_size(rand_shelter_id)
 
       _(aml_number).must_equal num_aml_shelter_ans
     end
