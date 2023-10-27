@@ -42,14 +42,4 @@ module CodePraise
           @data['id']
         end
 
-        def username
-          @data['login']
-        end
-
-        def email
-          @data['email']
-        end
-      end
-    end
-  end
-end
+     

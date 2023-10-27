@@ -14,6 +14,21 @@ task :spec do
   sh 'ruby spec/animal_results_spec.rb'
 end
 
+desc 'Keep rerunning tests upon changes'
+task :respec do
+  sh "rerun -c 'rake spec' --ignore 'coverage/*'"
+end
+
+desc 'Run web app'
+task :run do
+  sh 'bundle exec puma'
+end
+
+desc 'Keep rerunning web app upon changes'
+task :rerun do
+  sh "rerun -c --ignore 'coverage/*' -- bundle exec puma"
+end
+
 namespace :vcr do
   desc 'delete cassette fixtures'
   task :wipe do

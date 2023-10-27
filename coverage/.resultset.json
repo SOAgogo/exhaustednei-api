@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/tony/Documents/RubySOA/exhaustednei/lib/project.rb": {
+      "/home/justinkao/SOA/exhaustednei/lib/project.rb": {
         "lines": [
           null,
           null,
@@ -96,7 +96,7 @@
           null
         ]
       },
-      "/Users/tony/Documents/RubySOA/exhaustednei/lib/shelter.rb": {
+      "/home/justinkao/SOA/exhaustednei/lib/shelter.rb": {
         "lines": [
           null,
           null,
@@ -124,23 +124,23 @@
           null,
           1,
           1,
+          7,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          7,
+          null,
+          1,
+          null,
+          null,
+          1,
           4,
           null,
-          1,
-          null,
-          null,
-          1,
-          null,
-          1,
-          1,
-          4,
-          null,
-          1,
-          null,
-          null,
-          1,
-          4,
-          null,
           null,
           null,
           null,
@@ -150,7 +150,7 @@
           1,
           null,
           1,
-          36,
+          63,
           null,
           null,
           null,
@@ -158,8 +158,8 @@
           null,
           null,
           null,
-          36,
-          36,
+          63,
+          63,
           null,
           null,
           1,
@@ -169,7 +169,7 @@
           null
         ]
       },
-      "/Users/tony/Documents/RubySOA/exhaustednei/lib/animal.rb": {
+      "/home/justinkao/SOA/exhaustednei/lib/animal.rb": {
         "lines": [
           null,
           null,
@@ -186,23 +186,19 @@
           null,
           null,
           1,
-          144,
+          117,
           null,
           null,
           1,
-          145,
+          117,
           null,
           null,
           1,
-          1,
+          0,
           null,
           null,
           1,
-          144,
-          null,
-          null,
-          1,
-          1,
+          117,
           null,
           null,
           1,
@@ -229,29 +225,34 @@
           0,
           null,
           null,
-          null,
-          1,
-          null,
-          null,
-          null,
-          1,
-          36,
-          null,
-          null,
-          1,
-          36,
-          null,
-          null,
           1,
           0,
           null,
           null,
-          1,
-          36,
           null,
           null,
           1,
-          0,
+          null,
+          null,
+          null,
+          1,
+          63,
+          null,
+          null,
+          1,
+          64,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          63,
+          null,
+          null,
+          1,
+          1,
           null,
           null,
           1,
@@ -281,7 +282,7 @@
           null
         ]
       },
-      "/Users/tony/Documents/RubySOA/exhaustednei/lib/util.rb": {
+      "/home/justinkao/SOA/exhaustednei/lib/util.rb": {
         "lines": [
           null,
           null,
@@ -312,9 +313,9 @@
           1,
           180,
           180,
-          36,
+          63,
           null,
-          144,
+          117,
           null,
           180,
           null,
@@ -332,6 +333,6 @@
         ]
       }
     },
-    "timestamp": 1698257180
+    "timestamp": 1698386028
   }
 }
