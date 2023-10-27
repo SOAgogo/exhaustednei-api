@@ -4,8 +4,6 @@
 module Info
   # class Info::ShelterMapper`
   class AnimalMapper
-    attr_reader :animal_object_hash
-
     def initialize(data)
       @animal_info = data
     end
