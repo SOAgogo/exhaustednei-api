@@ -20,50 +20,25 @@ module Info
     #   @request_body = []
     #   @shelter_list = nil
     # end
-    def initialize(request_body)
-      @request_body = request_body
-      @shelter_list = nil
+    def initialize(uri)
+      @request_body = connection(uri)
+      # @shelter_list = nil
     end
 
-    def self.setup_url(uri)
+    def setup_url(uri)
       url = URI(uri)
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
       [url, http]
     end
 
-    def self.connection(uri)
+    def connection(uri)
       url, http = setup_url(uri)
       request = Net::HTTP::Get.new(url)
       request['accept'] = 'application/json'
       response = http.request(request)
       JSON.parse(response.read_body)[1..20]
     end
-
-    # def animal_parser(data, animal_data_hash = {})
-    #   data.each do |key, value|
-    #     animal_data_hash[key] = value unless %w[animal_area_pkid shelter_name shelter_address
-    #                                             shelter_tel].include?(key)
-    #   end
-    #   animal_data_hash
-    # end
-
-    # def shelter_parser(data, shelter_data_hash = {})
-    #   data.each do |key, value|
-    #     shelter_data_hash[key] = value if %w[animal_area_pkid shelter_name shelter_address shelter_tel].include?(key)
-    #   end
-    #   shelter_data_hash
-    # end
-
-    # def shelter_parser(data)
-    #   shelter_data_hash = {}
-    #   data.each do |key, value|
-    #     if %w[animal_shelter_pkid animal_id animal_area_pkid shelter_name shelter_address shelter_tel].include?(key)
-    #       shelter_data_hash[key] = value
-    #     end
-    #   end
-    #   shelter_data_hash
-    # end
 
     def initiate_shelterlist
       @shelter_list = ShelterList.new

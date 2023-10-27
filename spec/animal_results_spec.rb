@@ -24,11 +24,11 @@ describe 'Tests Animal API ' do
   describe 'Shelter information' do
     before do
       # update the DogCat_results every single day when do this tests
-      request_body = Info::Project.connection(RESOURCE_PATH)
-      @project = Info::Project.new(request_body)
+      @project = Info::Project.new(RESOURCE_PATH)
+      @animal_mapper = Info::Project::AnimalMapper.new(@project)
+      @project = Info::Project.new(request_body) # get the body from that request
       # @project.shelter_list = @project.initiate_shelterlist
       @project.initiate_shelterlist
-      # binding.pry
     end
 
     ans = File.read('spec/fixtures/DogCat_results.json')
@@ -39,6 +39,7 @@ describe 'Tests Animal API ' do
     num_cat_ans = file.select { |n| n['animal_kind'] == '貓' }.size
     rand_shelter_id = file[random]['animal_shelter_pkid']
     num_aml_shelter_ans = file.select { |n| n['animal_shelter_pkid'] == rand_shelter_id }.size
+
 
     it 'HAPPY: should connect to api successfully' do
       _(@project.request_body[0].keys).must_equal CORRECT[0].keys
@@ -84,7 +85,7 @@ describe 'Tests Animal API ' do
     end
 
     it 'HAPPY: should provide correct animal numbers in each shelter' do
-      aml_number = @project.shelter_list.get_the_shelter(rand_shelter_id).animal_nums
+      aml_number = @shelter.shelter_list.get_the_shelter(rand_shelter_id).animal_nums
 
       _(aml_number).must_equal num_aml_shelter_ans
     end
