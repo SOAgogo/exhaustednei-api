@@ -47,7 +47,7 @@ module Info
   class Shelter
     # attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid, :shelter_name, :shelter_address, :shelter_tel
 
-    attr_accessor :animal_object_hash, :cat_number, :dog_number
+    attr_reader :animal_object_hash, :cat_number, :dog_number
 
     def initialize
       @animal_object_hash = {}
@@ -64,6 +64,18 @@ module Info
 
     def animal_nums
       @animal_object_hash.size
+    end
+
+    def set_cat_number
+      @cat_number += 1
+    end
+
+    def set_dog_number
+      @dog_number += 1
+    end
+
+    def set_animal_object_hash(key, value)
+      @animal_object_hash[key] = value
     end
   end
 end
