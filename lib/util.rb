@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'shelter'
-require_relative 'animal'
+# require_relative 'shelter'
+# require_relative 'animal'
 # util handle the parser and other methods
 module Util
   # class Info::ShelterList`
@@ -16,28 +16,28 @@ module Util
     end
 
     def self.shelter_parser(data)
-      animal_data_hash = {}
+      shelter_data_hash = {}
       data.each do |key, value|
-        animal_data_hash[key] = value unless %w[animal_area_pkid shelter_name shelter_address
-                                                shelter_tel].include?(key)
+        shelter_data_hash[key] = value if %w[animal_area_pkid animal_shelter_pkid shelter_name shelter_address
+                                             shelter_tel].include?(key)
       end
-      animal_data_hash
+      shelter_data_hash
     end
 
-    def self.put_the_animal_into_shelter(shelter, animal_obj)
-      shelter.animal_object_hash[animal_obj.animal_id] = animal_obj
-      if animal_obj.animal_kind == '狗'
-        shelter.dog_number += 1
-      else
-        shelter.cat_number += 1
-      end
-      shelter
-    end
+    # def self.put_the_animal_into_shelter(shelter, animal_obj)
+    #   shelter.animal_object_hash[animal_obj.animal_id] = animal_obj
+    #   if animal_obj.animal_kind == '狗'
+    #     shelter.dog_number += 1
+    #   else
+    #     shelter.cat_number += 1
+    #   end
+    #   shelter
+    # end
 
-    def self.animal_classifier(shelter, animal_data)
-      animal = animal_data['animal_kind'] == '狗' ? Info::Dog.new(animal_data) : Info::Cat.new(animal_data)
-      Util.put_the_animal_into_shelter(shelter, animal)
-      shelter
-    end
+    # def self.animal_classifier(shelter, animal_data)
+    #   animal = animal_data['animal_kind'] == '狗' ? Info::Dog.new(animal_data) : Info::Cat.new(animal_data)
+    #   Util.put_the_animal_into_shelter(shelter, animal)
+    #   shelter
+    # end
   end
 end

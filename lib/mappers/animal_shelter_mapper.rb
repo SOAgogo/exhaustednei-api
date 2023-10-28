@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 # manage the relationship between shelter and animal
+require_relative 'animal_mapper'
+require_relative 'shelter_mapper'
+require 'pry'
 module Info
   # class Info::ShelterMapper`
   class AnimalShelterMapper
@@ -49,6 +52,7 @@ module Info
     def create_shelter_obj(shelter_data)
       shelter_list = set_shelter_list
       if shelter_list[shelter_data['animal_shelter_pkid']].nil?
+        # binding.pry
         @shelter_mapper.find(shelter_data)
       else
         shelter_list[shelter_data['animal_shelter_pkid']]
@@ -62,8 +66,9 @@ module Info
     end
 
     def create_animal_shelter_object(shelter_data, animal_data)
-      animal_obj = Info.AnimalMapper(animal_data).find
+      animal_obj = AnimalMapper.new(animal_data).find
       shelter_obj = create_shelter_obj(shelter_data)
+
       shelter_setting(shelter_obj, animal_data, animal_obj)
       shelter_obj
     end

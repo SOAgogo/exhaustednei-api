@@ -10,8 +10,13 @@ end
 
 desc 'run tests'
 task :spec do
-  # sh 'ruby lib/correct_data_init.rb'
+  # sh 'ruby lib/data_init.rb'
   sh 'ruby spec/animal_results_spec.rb'
+end
+
+desc 'Keep rerunning tests upon changes'
+task :respec do
+  sh "rerun -c 'rake spec' --ignore 'coverage/*'"
 end
 
 namespace :vcr do

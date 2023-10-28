@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'pry'
+require_relative '../entities/shelter'
 # create an shelter object instance
 module Info
   # class Info::ShelterMapper`
@@ -33,52 +35,57 @@ module Info
     # AnimalMapper::DataMapper
     # ShelterMapper::DataMapper
     class DataMapper
-      @animal_attributes = {
-        animal_area_pkid:,
-        shelter_name:,
-        shelter_addr:,
-        shelter_tel:,
-        cat_number:,
-        dog_number:,
-        animal_object_hash:
-      }
       def initialize(shelter_data)
         @data = shelter_data
       end
 
       def build_entity
-        Entity.shelter.new(
-          @animal_attributes
+        Entity::Shelter.new(
+          # @animal_attributes
+          animal_area_pkid:,
+          animal_shelter_pkid:,
+          shelter_name:,
+          shelter_address:,
+          shelter_tel:,
+          cat_number:,
+          dog_number:,
+          animal_object_list:
         )
       end
-    end
 
-    def animal_area_pkid
-      @data['animal_area_pkid']
-    end
+      private
 
-    def shelter_name
-      @data['shelter_name']
-    end
+      def animal_area_pkid
+        @data['animal_area_pkid']
+      end
 
-    def shelter_addr
-      @data['shelter_addr']
-    end
+      def animal_shelter_pkid
+        @data['animal_shelter_pkid']
+      end
 
-    def shelter_tel
-      @data['shelter_tel']
-    end
+      def shelter_name
+        @data['shelter_name']
+      end
 
-    def cat_number
-      0
-    end
+      def shelter_address
+        @data['shelter_address']
+      end
 
-    def dog_number
-      0
-    end
+      def shelter_tel
+        @data['shelter_tel']
+      end
 
-    def animal_object_hash
-      {}
+      def cat_number
+        0
+      end
+
+      def dog_number
+        0
+      end
+
+      def animal_object_list
+        {}
+      end
     end
   end
 end

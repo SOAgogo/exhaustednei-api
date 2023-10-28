@@ -2,13 +2,10 @@
 
 require 'uri'
 require 'net/http'
-require 'pry'
 require 'json'
 require 'yaml'
 # verify your identification
-require_relative 'shelter'
-require_relative 'animal'
-require_relative 'util'
+
 module Info
   # class Info::Project`
   class Project
