@@ -86,12 +86,5 @@ describe 'Tests Animal API ' do
 
       _(aml_number).must_equal num_aml_shelter_ans
     end
-
-    ## TODO: check the animal is in the shelter or not
-    # it 'HAPPY: check the specifc animal is in the shelter' do
-    #   aml_number = @shelter_mappper.shelter_list.get_the_shelter(rand_shelter_id).animal_nums
-    #   _(aml_number).must_equal num_aml_shelter_ans
-    #   # _(project.git_url).must_equal CORRECT['git_url']
-    # end
   end
 end

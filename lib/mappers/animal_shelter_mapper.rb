@@ -59,6 +59,8 @@ module Info
       end
     end
 
+    ## TODO: shelter_obj should have set_animal_object_list?
+    # shelter.rb set_animal_object_list
     def shelter_setting(shelter_obj, animal_data, animal_obj)
       shelter_obj.set_animal_object_list(animal_data['animal_id'], animal_obj)
       shelter_obj.set_cat_number if animal_obj.animal_kind == '貓'
