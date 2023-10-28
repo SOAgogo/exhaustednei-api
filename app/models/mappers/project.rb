@@ -8,7 +8,7 @@ require 'yaml'
 # verify your identification
 require_relative 'shelter'
 require_relative 'animal'
-require_relative 'util'
+require_relative '../gateways/util'
 module Info
   # class Info::Project`
   class Project

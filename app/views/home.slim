@@ -2,17 +2,146 @@
   form role="form" action="/project" method='POST' id='show-project-form'
     .row.vertical-align.query-bar
       .col-md-2.col-sm-3
-        .text-right Github URL:
+        .text-right Animal Kind:
       .col-md-8.col-sm-6
         input { 
           type='text' name='github_url'
           id='github_url_input' class="form-control"
-          placeholder="e.g. https://www.github.com/soumyaray/YPBT-app"
+          placeholder="e.g. dog"
         }
       .col-md-2.col-sm-3
         button { 
           type='submit' id='repo-form-submit' class='submit' 
           value='submit' class="btn btn-success" 
-        } Show Project
+        } Show Result
+  .row
+    .col-md-12
+      .row
+        .col-md-12
+          .card.flex-md-row.mb-2.box-shadow.h-md-250
+            .card-body.d-flex.flex-column.align-items-start
+              form role="form" action="/restaurant" method='POST' id='filter-form'
+                .form-group
+                  .row
+                    .col-md-4
+                      select#sel1.form-control name="town" 
+                        option
+                          | 地區
+                        optgroup label=("台北市") 
+                        option
+                          | 中正區
+                        option
+                          | 大同區
+                        option
+                          | 中山區
+                        option
+                          | 松山區
+                        option
+                          | 大安區
+                        option
+                          | 萬華區
+                        option
+                          | 信義區
+                        option
+                          | 士林區
+                        option
+                          | 北投區
+                        option
+                          | 內湖區
+                        option
+                          | 南港區
+                        option
+                          | 文山區
+                        optgroup label=("新北市") 
+                        option
+                          | 板橋區
+                        option
+                          | 中和區
+                        option
+                          | 新莊區
+                        option
+                          | 土城區
+                        option
+                          | 汐止區
+                        option
+                          | 鶯歌區
+                        option
+                          | 淡水區
+                        option
+                          | 五股區
+                        option
+                          | 林口區
+                        option
+                          | 深坑區
+                        option
+                          | 坪林區
+                        option
+                          | 石門區
+                        option
+                          | 萬里區
+                        option
+                          | 雙溪區
+                        option
+                          | 烏來區
+                        option
+                          | 三重區
+                        option
+                          | 永和區
+                        option
+                          | 新店區
+                        option
+                          | 蘆洲區
+                        option
+                          | 樹林區
+                        option
+                          | 三峽區
+                        option
+                          | 瑞芳區
+                        option
+                          | 泰山區
+                        option
+                          | 八里區
+                        option
+                          | 石碇區
+                        option
+                          | 三芝區
+                        option
+                          | 金山區
+                        option
+                          | 平溪區
+                        option
+                          | 貢寮區
+                  
+
+                    .col-md-3
+                      input { 
+                        type='number' name='min_money'
+                        min='0'
+                        id='min_money' class="form-control"
+                        placeholder= 'Min Price'
+                      } 
+                    
+                    .col-md-3
+                      input { 
+                        type='number' name='max_money'
+                        min='100'
+                        id='max_money' class="form-control"
+                        placeholder= 'Max Price'
+                      } 
+                    
+                    .col-md-2
+                      button {
+                        type='submit' id='filter-form-submit' class='submit' 
+                        value='submit' class="btn btn-outline-primary btn-block" 
+                      } Ewa
+          
+
     .row
       .col-md-12.blank-row
+
+
+  .row
+    .img_wrap
+      img src="https://im.marieclaire.com.tw/m800c533h100b0/assets/mc/201907/5D19A650F04EF1561962064.png"  alt="一張圖片"
+
+
