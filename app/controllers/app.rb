@@ -3,7 +3,7 @@
 require 'roda'
 require 'slim'
 
-module CodePraise
+module EAS
   # Web App
   class App < Roda
     plugin :render, engine: 'slim', views: 'app/views'
