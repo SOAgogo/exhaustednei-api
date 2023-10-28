@@ -8,7 +8,7 @@ module Info
       @animal_info = data
     end
 
-    def parse_animal_data
+    def find
       DataMapper.new(@animal_info).build_entity
       # @animal_object_hash[animal_obj.animal_id] = animal_obj
     end

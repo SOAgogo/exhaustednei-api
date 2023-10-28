@@ -5,30 +5,30 @@ module Info
   # class Info::ShelterMapper`
   # we should create more than one shelterMapper objects?
   class ShelterMapper
-    attr_reader :animal_obj_list, :animal_object_list
+    # attr_reader :animal_object_list
 
     # store the shelter hash that can access shelter object
 
     def initialize
       # @shelter_info = shelter_data
-      @shelter_object_list = {}
+      # @shelter_object_list = {}
       #   @shelter_list = ShelterList.shelter_animal_parser(@gateway_obj.request_body)
     end
 
-    def set_shelter_object
-      @shelter_object_list
-    end
+    # def set_shelter_object
+    #   @shelter_object_list
+    # end
 
-    def parse_shelter_data(shelter_info)
-      shelter_obj = DataMapper.new(shelter_info).build_entity
-      @shelter_object_list[shelter_obj.animal_area_pkid] = shelter_obj
-      shelter_obj
+    def find(shelter_info)
+      DataMapper.new(shelter_info).build_entity
+      # @shelter_object_list[shelter_obj.animal_area_pkid] = shelter_obj
+
       # @animal_object_hash[animal_obj.animal_id] = animal_obj
     end
 
-    def set_animal_object_list(key, value)
-      @shelter_object_list[key] = value
-    end
+    # def set_animal_object_list(key, value)
+    #   @shelter_object_list[key] = value
+    # end
 
     # AnimalMapper::DataMapper
     # ShelterMapper::DataMapper
@@ -37,7 +37,10 @@ module Info
         animal_area_pkid:,
         shelter_name:,
         shelter_addr:,
-        shelter_tel:
+        shelter_tel:,
+        cat_number:,
+        dog_number:,
+        animal_object_hash:
       }
       def initialize(shelter_data)
         @data = shelter_data
@@ -64,6 +67,18 @@ module Info
 
     def shelter_tel
       @data['shelter_tel']
+    end
+
+    def cat_number
+      0
+    end
+
+    def dog_number
+      0
+    end
+
+    def animal_object_hash
+      {}
     end
   end
 end
