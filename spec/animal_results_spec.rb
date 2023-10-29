@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'pry'
 require_relative 'spec_helper'
 
 describe 'Tests Animal API ' do
@@ -48,27 +49,28 @@ describe 'Tests Animal API ' do
       # _(project.git_url).must_equal CORRECT['git_url']
     end
     it 'HAPPY: should provide correct dog numbers in all shelters' do
-      dog_number = @shelter_mapper.calculate_dog_nums
+      dog_number = @animal_shelter_mapper.calculate_dog_nums
       _(dog_number).must_equal num_dog_ans # 10 should be modified with the correct data basedon dogCat_results
       # _(project.git_url).must_equal CORRECT['git_url']
     end
     it 'HAPPY: should provide correct cat numbers' do
-      cat_number = @shelter_mapper.calculate_cat_nums
+      cat_number = @animal_shelter_mapper.calculate_cat_nums
       _(cat_number).must_equal num_cat_ans
       # _(project.git_url).must_equal CORRECT['git_url']
     end
 
     ## TODO: right number
     it 'HAPPY: shelter should provide the correct animal numbers' do
-      aml_number = @shelter_mappper.animal_size_in_shelter(rand_shelter_id)
+      aml_number = @animal_shelter_mapper.animal_size_in_shelter(rand_shelter_id)
       _(aml_number).must_equal num_aml_shelter_ans
       # _(project.git_url).must_equal CORRECT['git_url']
     end
 
     ## TODO:
     it 'HAPPY: get the right animal id and its information' do
-      shelter_mapper = @shelter_mapper.get_the_shelter(rand_shelter_id)
-      _(shelter_mapper.animal_object_hash[file[random]['animal_id']].animal_id).must_equal 
+      shelter_mapper = @animal_shelter_mapper.get_the_shelter_mapper(rand_shelter_id)
+
+      _(shelter_mapper.animal_object_hash[file[random]['animal_id']].animal_id).must_equal
       file[random]['animal_id']
       _(shelter_mapper.animal_object_hash[file[random]['animal_id']].animal_place).must_equal
       file[random]['animal_place']
@@ -85,7 +87,7 @@ describe 'Tests Animal API ' do
     end
 
     it 'HAPPY: should provide correct animal numbers in each shelter' do
-      aml_number = @shelter_mapper.animal_size_in_shelter(rand_shelter_id)
+      aml_number = @animal_shelter_mapper.animal_size_in_shelter(rand_shelter_id)
 
       _(aml_number).must_equal num_aml_shelter_ans
     end

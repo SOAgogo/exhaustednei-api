@@ -40,7 +40,7 @@ module Info
     end
 
     def get_shelter_mapper(animal_shelter_pkid)
-      if @shelter_mapper_hash.has_key?(animal_shelter_pkid)
+      if @shelter_mapper_hash.key?(animal_shelter_pkid)
         [true, @shelter_mapper_hash[animal_shelter_pkid]]
       else
         [false, nil]
@@ -61,18 +61,19 @@ module Info
 
     def calculate_cat_nums
       sum = 0
-      @shelter_mapper.map do |_, obj|
+      @shelter_mapper_hash.map do |_, obj|
         sum += obj.cat_number
       end
       sum
     end
 
     def get_the_shelter_mapper(animal_shelter_pkid)
-      @shelter_mapper[animal_shelter_pkid]
+      @shelter_mapper_hash[animal_shelter_pkid]
     end
 
     def animal_size_in_shelter(animal_shelter_pkid)
       shelter = get_the_shelter_mapper(animal_shelter_pkid)
+
       shelter.cat_number + shelter.dog_number
     end
 
@@ -103,8 +104,8 @@ module Info
 
     def shelter_parser
       @gateway_obj.request_body.each do |data|
-        animal_data = animal_parser(data)
-        shelter_data = shelter_parser(data)
+        animal_data = AnimalShelterMapper.animal_parser(data)
+        shelter_data = AnimalShelterMapper.shelter_parser(data)
         create_animal_shelter_object(shelter_data, animal_data)
         # set_shelter_list[shelter_data['animal_shelter_pkid']] = shelter_obj
       end
