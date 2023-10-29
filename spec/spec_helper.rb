@@ -10,7 +10,8 @@ require 'minitest/rg'
 require 'vcr'
 require 'webmock'
 
-require_relative '../lib/project'
+require_relative '../require_app'
+require_app
 
 json_file = File.read('spec/fixtures/DogCat_results.json')
 CORRECT = JSON.parse(json_file)[1..20]

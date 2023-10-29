@@ -2,7 +2,7 @@
 
 require 'rake/testtask'
 
-CODE = 'lib/'
+CODE = 'app/'
 
 task :default do
   puts `rake -T`
@@ -10,7 +10,7 @@ end
 
 desc 'run tests'
 task :spec do
-  # sh 'ruby lib/correct_data_init.rb'
+  sh 'ruby app/data_init.rb'
   sh 'ruby spec/animal_results_spec.rb'
 end
 

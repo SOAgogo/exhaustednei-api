@@ -3,4 +3,4 @@
 require_relative 'require_app'
 require_app
 
-run CodePraise::App.freeze.app
+run EAS::App.freeze.app

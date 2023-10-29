@@ -2,46 +2,51 @@
 
 require 'roda'
 require 'slim'
+require 'json'
 
-module CodePraise
+module EAS
   # Web App
   class App < Roda
     plugin :render, engine: 'slim', views: 'app/views'
     plugin :assets, css: 'style.css', path: 'app/views/assets'
     plugin :common_logger, $stderr
     plugin :halt
-
+    plugin :json
+    ans = File.read('spec/fixtures/DogCat_results.json')
+    file = JSON.parse(ans)
     route do |routing|
       routing.assets # load CSS
       response['Content-Type'] = 'text/html; charset=utf-8'
 
       # GET /
       routing.root do
-        view 'home'
+        random = rand(0..19)
+        animal_pic = file[random]['album_file']
+        view 'home', locals: { image_url: animal_pic }
       end
 
       routing.on 'project' do
         routing.is do
           # POST /project/
           routing.post do
-            gh_url = routing.params['github_url'].downcase
-            routing.halt 400 unless (gh_url.include? 'github.com') &&
-                                    (gh_url.split('/').count >= 3)
-            owner, project = gh_url.split('/')[-2..]
-
-            routing.redirect "project/#{owner}/#{project}"
+            animal_kind = routing.params['animal_kind'].downcase
+            routing.redirect "project/#{animal_kind}/"
           end
         end
 
-        routing.on String, String do |owner, project|
+        routing.on 'dog' do
           # GET /project/owner/project
-          routing.get do
-            github_project = Github::ProjectMapper
-              .new(GH_TOKEN)
-              .find(owner, project)
+          animal_pic = file.select { |ath| ath['animal_kind'] == '狗' }.map { |ath| ath['album_file'] }
+          animal_dip = file.select { |ath| ath['animal_kind'] == '狗' }.map { |ath| ath['animal_place'] }
 
-            view 'project', locals: { project: github_project }
-          end
+          view 'project', locals: { image_url: animal_pic.zip(animal_dip) }
+        end
+        routing.on 'cat' do
+          # GET /project/owner/project
+          animal_pic = file.select { |ath| ath['animal_kind'] == '貓' }.map { |ath| ath['album_file'] }
+          animal_dip = file.select { |ath| ath['animal_kind'] == '貓' }.map { |ath| ath['animal_place'] }
+
+          view 'project', locals: { image_url: animal_pic.zip(animal_dip) }
         end
       end
     end
