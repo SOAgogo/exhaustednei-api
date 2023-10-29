@@ -16,18 +16,6 @@ module Info
 
     # # AnimalMapper::DataMapper
     class DataMapper
-      # @animal_attributes = {
-      #   animal_id => @data['animal_id'],
-      #   animal_kind => @data['animal_kind'],
-      #   animal_variate => @data['animal_variate'],
-      #   animal_sex => @data['animal_sex'],
-      #   animal_sterilization => @data['animal_sterilization'],
-      #   animal_bacterin => @data['animal_bacterin'],
-      #   animal_bodytype => @data['animal_bodytype'],
-      #   album_file => @data['album_file'],
-      #   animal_place => @data['animal_place'],
-      #   animal_opendate => @data['animal_opendate']
-      # }
       def initialize(animal_data)
         @data = animal_data
       end
@@ -41,9 +29,7 @@ module Info
           animal_sterilization:,
           animal_bacterin:,
           animal_bodytype:,
-          album_file:,
-          animal_place:,
-          animal_opendate:
+          album_file:
         )
       end
 
@@ -81,13 +67,13 @@ module Info
         @data['album_file']
       end
 
-      def animal_place
-        @data['animal_place']
-      end
+      # def animal_place
+      #   @data['animal_place']
+      # end
 
-      def animal_opendate
-        @data['animal_opendate']
-      end
+      # def animal_opendate
+      #   @data['animal_opendate']
+      # end
     end
   end
 end
