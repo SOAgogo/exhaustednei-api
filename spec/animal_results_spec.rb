@@ -81,7 +81,7 @@ describe 'Tests Animal API ' do
       project = Info::Project.new(path)
       _(proc do
           project.connection
-        end).must_raise 'not found'
+        end).must_raise(RuntimeError, 'not found')
     end
 
     it 'HAPPY: should provide correct animal numbers in each shelter' do

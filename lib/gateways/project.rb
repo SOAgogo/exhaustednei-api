@@ -18,23 +18,30 @@ module Info
     #   @shelter_list = nil
     # end
     def initialize(uri)
-      @request_body = connection(uri)
+      @uri = uri
+      @request_body = connection
       # @shelter_list = nil
     end
 
-    def setup_url(uri)
-      url = URI(uri)
+    def setup_url
+      url = URI(@uri)
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
       [url, http]
     end
 
-    def connection(uri)
-      url, http = setup_url(uri)
+    def self.read_body(url, http)
       request = Net::HTTP::Get.new(url)
       request['accept'] = 'application/json'
-      response = http.request(request)
-      JSON.parse(response.read_body)[1..20]
+      http.request(request).read_body
+    end
+
+    def connection
+      url, http = setup_url
+      response_body = Project.read_body(url, http)
+      raise 'not found' if response_body == '[]'
+
+      JSON.parse(response_body)[1..20]
     end
   end
 end
