@@ -1,64 +1,44 @@
 # frozen_string_literal: true
 
-require 'http'
-
-module CodePraise
-  module Github
-    # Library for Github Web API
-    class Api
-      def initialize(token)
-        @github_token = token
+require_relative '../mappers/shelter'
+require_relative '../mappers/animal'
+# util handle the parser and other methods
+module EAS
+  module Util
+    # class Info::ShelterList`
+    class Util
+      def self.animal_parser(data)
+        animal_data_hash = {}
+        data.each do |key, value|
+          animal_data_hash[key] = value unless %w[animal_area_pkid shelter_name shelter_address
+                                                  shelter_tel].include?(key)
+        end
+        animal_data_hash
       end
 
-      def repo_data(username, project_name)
-        Request.new(@github_token).repo(username, project_name).parse
+      def self.shelter_parser(data)
+        animal_data_hash = {}
+        data.each do |key, value|
+          animal_data_hash[key] = value unless %w[animal_area_pkid shelter_name shelter_address
+                                                  shelter_tel].include?(key)
+        end
+        animal_data_hash
       end
 
-      def contributors_data(contributors_url)
-        Request.new(@github_token).get(contributors_url).parse
+      def self.put_the_animal_into_shelter(shelter, animal_obj)
+        shelter.animal_object_hash[animal_obj.animal_id] = animal_obj
+        if animal_obj.animal_kind == '狗'
+          shelter.set_dog_number
+        else
+          shelter.set_cat_number
+        end
+        shelter
       end
 
-      # Sends out HTTP requests to Github
-      class Request
-        REPOS_PATH = 'https://api.github.com/repos/'
-
-        def initialize(token)
-          @token = token
-        end
-
-        def repo(username, project_name)
-          get(REPOS_PATH + [username, project_name].join('/'))
-        end
-
-        def get(url)
-          http_response = HTTP.headers(
-            'Accept' => 'application/vnd.github.v3+json',
-            'Authorization' => "token #{@token}"
-          ).get(url)
-
-          Response.new(http_response).tap do |response|
-            raise(response.error) unless response.successful?
-          end
-        end
-      end
-
-      # Decorates HTTP responses from Github with success/error
-      class Response < SimpleDelegator
-        Unauthorized = Class.new(StandardError)
-        NotFound = Class.new(StandardError)
-
-        HTTP_ERROR = {
-          401 => Unauthorized,
-          404 => NotFound
-        }.freeze
-
-        def successful?
-          HTTP_ERROR.keys.none?(code)
-        end
-
-        def error
-          HTTP_ERROR[code]
-        end
+      def self.animal_classifier(shelter, animal_data)
+        animal = animal_data['animal_kind'] == '狗' ? Info::Dog.new(animal_data) : Info::Cat.new(animal_data)
+        Util.put_the_animal_into_shelter(shelter, animal)
+        shelter
       end
     end
   end

@@ -2,7 +2,7 @@
 
 require 'roda'
 
-module CodePraise
+module EAS
   # Configuration for the App
   class App < Roda
 
