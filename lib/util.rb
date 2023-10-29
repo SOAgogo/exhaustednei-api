@@ -23,21 +23,5 @@ module Util
       end
       shelter_data_hash
     end
-
-    # def self.put_the_animal_into_shelter(shelter, animal_obj)
-    #   shelter.animal_object_hash[animal_obj.animal_id] = animal_obj
-    #   if animal_obj.animal_kind == '狗'
-    #     shelter.dog_number += 1
-    #   else
-    #     shelter.cat_number += 1
-    #   end
-    #   shelter
-    # end
-
-    # def self.animal_classifier(shelter, animal_data)
-    #   animal = animal_data['animal_kind'] == '狗' ? Info::Dog.new(animal_data) : Info::Cat.new(animal_data)
-    #   Util.put_the_animal_into_shelter(shelter, animal)
-    #   shelter
-    # end
   end
 end

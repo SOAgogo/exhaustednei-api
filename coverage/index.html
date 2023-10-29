@@ -14,7 +14,7 @@
       <img src="./assets/0.12.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2023-10-28T17:50:04+08:00">2023-10-28T17:50:04+08:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2023-10-29T10:54:47+08:00">2023-10-29T10:54:47+08:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -23,14 +23,14 @@
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
       <span class="green">
-  90.86%
+  91.26%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         5.27
+         5.05
        </span>
     </span> hits/line
     )
@@ -43,11 +43,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>197</b> relevant lines,
-    <span class="green"><b>179</b> lines covered</span> and
+    <b>206</b> relevant lines,
+    <span class="green"><b>188</b> lines covered</span> and
     <span class="red"><b>18</b> lines missed. </span>
     (<span class="green">
-  90.86%
+  91.26%
 </span>
 )
   </div>
@@ -94,12 +94,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#02b8137fe7abad88d0e4dc800cc1af207515d319" class="src_link" title="lib/entities/shelter.rb">lib/entities/shelter.rb</a></td>
-            <td class="yellow strong cell--number t-file__coverage">90.00 %</td>
-            <td class="cell--number">38</td>
-            <td class="cell--number">20</td>
-            <td class="cell--number">18</td>
+            <td class="green strong cell--number t-file__coverage">93.33 %</td>
+            <td class="cell--number">51</td>
+            <td class="cell--number">30</td>
+            <td class="cell--number">28</td>
             <td class="cell--number">2</td>
-            <td class="cell--number">1.30</td>
+            <td class="cell--number">1.17</td>
             
           </tr>
         
@@ -127,12 +127,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#2b6ecbd12009933d295cfb184d5ae5122b8c9e4c" class="src_link" title="lib/mappers/animal_shelter_mapper.rb">lib/mappers/animal_shelter_mapper.rb</a></td>
-            <td class="red strong cell--number t-file__coverage">67.35 %</td>
-            <td class="cell--number">88</td>
-            <td class="cell--number">49</td>
-            <td class="cell--number">33</td>
+            <td class="red strong cell--number t-file__coverage">66.67 %</td>
+            <td class="cell--number">89</td>
+            <td class="cell--number">48</td>
+            <td class="cell--number">32</td>
             <td class="cell--number">16</td>
-            <td class="cell--number">2.96</td>
+            <td class="cell--number">2.85</td>
             
           </tr>
         
@@ -150,7 +150,7 @@
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#a336d5845b48299b264ded51ef3a05e9c2a36135" class="src_link" title="lib/util.rb">lib/util.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">43</td>
+            <td class="cell--number">27</td>
             <td class="cell--number">12</td>
             <td class="cell--number">12</td>
             <td class="cell--number">0</td>
@@ -978,8 +978,8 @@
   <div class="header">
     <h3>lib/entities/shelter.rb</h3>
     <h4>
-      <span class="yellow">
-  90.0%
+      <span class="green">
+  93.33%
 </span>
 
       lines covered
@@ -988,8 +988,8 @@
     
 
     <div class="t-line-summary">
-      <b>20</b> relevant lines.
-      <span class="green"><b>18</b> lines covered</span> and
+      <b>30</b> relevant lines.
+      <span class="green"><b>28</b> lines covered</span> and
       <span class="red"><b>2</b> lines missed.</span>
     </div>
 
@@ -1106,18 +1106,18 @@
 
             
 
-            <code class="ruby">module Entity</code>
+            <code class="ruby">module MyModule</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="11">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="11">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">  # class Info::Shelter`</code>
+            
+
+            <code class="ruby">  include Dry.Types</code>
           </li>
         </div>
       
@@ -1128,7 +1128,7 @@
 
             
 
-            <code class="ruby">  class Shelter &lt; Dry::Struct</code>
+            <code class="ruby">  animal_area_pkid = Strict::Integer</code>
           </li>
         </div>
       
@@ -1139,18 +1139,18 @@
 
             
 
-            <code class="ruby">    attr_reader :animal_object_list, :cat_number, :dog_number</code>
+            <code class="ruby">  animal_shelter_pkid = Strict::Integer</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="14">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="14">
+            <span class="hits">1</span>
             
 
-            <code class="ruby"></code>
+            
+
+            <code class="ruby">  shelter_name = Strict::String</code>
           </li>
         </div>
       
@@ -1161,18 +1161,18 @@
 
             
 
-            <code class="ruby">    include Dry.Types</code>
+            <code class="ruby">  shelter_address = Strict::String</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="16">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="16">
+            <span class="hits">1</span>
             
 
-            <code class="ruby"></code>
+            
+
+            <code class="ruby">  shelter_tel = Strict::String</code>
           </li>
         </div>
       
@@ -1183,7 +1183,7 @@
 
             
 
-            <code class="ruby">    attribute :animal_area_pkid, Strict::Integer</code>
+            <code class="ruby">  cat_number = Strict::Integer</code>
           </li>
         </div>
       
@@ -1194,7 +1194,7 @@
 
             
 
-            <code class="ruby">    attribute :animal_shelter_pkid, Strict::Integer</code>
+            <code class="ruby">  dog_number = Strict::Integer</code>
           </li>
         </div>
       
@@ -1205,67 +1205,23 @@
 
             
 
-            <code class="ruby">    attribute :shelter_name, Strict::String</code>
+            <code class="ruby">  animal_object_list = Strict::Hash</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="20">
-            <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="20">
+            
             
 
             
 
-            <code class="ruby">    attribute :shelter_address, Strict::String</code>
+            <code class="ruby">end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="21">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    attribute :shelter_tel, Strict::String</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="22">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    attribute :cat_number, Strict::Integer</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="23">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    attribute :dog_number, Strict::Integer</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="24">
-            <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    attribute :animal_object_list, Strict::Hash</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="25">
+          <li class="never" data-hits="" data-linenumber="21">
             
             
 
@@ -1276,35 +1232,79 @@
         </div>
       
         <div>
+          <li class="covered" data-hits="1" data-linenumber="22">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">module Entity</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="23">
+            
+            
+
+            
+
+            <code class="ruby">  # class Info::Shelter`</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="24">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  class Shelter &lt; Dry::Struct</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="25">
+            
+            
+
+            
+
+            <code class="ruby">    # class Shelter</code>
+          </li>
+        </div>
+      
+        <div>
           <li class="covered" data-hits="1" data-linenumber="26">
             <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    def set_animal_object_list(key, value)</code>
+            <code class="ruby">    attr_reader :animal_object_list, :cat_number, :dog_number</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="9" data-linenumber="27">
-            <span class="hits">9</span>
+          <li class="never" data-hits="" data-linenumber="27">
+            
             
 
             
 
-            <code class="ruby">      @animal_object_list[key] = value</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="28">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="28">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    end</code>
+            
+
+            <code class="ruby">    include Dry.Types</code>
           </li>
         </div>
       
@@ -1326,40 +1326,40 @@
 
             
 
-            <code class="ruby">    def set_cat_number</code>
+            <code class="ruby">    attribute :animal_area_pkid, Strict::Integer</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="31">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="31">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">      @cat_number += 1</code>
+            
+
+            <code class="ruby">    attribute :animal_shelter_pkid, Strict::Integer</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="32">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="32">
+            <span class="hits">1</span>
             
 
-            <code class="ruby">    end</code>
+            
+
+            <code class="ruby">    attribute :shelter_name, Strict::String</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="33">
-            
-            
-
+          <li class="covered" data-hits="1" data-linenumber="33">
+            <span class="hits">1</span>
             
 
-            <code class="ruby"></code>
+            
+
+            <code class="ruby">    attribute :shelter_address, Strict::String</code>
           </li>
         </div>
       
@@ -1370,23 +1370,78 @@
 
             
 
-            <code class="ruby">    def set_dog_number</code>
+            <code class="ruby">    attribute :shelter_tel, Strict::String</code>
           </li>
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="35">
+          <li class="covered" data-hits="1" data-linenumber="35">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    attribute :cat_number, Strict::Integer</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="36">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    attribute :dog_number, Strict::Integer</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="37">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    attribute :animal_object_list, Strict::Hash</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="38">
             
             
 
             
 
-            <code class="ruby">      @dog_number += 1</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="36">
+          <li class="covered" data-hits="1" data-linenumber="39">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    def set_animal_object_list(key, value)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="8" data-linenumber="40">
+            <span class="hits">8</span>
+            
+
+            
+
+            <code class="ruby">      @animal_object_list[key] = value</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="41">
             
             
 
@@ -1397,7 +1452,95 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="37">
+          <li class="never" data-hits="" data-linenumber="42">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="43">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    def set_cat_number</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="44">
+            
+            
+
+            
+
+            <code class="ruby">      @cat_number += 1</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="45">
+            
+            
+
+            
+
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="46">
+            
+            
+
+            
+
+            <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="47">
+            <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    def set_dog_number</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="48">
+            
+            
+
+            
+
+            <code class="ruby">      @dog_number += 1</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="49">
+            
+            
+
+            
+
+            <code class="ruby">    end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="50">
             
             
 
@@ -1408,7 +1551,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="38">
+          <li class="never" data-hits="" data-linenumber="51">
             
             
 
@@ -2953,7 +3096,7 @@
     <h3>lib/mappers/animal_shelter_mapper.rb</h3>
     <h4>
       <span class="red">
-  67.35%
+  66.67%
 </span>
 
       lines covered
@@ -2962,8 +3105,8 @@
     
 
     <div class="t-line-summary">
-      <b>49</b> relevant lines.
-      <span class="green"><b>33</b> lines covered</span> and
+      <b>48</b> relevant lines.
+      <span class="green"><b>32</b> lines covered</span> and
       <span class="red"><b>16</b> lines missed.</span>
     </div>
 
@@ -3646,7 +3789,29 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="62">
+          <li class="never" data-hits="" data-linenumber="62">
+            
+            
+
+            
+
+            <code class="ruby">    ## TODO: shelter_obj should have set_animal_object_list?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="63">
+            
+            
+
+            
+
+            <code class="ruby">    # shelter.rb set_animal_object_list</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="64">
             <span class="hits">1</span>
             
 
@@ -3657,18 +3822,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="63">
-            <span class="hits">8</span>
-            
-
-            
-
-            <code class="ruby">      binding.pry</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="8" data-linenumber="64">
+          <li class="covered" data-hits="8" data-linenumber="65">
             <span class="hits">8</span>
             
 
@@ -3679,7 +3833,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="65">
+          <li class="missed" data-hits="0" data-linenumber="66">
             
             
 
@@ -3690,7 +3844,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="66">
+          <li class="missed" data-hits="0" data-linenumber="67">
             
             
 
@@ -3701,7 +3855,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="67">
+          <li class="never" data-hits="" data-linenumber="68">
             
             
 
@@ -3712,7 +3866,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="68">
+          <li class="never" data-hits="" data-linenumber="69">
             
             
 
@@ -3723,7 +3877,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="69">
+          <li class="covered" data-hits="1" data-linenumber="70">
             <span class="hits">1</span>
             
 
@@ -3734,7 +3888,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="70">
+          <li class="covered" data-hits="8" data-linenumber="71">
             <span class="hits">8</span>
             
 
@@ -3745,7 +3899,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="71">
+          <li class="covered" data-hits="8" data-linenumber="72">
             <span class="hits">8</span>
             
 
@@ -3756,7 +3910,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="72">
+          <li class="never" data-hits="" data-linenumber="73">
             
             
 
@@ -3767,7 +3921,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="73">
+          <li class="covered" data-hits="8" data-linenumber="74">
             <span class="hits">8</span>
             
 
@@ -3778,7 +3932,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="74">
+          <li class="missed" data-hits="0" data-linenumber="75">
             
             
 
@@ -3789,7 +3943,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="75">
+          <li class="never" data-hits="" data-linenumber="76">
             
             
 
@@ -3800,7 +3954,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="76">
+          <li class="never" data-hits="" data-linenumber="77">
             
             
 
@@ -3811,7 +3965,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="77">
+          <li class="covered" data-hits="1" data-linenumber="78">
             <span class="hits">1</span>
             
 
@@ -3822,7 +3976,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="78">
+          <li class="covered" data-hits="8" data-linenumber="79">
             <span class="hits">8</span>
             
 
@@ -3833,7 +3987,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="79">
+          <li class="covered" data-hits="8" data-linenumber="80">
             <span class="hits">8</span>
             
 
@@ -3844,7 +3998,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="80">
+          <li class="covered" data-hits="8" data-linenumber="81">
             <span class="hits">8</span>
             
 
@@ -3855,7 +4009,7 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="8" data-linenumber="81">
+          <li class="covered" data-hits="8" data-linenumber="82">
             <span class="hits">8</span>
             
 
@@ -3866,7 +4020,7 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="82">
+          <li class="missed" data-hits="0" data-linenumber="83">
             
             
 
@@ -3877,7 +4031,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="83">
+          <li class="never" data-hits="" data-linenumber="84">
             
             
 
@@ -3888,7 +4042,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="84">
+          <li class="never" data-hits="" data-linenumber="85">
             
             
 
@@ -3899,7 +4053,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="85">
+          <li class="never" data-hits="" data-linenumber="86">
             
             
 
@@ -3910,7 +4064,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="86">
+          <li class="never" data-hits="" data-linenumber="87">
             
             
 
@@ -3921,7 +4075,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="87">
+          <li class="never" data-hits="" data-linenumber="88">
             
             
 
@@ -3932,7 +4086,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="88">
+          <li class="never" data-hits="" data-linenumber="89">
             
             
 
@@ -5287,188 +5441,12 @@
 
             
 
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="27">
-            
-            
-
-            
-
-            <code class="ruby">    # def self.put_the_animal_into_shelter(shelter, animal_obj)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="28">
-            
-            
-
-            
-
-            <code class="ruby">    #   shelter.animal_object_hash[animal_obj.animal_id] = animal_obj</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="29">
-            
-            
-
-            
-
-            <code class="ruby">    #   if animal_obj.animal_kind == &#39;狗&#39;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="30">
-            
-            
-
-            
-
-            <code class="ruby">    #     shelter.dog_number += 1</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="31">
-            
-            
-
-            
-
-            <code class="ruby">    #   else</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="32">
-            
-            
-
-            
-
-            <code class="ruby">    #     shelter.cat_number += 1</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="33">
-            
-            
-
-            
-
-            <code class="ruby">    #   end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="34">
-            
-            
-
-            
-
-            <code class="ruby">    #   shelter</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="35">
-            
-            
-
-            
-
-            <code class="ruby">    # end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="36">
-            
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="37">
-            
-            
-
-            
-
-            <code class="ruby">    # def self.animal_classifier(shelter, animal_data)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="38">
-            
-            
-
-            
-
-            <code class="ruby">    #   animal = animal_data[&#39;animal_kind&#39;] == &#39;狗&#39; ? Info::Dog.new(animal_data) : Info::Cat.new(animal_data)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="39">
-            
-            
-
-            
-
-            <code class="ruby">    #   Util.put_the_animal_into_shelter(shelter, animal)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="40">
-            
-            
-
-            
-
-            <code class="ruby">    #   shelter</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="41">
-            
-            
-
-            
-
-            <code class="ruby">    # end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="42">
-            
-            
-
-            
-
             <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="43">
+          <li class="never" data-hits="" data-linenumber="27">
             
             
 
