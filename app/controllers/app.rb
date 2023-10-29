@@ -31,22 +31,30 @@ module EAS
         routing.is do
           # POST /project/
           routing.post do
-            animal_kind = routing.params['animal_kind']
-            routing.redirect "animal_kind/"
+            animal_kind = routing.params['animal_kind'].downcase
+            routing.redirect "project/#{animal_kind}/"
           end
         end
 
-        routing.on "animal_kind/" do 
+        routing.on "dog" do 
           # GET /project/owner/project
-          routing.post  do
-            if animal_kind == "dog" 
-              animal_kind = "狗"
-            else
-              animal_kind = "貓"
-            end
-            animal_kind_select =  file.select { |n| n['animal_kind'] == animal_kind }
-            view 'project', locals: { json_data: animal_kind_select }
-          end
+          ans = File.read('spec/fixtures/DogCat_results.json')
+          file = JSON.parse(ans)
+          animal_pic = file.select { |n| n['animal_kind'] == '狗' }.map { |n| n['album_file']}
+          animal_dip = file.select { |n| n['animal_kind'] == '狗' }.map { |n| n['animal_place']}
+          animal_adr = file.select { |n| n['animal_kind'] == '狗' }.map { |n| n['shelter_address']}
+
+          view 'project', locals: { image_url: animal_pic }
+        end
+        routing.on "cat" do 
+          # GET /project/owner/project
+          ans = File.read('spec/fixtures/DogCat_results.json')
+          file = JSON.parse(ans)
+          animal_pic = file.select { |n| n['animal_kind'] == '貓' }.map { |n| n['album_file']}
+          animal_dip = file.select { |n| n['animal_kind'] == '貓' }.map { |n| n['animal_place']}
+          animal_adr = file.select { |n| n['animal_kind'] == '貓' }.map { |n| n['shelter_address']}
+
+          view 'project', locals: { image_url: animal_pic.zip(animal_dip, animal_adr)}
         end
       end
     end
