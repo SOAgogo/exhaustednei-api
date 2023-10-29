@@ -2,7 +2,7 @@
 
 require 'rake/testtask'
 
-CODE = 'app/'
+CODE = 'config/ app/'
 
 task :default do
   puts `rake -T`
