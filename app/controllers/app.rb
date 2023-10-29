@@ -2,6 +2,7 @@
 
 require 'roda'
 require 'slim'
+require 'json'
 
 module EAS
   # Web App
@@ -10,6 +11,7 @@ module EAS
     plugin :assets, css: 'style.css', path: 'app/views/assets'
     plugin :common_logger, $stderr
     plugin :halt
+    plugin :json
 
     route do |routing|
       routing.assets # load CSS
@@ -17,30 +19,33 @@ module EAS
 
       # GET /
       routing.root do
-        view 'home'
+        ans = File.read('spec/fixtures/DogCat_results.json')
+        file = JSON.parse(ans)
+        random = rand(0..19)
+        animal_pic = file[random]['album_file']
+        view 'home', locals: { image_url: animal_pic }
+
       end
 
       routing.on 'project' do
         routing.is do
           # POST /project/
           routing.post do
-            gh_url = routing.params['github_url'].downcase
-            routing.halt 400 unless (gh_url.include? 'github.com') &&
-                                    (gh_url.split('/').count >= 3)
-            owner, project = gh_url.split('/')[-2..]
-
-            routing.redirect "project/#{owner}/#{project}"
+            animal_kind = routing.params['animal_kind']
+            routing.redirect "animal_kind/"
           end
         end
 
-        routing.on String, String do |owner, project|
+        routing.on "animal_kind/" do 
           # GET /project/owner/project
-          routing.get do
-            github_project = Github::ProjectMapper
-              .new(GH_TOKEN)
-              .find(owner, project)
-
-            view 'project', locals: { project: github_project }
+          routing.post  do
+            if animal_kind == "dog" 
+              animal_kind = "狗"
+            else
+              animal_kind = "貓"
+            end
+            animal_kind_select =  file.select { |n| n['animal_kind'] == animal_kind }
+            view 'project', locals: { json_data: animal_kind_select }
           end
         end
       end
