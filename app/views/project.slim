@@ -5,11 +5,13 @@
       img src="https://im.marieclaire.com.tw/m800c533h100b0/assets/mc/201907/5D19A650F04EF1561962064.png"  alt="一張圖片"
 
   body
-    h1 Image Gallery
+    h1 Search result
 
     div.gallery
       - image_url.each do |item|
-        div.item
-          img src = item.split(',')[0] width =300 height = 300
-          p = item.split(',')[1]
-          p = item.split(',')[2]
+        h1 
+          img src = item[0] width =300 height = 300
+          p == item[1]
+          p == item[2]
+
+

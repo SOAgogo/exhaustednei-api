@@ -44,7 +44,7 @@ module EAS
           animal_dip = file.select { |n| n['animal_kind'] == '狗' }.map { |n| n['animal_place']}
           animal_adr = file.select { |n| n['animal_kind'] == '狗' }.map { |n| n['shelter_address']}
 
-          view 'project', locals: { image_url: animal_pic }
+          view 'project', locals: { image_url: animal_pic.zip(animal_dip, animal_adr)}
         end
         routing.on "cat" do 
           # GET /project/owner/project
