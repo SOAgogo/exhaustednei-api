@@ -29,7 +29,7 @@ module EAS
         shelter_data_hash = {}
         data.each do |key, value|
           shelter_data_hash[key] = value if %w[animal_area_pkid animal_shelter_pkid shelter_name shelter_address
-                                              shelter_tel].include?(key)
+                                               shelter_tel].include?(key)
         end
         shelter_data_hash
       end
