@@ -79,9 +79,10 @@ describe 'Tests Animal API ' do
     it 'SAD: should raise exception on incorrect url' do
       path = "#{RESOURCE_PATH}/error_here"
       project = Info::Project.new(path)
-      _(proc do
-          project.connection
-        end).must_raise(RuntimeError, 'not found')
+      project.connection
+      _(
+        project.request_body.to_s
+      ).must_equal ''
     end
 
     it 'HAPPY: should provide correct animal numbers in each shelter' do

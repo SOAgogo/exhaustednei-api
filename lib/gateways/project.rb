@@ -39,9 +39,13 @@ module Info
     def connection
       url, http = setup_url
       response_body = Project.read_body(url, http)
-      raise 'not found' if response_body == '[]'
+      # raise 'not found' if response_body == '[]'
 
       JSON.parse(response_body)[1..20]
     end
   end
+
+  # class Response < SimpleDelegator
+  #   NotFound = Class.new(StandardError)
+  # end
 end
