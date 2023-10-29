@@ -68,7 +68,7 @@ describe 'Tests Animal API ' do
 
     ## TODO:
     it 'HAPPY: get the right animal id and its information' do
-      shelter_mapper = @animal_shelter_mapper.get_the_shelter_mapper(rand_shelter_id)
+      _, shelter_mapper = @animal_shelter_mapper.get_shelter_mapper(rand_shelter_id)
       # binding.pry
       random_id = file[random]['animal_id']
       _(shelter_mapper.animal_object_hash[random_id].animal_id).must_equal file[random]['animal_id']

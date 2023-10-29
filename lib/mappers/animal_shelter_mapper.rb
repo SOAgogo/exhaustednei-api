@@ -3,7 +3,6 @@
 # manage the relationship between shelter and animal
 require_relative 'animal_mapper'
 require_relative 'shelter_mapper'
-require 'pry'
 module Info
   # class Info::ShelterMapper`
   class AnimalShelterMapper
@@ -13,7 +12,6 @@ module Info
 
     def initialize(project = Info::Project.new)
       @gateway_obj = project
-      # @shelter_list = {} # store the shelter hash that can access shelter object
       @shelter_mapper_hash = {} # store the animal hash that can access animal object
     end
 
@@ -67,39 +65,49 @@ module Info
       sum
     end
 
-    def get_the_shelter_mapper(animal_shelter_pkid)
-      @shelter_mapper_hash[animal_shelter_pkid]
-    end
+    # def get_the_shelter_mapper(animal_shelter_pkid)
+    #   @shelter_mapper_hash[animal_shelter_pkid]
+    # end
 
     def animal_size_in_shelter(animal_shelter_pkid)
-      shelter = get_the_shelter_mapper(animal_shelter_pkid)
+      _, shelter = get_shelter_mapper(animal_shelter_pkid)
 
       shelter.cat_number + shelter.dog_number
     end
 
+    def shelter_mapper_creation(shelter_id, shelter_data)
+      get_or_not, shelter_mapper = get_shelter_mapper(shelter_id)
+      shelter_mapper = ShelterMapper.new(shelter_data) unless get_or_not
+      shelter_mapper
+    end
+
+    def shelter_mapper_setting(shelter_id, shelter_mapper)
+      set_shelter_mapper_obj(shelter_id, shelter_mapper)
+      shelter_mapper.setting_shelter_obj(shelter_mapper.find)
+    end
+
     def create_shelter_mapper(shelter_data)
-      get_or_not, shelter_mapper = get_shelter_mapper(shelter_data['animal_shelter_pkid'])
-      shelter_mapper = ShelterMapper.new unless get_or_not
-      set_shelter_mapper_obj(shelter_data['animal_shelter_pkid'], shelter_mapper)
-      # it will call shelter_mapper.rb setting_shelter_obj
-      # (1-1 relationship between shelter and shelter_mapper)
-      shelter_mapper.setting_shelter_obj(shelter_mapper.find(shelter_data))
+      shelter_id = shelter_data['animal_shelter_pkid']
+      shelter_mapper = shelter_mapper_creation(shelter_id, shelter_data)
+      shelter_mapper_setting(shelter_id, shelter_mapper)
       shelter_mapper
     end
 
     ## TODO: shelter_obj should have set_animal_object_list?
-    # shelter.rb set_animal_object_list
-    def shelter_setting(shelter_mapper, animal_data, animal_obj)
+    def self.shelter_setting(shelter_mapper, animal_data, animal_obj)
       shelter_mapper.set_animal_object_hash(animal_data['animal_id'], animal_obj)
-      shelter_mapper.set_cat_number if animal_obj.animal_kind == '貓'
-      shelter_mapper.set_dog_number if animal_obj.animal_kind == '狗'
+      if animal_obj.animal_kind == '貓'
+        shelter_mapper.set_cat_number
+      else
+        shelter_mapper.set_dog_number
+      end
     end
 
     # for creating the shelter_mapper to add the animal_obj
     def create_animal_shelter_object(shelter_data, animal_data)
       animal_obj = AnimalMapper.new(animal_data).find
       shelter_mapper = create_shelter_mapper(shelter_data)
-      shelter_setting(shelter_mapper, animal_data, animal_obj)
+      AnimalShelterMapper.shelter_setting(shelter_mapper, animal_data, animal_obj)
     end
 
     def shelter_parser
@@ -107,7 +115,6 @@ module Info
         animal_data = AnimalShelterMapper.animal_parser(data)
         shelter_data = AnimalShelterMapper.shelter_parser(data)
         create_animal_shelter_object(shelter_data, animal_data)
-        # set_shelter_list[shelter_data['animal_shelter_pkid']] = shelter_obj
       end
     end
   end

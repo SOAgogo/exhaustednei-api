@@ -12,12 +12,13 @@ module Info
 
     # store the shelter hash that can access shelter object
 
-    def initialize
+    def initialize(shelter_info)
       # @shelter_info = shelter_data
       @shelter_obj = nil
       @animal_object_hash = {}
       @cat_number = 0
       @dog_number = 0
+      @shelter_info = shelter_info
       #   @shelter_list = ShelterList.shelter_animal_parser(@gateway_obj.request_body)
     end
 
@@ -29,8 +30,8 @@ module Info
       @shelter_obj = shelter_obj
     end
 
-    def find(shelter_info)
-      DataMapper.new(shelter_info).build_entity
+    def find
+      DataMapper.new(@shelter_info).build_entity
       # @shelter_object_list[shelter_obj.animal_area_pkid] = shelter_obj
 
       # @animal_object_hash[animal_obj.animal_id] = animal_obj
