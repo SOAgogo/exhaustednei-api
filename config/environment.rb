@@ -5,6 +5,5 @@ require 'roda'
 module EAS
   # Configuration for the App
   class App < Roda
-
   end
 end
