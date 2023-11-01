@@ -25,9 +25,10 @@ describe 'Tests Animal API ' do
     before do
       # update the DogCat_results every single day when do this tests
       @project = Info::Project.new(RESOURCE_PATH)
-      @animal_mapper, @shelter_mapper = Info::AnimalShelterInitiator.new(@project).init
+      @animal_shelter_initator = Info::AnimalShelterInitiator.new(@project)
+      @shelter_mapper, @animal_mapper = @animal_shelter_initator.init
       # @project.shelter_list = @project.initiate_shelterlist
-      @animal_mapper
+      @shelter_mapper.create_all_shelter_animal_obj(@animal_mapper.shelter_animal_mapping)
     end
 
     ans = File.read('spec/fixtures/DogCat_results.json')
@@ -45,35 +46,39 @@ describe 'Tests Animal API ' do
     end
     it 'HAPPY: should provide the same fields as same as the ones in CORRECT DATA' do
       # @project.conection
-      _(@animal_shelter_mapper.shelter_size).must_equal shelter_id_ans
+      _(@shelter_mapper.shelter_size).must_equal shelter_id_ans
       # _(project.git_url).must_equal CORRECT['git_url']
     end
     it 'HAPPY: should provide correct dog numbers in all shelters' do
-      dog_number = @animal_shelter_mapper.calculate_dog_nums
+      dog_number = @shelter_mapper.calculate_dog_nums
       _(dog_number).must_equal num_dog_ans # 10 should be modified with the correct data basedon dogCat_results
       # _(project.git_url).must_equal CORRECT['git_url']
     end
     it 'HAPPY: should provide correct cat numbers' do
-      cat_number = @animal_shelter_mapper.calculate_cat_nums
+      cat_number = @shelter_mapper.calculate_cat_nums
       _(cat_number).must_equal num_cat_ans
       # _(project.git_url).must_equal CORRECT['git_url']
     end
 
     ## TODO: right number
     it 'HAPPY: shelter should provide the correct animal numbers' do
-      aml_number = @animal_shelter_mapper.animal_size_in_shelter(rand_shelter_id)
+      aml_number = @shelter_mapper.animal_size_in_shelter(rand_shelter_id)
       _(aml_number).must_equal num_aml_shelter_ans
       # _(project.git_url).must_equal CORRECT['git_url']
     end
 
     ## TODO:
     it 'HAPPY: get the right animal id and its information' do
-      _, shelter_mapper = @animal_shelter_mapper.get_shelter_mapper(rand_shelter_id)
+      # _, shelter_mapper = @animal_shelter_mapper.get_shelter_mapper(rand_shelter_id)
       # binding.pry
-      random_id = file[random]['animal_id']
-      _(shelter_mapper.animal_object_hash[random_id].animal_id).must_equal file[random]['animal_id']
-      _(shelter_mapper.animal_object_hash[random_id].animal_bodytype).must_equal file[random]['animal_bodytype']
-      _(shelter_mapper.animal_object_hash[random_id].animal_variate).must_equal file[random]['animal_Variety']
+      # random_id = file[random]['animal_id']
+      animal =  @shelter_mapper.find_animal_in_shelter(rand_shelter_id, random_id) # shelter_id, animal_id
+      #   _(shelter_mapper.animal_object_hash[random_id].animal_id).must_equal file[random]['animal_id']
+      #   _(shelter_mapper.animal_object_hash[random_id].animal_bodytype).must_equal file[random]['animal_bodytype']
+      #   _(shelter_mapper.animal_object_hash[random_id].animal_variate).must_equal file[random]['animal_Variety']
+      _(animal.animal_id).must_equal file[random]['animal_id']
+      _(animal.animal_bodytype).must_equal file[random]['animal_bodytype']
+      _(animal.animal_variate).must_equal file[random]['animal_Variety']
     end
 
     it 'SAD: should raise exception on incorrect url' do
@@ -86,8 +91,7 @@ describe 'Tests Animal API ' do
     end
 
     it 'HAPPY: should provide correct animal numbers in each shelter' do
-      aml_number = @animal_shelter_mapper.animal_size_in_shelter(rand_shelter_id)
-
+      aml_number = @shelter_mapper.animal_size_in_shelter(rand_shelter_id)
       _(aml_number).must_equal num_aml_shelter_ans
     end
   end

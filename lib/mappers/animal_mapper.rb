@@ -5,19 +5,29 @@ require_relative '../entities/animal'
 module Info
   # class Info::ShelterMapper`
   class AnimalMapper
-    def initialize(data)
-      @animaldata_info_list = data
+    def initialize(animal_data_list)
+      @animal_info_list = animal_data_list
     end
 
-    def find
-      DataMapper.new(@animal_info).build_entity
+    def find(animal_info)
+      DataMapper.new(animal_info).build_entity
       # @animal_object_hash[animal_obj.animal_id] = animal_obj
+    end
+
+    def shelter_animal_mapping
+      shelter_animal_mapping = {}
+      shelter_id = animal_info['animal_shelter_pkid']
+      @animal_info_list.each do |animal_info|
+        shelter_animal_mapping[shelter_id] = [] if shelter_animal_mapping[shelter_id].empty?
+        shelter_animal_mapping[shelter_id] << find(animal_info)
+      end
+      shelter_animal_mapping
     end
 
     # # AnimalMapper::DataMapper
     class DataMapper
-      def initialize(animal_data)
-        @data = animal_data
+      def initialize(animal_data_list)
+        @animal_data_list = animal_data_list
       end
 
       def build_entity

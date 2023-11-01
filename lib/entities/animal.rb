@@ -20,9 +20,17 @@ module Entity
     # attribute :animal_opendate, Strict::String
   end
 
+  # class Info::Cat`
   class Cat < Animal
+    def sound
+      'meow'
+    end
   end
 
+  # class Info::Dog`
   class Dog < Animal
+    def sound
+      'woof'
+    end
   end
 end
