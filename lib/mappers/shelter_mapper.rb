@@ -76,22 +76,22 @@ module Info
       def build_entity
         Entity::Shelter.new(
           # @animal_attributes
-          animal_area_pkid:,
           animal_shelter_pkid:,
           shelter_name:,
           shelter_address:,
           shelter_tel:,
           animal_object_list:,
           cat_number:,
-          dog_number:
+          dog_number:,
+          animal_number:
         )
       end
 
       private
 
-      def animal_area_pkid
-        @data['animal_area_pkid']
-      end
+      # def animal_area_pkid
+      #   @data['animal_area_pkid']
+      # end
 
       def animal_shelter_pkid
         @data['animal_shelter_pkid']
@@ -111,15 +111,16 @@ module Info
 
       def animal_object_list
         animal_object_list = {}
-        @animal_list.map do |animal|
+        @animal_list.each do |animal|
           animal_object_list[animal.animal_id] = animal
         end
+        # binding.pry
         animal_object_list
       end
 
       def cat_number
         cat_number = 0
-        @animal_list.map do |animal|
+        @animal_list.each do |animal|
           cat_number += 1 if animal.sound == 'meow'
         end
         cat_number
@@ -127,7 +128,7 @@ module Info
 
       def dog_number
         dog_number = 0
-        @animal_list.map do |animal|
+        @animal_list.each do |animal|
           dog_number += 1 if animal.sound == 'woof'
         end
         dog_number

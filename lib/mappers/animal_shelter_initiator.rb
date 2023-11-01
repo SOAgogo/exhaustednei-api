@@ -12,7 +12,7 @@ module Info
 
     def initialize(project = Info::Project.new)
       @gateway_obj = project
-      @shelter_mapper_hash = {} # store the animal hash that can access animal object
+      # store the animal hash that can access animal object
     end
 
     def self.animal_parser(data)
@@ -49,8 +49,8 @@ module Info
       animal_data_list = []
       shelter_data_list = []
       @gateway_obj.request_body.each do |data|
-        animal_data = AnimalShelterMapper.animal_parser(data)
-        shelter_data = AnimalShelterMapper.shelter_parser(data)
+        animal_data = AnimalShelterInitiator.animal_parser(data)
+        shelter_data = AnimalShelterInitiator.shelter_parser(data)
         shelter_data_list << shelter_data
         animal_data_list << animal_data
       end

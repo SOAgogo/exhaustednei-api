@@ -10,15 +10,17 @@ module Info
     end
 
     def find(animal_info)
-      DataMapper.new(animal_info).build_entity
+      DataMapper.new(animal_info).build_dog_entity if animal_info['animal_kind'] == '狗'
+      DataMapper.new(animal_info).build_cat_entity if animal_info['animal_kind'] == '貓'
       # @animal_object_hash[animal_obj.animal_id] = animal_obj
     end
 
     def shelter_animal_mapping
       shelter_animal_mapping = {}
-      shelter_id = animal_info['animal_shelter_pkid']
+
       @animal_info_list.each do |animal_info|
-        shelter_animal_mapping[shelter_id] = [] if shelter_animal_mapping[shelter_id].empty?
+        shelter_id = animal_info['animal_shelter_pkid']
+        shelter_animal_mapping[shelter_id] = [] if shelter_animal_mapping[shelter_id].nil?
         shelter_animal_mapping[shelter_id] << find(animal_info)
       end
       shelter_animal_mapping
@@ -26,12 +28,25 @@ module Info
 
     # # AnimalMapper::DataMapper
     class DataMapper
-      def initialize(animal_data_list)
-        @animal_data_list = animal_data_list
+      def initialize(animal_info)
+        @data = animal_info
       end
 
-      def build_entity
-        Entity::Animal.new(
+      def build_dog_entity
+        Entity::Dog.new(
+          animal_id:,
+          animal_kind:,
+          animal_variate:,
+          animal_sex:,
+          animal_sterilization:,
+          animal_bacterin:,
+          animal_bodytype:,
+          album_file:
+        )
+      end
+
+      def build_cat_entity
+        Entity::Cat.new(
           animal_id:,
           animal_kind:,
           animal_variate:,

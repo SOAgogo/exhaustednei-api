@@ -10,7 +10,7 @@ end
 
 desc 'run tests'
 task :spec do
-  sh 'ruby lib/data_init.rb'
+  # sh 'ruby lib/data_init.rb'
   sh 'ruby spec/animal_results_spec.rb'
 end
 
