@@ -12,7 +12,7 @@ module Info
 
     # store the shelter hash that can access shelter object
 
-    def initialize(shelter_info)
+    def initialize(shelter_info_list)
       # @shelter_info = shelter_data
       @shelter_obj = nil
       @animal_object_hash = {}

@@ -4,7 +4,7 @@
 require 'dry-types'
 require 'dry-struct'
 module Entity
-  # class Info::Shelter`
+  # class Info::Animal`
   class Animal < Dry::Struct
     # attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid, :shelter_name, :shelter_address, :shelter_tel
     include Dry.Types
@@ -18,5 +18,11 @@ module Entity
     attribute :album_file, Strict::String
     # attribute :animal_place, Strict::String
     # attribute :animal_opendate, Strict::String
+  end
+
+  class Cat < Animal
+  end
+
+  class Dog < Animal
   end
 end

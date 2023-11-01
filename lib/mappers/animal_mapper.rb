@@ -6,7 +6,7 @@ module Info
   # class Info::ShelterMapper`
   class AnimalMapper
     def initialize(data)
-      @animal_info = data
+      @animaldata_info_list = data
     end
 
     def find

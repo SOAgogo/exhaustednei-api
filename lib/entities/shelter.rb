@@ -9,7 +9,7 @@ module Entity
   # class Info::Shelter`
   class Shelter < Dry::Struct
     # class Shelter
-    attr_reader :animal_object_list, :cat_number, :dog_number
+    # attr_reader :animal_object_list, :cat_number, :dog_number
 
     include Dry.Types
 
@@ -18,5 +18,7 @@ module Entity
     attribute :shelter_name, Strict::String
     attribute :shelter_address, Strict::String
     attribute :shelter_tel, Strict::String
+    # add animal object list to shelter
+    # atrribute :animal_object_list, Strict::Hash.map(Types::Strict::Integer, Animal)
   end
 end

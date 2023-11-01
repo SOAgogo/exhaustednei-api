@@ -5,7 +5,7 @@ require_relative 'animal_mapper'
 require_relative 'shelter_mapper'
 module Info
   # class Info::ShelterMapper`
-  class AnimalShelterMapper
+  class AnimalShelterInitiator
     attr_reader :shelter_mapper_hash
 
     # store the shelter hash that can access shelter object
@@ -110,12 +110,25 @@ module Info
       AnimalShelterMapper.shelter_setting(shelter_mapper, animal_data, animal_obj)
     end
 
-    def shelter_parser
+    # refactor for some reek errors
+    def animal_shelter_parser
+      animal_data_list = []
+      shelter_data_list = []
       @gateway_obj.request_body.each do |data|
         animal_data = AnimalShelterMapper.animal_parser(data)
         shelter_data = AnimalShelterMapper.shelter_parser(data)
-        create_animal_shelter_object(shelter_data, animal_data)
+        animal_data_list << animal_data
+        shelter_data_list << shelter_data
+        # create_animal_shelter_object(shelter_data, animal_data)
       end
+      [animal_data_list, shelter_data_list]
+    end
+
+    def init
+      animal_data_list, shelter_data_list = animal_shelter_parser
+      animal_mapper = AnimalMapper.new(animal_data_list)
+      shelter_mapper = ShelterMapper.new(shelter_data_list)
+      [animal_mapper, shelter_mapper]
     end
   end
 end
