@@ -12,7 +12,7 @@ module Info
     def find(animal_info)
       DataMapper.new(animal_info).build_dog_entity if animal_info['animal_kind'] == '狗'
       DataMapper.new(animal_info).build_cat_entity if animal_info['animal_kind'] == '貓'
-      # @animal_object_hash[animal_obj.animal_id] = animal_obj
+      # DataMapper.new(animal_info).build_entity
     end
 
     def shelter_animal_mapping
@@ -20,8 +20,9 @@ module Info
 
       @animal_info_list.each do |animal_info|
         shelter_id = animal_info['animal_shelter_pkid']
-        shelter_animal_mapping[shelter_id] = [] if shelter_animal_mapping[shelter_id].nil?
-        shelter_animal_mapping[shelter_id] << find(animal_info)
+        animal_id = animal_info['animal_id']
+        shelter_animal_mapping[shelter_id] = {} if shelter_animal_mapping[shelter_id].nil?
+        shelter_animal_mapping[shelter_id][animal_id] = find(animal_info)
       end
       shelter_animal_mapping
     end
@@ -57,6 +58,18 @@ module Info
           album_file:
         )
       end
+      # def build_entity
+      #   Entity::Animal.new(
+      #     animal_id:,
+      #     animal_kind:,
+      #     animal_variate:,
+      #     animal_sex:,
+      #     animal_sterilization:,
+      #     animal_bacterin:,
+      #     animal_bodytype:,
+      #     album_file:
+      #   )
+      # end
 
       private
 

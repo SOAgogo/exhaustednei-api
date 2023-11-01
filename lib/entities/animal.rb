@@ -22,13 +22,15 @@ module Entity
 
   # class Info::Cat`
   class Cat < Animal
-    def sound
-      'meow'
-    end
+    include Dry.Types
+    # def sound
+    #   'meow'
+    # end
   end
 
   # class Info::Dog`
   class Dog < Animal
+    include Dry.Types
     def sound
       'woof'
     end

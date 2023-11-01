@@ -2,6 +2,7 @@
 
 require 'pry'
 require_relative '../entities/shelter'
+require_relative '../entities/animal'
 
 module Info
   # we should create more than one shelterMapper objects?
@@ -27,8 +28,8 @@ module Info
 
     def create_all_shelter_animal_obj(shelter_animal_map)
       @shelter_info_list.each do |shelter_info|
-        shelter_animal_map.each do |shelter_id, animal_list|
-          set_shelter_obj_map(shelter_id, find(shelter_info, animal_list))
+        shelter_animal_map.each do |shelter_id, animal_map|
+          set_shelter_obj_map(shelter_id, find(shelter_info, animal_map))
           # @shelter_obj_map[shelter_id] = find(shelter_info, animal_list)
         end
       end
@@ -58,8 +59,8 @@ module Info
       @shelter_obj_map[rand_shelter_id].animal_number
     end
 
-    def find(shelter_info, animal_list)
-      DataMapper.new(shelter_info, animal_list).build_entity
+    def find(shelter_info, animal_map)
+      DataMapper.new(shelter_info, animal_map).build_entity
       # @shelter_object_list[shelter_obj.animal_area_pkid] = shelter_obj
 
       # @animal_object_hash[animal_obj.animal_id] = animal_obj
@@ -68,9 +69,9 @@ module Info
     # AnimalMapper::DataMapper
     # ShelterMapper::DataMapper
     class DataMapper
-      def initialize(shelter_data, animal_list)
+      def initialize(shelter_data, animal_map)
         @data = shelter_data
-        @animal_list = animal_list
+        @animal_map = animal_map
       end
 
       def build_entity
@@ -110,32 +111,36 @@ module Info
       end
 
       def animal_object_list
-        animal_object_list = {}
-        @animal_list.each do |animal|
-          animal_object_list[animal.animal_id] = animal
-        end
-        # binding.pry
-        animal_object_list
+        # animal_object_list = {}
+        # @animal_map.each do |animal_id, animal_obj|
+        #   animal_object_list[animal.animal_id] = animal
+        #   binding.pry
+        # end
+        # animal_object_list
+
+        # animal_id = 330874 can't read
+        binding.pry
+        @animal_map
       end
 
       def cat_number
-        cat_number = 0
-        @animal_list.each do |animal|
-          cat_number += 1 if animal.sound == 'meow'
+        sum = 0
+        @animal_map.each do |_, animal_obj|
+          sum += 1 if animal_obj.instance_of?(::Entity::Cat)
         end
-        cat_number
+        sum
       end
 
       def dog_number
-        dog_number = 0
-        @animal_list.each do |animal|
-          dog_number += 1 if animal.sound == 'woof'
+        sum = 0
+        @animal_map.each do |_, animal_obj|
+          sum += 1 if animal_obj.instance_of?(::Entity::Dog)
         end
-        dog_number
+        sum
       end
 
       def animal_number
-        @animal_list.size
+        @animal_map.size
       end
     end
   end

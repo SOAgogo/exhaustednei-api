@@ -19,3 +19,9 @@ gem 'webmock', '~> 3'
 gem 'flog'
 gem 'reek'
 gem 'rubocop'
+
+# debugging
+
+gem 'pry'
+gem 'pry-remote'
+gem 'pry-nav'

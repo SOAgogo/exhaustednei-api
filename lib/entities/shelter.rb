@@ -13,7 +13,7 @@ module Entity
     attribute :shelter_address, Strict::String
     attribute :shelter_tel, Strict::String
     # add animal object list to shelter
-    attribute :animal_object_list, Strict::Hash.map(Strict::Integer, Animal)
+    attribute :animal_object_list, Hash.map(Strict::Integer, Animal)
     # Strict::Hash.map(Strict::Integer, Animal)
     attribute :cat_number, Strict::Integer
     attribute :dog_number, Strict::Integer
