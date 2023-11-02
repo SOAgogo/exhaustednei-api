@@ -18,15 +18,17 @@ module Info
       animal
     end
 
+    def self.shelter_creation?(shelter_id, shelter_animal_mapping)
+      shelter_animal_mapping[shelter_id] = {} unless shelter_animal_mapping.key?(shelter_id)
+      shelter_animal_mapping[shelter_id]
+    end
+
     def self.shelter_animal_mapping(animal_info_list)
       shelter_animal_mapping = {}
       animal_info_list.each do |animal_info|
-        shelter_id = animal_info['animal_shelter_pkid']
-        animal_id = animal_info['animal_id']
-        shelter_animal_mapping[shelter_id] = {} unless shelter_animal_mapping.key?(shelter_id)
-        shelter_animal_mapping[shelter_id][animal_id] = Info::AnimalMapper.find(animal_info)
+        animal_shelter = AnimalMapper.shelter_creation?(animal_info['animal_shelter_pkid'], shelter_animal_mapping)
+        animal_shelter[animal_info['animal_id']] = Info::AnimalMapper.find(animal_info)
       end
-
       shelter_animal_mapping
     end
 
@@ -61,18 +63,6 @@ module Info
           album_file:
         )
       end
-      # def build_entity
-      #   Entity::Animal.new(
-      #     animal_id:,
-      #     animal_kind:,
-      #     animal_variate:,
-      #     animal_sex:,
-      #     animal_sterilization:,
-      #     animal_bacterin:,
-      #     animal_bodytype:,
-      #     album_file:
-      #   )
-      # end
 
       private
 

@@ -44,26 +44,26 @@ module Info
       AnimalShelterMapper.shelter_setting(shelter_mapper, animal_data, animal_obj)
     end
 
-    def parser_data_init(data)
-      animal_data = AnimalShelterInitiator.animal_parser(data)
-      shelter_data = AnimalShelterInitiator.shelter_parser(data)
-      [animal_data, shelter_data]
+    # refactor for some reek errors
+    def animal_parser
+      animal_data_list = []
+      @gateway_obj.request_body.each do |data|
+        animal_data_list << AnimalShelterInitiator.animal_parser(data)
+      end
+      animal_data_list
     end
 
-    # refactor for some reek errors
-    def animal_shelter_parser
-      animal_data_list = []
+    def shelter_parser
       shelter_data_list = []
       @gateway_obj.request_body.each do |data|
-        animal_data, shelter_data = parser_data_init(data)
-        shelter_data_list << shelter_data
-        animal_data_list << animal_data
+        shelter_data_list << AnimalShelterInitiator.shelter_parser(data)
       end
-      [animal_data_list, shelter_data_list]
+      shelter_data_list
     end
 
     def init
-      animal_data_list, shelter_data_list = animal_shelter_parser
+      animal_data_list = animal_parser
+      shelter_data_list = shelter_parser
       shelter_mapper = ShelterMapper.new(shelter_data_list)
       animal_mapper = AnimalMapper.new(animal_data_list)
       [shelter_mapper, animal_mapper]
