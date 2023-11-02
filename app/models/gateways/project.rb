@@ -6,48 +6,35 @@ require 'json'
 require 'yaml'
 # verify your identification
 
-module EAS
-  module Info
-    # class Info::Project`
-    class Project
-      # attr_accessor :request_body, :shelter_list
-      attr_reader :request_body, :shelter_list
+module Info
+  # class Info::Project`
+  class Project
+    attr_reader :request_body, :shelter_list
 
-      # def initialize(uri)
-      #   @uri = uri
-      #   @request_body = []
-      #   @shelter_list = nil
-      # end
-      def initialize(uri)
-        @uri = uri
-        @request_body = connection
-        # @shelter_list = nil
-      end
-
-      def setup_url
-        url = URI(@uri)
-        http = Net::HTTP.new(url.host, url.port)
-        http.use_ssl = true
-        [url, http]
-      end
-
-      def self.read_body(url, http)
-        request = Net::HTTP::Get.new(url)
-        request['accept'] = 'application/json'
-        http.request(request).read_body
-      end
-
-      def connection
-        url, http = setup_url
-        response_body = Project.read_body(url, http)
-        # raise 'not found' if response_body == '[]'
-
-        JSON.parse(response_body)[1..20]
-      end
+    def initialize(uri)
+      @uri = uri
+      @request_body = connection
     end
 
-    # class Response < SimpleDelegator
-    #   NotFound = Class.new(StandardError)
-    # end
+    def setup_url
+      url = URI(@uri)
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
+      [url, http]
+    end
+
+    def self.read_body(url, http)
+      request = Net::HTTP::Get.new(url)
+      request['accept'] = 'application/json'
+      http.request(request).read_body
+    end
+
+    def connection
+      url, http = setup_url
+      response_body = Project.read_body(url, http)
+      # raise 'not found' if response_body == '[]'
+
+      JSON.parse(response_body)[1..20]
+    end
   end
 end
