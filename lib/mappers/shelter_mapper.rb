@@ -9,35 +9,37 @@ module Info
 
   # class Info::ShelterMapper`
   class ShelterMapper
-    attr_reader :shelter_obj_map, :shelter_info_list
+    attr_reader :shelter_info_list
 
     # store the shelter hash that can access shelter object
-
+    @shelter_obj_map = {}
     def initialize(shelter_info_list)
       @shelter_info_list = shelter_info_list
-      @shelter_obj_map = {}
+    end
+
+    class << self
+      attr_reader :shelter_obj_map
     end
 
     def set_shelter_obj_map(shelter_id, shelter_obj)
-      @shelter_obj_map[shelter_id] = shelter_obj
+      ShelterMapper.shelter_obj_map[shelter_id] = shelter_obj
     end
 
     def shelter_size
-      @shelter_obj_map.size
+      ShelterMapper.shelter_obj_map.size
     end
 
     def create_all_shelter_animal_obj(shelter_animal_map)
       @shelter_info_list.each do |shelter_info|
         shelter_animal_map.each do |shelter_id, animal_map|
           set_shelter_obj_map(shelter_id, find(shelter_info, animal_map))
-          # @shelter_obj_map[shelter_id] = find(shelter_info, animal_list)
         end
       end
     end
 
     def calculate_dog_nums
       num = 0
-      @shelter_obj_map.each do |_, shelter_obj|
+      ShelterMapper.shelter_obj_map.each do |_, shelter_obj|
         num += shelter_obj.dog_number
       end
       num
@@ -45,18 +47,18 @@ module Info
 
     def calculate_cat_nums
       num = 0
-      @shelter_obj_map.each do |_, shelter_obj|
+      ShelterMapper.shelter_obj_map.each do |_, shelter_obj|
         num += shelter_obj.cat_number
       end
       num
     end
 
     def find_animal_in_shelter(shelter_id, animal_id)
-      @shelter_obj_map[shelter_id].animal_object_list[animal_id]
+      ShelterMapper.shelter_obj_map[shelter_id].animal_object_list[animal_id]
     end
 
     def animal_size_in_shelter(rand_shelter_id)
-      @shelter_obj_map[rand_shelter_id].animal_number
+      ShelterMapper.shelter_obj_map[rand_shelter_id].animal_number
     end
 
     def find(shelter_info, animal_map)
@@ -111,14 +113,6 @@ module Info
       end
 
       def animal_object_list
-        # animal_object_list = {}
-        # @animal_map.each do |animal_id, animal_obj|
-        #   animal_object_list[animal.animal_id] = animal
-        #   binding.pry
-        # end
-        # animal_object_list
-
-        # animal_id = 330874 can't read
         @animal_map
       end
 

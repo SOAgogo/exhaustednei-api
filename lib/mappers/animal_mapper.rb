@@ -5,26 +5,26 @@ require_relative '../entities/animal'
 module Info
   # class Info::ShelterMapper`
   class AnimalMapper
+    attr_reader :animal_info_list
+
     def initialize(animal_data_list)
       @animal_info_list = animal_data_list
     end
 
-    def find(animal_info)
-      a = DataMapper.new(animal_info).build_dog_entity if animal_info['animal_kind'] == '狗'
-      a = DataMapper.new(animal_info).build_cat_entity if animal_info['animal_kind'] == '貓'
-      # DataMapper.new(animal_info).build_entity
-
-      a
+    def self.find(animal_info)
+      kind = animal_info['animal_kind']
+      animal = DataMapper.new(animal_info).build_dog_entity if kind == '狗'
+      animal = DataMapper.new(animal_info).build_cat_entity if kind == '貓'
+      animal
     end
 
-    def shelter_animal_mapping
+    def self.shelter_animal_mapping(animal_info_list)
       shelter_animal_mapping = {}
-
-      @animal_info_list.each do |animal_info|
+      animal_info_list.each do |animal_info|
         shelter_id = animal_info['animal_shelter_pkid']
         animal_id = animal_info['animal_id']
-        shelter_animal_mapping[shelter_id] = {} if shelter_animal_mapping[shelter_id].nil?
-        shelter_animal_mapping[shelter_id][animal_id] = find(animal_info)
+        shelter_animal_mapping[shelter_id] = {} unless shelter_animal_mapping.key?(shelter_id)
+        shelter_animal_mapping[shelter_id][animal_id] = Info::AnimalMapper.find(animal_info)
       end
 
       shelter_animal_mapping

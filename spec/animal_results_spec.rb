@@ -27,8 +27,9 @@ describe 'Tests Animal API ' do
       @project = Info::Project.new(RESOURCE_PATH)
       @animal_shelter_initator = Info::AnimalShelterInitiator.new(@project)
       @shelter_mapper, @animal_mapper = @animal_shelter_initator.init
-      # @project.shelter_list = @project.initiate_shelterlist
-      @shelter_mapper.create_all_shelter_animal_obj(@animal_mapper.shelter_animal_mapping)
+      @shelter_mapper.create_all_shelter_animal_obj(
+        Info::AnimalMapper.shelter_animal_mapping(@animal_mapper.animal_info_list)
+      )
     end
 
     ans = File.read('spec/fixtures/DogCat_results.json')
