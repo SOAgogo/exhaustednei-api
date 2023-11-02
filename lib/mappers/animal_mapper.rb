@@ -10,9 +10,11 @@ module Info
     end
 
     def find(animal_info)
-      DataMapper.new(animal_info).build_dog_entity if animal_info['animal_kind'] == '狗'
-      DataMapper.new(animal_info).build_cat_entity if animal_info['animal_kind'] == '貓'
+      a = DataMapper.new(animal_info).build_dog_entity if animal_info['animal_kind'] == '狗'
+      a = DataMapper.new(animal_info).build_cat_entity if animal_info['animal_kind'] == '貓'
       # DataMapper.new(animal_info).build_entity
+
+      a
     end
 
     def shelter_animal_mapping
@@ -24,6 +26,7 @@ module Info
         shelter_animal_mapping[shelter_id] = {} if shelter_animal_mapping[shelter_id].nil?
         shelter_animal_mapping[shelter_id][animal_id] = find(animal_info)
       end
+
       shelter_animal_mapping
     end
 

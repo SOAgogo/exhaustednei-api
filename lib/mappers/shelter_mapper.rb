@@ -119,7 +119,6 @@ module Info
         # animal_object_list
 
         # animal_id = 330874 can't read
-        binding.pry
         @animal_map
       end
 
