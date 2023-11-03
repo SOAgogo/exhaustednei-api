@@ -16,23 +16,17 @@ module Entity
     attribute :animal_bacterin, Strict::Bool
     attribute :animal_bodytype, Strict::String
     attribute :album_file, Strict::String
-    # attribute :animal_place, Strict::String
-    # attribute :animal_opendate, Strict::String
+    attribute :animal_place, Strict::String
+    attribute :animal_opendate, Strict::String
   end
 
   # class Info::Cat`
   class Cat < Animal
     include Dry.Types
-    # def sound
-    #   'meow'
-    # end
   end
 
   # class Info::Dog`
   class Dog < Animal
     include Dry.Types
-    def sound
-      'woof'
-    end
   end
 end
