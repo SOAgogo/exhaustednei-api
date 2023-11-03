@@ -7,10 +7,7 @@ Sequel.migration do
     create_table(:shelter) do
       primary_key :id
 
-      foreign_key :dog_id, :dog
-      foreign_key :cat_id, :cat
-
-      add_foreign_key [:dog_id, :cat_id], :dog, :cat, name: :animal_object_list
+      foreign_key :animal_id :animal
       Integer :animal_shelter_pkid, unique: true
       String :shelter_name
       String :shelter_address
