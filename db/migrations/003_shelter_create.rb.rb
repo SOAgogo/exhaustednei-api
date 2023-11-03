@@ -6,21 +6,22 @@ Sequel.migration do
   change do
     create_table(:shelter) do
       primary_key :id
-      foreign_key :project_id, :dog
-      foreign_key :project_id, :cat
 
-      Integer     :animal_shelter_pkid, unique: true
-      String      :shelter_name
-      String      :shelter_address
-      String      :shelter_tel
-      Integer     :cat_number
-      Integer     :dog_number
-      Integer     :animal_number
+      foreign_key :dog_id, :dog
+      foreign_key :cat_id, :cat
 
-      Hash.map(Strict::Integer, Animal) animal_object_list
+      add_foreign_key [:dog_id, :cat_id], :dog, :cat, name: :animal_object_list
+      Integer :animal_shelter_pkid, unique: true
+      String :shelter_name
+      String :shelter_address
+      String :shelter_tel
+      Integer :cat_number
+      Integer :dog_number
+      Integer :animal_number
 
       DateTime :created_at
       DateTime :updated_at
     end
+
   end
 end
