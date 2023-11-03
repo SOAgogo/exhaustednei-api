@@ -8,16 +8,17 @@ module Entity
   class Animal < Dry::Struct
     # attr_reader :animal_id, :animal_area_pkid, :animal_shelter_pkid, :shelter_name, :shelter_address, :shelter_tel
     include Dry.Types
+    attribute :id,        Integer.optional
     attribute :animal_id, Strict::Integer
     attribute :animal_kind, Strict::String
-    attribute :animal_variate, Strict::String
+    attribute :animal_variate, String.optional
     attribute :animal_sex, Strict::String
     attribute :animal_sterilization, Strict::Bool
     attribute :animal_bacterin, Strict::Bool
     attribute :animal_bodytype, Strict::String
-    attribute :album_file, Strict::String
+    attribute :album_file, String.optional
     attribute :animal_place, Strict::String
-    attribute :animal_opendate, Strict::String
+    attribute :animal_opendate, String.optional
   end
 
   # class Info::Cat`

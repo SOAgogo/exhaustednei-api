@@ -4,8 +4,8 @@ require 'sequel'
 
 module Info
   module Database
-    # Object-Relational Mapper for Members
-    class MemberOrm < Sequel::Model(:dog)
+    # Object-Relational Mapper for Animals
+    class MemberOrm < Sequel::Model(:animal)
       one_to_many :owned_projects,
                   class: :'CodePraise::Database::ProjectOrm',
                   key: :owner_id
