@@ -1,14 +1,27 @@
-Sequel.migration do
-    change do
-        create_table(:dog) do
-            primary_key :id
-            Integer :animal_id, unique: true
-            String :animal_variate, album_file, unique: true, null: false
-            String :animal_kind, animal_sex, animal_bodytype
-            Bool : animal_sterilization, animal_bacterin
+# frozen_string_literal: true
 
-            DateTime :created_at
-            DateTime :updated_at
-        end
+require 'sequel'
+
+Sequel.migration do
+  change do
+    create_table(:animals) do
+      primary_key :id
+
+      foreign_key :shelter_id, :shelters
+
+      Integer :animal_id, unique: true, null: false
+      String :animal_kind, null: false
+      String :animal_variate
+      String :animal_sex, null: false
+      Boolean :animal_sterilization
+      Boolean :animal_bacterin
+      String :animal_bodytype
+
+      String :album_file
+      String :animal_place, null: false
+      String :animal_opendate
+      DateTime :created_at
+      DateTime :updated_at
     end
+  end
 end

@@ -4,7 +4,7 @@ require 'roda'
 require 'slim'
 require 'json'
 
-module EAS
+module Info
   # Web App
   class App < Roda
     plugin :render, engine: 'slim', views: 'app/views'

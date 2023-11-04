@@ -1,18 +1,16 @@
 # frozen_string_literal: true
 
 require 'rake/testtask'
-
-CODE = 'config/ app/'
+require_relative 'require_app'
 
 task :default do
   puts `rake -T`
 end
 
-
-desc 'run tests'
-task :spec do
-  sh 'ruby app/data_init.rb'
-  sh 'ruby spec/animal_results_spec.rb'
+desc 'Run tests once'
+Rake::TestTask.new(:spec) do |t|
+  t.pattern = 'spec/*_spec.rb'
+  t.warning = false
 end
 
 desc 'Keep rerunning tests upon changes'
@@ -30,23 +28,13 @@ task :rerun do
   sh "rerun -c --ignore 'coverage/*' -- bundle exec puma"
 end
 
-namespace :vcr do
-  desc 'delete cassette fixtures'
-  task :wipe do
-    sh 'rm spec/fixtures/cassettes/*.yml' do |ok, _|
-      puts(ok ? 'Cassettes deleted' : 'No cassettes found')
-    end
-  end
-end
-
-
 namespace :db do
   task :config do
     require 'sequel'
     require_relative 'config/environment' # load config info
     require_relative 'spec/helpers/database_helper'
 
-    def app = CodePraise::App
+    def app = Info::App
   end
 
   desc 'Run migrations'
@@ -74,8 +62,8 @@ namespace :db do
       return
     end
 
-    FileUtils.rm(EAS::App.config.DB_FILENAME)
-    puts "Deleted #{EAS::App.config.DB_FILENAME}"
+    FileUtils.rm(Info::App.config.DB_FILENAME)
+    puts "Deleted #{Info::App.config.DB_FILENAME}"
   end
 end
 
@@ -84,10 +72,19 @@ task :console do
   sh 'pry -r ./load_all'
 end
 
+namespace :vcr do
+  desc 'delete cassette fixtures'
+  task :wipe do
+    sh 'rm spec/fixtures/cassettes/*.yml' do |ok, _|
+      puts(ok ? 'Cassettes deleted' : 'No cassettes found')
+    end
+  end
+end
 
 namespace :quality do
+  only_app = 'config/ app/'
+
   desc 'run all static-analysis quality checks'
-  # task all: %i[rubocop reek flog]
   task all: %i[rubocop reek flog]
 
   desc 'code style linter'
@@ -102,6 +99,6 @@ namespace :quality do
 
   desc 'complexiy analysis'
   task :flog do
-    sh "flog #{CODE}"
+    sh "flog -m #{only_app}"
   end
 end
