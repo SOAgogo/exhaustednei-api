@@ -30,6 +30,13 @@ module Repository
         )
       end
 
+      def self.create(entity)
+        raise 'Project already exists' if find(entity)
+
+        db_project = PersistProject.new(entity).call
+        rebuild_entity(db_project)
+      end
+
       def self.rebuild_many(db_records)
         db_records.map do |db_member|
           Members.rebuild_entity(db_member)
@@ -41,6 +48,33 @@ module Repository
         # #<CodePraise::Entity::Member id=nil origin_id=1926704 username="soumyaray" email=nil>
         # to hash {:origin_id=>1926704, :username=>"soumyaray", :email=>nil}
         Database::MemberOrm.find_or_create(entity.to_attr_hash)
+      end
+
+      # Helper class to persist project and its members to database
+      class PersistProject
+        def initialize(entity)
+          @entity = entity
+        end
+
+        def create_project
+          Database::ProjectOrm.create(@entity.to_attr_hash)
+        end
+
+        def call
+          # if owner is not in database, create one, otherwise, return it
+          owner = Members.db_find_or_create(@entity.owner)
+
+          # update owner and contributors field
+          # create_project: 沒有產生owner_id
+          create_project.tap do |db_project|
+            db_project.update(owner:) # 在這邊更新owner_id !!!!
+
+            @entity.contributors.each do |contributor|
+              # add_contributor relates to many_to_many relationship in project_orm.rb
+              db_project.add_contributor(Members.db_find_or_create(contributor))
+            end
+          end
+        end
       end
     end
   end
