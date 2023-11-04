@@ -19,7 +19,7 @@ Sequel.migration do
 
       String :album_file
       String :animal_place, null: false
-      # String :animal_opendate
+      String :animal_opendate
       DateTime :created_at
       DateTime :updated_at
     end
