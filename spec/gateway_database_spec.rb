@@ -5,8 +5,9 @@ require_relative 'helpers/vcr_helper'
 require_relative 'helpers/database_helper'
 
 describe 'Integration Tests of Github API and Database' do
+  VcrHelper.setup_vcr
   before do
-    VcrHelper.setup_vcr
+    VcrHelper.configure_vcr_for_website
   end
 
   random = rand(0..19)

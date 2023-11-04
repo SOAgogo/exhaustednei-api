@@ -40,6 +40,7 @@ module Info
 
       def build_dog_entity
         Entity::Dog.new(
+          id:,
           animal_id:,
           animal_kind:,
           animal_variate:,
@@ -47,12 +48,15 @@ module Info
           animal_sterilization:,
           animal_bacterin:,
           animal_bodytype:,
-          album_file:
+          album_file:,
+          animal_place:,
+          animal_opendate:
         )
       end
 
       def build_cat_entity
         Entity::Cat.new(
+          id:,
           animal_id:,
           animal_kind:,
           animal_variate:,
@@ -60,11 +64,17 @@ module Info
           animal_sterilization:,
           animal_bacterin:,
           animal_bodytype:,
-          album_file:
+          album_file:,
+          animal_place:,
+          animal_opendate:
         )
       end
 
       private
+
+      def id
+        rand(1..1000)
+      end
 
       def animal_id
         @data['animal_id']
@@ -98,13 +108,13 @@ module Info
         @data['album_file']
       end
 
-      # def animal_place
-      #   @data['animal_place']
-      # end
+      def animal_place
+        @data['animal_place']
+      end
 
-      # def animal_opendate
-      #   @data['animal_opendate']
-      # end
+      def animal_opendate
+        @data['animal_opendate']
+      end
     end
   end
 end

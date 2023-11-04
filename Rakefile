@@ -7,6 +7,11 @@ task :default do
   puts `rake -T`
 end
 
+desc 'update daily government data'
+task :update do
+  sh 'ruby app/data_init.rb'
+end
+
 desc 'Run tests once'
 Rake::TestTask.new(:spec) do |t|
   t.pattern = 'spec/*_spec.rb'

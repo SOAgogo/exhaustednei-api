@@ -6,12 +6,21 @@ require 'webmock'
 # Setting up VCR
 module VcrHelper
   CASSETTES_FOLDER = 'spec/fixtures/cassettes'
+  CASSETTE_FILE = 'animals-record'
 
   def self.setup_vcr
     VCR.configure do |c|
       c.cassette_library_dir = CASSETTES_FOLDER
       c.hook_into :webmock
     end
+  end
+
+  def self.configure_vcr_for_website
+    VCR.insert_cassette(
+      CASSETTE_FILE,
+      record: :new_episodes,
+      match_requests_on: %i[method uri headers]
+    )
   end
 
   def self.eject_vcr
