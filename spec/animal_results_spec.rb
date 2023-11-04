@@ -32,7 +32,7 @@ describe 'Tests Animal API ' do
     end
 
     ans = File.read('spec/fixtures/DogCat_results.json')
-    file = JSON.parse(ans)
+    file = JSON.parse(ans)[0..19]
     random = rand(0..19)
     shelter_id_ans = file.map { |n| n['animal_shelter_pkid'] }.uniq.size
     num_dog_ans = file.select { |n| n['animal_kind'] == '狗' }.size
