@@ -5,15 +5,9 @@ require 'sequel'
 module Info
   module Database
     # Object-Relational Mapper for Animals
-    class MemberOrm < Sequel::Model(:animal)
-      one_to_many :owned_projects,
-                  class: :'CodePraise::Database::ProjectOrm',
-                  key: :owner_id
-
-      many_to_many :contributed_projects,
-                   class: :'CodePraise::Database::ProjectOrm',
-                   join_table: :projects_members,
-                   left_key: :member_id, right_key: :project_id
+    class AnimalOrm < Sequel::Model(:animal)
+      many_to_one :shelter_relations,
+                  class: :'Info::Database::ShelterOrm'
 
       plugin :timestamps, update_on_create: true
 

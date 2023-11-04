@@ -5,9 +5,8 @@ require 'sequel'
 Sequel.migration do
   change do
     create_table(:animals) do
-      primary_key :id
-
-      Integer     :animal_id, unique: true
+      primary_key :animal_id, unique: true, null: false
+      foreign_key :shelter_id, :shelters
 
       String :animal_kind, null: false
       String :animal_variate

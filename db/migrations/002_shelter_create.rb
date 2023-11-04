@@ -4,16 +4,12 @@ require 'sequel'
 
 Sequel.migration do
   change do
-    create_table(:shelter) do
-      primary_key :id
+    create_table(:shelters) do
+      primary_key :animal_shelter_pkid, null: false
 
-      Integer     :animal_id, unique: true
-
-      String :animal_shelter_pkid, null: false
       String :shelter_name, null: false
       String :shelter_address, null: false
-      Boolean :shelter_tel
-      Boolean :animal_bacterin
+      String :shelter_tel
 
       Integer :cat_number, null: false
       Integer :dog_number, null: false
