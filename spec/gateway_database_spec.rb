@@ -3,6 +3,7 @@
 require_relative 'spec_helper'
 require_relative 'helpers/vcr_helper'
 require_relative 'helpers/database_helper'
+require 'pry'
 
 describe 'Integration Tests of Github API and Database' do
   VcrHelper.setup_vcr
@@ -32,7 +33,7 @@ describe 'Integration Tests of Github API and Database' do
     it 'HAPPY: should be able to save animal info from government website to database' do
       animal = Info::ShelterMapper.find_animal_in_shelter(rand_shelter_id, rand_animal_id)
 
-      rebuilt = Info::Repository::For.entity(animal).create(animal)
+      rebuilt = Repository::Info::For.entity(animal).create(animal)
 
       _(rebuilt.animal_id).must_equal(animal.animal_id)
       _(rebuilt.animal_kind).must_equal(animal.animal_kind)
@@ -53,7 +54,7 @@ describe 'Integration Tests of Github API and Database' do
     it 'HAPPY: should be able to save shelter info from government website to database' do
       shelter = Info::ShelterMapper.get_shelter_obj(rand_shelter_id)
 
-      rebuilt = Info::Repository::For.entity(shelter).create(shelter)
+      rebuilt = Repository::Info::For.entity(shelter).create(shelter)
 
       _(rebuilt.animal_shelter_pkid).must_equal(shelter.animal_shelter_pkid)
       _(rebuilt.shelter_name).must_equal(shelter.shelter_name)

@@ -15,11 +15,18 @@ module Repository
       def self.rebuild_entity(db_record)
         return nil unless db_record
 
-        Entity::Member.new(
+        Entity::Animal.new(
           id: db_record.id,
-          origin_id: db_record.origin_id,
-          username: db_record.username,
-          email: db_record.email
+          animal_id: db_record.animal_id,
+          animal_kind: db_record.animal_kind,
+          animal_variate: db_record.animal_variate,
+          animal_sex: db_record.animal_sex,
+          animal_sterilization: db_record.animal_sterilization,
+          animal_bacterin: db_record.animal_bacterin,
+          animal_bodytype: db_record.animal_bodytype,
+          album_file: db_record.album_file,
+          animal_place: db_record.animal_place,
+          animal_opendate: db_record.animal_opendate
         )
       end
 

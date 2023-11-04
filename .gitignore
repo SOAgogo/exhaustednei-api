@@ -1,4 +1,6 @@
+_snippets/
+config/secrets.yml
 coverage/*
 !coverage/.resultset.json
-spec/fixtures/*
-config/secrets.yml
+*.db
+db/local/*
