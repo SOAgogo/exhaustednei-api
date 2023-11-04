@@ -5,9 +5,11 @@ require 'sequel'
 Sequel.migration do
   change do
     create_table(:animals) do
-      primary_key :animal_id, unique: true, null: false
+      primary_key :id
+
       foreign_key :shelter_id, :shelters
 
+      Integer :animal_id, unique: true, null: false
       String :animal_kind, null: false
       String :animal_variate
       String :animal_sex, null: false
@@ -17,7 +19,7 @@ Sequel.migration do
 
       String :album_file
       String :animal_place, null: false
-      String :animal_opendate
+      # String :animal_opendate
       DateTime :created_at
       DateTime :updated_at
     end
