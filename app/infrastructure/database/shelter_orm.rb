@@ -5,7 +5,7 @@ require 'sequel'
 module Info
   module Database
     # Object-Relational Mapper for Shelters
-    class ShelterOrm < Sequel::Model(:shelters)
+    class ShelterOrm < Sequel::Model(:shelter)
       one_to_many :animal_relations,
                   class: :'Info::Database::AnimalOrm',
                   key: :shelter_id

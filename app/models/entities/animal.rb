@@ -30,20 +30,4 @@ module Entity
   class Dog < Animal
     include Dry.Types
   end
-
-  # class Info::Cat`
-  class Cat < Animal
-    include Dry.Types
-    # def sound
-    #   'meow'
-    # end
-  end
-
-  # class Info::Dog`
-  class Dog < Animal
-    include Dry.Types
-    def sound
-      'woof'
-    end
-  end
 end
