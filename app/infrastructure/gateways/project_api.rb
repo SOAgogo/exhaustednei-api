@@ -9,18 +9,11 @@ require 'yaml'
 module Info
   # class Info::Project`
   class Project
-    # attr_accessor :request_body, :shelter_list
     attr_reader :request_body, :shelter_list
 
-    # def initialize(uri)
-    #   @uri = uri
-    #   @request_body = []
-    #   @shelter_list = nil
-    # end
     def initialize(uri)
       @uri = uri
       @request_body = connection
-      # @shelter_list = nil
     end
 
     def setup_url
@@ -44,8 +37,4 @@ module Info
       JSON.parse(response_body)[1..20]
     end
   end
-
-  # class Response < SimpleDelegator
-  #   NotFound = Class.new(StandardError)
-  # end
 end

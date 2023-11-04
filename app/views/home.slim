@@ -1,0 +1,51 @@
+.container
+  form role="form" action="/project" method='POST' id='show-project-form'
+    .row.vertical-align.query-bar
+      .col-md-2.col-sm-3
+        .text-right Animal Kind:
+      .col-md-4.col-sm-6
+        input { 
+          type='text' name='animal_kind'
+          id='animal_kind' class="form-control"
+          placeholder="e.g. dog"
+        }
+      .col-md-4
+                      select#sel1.form-control name="town" 
+                        option
+                          | Shelter name
+                        optgroup label=("動物之家") 
+                        option
+                          | 高雄市壽山動物保護教育園區
+                        option
+                          | 臺南市動物之家灣裡站
+                        option
+                          | 臺北市動物之家
+                        option
+                          | 新北市五股區公立動物之家
+                        option
+                          | 花蓮縣狗貓躍動園區
+                        option
+                          | 澎湖縣流浪動物收容中心
+                        option
+                          | 新竹縣動物保護教育園區
+                        option
+                          | 彰化縣流浪狗中途之家
+      .col-md-2.col-sm-3
+        button { 
+          type='submit' id='repo-form-submit' class='submit' 
+          value='submit' class="btn btn-success" 
+        } Show Result
+
+
+    .row
+      .col-md-12.blank-row
+
+
+  .row
+    .img_wrap
+      img src= image_url  alt="一張圖片"  width="500" height="500"
+    .img_wrap
+      img src="https://im.marieclaire.com.tw/m800c533h100b0/assets/mc/201907/5D19A650F04EF1561962064.png"  alt="一張圖片"
+
+
+

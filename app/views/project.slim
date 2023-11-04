@@ -1,0 +1,16 @@
+
+  .row
+    .img_wrap
+    
+      img src="https://im.marieclaire.com.tw/m800c533h100b0/assets/mc/201907/5D19A650F04EF1561962064.png"  alt="一張圖片"
+
+  body
+    h1 Search result
+
+    div.gallery
+      - image_url.each do |item|
+        h1 
+          img src = item[0] width =300 height = 300
+          p == item[1]
+
+
