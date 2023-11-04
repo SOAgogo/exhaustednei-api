@@ -8,6 +8,7 @@ module Entity
   class Shelter < Dry::Struct
     include Dry.Types
     # attribute :animal_area_pkid, Strict::Integer
+    attribute :id, Integer.optional
     attribute :animal_shelter_pkid, Strict::Integer
     attribute :shelter_name, Strict::String
     attribute :shelter_address, Strict::String
