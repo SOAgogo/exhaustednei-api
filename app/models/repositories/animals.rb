@@ -4,7 +4,7 @@ module Repository
   module Info
     # Repository for Members
     class Animals
-      def self.find_animal_id(animal_id)
+      def self.find_all_animal_by_id(_animal_id)
         Database::AnimalOrm.all.map { |db_project| rebuild_entity(db_project) }
       end
 
@@ -34,6 +34,15 @@ module Repository
         )
       end
 
+      def self.find(entity)
+        find_animal_id(entity.animal_id)
+      end
+
+      def self.find_animal_id(animal_id)
+        db_record = Database::ProjectOrm::AnimalOrm.first(animal_id:)
+        rebuild_entity(db_record)
+      end
+
       def self.create(entity)
         raise 'Project already exists' if find(entity)
 
@@ -61,17 +70,18 @@ module Repository
         end
 
         def create_project
-          Database::ProjectOrm.create(@entity.to_attr_hash)
+          Database::ProjectOrm::ShelterOrm.create(@entity.to_attr_hash)
         end
 
         def call
+          binding.pry
           # if owner is not in database, create one, otherwise, return it
-          owner = Shelters.db_find_or_create(@entity.owner)
+          shelter_info = Shelters.db_find_or_create(@entity.animal_place)
 
           # update owner and contributors field
           # create_project: 沒有產生owner_id
           create_project.tap do |db_project|
-            db_project.update(owner:) # 在這邊更新owner_id !!!!
+            db_project.update(shelter_pkid:) # 在這邊更新owner_id !!!!
 
             @entity.contributors.each do |contributor|
               # add_contributor relates to many_to_many relationship in project_orm.rb

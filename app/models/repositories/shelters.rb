@@ -58,8 +58,8 @@ module Repository
 
         Entity::Shelter.new(
           db_record.to_hash.merge(
-            # change here !! 
-            animal_object_list: Animals.rebuild_entity(db_record.owner)
+            # change here !!
+            animal_object_list: Animals.rebuild_many(db_record.owner)
           )
         )
         # after the preious operation, Project object will add owner and contributors field
