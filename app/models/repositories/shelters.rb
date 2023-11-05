@@ -7,7 +7,7 @@ module Repository
     # Repository for Project Entities
     class Shelters
       def self.all
-        Database::ProjectOrm.all.map { |db_project| rebuild_entity(db_project) }
+        Database::ShelterOrm.all.map { |db_project| rebuild_entity(db_project) }
       end
 
       def self.find_full_name(owner_name, project_name)
@@ -22,21 +22,21 @@ module Repository
       end
 
       def self.find(entity)
-        find_origin_id(entity.origin_id)
+        find_origin_id(entity.animal_shelter_pkid)
       end
 
       def self.find_id(id)
-        db_record = Database::ProjectOrm.first(id:)
+        db_record = Database::ShelterOrm.first(id:)
         rebuild_entity(db_record)
       end
 
-      def self.find_origin_id(origin_id)
-        db_record = Database::ProjectOrm.first(origin_id:)
+      def self.find_shelter_id(animal_shelter_pkid)
+        db_record = Database::ShelterOrm.first(animal_shelter_pkid:)
         rebuild_entity(db_record)
       end
 
       def self.create(entity)
-        raise 'Project already exists' if find(entity)
+        raise 'Shelter already exists' if find(entity)
 
         db_project = PersistProject.new(entity).call
         rebuild_entity(db_project)
@@ -45,7 +45,6 @@ module Repository
       def self.rebuild_entity(db_record)
         return nil unless db_record
 
-        # binding.pry
         # db_record.to_hash like this:
         # {:id=>2,
         #   :owner_id=>5,
@@ -56,10 +55,11 @@ module Repository
         #   :size=>3262,
         #   :created_at=>2023-11-03 12:47:06.393605 +0800,
         #   :updated_at=>2023-11-03 12:47:06.396262 +0800}
-        Entity::Project.new(
+
+        Entity::Shelter.new(
           db_record.to_hash.merge(
-            owner: Members.rebuild_entity(db_record.owner),
-            contributors: Members.rebuild_many(db_record.contributors)
+            # change here !! 
+            animal_object_list: Animals.rebuild_entity(db_record.owner)
           )
         )
         # after the preious operation, Project object will add owner and contributors field
@@ -78,7 +78,7 @@ module Repository
 
         def call
           # if owner is not in database, create one, otherwise, return it
-          owner = Members.db_find_or_create(@entity.owner)
+          owner = Animals.db_find_or_create(@entity.owner)
 
           # update owner and contributors field
           # create_project: 沒有產生owner_id

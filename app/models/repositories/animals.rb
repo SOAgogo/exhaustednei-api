@@ -4,6 +4,10 @@ module Repository
   module Info
     # Repository for Members
     class Animals
+      def self.find_animal_id(animal_id)
+        Database::AnimalOrm.all.map { |db_project| rebuild_entity(db_project) }
+      end
+
       def self.find_id(id)
         rebuild_entity(Database::MemberOrm.first(id:))
       end
@@ -62,7 +66,7 @@ module Repository
 
         def call
           # if owner is not in database, create one, otherwise, return it
-          owner = Members.db_find_or_create(@entity.owner)
+          owner = Shelters.db_find_or_create(@entity.owner)
 
           # update owner and contributors field
           # create_project: 沒有產生owner_id

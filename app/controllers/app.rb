@@ -30,19 +30,24 @@ module Info
           # POST /project/
           routing.post do
             animal_kind = routing.params['animal_kind'].downcase
-            routing.redirect "project/#{animal_kind}/"
+            animal_place = routing.params['town'].downcase
+            routing.redirect "project/#{animal_kind}/#{animal_place}"
           end
         end
 
-        routing.on 'dog' do
-          # GET /project/owner/project
-          animal_pic = file.select { |ath| ath['animal_kind'] == '狗' }.map { |ath| ath['album_file'] }
-          animal_dip = file.select { |ath| ath['animal_kind'] == '狗' }.map { |ath| ath['animal_place'] }
+        routing.on 'dog', String do |_suffix|
+          routing.get do
+            # GET /project/dog/{animal_home}
+            # TODO: converrt the pkid to shelter name
+            ShelterMapper.find_animal_in_shelter('臺北市', '狗')
+            animal_pic = file.select { |ath| ath['animal_kind'] == '狗' }.map { |ath| ath['album_file'] }
+            animal_dip = file.select { |ath| ath['animal_kind'] == '狗' }.map { |ath| ath['animal_place'] }
 
-          view 'project', locals: { image_url: animal_pic.zip(animal_dip) }
+            view 'project', locals: { image_url: animal_pic.zip(animal_dip) }
+          end
         end
-        routing.on 'cat' do
-          # GET /project/owner/project
+        routing.on 'cat', String do |_suffix|
+          # GET /project/cat/{animal_home}
           animal_pic = file.select { |ath| ath['animal_kind'] == '貓' }.map { |ath| ath['album_file'] }
           animal_dip = file.select { |ath| ath['animal_kind'] == '貓' }.map { |ath| ath['animal_place'] }
 
