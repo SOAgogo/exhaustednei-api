@@ -47,7 +47,9 @@ module Info
           animal_sterilization:,
           animal_bacterin:,
           animal_bodytype:,
-          album_file:
+          album_file:,
+          animal_place:,
+          animal_opendate:
         )
       end
 
@@ -60,7 +62,9 @@ module Info
           animal_sterilization:,
           animal_bacterin:,
           animal_bodytype:,
-          album_file:
+          album_file:,
+          animal_place:,
+          animal_opendate:
         )
       end
 
@@ -98,13 +102,13 @@ module Info
         @data['album_file']
       end
 
-      # def animal_place
-      #   @data['animal_place']
-      # end
+      def animal_place
+        @data['animal_place']
+      end
 
-      # def animal_opendate
-      #   @data['animal_opendate']
-      # end
+      def animal_opendate
+        @data['animal_opendate']
+      end
     end
   end
 end
