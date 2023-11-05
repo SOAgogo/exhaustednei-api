@@ -7,7 +7,7 @@ module Database
     # Object-Relational Mapper for Animals
     class AnimalOrm < Sequel::Model(:animals)
       many_to_one :shelter_relations,
-                  class: :'Info::Database::ShelterOrm'
+                  class: :'Database::ProjectOrm::ShelterOrm'
 
       plugin :timestamps, update_on_create: true
 

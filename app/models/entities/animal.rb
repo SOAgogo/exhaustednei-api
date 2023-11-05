@@ -19,6 +19,10 @@ module Entity
     attribute :album_file, String.optional
     attribute :animal_place, Strict::String
     attribute :animal_opendate, String.optional
+
+    def to_attr_hash
+      to_hash.except(:id)
+    end
   end
 
   # class Info::Cat`

@@ -73,9 +73,7 @@ describe 'Tests Animal API ' do
       # binding.pry
       random_id = file[random]['animal_id']
       animal = Info::ShelterMapper.find_animal_in_shelter(rand_shelter_id, random_id) # shelter_id, animal_id
-      #   _(shelter_mapper.animal_object_hash[random_id].animal_id).must_equal file[random]['animal_id']
-      #   _(shelter_mapper.animal_object_hash[random_id].animal_bodytype).must_equal file[random]['animal_bodytype']
-      #   _(shelter_mapper.animal_object_hash[random_id].animal_variate).must_equal file[random]['animal_Variety']
+
       _(animal.animal_id).must_equal file[random]['animal_id']
       _(animal.animal_bodytype).must_equal file[random]['animal_bodytype']
       _(animal.animal_variate).must_equal file[random]['animal_Variety']

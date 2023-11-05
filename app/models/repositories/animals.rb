@@ -5,15 +5,15 @@ module Repository
     # Repository for Members
     class Animals
       def self.find_all_animal_by_id(_animal_id)
-        Database::AnimalOrm.all.map { |db_project| rebuild_entity(db_project) }
+        Database::ProjectOrm::AnimalOrm.all.map { |db_project| rebuild_entity(db_project) }
       end
 
       def self.find_id(id)
-        rebuild_entity(Database::MemberOrm.first(id:))
+        rebuild_entity(Database::ProjectOrm::AnimalOrm.first(id:))
       end
 
       def self.find_username(username)
-        rebuild_entity(Database::MemberOrm.first(username:))
+        rebuild_entity(Database::ProjectOrm::AnimalOrm.first(username:))
       end
 
       def self.rebuild_entity(db_record)
@@ -50,17 +50,31 @@ module Repository
         rebuild_entity(db_project)
       end
 
+      def self.find_full_animals_in_shelter(shelter_name)
+        Database::ProjectOrm::AnimalOrm
+          .left_join(:shelters, id: :shelter_id)
+          .where(shelter_name:)
+          .all
+      end
+
       def self.rebuild_many(db_records)
         db_records.map do |db_member|
           Members.rebuild_entity(db_member)
         end
       end
 
+      def self.store_several(animal_obj_list)
+        animal_obj_list.map do |_, animal_obj|
+          db_find_or_create(animal_obj)
+        end
+      end
+
+      #
       # create an entry for each contributor
       def self.db_find_or_create(entity)
         # #<CodePraise::Entity::Member id=nil origin_id=1926704 username="soumyaray" email=nil>
         # to hash {:origin_id=>1926704, :username=>"soumyaray", :email=>nil}
-        Database::MemberOrm.find_or_create(entity.to_attr_hash)
+        Database::ProjectOrm::AnimalOrm.find_or_create(entity.to_attr_hash)
       end
 
       # Helper class to persist project and its members to database
@@ -70,25 +84,24 @@ module Repository
         end
 
         def create_project
-          Database::ProjectOrm::ShelterOrm.create(@entity.to_attr_hash)
+          Database::ProjectOrm::AnimalOrm.create(@entity.to_attr_hash)
         end
 
-        def call
-          binding.pry
-          # if owner is not in database, create one, otherwise, return it
-          shelter_info = Shelters.db_find_or_create(@entity.animal_place)
+        # def call
+        #   # if owner is not in database, create one, otherwise, return it
+        #   # animal_info = Shelters.db_find_or_create(@entity.animal_place)
 
-          # update owner and contributors field
-          # create_project: 沒有產生owner_id
-          create_project.tap do |db_project|
-            db_project.update(shelter_pkid:) # 在這邊更新owner_id !!!!
+        #   # update owner and contributors field
+        #   # create_project: 沒有產生owner_id
+        #   create_project.tap do |db_project|
+        #     db_project.update(shelter_relations:) # 在這邊更新shelter_id !!!!
 
-            @entity.contributors.each do |contributor|
-              # add_contributor relates to many_to_many relationship in project_orm.rb
-              db_project.add_contributor(Members.db_find_or_create(contributor))
-            end
-          end
-        end
+        #     @entity.contributors.each do |contributor|
+        #       # add_contributor relates to many_to_many relationship in project_orm.rb
+        #       db_project.add_contributor(Members.db_find_or_create(contributor))
+        #     end
+        #   end
+        # end
       end
     end
   end
