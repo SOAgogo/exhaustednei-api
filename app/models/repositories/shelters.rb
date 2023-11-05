@@ -39,6 +39,8 @@ module Repository
       def self.create(entity)
         raise 'Shelter already exists' if find(entity)
 
+
+        # binding.pry
         db_project = PersistShelter.new(entity).call
 
         rebuild_entity(db_project)
@@ -59,6 +61,7 @@ module Repository
         #   :updated_at=>2023-11-03 12:47:06.396262 +0800}
 
         db_animals = Animals.find_full_animals_in_shelter(db_record.shelter_name)
+
 
         Entity::Shelter.new(
           db_record.to_hash.merge(
@@ -98,7 +101,7 @@ module Repository
               db_animal.save
             end
           end
-
+          
           shelter
         end
       end

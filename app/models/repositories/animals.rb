@@ -52,8 +52,8 @@ module Repository
 
       def self.find_full_animals_in_shelter(shelter_name)
         Database::ProjectOrm::AnimalOrm
-          .left_join(:shelters, id: :shelter_id)
-          .where(shelter_name:)
+          # .right_join(:shelters, id: :shelter_id)
+          .where(animal_place: shelter_name)
           .all
       end
 

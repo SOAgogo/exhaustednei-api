@@ -62,6 +62,7 @@ describe 'Tests Animal API ' do
 
     ## TODO: right number
     it 'HAPPY: shelter should provide the correct animal numbers' do
+      binding.pry
       aml_number = Info::ShelterMapper.animal_size_in_shelter(rand_shelter_id)
       _(aml_number).must_equal num_aml_shelter_ans
       # _(project.git_url).must_equal CORRECT['git_url']
