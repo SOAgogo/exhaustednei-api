@@ -32,7 +32,6 @@ describe 'Integration Tests of Github API and Database' do
     it 'HAPPY: should be able to save shelter info from government website to database' do
       shelter = Info::ShelterMapper.get_shelter_obj(rand_shelter_id)
 
-      
       rebuilt = Repository::Info::For.entity(shelter).create(shelter)
 
       _(rebuilt.animal_shelter_pkid).must_equal(shelter.animal_shelter_pkid)

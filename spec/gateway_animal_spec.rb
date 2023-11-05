@@ -26,9 +26,11 @@ describe 'Tests Animal API ' do
       @project = Info::Project.new(RESOURCE_PATH)
       @animal_shelter_initator = Info::AnimalShelterInitiator.new(@project)
       @shelter_mapper, @animal_mapper = @animal_shelter_initator.init
+
       @shelter_mapper.create_all_shelter_animal_obj(
         Info::AnimalMapper.shelter_animal_mapping(@animal_mapper.animal_info_list)
       )
+      # binding.pry
     end
 
     ans = File.read('spec/fixtures/DogCat_results.json')
@@ -62,7 +64,6 @@ describe 'Tests Animal API ' do
 
     ## TODO: right number
     it 'HAPPY: shelter should provide the correct animal numbers' do
-      binding.pry
       aml_number = Info::ShelterMapper.animal_size_in_shelter(rand_shelter_id)
       _(aml_number).must_equal num_aml_shelter_ans
       # _(project.git_url).must_equal CORRECT['git_url']
