@@ -149,21 +149,21 @@ DEPENDENCIES
   flog
   hirb
   http (~> 5.0)
-  minitest (~> 5.0)
-  minitest-rg (~> 5.0)
+  minitest (~> 5)
+  minitest-rg (~> 5)
   pry
   puma (~> 6.0)
   rake
   reek
-  rerun (~> 0.0)
+  rerun (~> 0)
   roda (~> 3.0)
-  rubocop (~> 1.0)
+  rubocop
   sequel (~> 5.0)
-  simplecov (~> 0.0)
+  simplecov (~> 0)
   slim (~> 5.0)
   sqlite3 (~> 1.0)
-  vcr (~> 6.0)
-  webmock (~> 3.0)
+  vcr (~> 6)
+  webmock (~> 3)
 
 BUNDLED WITH
    2.4.21

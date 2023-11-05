@@ -3,6 +3,7 @@
 require 'roda'
 require 'slim'
 require 'json'
+require 'uri'
 
 module Info
   # Web App
@@ -30,21 +31,21 @@ module Info
           # POST /project/
           routing.post do
             animal_kind = routing.params['animal_kind'].downcase
-            routing.redirect "project/#{animal_kind}/"
+            shelter_name = routing.params['shelter_name']
+            routing.redirect "project/#{animal_kind}/#{shelter_name}"
           end
         end
 
-        routing.on 'dog' do
+        routing.on String, String do |animal_kind, shelter_name|
           # GET /project/owner/project
-          animal_pic = file.select { |ath| ath['animal_kind'] == '狗' }.map { |ath| ath['album_file'] }
-          animal_dip = file.select { |ath| ath['animal_kind'] == '狗' }.map { |ath| ath['animal_place'] }
 
-          view 'project', locals: { image_url: animal_pic.zip(animal_dip) }
-        end
-        routing.on 'cat' do
-          # GET /project/owner/project
-          animal_pic = file.select { |ath| ath['animal_kind'] == '貓' }.map { |ath| ath['album_file'] }
-          animal_dip = file.select { |ath| ath['animal_kind'] == '貓' }.map { |ath| ath['animal_place'] }
+          animal_kind == 'dog' ? animal_kind_ch = '狗' : animal_kind_ch = '貓' 
+          animal_pic = file.select { |ath| (ath['animal_kind'] == animal_kind_ch) && (ath['shelter_name'] == URI.decode_www_form_component(shelter_name)
+          )}
+          .map { |ath| ath['album_file'] }
+          animal_dip = file.select { |ath| (ath['animal_kind'] == animal_kind_ch) && (ath['shelter_name'] == URI.decode_www_form_component(shelter_name)
+          )}
+          .map { |ath| ath['animal_place'] }
 
           view 'project', locals: { image_url: animal_pic.zip(animal_dip) }
         end
