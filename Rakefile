@@ -7,6 +7,11 @@ task :default do
   puts `rake -T`
 end
 
+desc 'update daily government data'
+task :update do
+  sh 'ruby app/data_init.rb'
+end
+
 desc 'Run tests once'
 Rake::TestTask.new(:spec) do |t|
   t.pattern = 'spec/*_spec.rb'
@@ -62,8 +67,8 @@ namespace :db do
       return
     end
 
-    FileUtils.rm(CodePraise::App.config.DB_FILENAME)
-    puts "Deleted #{CodePraise::App.config.DB_FILENAME}"
+    FileUtils.rm(Info::App.config.DB_FILENAME)
+    puts "Deleted #{Info::App.config.DB_FILENAME}"
   end
 end
 

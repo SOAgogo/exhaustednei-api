@@ -30,4 +30,14 @@ module Entity
   class Dog < Animal
     include Dry.Types
   end
+
+  # class Info::Cat`
+  class Cat < Animal
+    include Dry.Types
+  end
+
+  # class Info::Dog`
+  class Dog < Animal
+    include Dry.Types
+  end
 end
