@@ -39,9 +39,8 @@ module Info
         routing.on String, String do |animal_kind, shelter_name|
           # GET /project/owner/project
 
-          animal_kind == 'dog' ? animal_kind_ch = '狗' : animal_kind_ch = '貓' 
-          animal_info = file.select { |ath| (ath['animal_kind'] == animal_kind_ch) && (ath['shelter_name'] == URI.decode_www_form_component(shelter_name)
-          )}
+          animal_kind_ch = animal_kind == 'dog' ? '狗' : '貓'
+          animal_info = file.select { |ath| (ath['animal_kind'] == animal_kind_ch) && (ath['shelter_name'] == URI.decode_www_form_component(shelter_name)) }
           animal_pic = animal_info.map { |ath| ath['album_file'] }
           animal_id = animal_info.map { |ath| ath['animal_id'] }
           animal_age = animal_info.map { |ath| ath['animal_age'] }
@@ -49,10 +48,9 @@ module Info
 
           view 'project', locals: {
             shelter_name: URI.decode_www_form_component(shelter_name),
-            image_url: animal_pic.zip(animal_id , animal_age , animal_colour),
-            animal_num: animal_pic.length(),
-            animal_kind: animal_kind
-
+            image_url: animal_pic.zip(animal_id, animal_age, animal_colour),
+            animal_num: animal_pic.length,
+            animal_kind:
           }
         end
       end
