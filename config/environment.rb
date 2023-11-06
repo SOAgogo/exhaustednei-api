@@ -2,6 +2,11 @@
 
 require 'figaro'
 require 'roda'
+require 'figaro'
+require 'roda'
+
+require 'sequel'
+require 'yaml'
 
 require 'sequel'
 require 'yaml'

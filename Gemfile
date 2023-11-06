@@ -29,18 +29,17 @@ group :development, :test do
 end
 
 # Testing
-group :test do
-  gem 'minitest', '~> 5.0'
-  gem 'minitest-rg', '~> 5.0'
-  gem 'simplecov', '~> 0.0'
-  gem 'vcr', '~> 6.0'
-  gem 'webmock', '~> 3.0'
-end
+gem 'minitest', '~> 5'
+gem 'minitest-rg', '~> 5'
+gem 'simplecov', '~> 0'
+gem 'vcr', '~> 6'
+gem 'webmock', '~> 3'
 
-# Development
-group :development do
-  gem 'flog'
-  gem 'reek'
-  gem 'rerun', '~> 0.0'
-  gem 'rubocop', '~> 1.0'
-end
+# Debugging
+gem 'pry'
+gem 'rerun', '~> 0'
+
+# Code Quality
+gem 'flog'
+gem 'reek'
+gem 'rubocop'
