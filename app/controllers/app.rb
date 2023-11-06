@@ -38,9 +38,9 @@ module Info
 
         routing.on String, String do |animal_kind, shelter_name|
           # GET /project/owner/project
-
-          animal_kind_ch = animal_kind == 'dog' ? '狗' : '貓'
-          animal_info = file.select { |ath| (ath['animal_kind'] == animal_kind_ch) && (ath['shelter_name'] == URI.decode_www_form_component(shelter_name)) }
+          sn_ch = URI.decode_www_form_component(shelter_name)
+          ak_ch = animal_kind == 'dog' ? '狗' : '貓'
+          animal_info = file.select { |ath| ath['animal_kind'] == ak_ch && ath['shelter_name'] == sn_ch }
           animal_pic = animal_info.map { |ath| ath['album_file'] }
           animal_id = animal_info.map { |ath| ath['animal_id'] }
           animal_age = animal_info.map { |ath| ath['animal_age'] }
