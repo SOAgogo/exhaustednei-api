@@ -32,6 +32,7 @@ describe 'Integration Tests of Github API and Database' do
     it 'HAPPY: should be able to save shelter info from government website to database' do
       shelter = Info::ShelterMapper.get_shelter_obj(rand_shelter_id)
 
+      # expected: return shelter object
       rebuilt = Repository::Info::For.entity(shelter).create(shelter)
 
       _(rebuilt.animal_shelter_pkid).must_equal(shelter.animal_shelter_pkid)
@@ -43,10 +44,20 @@ describe 'Integration Tests of Github API and Database' do
       _(rebuilt.animal_number).must_equal(shelter.animal_number)
 
       shelter.animal_object_list.each do |animal_id, animal_obj|
-        found = rebuilt.animals.find do |animal|
-          animal.animal_id == animal_id
-        end
+        found, err = rebuilt.animal_object_list[animal_id]
+
+        assert_nil err
+
         _(found.animal_id).must_equal(animal_obj.animal_id)
+        _(found.animal_kind).must_equal(animal_obj.animal_kind)
+        _(found.animal_variate).must_equal(animal_obj.animal_variate)
+        _(found.animal_sex).must_equal(animal_obj.animal_sex)
+        _(found.animal_sterilization).must_equal(animal_obj.animal_sterilization)
+        _(found.animal_bacterin).must_equal(animal_obj.animal_bacterin)
+        _(found.animal_bodytype).must_equal(animal_obj.animal_bodytype)
+        _(found.album_file).must_equal(animal_obj.album_file)
+        _(found.animal_place).must_equal(animal_obj.animal_place)
+        _(found.animal_opendate).must_equal(animal_obj.animal_opendate)
       end
     end
   end

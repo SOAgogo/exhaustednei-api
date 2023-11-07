@@ -11,17 +11,6 @@ module Repository
         Database::ShelterOrm.all.map { |db_project| rebuild_entity(db_project) }
       end
 
-      def self.find_full_name(owner_name, project_name)
-        # SELECT * FROM `projects` LEFT JOIN `members`
-        # ON (`members`.`id` = `projects`.`owner_id`)
-        # WHERE ((`username` = 'owner_name') AND (`name` = 'project_name'))
-        db_project = Database::ProjectOrm
-          .left_join(:members, id: :owner_id)
-          .where(username: owner_name, name: project_name)
-          .first
-        rebuild_entity(db_project)
-      end
-
       def self.find(entity)
         find_shelter_id(entity.animal_shelter_pkid)
       end
@@ -39,7 +28,6 @@ module Repository
       def self.create(entity)
         raise 'Shelter already exists' if find(entity)
 
-
         # binding.pry
         db_project = PersistShelter.new(entity).call
 
@@ -49,19 +37,7 @@ module Repository
       def self.rebuild_entity(db_record)
         return nil unless db_record
 
-        # db_record.to_hash like this:
-        # {:id=>2,
-        #   :owner_id=>5,
-        #   :origin_id=>518708142,
-        #   :name=>"kwok",
-        #   :ssh_url=>"git://github.com/kubernetes-sigs/kwok.git",
-        #   :http_url=>"https://github.com/kubernetes-sigs/kwok",
-        #   :size=>3262,
-        #   :created_at=>2023-11-03 12:47:06.393605 +0800,
-        #   :updated_at=>2023-11-03 12:47:06.396262 +0800}
-
         db_animals = Animals.find_full_animals_in_shelter(db_record.shelter_name)
-
 
         Entity::Shelter.new(
           db_record.to_hash.merge(
@@ -101,7 +77,7 @@ module Repository
               db_animal.save
             end
           end
-          
+
           shelter
         end
       end

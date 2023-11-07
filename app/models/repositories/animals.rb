@@ -58,9 +58,11 @@ module Repository
       end
 
       def self.rebuild_many(db_records)
+        animal_obj_list = {}
         db_records.map do |db_member|
-          Members.rebuild_entity(db_member)
+          animal_obj_list[db_member.animal_id] = Animals.rebuild_entity(db_member)
         end
+        animal_obj_list
       end
 
       def self.store_several(animal_obj_list)
@@ -86,22 +88,6 @@ module Repository
         def create_project
           Database::ProjectOrm::AnimalOrm.create(@entity.to_attr_hash)
         end
-
-        # def call
-        #   # if owner is not in database, create one, otherwise, return it
-        #   # animal_info = Shelters.db_find_or_create(@entity.animal_place)
-
-        #   # update owner and contributors field
-        #   # create_project: 沒有產生owner_id
-        #   create_project.tap do |db_project|
-        #     db_project.update(shelter_relations:) # 在這邊更新shelter_id !!!!
-
-        #     @entity.contributors.each do |contributor|
-        #       # add_contributor relates to many_to_many relationship in project_orm.rb
-        #       db_project.add_contributor(Members.db_find_or_create(contributor))
-        #     end
-        #   end
-        # end
       end
     end
   end

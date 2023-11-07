@@ -30,7 +30,6 @@ describe 'Tests Animal API ' do
       @shelter_mapper.create_all_shelter_animal_obj(
         Info::AnimalMapper.shelter_animal_mapping(@animal_mapper.animal_info_list)
       )
-      # binding.pry
     end
 
     ans = File.read('spec/fixtures/DogCat_results.json')
@@ -79,6 +78,7 @@ describe 'Tests Animal API ' do
       _(animal.animal_id).must_equal file[random]['animal_id']
       _(animal.animal_bodytype).must_equal file[random]['animal_bodytype']
       _(animal.animal_variate).must_equal file[random]['animal_Variety']
+      _(animal.animal_place).must_equal file[random]['animal_place']
     end
 
     it 'SAD: should raise exception on incorrect url' do
