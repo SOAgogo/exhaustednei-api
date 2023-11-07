@@ -3,6 +3,7 @@
 require 'roda'
 require 'slim'
 require 'json'
+require 'uri'
 
 module Info
   # Web App
@@ -30,28 +31,27 @@ module Info
           # POST /project/
           routing.post do
             animal_kind = routing.params['animal_kind'].downcase
-            animal_place = routing.params['town'].downcase
-            routing.redirect "project/#{animal_kind}/#{animal_place}"
+            shelter_name = routing.params['shelter_name']
+            routing.redirect "project/#{animal_kind}/#{shelter_name}"
           end
         end
 
-        routing.on 'dog', String do |_suffix|
-          routing.get do
-            # GET /project/dog/{animal_home}
-            # TODO: converrt the pkid to shelter name
-            ShelterMapper.find_animal_in_shelter('臺北市', '狗')
-            animal_pic = file.select { |ath| ath['animal_kind'] == '狗' }.map { |ath| ath['album_file'] }
-            animal_dip = file.select { |ath| ath['animal_kind'] == '狗' }.map { |ath| ath['animal_place'] }
+        routing.on String, String do |animal_kind, shelter_name|
+          # GET /project/owner/project
+          sn_ch = URI.decode_www_form_component(shelter_name)
+          ak_ch = animal_kind == 'dog' ? '狗' : '貓'
+          animal_info = file.select { |ath| ath['animal_kind'] == ak_ch && ath['shelter_name'] == sn_ch }
+          animal_pic = animal_info.map { |ath| ath['album_file'] }
+          animal_id = animal_info.map { |ath| ath['animal_id'] }
+          animal_age = animal_info.map { |ath| ath['animal_age'] }
+          animal_colour = animal_info.map { |ath| ath['animal_colour'] }
 
-            view 'project', locals: { image_url: animal_pic.zip(animal_dip) }
-          end
-        end
-        routing.on 'cat', String do |_suffix|
-          # GET /project/cat/{animal_home}
-          animal_pic = file.select { |ath| ath['animal_kind'] == '貓' }.map { |ath| ath['album_file'] }
-          animal_dip = file.select { |ath| ath['animal_kind'] == '貓' }.map { |ath| ath['animal_place'] }
-
-          view 'project', locals: { image_url: animal_pic.zip(animal_dip) }
+          view 'project', locals: {
+            shelter_name: URI.decode_www_form_component(shelter_name),
+            image_url: animal_pic.zip(animal_id, animal_age, animal_colour),
+            animal_num: animal_pic.length,
+            animal_kind:
+          }
         end
       end
     end
