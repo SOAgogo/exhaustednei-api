@@ -25,19 +25,20 @@ module Info
       ShelterMapper.shelter_obj_map[shelter_id] = shelter_obj
     end
 
+    def self.get_shelter_obj(shelter_id)
+      ShelterMapper.shelter_obj_map[shelter_id]
+    end
+
     def self.shelter_size
       ShelterMapper.shelter_obj_map.size
     end
 
-    def self.set_all_animal_to_shelter(shelter_animal_map, shelter_info)
-      shelter_animal_map.each do |shelter_id, animal_map|
-        ShelterMapper.set_shelter_obj_map(shelter_id, ShelterMapper.find(shelter_info, animal_map))
-      end
-    end
-
     def create_all_shelter_animal_obj(shelter_animal_map)
       @shelter_info_list.each do |shelter_info|
-        ShelterMapper.set_all_animal_to_shelter(shelter_animal_map, shelter_info)
+        shelter_id = shelter_info['animal_shelter_pkid']
+        ShelterMapper.set_shelter_obj_map(shelter_id,
+                                          ShelterMapper.find(shelter_info, shelter_animal_map[shelter_id]))
+        # end
       end
     end
 
@@ -82,6 +83,7 @@ module Info
       def build_entity
         Entity::Shelter.new(
           # @animal_attributes
+          id:,
           animal_shelter_pkid:,
           shelter_name:,
           shelter_address:,
@@ -98,6 +100,9 @@ module Info
       # def animal_area_pkid
       #   @data['animal_area_pkid']
       # end
+      def id
+        rand(1..1000)
+      end
 
       def animal_shelter_pkid
         @data['animal_shelter_pkid']

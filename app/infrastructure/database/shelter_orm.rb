@@ -2,12 +2,12 @@
 
 require 'sequel'
 
-module Info
-  module Database
+module Database
+  module ProjectOrm
     # Object-Relational Mapper for Shelters
-    class ShelterOrm < Sequel::Model(:shelter)
+    class ShelterOrm < Sequel::Model(:shelters)
       one_to_many :animal_relations,
-                  class: :'Info::Database::AnimalOrm',
+                  class: :'Database::ProjectOrm::AnimalOrm',
                   key: :shelter_id
 
       plugin :timestamps, update_on_create: true

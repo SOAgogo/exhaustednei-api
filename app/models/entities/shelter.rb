@@ -19,5 +19,10 @@ module Entity
     attribute :cat_number, Strict::Integer
     attribute :dog_number, Strict::Integer
     attribute :animal_number, Strict::Integer
+
+    def to_attr_hash
+      # to_hash.reject { |key, _| %i[id owner contributors].include? key }
+      to_hash.except(:id, :animal_object_list)
+    end
   end
 end

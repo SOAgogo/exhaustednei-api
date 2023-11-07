@@ -40,6 +40,7 @@ module Info
 
       def build_dog_entity
         Entity::Dog.new(
+          id:,
           animal_id:,
           animal_kind:,
           animal_variate:,
@@ -55,6 +56,7 @@ module Info
 
       def build_cat_entity
         Entity::Cat.new(
+          id:,
           animal_id:,
           animal_kind:,
           animal_variate:,
@@ -69,6 +71,10 @@ module Info
       end
 
       private
+
+      def id
+        rand(1..1000)
+      end
 
       def animal_id
         @data['animal_id']
