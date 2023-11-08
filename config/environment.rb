@@ -11,7 +11,7 @@ require 'yaml'
 require 'sequel'
 require 'yaml'
 
-module Info
+module PetAdoption
   # Configuration for the App
   class App < Roda
     plugin :environments
