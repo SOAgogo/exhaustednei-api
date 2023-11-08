@@ -3,4 +3,4 @@
 require_relative 'require_app'
 require_app
 
-run Info::App.freeze.app
+run PetAdoption::App.freeze.app

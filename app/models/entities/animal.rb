@@ -3,6 +3,7 @@
 # verify your identification
 require 'dry-types'
 require 'dry-struct'
+
 module Entity
   # class Info::Animal`
   class Animal < Dry::Struct
@@ -19,16 +20,10 @@ module Entity
     attribute :album_file, String.optional
     attribute :animal_place, Strict::String
     attribute :animal_opendate, String.optional
-  end
 
-  # class Info::Cat`
-  class Cat < Animal
-    include Dry.Types
-  end
-
-  # class Info::Dog`
-  class Dog < Animal
-    include Dry.Types
+    def to_attr_hash
+      to_hash.except(:id)
+    end
   end
 
   # class Info::Cat`
