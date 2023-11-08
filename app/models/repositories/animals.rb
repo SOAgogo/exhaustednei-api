@@ -34,13 +34,9 @@ module Repository
         )
       end
 
-      def self.find(entity)
-        find_animal_id(entity.animal_id)
-      end
-
-      def self.find_animal_id(animal_id)
-        db_record = Database::ProjectOrm::AnimalOrm.first(animal_id:)
-        rebuild_entity(db_record)
+      def self.select_animal_by_shelter_name(animal_kind, shelter_name)
+        db_record = Database::ProjectOrm::AnimalOrm.where(animal_kind:, animal_place: shelter_name).all
+        rebuild_many(db_record)
       end
 
       def self.create(entity)

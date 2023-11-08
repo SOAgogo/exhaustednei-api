@@ -17,7 +17,7 @@ module Repository
       end
 
       def self.store_shelter_info_to_db
-        (0..19).each do |i|
+        (0..19).map do |i|
           shelter = PetAdoption::Info::ShelterMapper.get_shelter_obj(CORRECT[i]['animal_shelter_pkid'])
           Repository::Info::For.entity(shelter).create(shelter)
         end

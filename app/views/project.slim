@@ -8,7 +8,7 @@ div.gallery {
       img src="https://im.marieclaire.com.tw/m800c533h100b0/assets/mc/201907/5D19A650F04EF1561962064.png"  alt="一張圖片"
 
   body
-    h1 #{shelter_name} Search result: total #{animal_num} #{animal_kind}
+    h1 #{shelter_name} Search result: total #{animal_num} search result: #{animal_kind}
 
     div.gallery
       - image_url.each do |item|
@@ -20,5 +20,20 @@ div.gallery {
           | Age : #{item[2]}
           br
           | Color : #{item[3]}
+          br 
+          | Sex : #{item[4]}
+          br 
+          | Sterilization : #{item[5]}
+          br 
+          | Bacterin : #{item[6]}
+          br 
+          | BodyType : #{item[7]}
+          br 
+          | AnimalPlace : #{item[8]}
+          br 
+          | AnimalDate : #{item[9]}
+
+      
+
 
 
