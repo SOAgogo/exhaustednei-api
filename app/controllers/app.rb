@@ -5,7 +5,7 @@ require 'slim'
 require 'json'
 require 'uri'
 
-module Info
+module PetAdoption
   # Web App
   class App < Roda
     plugin :render, engine: 'slim', views: 'app/views'
@@ -13,8 +13,6 @@ module Info
     plugin :common_logger, $stderr
     plugin :halt
     plugin :json
-    # ans = File.read('spec/fixtures/DogCat_results.json')
-    # file = JSON.parse(ans)
 
     route do |routing|
       random = rand(0..19)
@@ -24,8 +22,6 @@ module Info
 
       # GET /
       routing.root do
-        # random = rand(0..19)
-        # animal_pic = file[random]['album_file']
         animal_pic = Repository::Info::Animals
         view 'home', locals: { image_url: animal_pic }
       end

@@ -3,6 +3,7 @@
 # verify your identification
 require 'dry-types'
 require 'dry-struct'
+
 module Entity
   # class Info::Animal`
   class Animal < Dry::Struct

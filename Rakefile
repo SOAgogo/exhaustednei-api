@@ -55,7 +55,7 @@ namespace :db do
     require_relative 'config/environment' # load config info
     require_relative 'spec/helpers/database_helper'
 
-    def app = Info::App
+    def app = PetAdoption::App
   end
 
   desc 'Run data initialization for database'
@@ -63,6 +63,9 @@ namespace :db do
     require_relative 'spec/helpers/init_database_data_helper'
     require_app('infrastructure')
     require_app('models')
+    puts 'wipe database'
+    DatabaseHelper.wipe_database
+    puts 'data initializtion for database'
     Repository::App::PrepareDatabase.init_database
     sh 'ruby spec/helpers/init_database_data_helper.rb'
   end
