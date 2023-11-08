@@ -28,7 +28,6 @@ Animal adoption platform will pull data from the data source from agriculture bu
 ## Database Design
 - we only have exact one many-to-one relationship between animals and shelter and the design is like following figure
 
-
 ## Running tests
 
 To run tests:
