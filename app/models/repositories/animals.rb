@@ -4,16 +4,16 @@ module Repository
   module Info
     # Repository for Members
     class Animals
-      def self.find_all_animal_by_id(_animal_id)
+      def self.find_all_animal
         Database::ProjectOrm::AnimalOrm.all.map { |db_project| rebuild_entity(db_project) }
       end
 
-      def self.find_id(id)
-        rebuild_entity(Database::ProjectOrm::AnimalOrm.first(id:))
+      def self.find_id(animal_id)
+        rebuild_entity(Database::ProjectOrm::AnimalOrm.first(animal_id:))
       end
 
-      def self.find_username(username)
-        rebuild_entity(Database::ProjectOrm::AnimalOrm.first(username:))
+      def self.find_animal_pohto(album_file)
+        rebuild_entity(Database::ProjectOrm::AnimalOrm.first(album_file:)).album_file
       end
 
       def self.rebuild_entity(db_record)

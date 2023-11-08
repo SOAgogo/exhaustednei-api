@@ -3,6 +3,7 @@
 # manage the relationship between shelter and animal
 require_relative 'animal_mapper'
 require_relative 'shelter_mapper'
+
 module Info
   # class Info::ShelterMapper`
   class AnimalShelterInitiator

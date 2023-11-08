@@ -25,51 +25,14 @@ end
 
 desc 'Run web app'
 task :run do
+  # require_app('models')
+  # sh 'ruby spec/helpers/init_database_data_helper.rb'
   sh 'bundle exec puma'
 end
 
 desc 'Keep rerunning web app upon changes'
 task :rerun do
   sh "rerun -c --ignore 'coverage/*' -- bundle exec puma"
-end
-
-namespace :db do
-  task :config do
-    require 'sequel'
-    require_relative 'config/environment' # load config info
-    require_relative 'spec/helpers/database_helper'
-
-    def app = Info::App
-  end
-
-  desc 'Run migrations'
-  task :migrate => :config do
-    Sequel.extension :migration
-    puts "Migrating #{app.environment} database to latest"
-    Sequel::Migrator.run(app.db, 'db/migrations')
-  end
-
-  desc 'Wipe records from all tables'
-  task :wipe => :config do
-    if app.environment == :production
-      puts 'Do not damage production database!'
-      return
-    end
-
-    require_app('infrastructure')
-    DatabaseHelper.wipe_database
-  end
-
-  desc 'Delete dev or test database file (set correct RACK_ENV)'
-  task :drop => :config do
-    if app.environment == :production
-      puts 'Do not damage production database!'
-      return
-    end
-
-    FileUtils.rm(Info::App.config.DB_FILENAME)
-    puts "Deleted #{Info::App.config.DB_FILENAME}"
-  end
 end
 
 desc 'Run application console'
@@ -86,7 +49,6 @@ namespace :vcr do
   end
 end
 
-
 namespace :db do
   task :config do
     require 'sequel'
@@ -94,6 +56,15 @@ namespace :db do
     require_relative 'spec/helpers/database_helper'
 
     def app = Info::App
+  end
+
+  desc 'Run data initialization for database'
+  task :datainit => :config do
+    require_relative 'spec/helpers/init_database_data_helper'
+    require_app('infrastructure')
+    require_app('models')
+    Repository::App::PrepareDatabase.init_database
+    sh 'ruby spec/helpers/init_database_data_helper.rb'
   end
 
   desc 'Run migrations'
