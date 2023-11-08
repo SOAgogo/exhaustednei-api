@@ -15,14 +15,12 @@ module PetAdoption
     plugin :json
 
     route do |routing|
-      random = rand(0..19)
-      animal_pic = file[random]['album_file']
       routing.assets # load CSS
       response['Content-Type'] = 'text/html; charset=utf-8'
 
       # GET /
       routing.root do
-        animal_pic = Repository::Info::Animals
+        animal_pic = Repository::Info::Animals.web_page_cover
         view 'home', locals: { image_url: animal_pic }
       end
 

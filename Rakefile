@@ -25,8 +25,6 @@ end
 
 desc 'Run web app'
 task :run do
-  # require_app('models')
-  # sh 'ruby spec/helpers/init_database_data_helper.rb'
   sh 'bundle exec puma'
 end
 
