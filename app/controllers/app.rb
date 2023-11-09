@@ -37,12 +37,13 @@ module PetAdoption
 
         routing.on String, String do |animal_kind, shelter_name|
           # GET /project/owner/project
+          sn_ch = URI.decode_www_form_component(shelter_name)
+          ak_ch = animal_kind == 'dog' ? '狗' : '貓'
           animal_obj_list = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
 
           shelter_obj = Repository::Info::Shelters.find_shelter_by_name(shelter_name)
 
-          sn_ch = URI.decode_www_form_component(shelter_name)
-          ak_ch = animal_kind == 'dog' ? '狗' : '貓'
+
           animal_pic = animal_obj_list.map { |ath| ath.album_file }
           animal_id = animal_obj_list.map { |ath| ath.animal_id }
           animal_age = animal_obj_list.map { |ath| ath.animal_age }
@@ -57,13 +58,15 @@ module PetAdoption
           binding.pry
           puts animal_opendate
           view 'project', locals: {
-            shelter_name: URI.decode_www_form_component(shelter_name),
+            shelter_name: sn_ch,
             image_url: animal_pic.zip(animal_id, animal_age, animal_colour,
             animal_sex, animal_sterilization, 
             animal_bacterin, animal_bodytype, 
             album_place, animal_opendate
             ),
-            animal_num: shelter_obj.animal_nums,
+            #animal_num: shelter_obj.animal_nums,
+            animal_num: '0',
+
             animal_kind: animal_kind
           }
         end
