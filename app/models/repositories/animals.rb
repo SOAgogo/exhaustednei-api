@@ -13,7 +13,10 @@ module Repository
       end
 
       def self.web_page_cover
-        Database::ProjectOrm::AnimalOrm.first.album_file
+        Database::ProjectOrm::AnimalOrm
+          # .right_join(:shelters, id: :shelter_id)
+          .where(:animal_file != '')
+          .first.album_file
       end
 
       def self.rebuild_entity(db_record)
