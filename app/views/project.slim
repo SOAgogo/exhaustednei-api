@@ -9,7 +9,6 @@ div.gallery {
 
   body
     
-
     div.gallery
       - animal_obj_hash.each do |_,obj| 
         p style="display:inline-block;"
@@ -17,9 +16,17 @@ div.gallery {
           br
           | Id : "#{obj.animal_id.to_s}"
           br 
-          | AnimalPlace : "#{obj.animal_place}"
+          | Shelter : "#{obj.animal_place}"
           br 
-          | Sex : "#{obj.animal_sex.to_s}"
+          | FoundPlace : "#{obj.animal_found_place}"
+          br 
+          | Variate : "#{obj.animal_variate}"
+          br 
+          | Color : "#{obj.animal_color}"
+          br 
+          | Sex : "#{obj.animal_sex}"
+          br 
+          | Age : "#{obj.animal_age}"
           br 
           | Sterilization : "#{obj.animal_sterilization}"
           br 
@@ -27,7 +34,10 @@ div.gallery {
           br 
           | BodyType : "#{obj.animal_bodytype}"
           br 
-          | AnimalDate : "#{obj.animal_opendate}"
+          | FoundPlace : "#{obj.animal_found_place}"
+          br 
+          | RegisterDate : "#{obj.animal_opendate}"
+          
       
 
 

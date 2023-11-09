@@ -50,14 +50,15 @@ module PetAdoption
             obj.to_decode_hash.merge(
               animal_kind: URI.decode_www_form_component(obj.animal_kind),
               animal_variate: URI.decode_www_form_component(obj.animal_variate),
-              animal_place: URI.decode_www_form_component(obj.animal_place)
+              animal_place: URI.decode_www_form_component(obj.animal_place),
+              animal_found_place: URI.decode_www_form_component(obj.animal_found_place),
+              animal_age: URI.decode_www_form_component(obj.animal_age),
+              animal_color: URI.decode_www_form_component(obj.animal_color)
             )
             animal_obj_hash[key] = obj
           end
-          
+
           view 'project', locals: {
-            # shelter_name: URI.decode_www_form_component(shelter_name),
-            # animal_kind: URI.decode_www_form_component(ak_ch),
             animal_obj_hash:
           }
         end

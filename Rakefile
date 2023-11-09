@@ -93,8 +93,8 @@ namespace :db do
       return
     end
 
-    FileUtils.rm(Info::App.config.DB_FILENAME)
-    puts "Deleted #{Info::App.config.DB_FILENAME}"
+    FileUtils.rm(PetAdoption::App.config.DB_FILENAME)
+    puts "Deleted #{PetAdoption::App.config.DB_FILENAME}"
   end
 end
 

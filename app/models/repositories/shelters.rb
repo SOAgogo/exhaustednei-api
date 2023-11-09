@@ -28,7 +28,7 @@ module Repository
       def self.create(entity)
         raise 'Shelter already exists' if find(entity)
 
-        # binding.pry
+        # return shelter obj
         db_project = PersistShelter.new(entity).call
 
         rebuild_entity(db_project)
@@ -41,7 +41,6 @@ module Repository
 
         Entity::Shelter.new(
           db_record.to_hash.merge(
-            # change here !!
             animal_object_list: Animals.rebuild_many(db_animals)
           )
         )
@@ -71,7 +70,7 @@ module Repository
 
           animal_database_list.map do |animal_database|
             animal_database.tap do |db_animal|
-              # chaneg the foreign key
+              # change the foreign key
 
               db_animal.shelter_id = shelter.id
               db_animal.save
