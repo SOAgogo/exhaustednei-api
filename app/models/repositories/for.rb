@@ -8,7 +8,8 @@ module Repository
     # Finds the right repository for an entity object or class
     module For
       ENTITY_REPOSITORY = {
-        Entity::Animal => Animals,
+        Entity::Dog => Animals,
+        Entity::Cat => Animals,
         Entity::Shelter => Shelters
       }.freeze
 

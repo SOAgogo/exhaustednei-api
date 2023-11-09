@@ -4,9 +4,9 @@
 module DatabaseHelper
   def self.wipe_database
     # Ignore foreign key constraints when wiping tables
-    Info::App.db.run('PRAGMA foreign_keys = OFF')
-    Info::Database::AnimalOrm.map(&:destroy)
-    Info::Database::ShelterOrm.map(&:destroy)
-    Info::App.db.run('PRAGMA foreign_keys = ON')
+    PetAdoption::App.db.run('PRAGMA foreign_keys = OFF')
+    Database::ProjectOrm::AnimalOrm.map(&:destroy)
+    Database::ProjectOrm::ShelterOrm.map(&:destroy)
+    PetAdoption::App.db.run('PRAGMA foreign_keys = ON')
   end
 end

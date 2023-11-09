@@ -8,17 +8,37 @@ div.gallery {
       img src="https://im.marieclaire.com.tw/m800c533h100b0/assets/mc/201907/5D19A650F04EF1561962064.png"  alt="一張圖片"
 
   body
-    h1 #{shelter_name} Search result: total #{animal_num} #{animal_kind}
-
+    
     div.gallery
-      - image_url.each do |item|
+      - animal_obj_hash.each do |_,obj| 
         p style="display:inline-block;"
-          img src = item[0] width = 300 height = 300
+          img src = "#{obj.album_file}" width = 300 height = 300
           br
-          | Id : #{item[1]}
-          br
-          | Age : #{item[2]}
-          br
-          | Color : #{item[3]}
+          | Id : "#{obj.animal_id.to_s}"
+          br 
+          | Shelter : "#{obj.animal_place}"
+          br 
+          | FoundPlace : "#{obj.animal_found_place}"
+          br 
+          | Variate : "#{obj.animal_variate}"
+          br 
+          | Color : "#{obj.animal_color}"
+          br 
+          | Sex : "#{obj.animal_sex}"
+          br 
+          | Age : "#{obj.animal_age}"
+          br 
+          | Sterilization : "#{obj.animal_sterilization}"
+          br 
+          | Bacterin : "#{obj.animal_bacterin}"
+          br 
+          | BodyType : "#{obj.animal_bodytype}"
+          br 
+          | FoundPlace : "#{obj.animal_found_place}"
+          br 
+          | RegisterDate : "#{obj.animal_opendate}"
+          
+      
+
 
 
