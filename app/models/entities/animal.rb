@@ -24,6 +24,10 @@ module Entity
     def to_attr_hash
       to_hash.except(:id)
     end
+
+    def to_decode_hash
+      to_hash.except(:animal_kind, :animal_variate, :animal_place)
+    end
   end
 
   # class Info::Cat`

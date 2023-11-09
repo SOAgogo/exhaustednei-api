@@ -5,6 +5,7 @@ require 'slim'
 require 'json'
 require 'uri'
 require 'pry'
+require_relative 'app_helper'
 
 module PetAdoption
   # Web App
@@ -39,21 +40,25 @@ module PetAdoption
         routing.on String, String do |shelter_name, animal_kind|
           # GET /project/owner/project
           ak_ch = animal_kind == 'dog' ? '狗' : '貓'
-          animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name(ak_ch, shelter_name)
+          shelter_name = URI.decode_www_form_component(shelter_name)
+          animal_kind = URI.decode_www_form_component(ak_ch)
+          # animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name('狗', '高雄市壽山動物保護教育園區')
+          animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
 
-          animal_obj_list = []
-          animal_obj_hash.each do |_, animal_obj|
-            animal_obj_list << animal_obj
+          # include PetAdoption::Decoder
+          animal_obj_hash.each do |key, obj|
+            obj.to_decode_hash.merge(
+              animal_kind: URI.decode_www_form_component(obj.animal_kind),
+              animal_variate: URI.decode_www_form_component(obj.animal_variate),
+              animal_place: URI.decode_www_form_component(obj.animal_place)
+            )
+            animal_obj_hash[key] = obj
           end
-
+          
           view 'project', locals: {
-            shelter_name: URI.decode_www_form_component(shelter_name),
-            animal_kind: URI.decode_www_form_component(ak_ch),
-            # image_url: animal_pic.zip(animal_id, animal_age, animal_colour,
-            #                           animal_sex, animal_sterilization,
-            #                           animal_bacterin, animal_bodytype,
-            #                           album_place, animal_opendate),
-            animal_obj_list:
+            # shelter_name: URI.decode_www_form_component(shelter_name),
+            # animal_kind: URI.decode_www_form_component(ak_ch),
+            animal_obj_hash:
           }
         end
       end

@@ -6,4 +6,4 @@ require_relative 'spec/helpers/database_helper'
 require_relative 'require_app'
 require_app
 
-def app = Info::App
+def app = PetAdoption::App
