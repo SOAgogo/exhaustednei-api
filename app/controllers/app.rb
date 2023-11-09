@@ -30,18 +30,18 @@ module PetAdoption
           routing.post do
             animal_kind = routing.params['animal_kind'].downcase
             shelter_name = routing.params['shelter_name']
+            sn_ch = URI.decode_www_form_component(shelter_name)
 
-            routing.redirect "animal/#{shelter_name}/#{animal_kind}"
+            routing.redirect "animal/#{animal_kind}/#{sn_ch}"
           end
         end
 
-        routing.on String, String do |animal_kind, shelter_name|
+        routing.on String, String do |animal_kind, sn_ch|
           # GET /project/owner/project
-          sn_ch = URI.decode_www_form_component(shelter_name)
           ak_ch = animal_kind == 'dog' ? '狗' : '貓'
-          animal_obj_list = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
+          animal_obj_list = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, sn_ch)
 
-          shelter_obj = Repository::Info::Shelters.find_shelter_by_name(shelter_name)
+          # shelter_obj = Repository::Info::Shelters.find_shelter_by_name(shelter_name)
 
 
           animal_pic = animal_obj_list.map { |ath| ath.album_file }
