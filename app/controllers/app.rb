@@ -5,6 +5,7 @@ require 'slim'
 require 'json'
 require 'uri'
 require 'pry'
+
 module PetAdoption
   # Web App
   class App < Roda
@@ -44,11 +45,6 @@ module PetAdoption
           animal_obj_hash.each do |_, animal_obj|
             animal_obj_list << animal_obj
           end
-
-          # animal_number = Repository::Info::Shelters.get_shelter_animal_number(shelter_name)
-          # shelter_obj = Repository::Info::Shelters.find_shelter_by_name(shelter_name.to_s)
-          # animal_num = shelter_obj.cat_number if animal_kind == 'cat'
-          # animal_num = shelter_obj.dog_number if animal_kind == 'dog'
 
           view 'project', locals: {
             shelter_name: URI.decode_www_form_component(shelter_name),

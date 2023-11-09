@@ -44,6 +44,7 @@ describe 'Integration Tests of Github API and Database' do
       _(rebuilt.animal_number).must_equal(shelter.animal_number)
 
       shelter_obj = Repository::Info::Shelters.find_shelter_by_name(shelter.shelter_name)
+      binding.pry
 
       shelter.animal_object_list.each do |animal_id, animal_obj|
         found, err = rebuilt.animal_object_list[animal_id]
