@@ -15,8 +15,8 @@ module Repository
         find_shelter_id(entity.animal_shelter_pkid)
       end
 
-      def self.find_shelter_name(shelter_name)
-        db_record = Database::ProjectOrm::ShelterOrm.first(shelter_name:)
+      def self.find_shelter_by_name(shelter_name)
+        db_record = Database::ProjectOrm::ShelterOrm.where(shelter_name:).first
         rebuild_entity(db_record)
       end
 

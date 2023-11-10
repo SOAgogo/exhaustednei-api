@@ -17,7 +17,7 @@ gem 'dry-struct', '~> 1.0'
 gem 'dry-types', '~> 1.0'
 
 # Data Visualizaiton
-gem 'gruff'
+#gem 'gruff'
 
 # Networking
 gem 'http', '~> 5.0'
