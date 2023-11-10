@@ -15,9 +15,9 @@ module Database
         first(animal_id: animal_info[:animal_id]) || create(animal_info)
       end
 
-      def self.find_or_create_many(animal_info)
-        first(animal_variate: animal_info[:animal_variate]) || create(animal_info)
-      end
+      # def self.find_or_create_many(animal_info)
+      #   first(animal_variate: animal_info[:animal_variate]) || create(animal_info)
+      # end
     end
   end
 end

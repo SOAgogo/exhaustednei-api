@@ -25,11 +25,6 @@ Animal adoption platform will pull data from the data source from agriculture bu
 - Ensure correct version of Ruby install (see `.ruby-version` for `rbenv`)
 - Run `bundle install`
 
-## Database Design
-- we only have exact one many-to-one relationship between animals and shelter and the design is like following figure
-
-![Alt text](https://drive.google.com/file/d/1bt-RbfezO5hWv6Kc3QI9cJbOOZMwjOAQ/view?usp=sharing)
-
 ## Running tests
 
 To run tests:

@@ -39,7 +39,6 @@ gem 'vcr', '~> 6'
 gem 'webmock', '~> 3'
 
 # Debugging
-gem 'pry'
 gem 'rerun', '~> 0'
 
 # Code Quality

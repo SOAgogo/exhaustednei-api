@@ -65,12 +65,28 @@ footer {
 }
 
 
-button {
-  width: 100%; /* Adjust the width as needed */
-  margin: 0 1%; /* Add margin between buttons */
+/* Add these styles to your CSS file (styles.css) */
+button.btn {
+  color: #4CAF50;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px; /* Add border-radius for rounded corners */
 }
 
-/* Adjustments for better visibility and responsiveness */
-section {
-  text-align: center;
+button.btn.btn-adopt {
+  background-color: #4CAF50; /* Green */
+  color: green;
+
+}
+
+button.btn.btn-found {
+  background-color: #008CBA; /* Blue */
+  color: blue;
+
+}
+
+button.btn.btn-missing {
+  background-color: #f44336; /* Red */
+  color: red;
+
 }

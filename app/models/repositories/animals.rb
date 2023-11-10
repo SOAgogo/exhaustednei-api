@@ -19,6 +19,7 @@ module Repository
           .first.album_file
       end
 
+      # rubocop:disable Metrics/MethodLength
       def self.rebuild_entity(db_record)
         return nil unless db_record
 
@@ -27,6 +28,9 @@ module Repository
           animal_id: db_record.animal_id,
           animal_kind: db_record.animal_kind,
           animal_variate: db_record.animal_variate,
+          animal_found_place: db_record.animal_found_place,
+          animal_age: db_record.animal_age,
+          animal_color: db_record.animal_color,
           animal_sex: db_record.animal_sex,
           animal_sterilization: db_record.animal_sterilization,
           animal_bacterin: db_record.animal_bacterin,
@@ -37,6 +41,7 @@ module Repository
         )
       end
 
+      # rubocop:enable Metrics/MethodLength
       def self.select_animal_by_shelter_name(animal_kind, shelter_name)
         db_record = Database::ProjectOrm::AnimalOrm.where(animal_kind:, animal_place: shelter_name).all
         rebuild_many(db_record)

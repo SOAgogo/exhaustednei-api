@@ -16,7 +16,9 @@ Sequel.migration do
       Boolean :animal_sterilization
       Boolean :animal_bacterin
       String :animal_bodytype
-
+      String :animal_color
+      String :animal_age
+      String :animal_found_place
       String :album_file
       String :animal_place, null: false
       String :animal_opendate

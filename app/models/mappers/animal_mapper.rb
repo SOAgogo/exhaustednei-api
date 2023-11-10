@@ -34,24 +34,29 @@ module PetAdoption
       end
 
       # # AnimalMapper::DataMapper
+      # This method smells of :reek:TooManyMethods
       class DataMapper
         def initialize(animal_info)
           @data = animal_info
         end
 
+        # rubocop:disable Metrics/MethodLength
         def build_dog_entity
           Entity::Dog.new(
             id:,
             animal_id:,
             animal_kind:,
             animal_variate:,
+            animal_age:,
             animal_sex:,
             animal_sterilization:,
             animal_bacterin:,
             animal_bodytype:,
             album_file:,
             animal_place:,
-            animal_opendate:
+            animal_opendate:,
+            animal_color:,
+            animal_found_place:
           )
         end
 
@@ -61,16 +66,20 @@ module PetAdoption
             animal_id:,
             animal_kind:,
             animal_variate:,
+            animal_age:,
+            animal_color:,
             animal_sex:,
             animal_sterilization:,
             animal_bacterin:,
             animal_bodytype:,
             album_file:,
             animal_place:,
-            animal_opendate:
+            animal_opendate:,
+            animal_found_place:
           )
         end
 
+        # rubocop:enable Metrics/MethodLength
         private
 
         def id
@@ -115,6 +124,18 @@ module PetAdoption
 
         def animal_opendate
           @data['animal_opendate']
+        end
+
+        def animal_age
+          @data['animal_age']
+        end
+
+        def animal_color
+          @data['animal_colour']
+        end
+
+        def animal_found_place
+          @data['animal_foundplace']
         end
       end
     end

@@ -5,11 +5,12 @@ require 'slim'
 require 'json'
 require 'uri'
 require 'pry'
+
 module PetAdoption
   # Web App
   class App < Roda
     plugin :render, engine: 'slim', views: 'app/views'
-    plugin :assets, css: 'style.css', path: 'app/views/assets'
+    plugin :assets, css: 'style.css', path: 'app/views/assets/css'
     plugin :common_logger, $stderr
     plugin :halt
     plugin :json
@@ -40,28 +41,52 @@ module PetAdoption
           # GET /project/owner/project
           sn_ch = URI.decode_www_form_component(shelter_name)
           ak_ch = animal_kind == 'dog' ? '狗' : '貓'
-          animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name(ak_ch, sn_ch)
+          shelter_name = URI.decode_www_form_component(shelter_name)
+          animal_kind = URI.decode_www_form_component(ak_ch)
+          # animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name('狗', '高雄市壽山動物保護教育園區')
+          animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
 
-          animal_obj_list = []
-          animal_obj_hash.each do |_, animal_obj|
-            animal_obj_list << animal_obj
+          # include PetAdoption::Decoder
+          animal_obj_hash.each do |key, obj|
+            obj.to_decode_hash.merge(
+              animal_kind: URI.decode_www_form_component(obj.animal_kind),
+              animal_variate: URI.decode_www_form_component(obj.animal_variate),
+              animal_place: URI.decode_www_form_component(obj.animal_place),
+              animal_found_place: URI.decode_www_form_component(obj.animal_found_place),
+              animal_age: URI.decode_www_form_component(obj.animal_age),
+              animal_color: URI.decode_www_form_component(obj.animal_color)
+            )
+            animal_obj_hash[key] = obj
           end
 
-          # animal_number = Repository::Info::Shelters.get_shelter_animal_number(shelter_name)
-          # shelter_obj = Repository::Info::Shelters.find_shelter_by_name(shelter_name.to_s)
-          # animal_num = shelter_obj.cat_number if animal_kind == 'cat'
-          # animal_num = shelter_obj.dog_number if animal_kind == 'dog'
-
           view 'project', locals: {
-            shelter_name: URI.decode_www_form_component(shelter_name),
-            animal_kind: URI.decode_www_form_component(ak_ch),
-            # image_url: animal_pic.zip(animal_id, animal_age, animal_colour,
-            #                           animal_sex, animal_sterilization,
-            #                           animal_bacterin, animal_bodytype,
-            #                           album_place, animal_opendate),
-            animal_obj_list:
+            animal_obj_hash:
           }
         end
+      end
+
+      r.post 'adopt' do
+        # Perform any necessary processing for the 'Adopt?' button click
+        # ...
+  
+        # Redirect to the desired page
+        r.redirect '/adopted'
+      end
+
+      r.post 'found' do
+        # Perform any necessary processing for the 'Adopt?' button click
+        # ...
+  
+        # Redirect to the desired page
+        r.redirect '/found'
+      end
+
+      r.post 'missing' do
+        # Perform any necessary processing for the 'Adopt?' button click
+        # ...
+  
+        # Redirect to the desired page
+        r.redirect '/missing'
       end
     end
   end

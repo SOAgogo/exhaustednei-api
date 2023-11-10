@@ -8,16 +8,25 @@ div.gallery {
       img src="https://im.marieclaire.com.tw/m800c533h100b0/assets/mc/201907/5D19A650F04EF1561962064.png"  alt="一張圖片"
 
   body
-    h1 #{shelter_name} Search result: The total #{animal_kind} numbers is 
-
+    
     div.gallery
-      - animal_obj_list.each do |obj| 
+      - animal_obj_hash.each do |_,obj| 
         p style="display:inline-block;"
           img src = "#{obj.album_file}" width = 300 height = 300
           br
           | Id : "#{obj.animal_id.to_s}"
-          br
-          | Sex : "#{obj.animal_sex.to_s}"
+          br 
+          | Shelter : "#{obj.animal_place}"
+          br 
+          | FoundPlace : "#{obj.animal_found_place}"
+          br 
+          | Variate : "#{obj.animal_variate}"
+          br 
+          | Color : "#{obj.animal_color}"
+          br 
+          | Sex : "#{obj.animal_sex}"
+          br 
+          | Age : "#{obj.animal_age}"
           br 
           | Sterilization : "#{obj.animal_sterilization}"
           br 
@@ -25,9 +34,10 @@ div.gallery {
           br 
           | BodyType : "#{obj.animal_bodytype}"
           br 
-          | AnimalPlace : "#{obj.animal_place}"
+          | FoundPlace : "#{obj.animal_found_place}"
           br 
-          | AnimalDate : "#{obj.animal_opendate}"
+          | RegisterDate : "#{obj.animal_opendate}"
+          
       
 
 
