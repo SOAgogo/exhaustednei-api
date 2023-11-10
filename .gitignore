@@ -2,5 +2,6 @@ _snippets/
 config/secrets.yml
 coverage/*
 !coverage/.resultset.json
+.DS_Store
 *.db
 db/local/*
