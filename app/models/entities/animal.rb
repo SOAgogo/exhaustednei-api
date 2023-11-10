@@ -3,6 +3,7 @@
 # verify your identification
 require 'dry-types'
 require 'dry-struct'
+
 module Entity
   # class Info::Animal`
   class Animal < Dry::Struct
@@ -12,16 +13,28 @@ module Entity
     attribute :animal_id, Strict::Integer
     attribute :animal_kind, Strict::String
     attribute :animal_variate, String.optional
+    attribute :animal_age, Strict::String
+    attribute :animal_color, Strict::String
     attribute :animal_sex, Strict::String
     attribute :animal_sterilization, Strict::Bool
     attribute :animal_bacterin, Strict::Bool
     attribute :animal_bodytype, Strict::String
+    attribute :animal_found_place, Strict::String
     attribute :album_file, String.optional
     attribute :animal_place, Strict::String
     attribute :animal_opendate, String.optional
 
     def to_attr_hash
       to_hash.except(:id)
+    end
+
+    def to_decode_hash
+      to_hash.except(:animal_kind,
+                     :animal_variate,
+                     :animal_found_place,
+                     :animal_age,
+                     :animal_color,
+                     :animal_place)
     end
   end
 

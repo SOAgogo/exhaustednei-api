@@ -16,6 +16,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
     - 'Rakefile'
+    - 'app/controllers/*.rb'
 
 # See: https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Layout/MultilineMethodCallIndentation
 Layout/MultilineMethodCallIndentation:

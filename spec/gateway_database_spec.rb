@@ -21,16 +21,16 @@ describe 'Integration Tests of Github API and Database' do
   describe 'Retrieve and store project' do
     before do
       DatabaseHelper.wipe_database
-      project = Info::Project.new(RESOURCE_PATH)
-      animal_shelter_initator = Info::AnimalShelterInitiator.new(project)
+      project = PetAdoption::Info::Project.new(RESOURCE_PATH)
+      animal_shelter_initator = PetAdoption::Info::AnimalShelterInitiator.new(project)
       shelter_mapper, animal_mapper = animal_shelter_initator.init
       shelter_mapper.create_all_shelter_animal_obj(
-        Info::AnimalMapper.shelter_animal_mapping(animal_mapper.animal_info_list)
+        PetAdoption::Info::AnimalMapper.shelter_animal_mapping(animal_mapper.animal_info_list)
       )
     end
 
     it 'HAPPY: should be able to save shelter info from government website to database' do
-      shelter = Info::ShelterMapper.get_shelter_obj(rand_shelter_id)
+      shelter = PetAdoption::Info::ShelterMapper.get_shelter_obj(rand_shelter_id)
 
       # expected: return shelter object
       rebuilt = Repository::Info::For.entity(shelter).create(shelter)
@@ -42,6 +42,8 @@ describe 'Integration Tests of Github API and Database' do
       _(rebuilt.cat_number).must_equal(shelter.cat_number)
       _(rebuilt.dog_number).must_equal(shelter.dog_number)
       _(rebuilt.animal_number).must_equal(shelter.animal_number)
+
+      # shelter_obj = Repository::Info::Animals.select_animal_by_shelter_name('狗', '高雄市壽山動物保護教育園區')
 
       shelter.animal_object_list.each do |animal_id, animal_obj|
         found, err = rebuilt.animal_object_list[animal_id]
