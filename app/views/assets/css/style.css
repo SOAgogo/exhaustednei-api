@@ -63,3 +63,14 @@ footer {
   font-size:11px;
   color:rgb(100, 100, 100);
 }
+
+
+button {
+  width: 100%; /* Adjust the width as needed */
+  margin: 0 1%; /* Add margin between buttons */
+}
+
+/* Adjustments for better visibility and responsiveness */
+section {
+  text-align: center;
+}
