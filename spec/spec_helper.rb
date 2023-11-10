@@ -3,12 +3,7 @@
 require 'simplecov'
 SimpleCov.start
 
-<<<<<<< HEAD
-require 'yaml'
-
-=======
 require 'json'
->>>>>>> feature-database
 require 'minitest/autorun'
 require 'minitest/unit' # minitest Github issue #17 requires
 require 'minitest/rg'
