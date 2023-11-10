@@ -73,7 +73,7 @@ describe 'Tests Animal API ' do
       # _, shelter_mapper = @animal_shelter_mapper.get_shelter_mapper(rand_shelter_id)
       # binding.pry
       random_id = file[random]['animal_id']
-      animal = PetAdoption::Info::ShelterMapper.find_animal_in_shelter(rand_shelter_id, random_id) # shelter_id, animal_id
+      animal = PetAdoption::Info::ShelterMapper.find_animal_in_shelter(rand_shelter_id, random_id)
 
       _(animal.animal_id).must_equal file[random]['animal_id']
       _(animal.animal_bodytype).must_equal file[random]['animal_bodytype']

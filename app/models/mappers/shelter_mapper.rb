@@ -81,6 +81,7 @@ module PetAdoption
           @animal_map = animal_map
         end
 
+        # rubocop:disable Metrics/MethodLength
         def build_entity
           Entity::Shelter.new(
             # @animal_attributes
@@ -96,6 +97,7 @@ module PetAdoption
           )
         end
 
+        # rubocop:enable Metrics/MethodLength
         private
 
         # def animal_area_pkid

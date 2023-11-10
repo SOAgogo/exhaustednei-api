@@ -5,7 +5,6 @@ require 'slim'
 require 'json'
 require 'uri'
 require 'pry'
-require_relative 'app_helper'
 
 module PetAdoption
   # Web App
