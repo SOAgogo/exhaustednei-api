@@ -44,7 +44,8 @@ module PetAdoption
           # animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name('狗', '高雄市壽山動物保護教育園區')
           animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
 
-          # include PetAdoption::Decoder
+          # can this follwoing codes which decode chinese words be put the other side?
+
           animal_obj_hash.each do |key, obj|
             obj.to_decode_hash.merge(
               animal_kind: URI.decode_www_form_component(obj.animal_kind),
