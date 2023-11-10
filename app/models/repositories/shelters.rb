@@ -44,8 +44,6 @@ module Repository
             animal_object_list: Animals.rebuild_many(db_animals)
           )
         )
-        # after the preious operation, Project object will add owner and contributors field
-        # <CodePraise::Entity::Project id=1 origin_id=104999627 name="YPBT-app" size=551 ssh_url="git://github.com/soumyaray/YPBT-app.git" http_url="https://github.com/soumyaray/YPBT-app" owner=#<CodePraise::Entity::Member id=1 origin_id=1926704 username="soumyaray" email=nil> contributors=[#<CodePraise::Entity::Member id=2 origin_id=8809778 username="Yuan-Yu" email=nil>,
       end
 
       def self.db_find_or_create(entity)
@@ -62,21 +60,21 @@ module Repository
           Database::ProjectOrm::ShelterOrm.create(@entity.to_attr_hash)
         end
 
+        def self.add_foeign_key_to_animal(animal_database_list, shelter)
+          animal_database_list.map do |animal_database|
+            animal_database.tap do |db_animal|
+              db_animal.shelter_id = shelter.id
+              db_animal.save
+            end
+          end
+        end
+
         def call
           # if owner is not in database, create one, otherwise, return it
           animal_database_list = Animals.store_several(@entity.animal_object_list)
 
           shelter = create_shelter
-
-          animal_database_list.map do |animal_database|
-            animal_database.tap do |db_animal|
-              # change the foreign key
-
-              db_animal.shelter_id = shelter.id
-              db_animal.save
-            end
-          end
-
+          PersistShelter.add_foeign_key_to_animal(animal_database_list, shelter)
           shelter
         end
       end
