@@ -3,21 +3,23 @@
 require 'simplecov'
 SimpleCov.start
 
+<<<<<<< HEAD
 require 'yaml'
 
+=======
+require 'json'
+>>>>>>> feature-database
 require 'minitest/autorun'
 require 'minitest/unit' # minitest Github issue #17 requires
 require 'minitest/rg'
 require 'vcr'
 require 'webmock'
 
-require_relative '../lib/github_api'
+require_relative '../require_app'
+require_app
 
-USERNAME = 'soumyaray'
-PROJECT_NAME = 'YPBT-app'
-CONFIG = YAML.safe_load_file('config/secrets.yml')
-GITHUB_TOKEN = CONFIG['GITHUB_TOKEN']
-CORRECT = YAML.safe_load_file('spec/fixtures/github_results.yml')
-
+json_file = File.read('spec/fixtures/DogCat_results.json')
+CORRECT = JSON.parse(json_file)[1..20]
+RESOURCE_PATH = 'https://data.moa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL'
 CASSETTES_FOLDER = 'spec/fixtures/cassettes'
-CASSETTE_FILE = 'github_api'
+CASSETTE_FILE = 'animals-record'

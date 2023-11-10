@@ -1,2 +1,7 @@
+_snippets/
 config/secrets.yml
-spec/fixtures
+coverage/*
+!coverage/.resultset.json
+.DS_Store
+*.db
+db/local/*

@@ -1,44 +1,39 @@
-# GIPHY API Client
+# Animal adoption platform
 
-Project to gather search result and useful suggestion from GIPHY API 
+Application that allows *some missing pets* can find its warm hosue and *other pets lovers* can adopt the pets from the original pets keepers
 
-## Resources
+## Overview
 
-- GIFs
-- Related Tags (It used to be displayed under the search bar, but it is no longer on the page.)
+Animal adoption platform will pull data from the data source from agriculture burreau of Taiwanese goverment 
 
-## Elements
+## Objectives
+* Offer the channels to inform the pet lovers to adopt the missing pets
 
-- GIFs
-  - title
-  - url
-  - height
-  - width
+### Short-term usability goals
 
-- Related Tags
-  - name
+- the platform for adopting animals
+- Analyze data from goverment and try to send the notifications to the potential clients who want to adopt pets.
 
-## Entities
+### database design:
+- At this moment, we only have many-to-one relationship between shelters and animals. In the future, probably we could have
+  more relationships like potential adopters and animals etc ...
+- **this is the figure of database design** :
+  ![soa](https://github.com/SOAgogo/exhaustednei/assets/48583047/1fd00b65-b0d4-46a2-acbb-eb53467cf4e1)
 
-These are objects that are important to the project, following my own naming conventions:
+### Long-term goals
 
-- Search results (with the gif and the related tags)
+- Perform static analysis of folders/files: e.g., flog, rubocop, reek for Ruby
 
-## Install
+## Setup
 
-## Setting up this script
-
-- Create a personal GIPHY API access token
-- Copy `config/secrets_example.yml` to `config/secrets.yml` and update token
+- Run `ruby lib/correct_data_init.rb` in rakefile once then you don't need to do that after that because the government would update data everyday
 - Ensure correct version of Ruby install (see `.ruby-version` for `rbenv`)
 - Run `bundle install`
 
-## Running this script
+## Running tests
 
-To create fixtures, run:
+To run tests:
 
 ```shell
-ruby lib/GIPHY_API.rb
+rake spec
 ```
-
-Fixture data should appear in `spec/fixtures/` folder
