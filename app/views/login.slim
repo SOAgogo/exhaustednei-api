@@ -9,9 +9,13 @@ section.vh-100
     | This is login page 
   .d-flex.align-items-center.h-custom-2.px-5.ms-xl-2.mt-2.pt-2.pt-xl-0.mt-xl-n5
 
-  form[style="width: 23rem;"]
+  form action="/login" method="post" style="width: 23rem" 
     h3.fw-normal.mb-3.pb-3[style="letter-spacing: 1px;"]
       | Log in
+    .form-outline.mb-4
+      input#form2Example8.form-control.form-control-lg[type="name"]
+      label.form-label[for="form2Example8"]
+        | Your Name 
     .form-outline.mb-4
       input#form2Example18.form-control.form-control-lg[type="email"]
       label.form-label[for="form2Example18"]
@@ -21,8 +25,9 @@ section.vh-100
       label.form-label[for="form2Example28"]
         | Password
     .pt-1.mb-4
-      button.btn.btn-info.btn-lg.btn-block[type="button"]
+      button.btn.btn-info.btn-lg.btn-block[type="button.next"]
         | Login
+
   p.small.mb-5.pb-lg-2
     a.text-muted[href="#!"]
       | Forgot password?

@@ -23,7 +23,7 @@ module Repository
       def self.rebuild_entity(db_record)
         return nil unless db_record
 
-        Entity::Animal.new(
+        PetAdoption::Entity::Animal.new(
           id: db_record.id,
           animal_id: db_record.animal_id,
           animal_kind: db_record.animal_kind,

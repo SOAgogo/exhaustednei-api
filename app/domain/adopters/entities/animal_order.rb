@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
+require_relative 'normal_people'
 # module PetAdoption
 module PetAdoption
-  modue Entity
-  # class PetAdoption::Entity::AnimalOrder`
-  # when adopters adopt animals, we need to create a new animal order
-  # to identify which animal he(she) wants to adopt
-  class AnimalOrder < Dry::Struct
-    include Dry.Types
-    attribute :adopter_id, Strict::Integer, unique: true, null: false
-    attribute :animal_ids, Array::Integer
-    attribute :created_at, Strict::String
-    attribute :updated_at, Strict::String
+  module Entity
+    # class PetAdoption::Entity::AnimalOrder`
+    # when adopters adopt animals, we need to create a new animal order
+    # to identify which animal he(she) wants to adopt
+    class AnimalOrder < NormalPeople
+      include Dry.Types
+      attribute :adopter_id, Strict::Integer
+      attribute :animal_ids, Strict::Array.of(Integer)
+      attribute :created_at, Strict::String
+      attribute :updated_at, Strict::String
+    end
   end
 end

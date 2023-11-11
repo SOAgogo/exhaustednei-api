@@ -83,7 +83,7 @@ module PetAdoption
 
         # rubocop:disable Metrics/MethodLength
         def build_entity
-          Entity::Shelter.new(
+          PetAdoption::Entity::Shelter.new(
             # @animal_attributes
             id:,
             animal_shelter_pkid:,
@@ -130,7 +130,7 @@ module PetAdoption
         def cat_number
           sum = 0
           @animal_map.each do |_, animal_obj|
-            sum += 1 if animal_obj.instance_of?(::Entity::Cat)
+            sum += 1 if animal_obj.instance_of?(PetAdoption::Entity::Cat)
           end
           sum
         end
@@ -138,7 +138,7 @@ module PetAdoption
         def dog_number
           sum = 0
           @animal_map.each do |_, animal_obj|
-            sum += 1 if animal_obj.instance_of?(::Entity::Dog)
+            sum += 1 if animal_obj.instance_of?(PetAdoption::Entity::Dog)
           end
           sum
         end

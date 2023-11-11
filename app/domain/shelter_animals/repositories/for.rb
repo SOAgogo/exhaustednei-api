@@ -8,9 +8,9 @@ module Repository
     # Finds the right repository for an entity object or class
     module For
       ENTITY_REPOSITORY = {
-        Entity::Dog => Animals,
-        Entity::Cat => Animals,
-        Entity::Shelter => Shelters
+        PetAdoption::Entity::Dog => Animals,
+        PetAdoption::Entity::Cat => Animals,
+        PetAdoption::Entity::Shelter => Shelters
       }.freeze
 
       def self.klass(entity_klass)

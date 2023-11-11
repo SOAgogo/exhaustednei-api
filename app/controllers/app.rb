@@ -21,17 +21,19 @@ module PetAdoption
 
       # GET /
       routing.root do
-        # animal_pic = Repository::Info::Animals.web_page_cover
-        # view 'home', locals: { image_url: animal_pic }
-
         view('login')
       end
 
       routing.post 'login' do
         # Handle login logic here
-        # For simplicity, let's just print the submitted parameters for now
-        puts "Username: #{routing.params['username']}, Password: #{routing.params['password']}"
-        'Login successful!'
+        routing.redirect '/home'
+      end
+
+      routing.on 'home' do
+        routing.is do
+          animal_pic = Repository::Info::Animals.web_page_cover
+          view 'home', locals: { image_url: animal_pic }
+        end
       end
 
       routing.on 'animal' do
@@ -74,28 +76,28 @@ module PetAdoption
         end
       end
 
-      r.post 'adopt' do
+      routing.post 'adopt' do
         # Perform any necessary processing for the 'Adopt?' button click
         # ...
-  
+
         # Redirect to the desired page
-        r.redirect '/adopted'
+        routing.redirect '/adopted'
       end
 
-      r.post 'found' do
+      routing.post 'found' do
         # Perform any necessary processing for the 'Adopt?' button click
         # ...
-  
+
         # Redirect to the desired page
-        r.redirect '/found'
+        routing.redirect '/found'
       end
 
-      r.post 'missing' do
+      routing.post 'missing' do
         # Perform any necessary processing for the 'Adopt?' button click
         # ...
-  
+
         # Redirect to the desired page
-        r.redirect '/missing'
+        routing.redirect '/missing'
       end
     end
   end

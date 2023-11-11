@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'dry-struct'
 module PetAdoption
   module Entity
     # class Info::adotpers`
@@ -9,7 +10,7 @@ module PetAdoption
 
       attribute :username, Strict::String
       attribute :phone, Strict::String
-      attribute :email, Strict::Optional::String
+      attribute :email, Strict::String.optional
       attribute :created_at, Strict::String
       attribute :updated_at, Strict::String
     end

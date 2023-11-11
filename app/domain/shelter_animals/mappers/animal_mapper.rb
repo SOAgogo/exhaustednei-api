@@ -42,7 +42,7 @@ module PetAdoption
 
         # rubocop:disable Metrics/MethodLength
         def build_dog_entity
-          Entity::Dog.new(
+          PetAdoption::Entity::Dog.new(
             id:,
             animal_id:,
             animal_kind:,
@@ -61,7 +61,7 @@ module PetAdoption
         end
 
         def build_cat_entity
-          Entity::Cat.new(
+          PetAdoption::Entity::Cat.new(
             id:,
             animal_id:,
             animal_kind:,

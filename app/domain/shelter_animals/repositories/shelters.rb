@@ -39,7 +39,7 @@ module Repository
 
         db_animals = Animals.find_full_animals_in_shelter(db_record.shelter_name)
 
-        Entity::Shelter.new(
+        PetAdoption::Entity::Shelter.new(
           db_record.to_hash.merge(
             animal_object_list: Animals.rebuild_many(db_animals)
           )

@@ -9,8 +9,8 @@ module PetAdoption
     class Adopters < NormalPeople
       include Dry.Types
       attribute :id, Integer.optional
-      attribute :adopter_id, Strict::Integer, unique: true, null: false
-      attribute :animals, Array::Animals
+      attribute :adopter_id, Strict::Integer
+      attribute :animals, Strict::Array.of(Animal)
       attribute :animal_order, AnimalOrder
       attribute :created_at, Strict::String
       attribute :updated_at, Strict::String
