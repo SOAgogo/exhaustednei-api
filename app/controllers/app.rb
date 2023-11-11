@@ -10,7 +10,7 @@ module PetAdoption
   # Web App
   class App < Roda
     plugin :render, engine: 'slim', views: 'app/views'
-    plugin :assets, css: 'style.css', path: 'app/views/assets'
+    plugin :assets, css: 'style.css', path: 'app/views/assets/css'
     plugin :common_logger, $stderr
     plugin :halt
     plugin :json
@@ -40,13 +40,15 @@ module PetAdoption
           routing.post do
             animal_kind = routing.params['animal_kind'].downcase
             shelter_name = routing.params['shelter_name']
+            sn_ch = URI.decode_www_form_component(shelter_name)
 
-            routing.redirect "animal/#{shelter_name}/#{animal_kind}"
+            routing.redirect "animal/#{animal_kind}/#{sn_ch}"
           end
         end
 
-        routing.on String, String do |shelter_name, animal_kind|
+        routing.on String, String do |animal_kind, shelter_name|
           # GET /project/owner/project
+          sn_ch = URI.decode_www_form_component(shelter_name)
           ak_ch = animal_kind == 'dog' ? '狗' : '貓'
           shelter_name = URI.decode_www_form_component(shelter_name)
           animal_kind = URI.decode_www_form_component(ak_ch)
@@ -70,6 +72,30 @@ module PetAdoption
             animal_obj_hash:
           }
         end
+      end
+
+      r.post 'adopt' do
+        # Perform any necessary processing for the 'Adopt?' button click
+        # ...
+  
+        # Redirect to the desired page
+        r.redirect '/adopted'
+      end
+
+      r.post 'found' do
+        # Perform any necessary processing for the 'Adopt?' button click
+        # ...
+  
+        # Redirect to the desired page
+        r.redirect '/found'
+      end
+
+      r.post 'missing' do
+        # Perform any necessary processing for the 'Adopt?' button click
+        # ...
+  
+        # Redirect to the desired page
+        r.redirect '/missing'
       end
     end
   end
