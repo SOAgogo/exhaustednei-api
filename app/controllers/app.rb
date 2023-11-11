@@ -21,8 +21,17 @@ module PetAdoption
 
       # GET /
       routing.root do
-        animal_pic = Repository::Info::Animals.web_page_cover
-        view 'home', locals: { image_url: animal_pic }
+        # animal_pic = Repository::Info::Animals.web_page_cover
+        # view 'home', locals: { image_url: animal_pic }
+
+        view('login')
+      end
+
+      routing.post 'login' do
+        # Handle login logic here
+        # For simplicity, let's just print the submitted parameters for now
+        puts "Username: #{routing.params['username']}, Password: #{routing.params['password']}"
+        'Login successful!'
       end
 
       routing.on 'animal' do

@@ -8,9 +8,8 @@ module PetAdoption
   # to identify which animal he(she) wants to adopt
   class AnimalOrder < Dry::Struct
     include Dry.Types
-
-    attribute :animal_id, Strict::Integer
-    attribute :adopter_id, Strict::Integer
+    attribute :adopter_id, Strict::Integer, unique: true, null: false
+    attribute :animal_ids, Array::Integer
     attribute :created_at, Strict::String
     attribute :updated_at, Strict::String
   end

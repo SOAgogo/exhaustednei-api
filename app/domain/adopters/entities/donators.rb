@@ -1,14 +1,19 @@
 # frozen_string_literal: true
 
+require_relative 'normal_people'
 module PetAdoption
   module Entity
-    class Donators < Dry::Struct
-      include Dry.Types
+    # class Donators`
+    class Donators < NormalPeople
       attribute :id, Integer.optional
-      attribute :adopter_id, Strict::Integer
-      attribute :donate_money, Strict::Integer
+      attribute :donater_id, Strict::Integer, unique: true, null: false
+      attribute :shelters, Array::Shelters
+      # each element in donate_money is the one gave to the shelter(one-one)
+      attribute :donate_money, Array::Integer
       attribute :created_at, Strict::String
       attribute :updated_at, Strict::String
+
+      def pay_money_to_shelter; end
     end
   end
 end

@@ -1,0 +1,11 @@
+--2023-11-11 01:25:36--  https://data.moa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL
+Resolving data.moa.gov.tw (data.moa.gov.tw)... 210.241.95.225
+Connecting to data.moa.gov.tw (data.moa.gov.tw)|210.241.95.225|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7668636 (7.3M) [application/json]
+Saving to: ‘TransService.aspx?UnitId=QcbUEzN6E6DL’
+
+         TransSer   0%[             ]       0  --.-KB/s                       TransServ   8%[>            ] 655.67K  1.36MB/s                      TransServi  14%[>            ]   1.06M  1.58MB/s                     TransServic  24%[==>          ]   1.81M  2.07MB/s                    TransService  33%[===>         ]   2.47M  2.28MB/s                   TransService.  42%[====>        ]   3.14M  2.45MB/s                  TransService.a  52%[=====>       ]   3.84M  2.59MB/s                 TransService.as  61%[======>      ]   4.47M  2.65MB/s                TransService.asp  70%[========>    ]   5.17M  2.74MB/s               TransService.aspx  82%[=========>   ]   6.01M  2.87MB/s               ransService.aspx?  90%[==========>  ]   6.59M  2.86MB/s               ansService.aspx?U  98%[===========> ]   7.23M  2.89MB/s               TransService.aspx 100%[============>]   7.31M  2.90MB/s    in 2.5s    
+
+2023-11-11 01:25:39 (2.90 MB/s) - ‘TransService.aspx?UnitId=QcbUEzN6E6DL’ saved [7668636/7668636]
+
