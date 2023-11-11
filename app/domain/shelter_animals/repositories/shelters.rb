@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'animals'
-require 'pry'
 
 module Repository
   module Info
@@ -21,7 +20,7 @@ module Repository
       end
 
       def self.find_shelter_id(animal_shelter_pkid)
-        db_record = Database::ProjectOrm::ShelterOrm.first(animal_shelter_pkid:)
+        db_record = Database::ProjectOrm::ShelterOrm.where(animal_shelter_pkid:).first
         rebuild_entity(db_record)
       end
 

@@ -2,12 +2,12 @@
 
 require_relative '../../shelter_animals/entities/animal'
 require_relative 'animal_order'
-require_relative 'normal_people'
+require_relative 'account'
 
 module PetAdoption
   module Entity
     # class Info::adotpers`
-    class Keepers < NormalPeople
+    class Keepers < Account
       include Dry.Types
       attribute :id, Integer.optional
       attribute :animals, Strict::Array.of(Animal)

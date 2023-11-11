@@ -61,11 +61,9 @@ namespace :db do
     require_relative 'spec/helpers/init_database_data_helper'
     require_app('infrastructure')
     require_app('models')
-    puts 'wipe database'
+    puts 'puts all the data in the database'
     DatabaseHelper.wipe_database
-    puts 'data initializtion for database'
     Repository::App::PrepareDatabase.init_database
-    sh 'ruby spec/helpers/init_database_data_helper.rb'
   end
 
   desc 'Run migrations'
@@ -83,6 +81,7 @@ namespace :db do
     end
 
     require_app('infrastructure')
+    require_relative 'spec/helpers/database_helper'
     DatabaseHelper.wipe_database
   end
 

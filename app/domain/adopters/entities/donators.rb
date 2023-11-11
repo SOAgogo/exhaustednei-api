@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'normal_people'
+require_relative 'account'
 require_relative '../../shelter_animals/entities/shelter'
 module PetAdoption
   module Entity
     # class Donators`
-    class Donators < NormalPeople
+    class Donators < Account
       attribute :id, Integer.optional
       attribute :donater_id, Strict::Integer
       attribute :shelters, Strict::Array.of(Shelter)

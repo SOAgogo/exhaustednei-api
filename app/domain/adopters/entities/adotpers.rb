@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative 'normal_people'
+require_relative 'account'
 require_relative 'animal_order'
 require_relative '../../shelter_animals/entities/animal'
 module PetAdoption
   module Entity
     # class Info::adotpers`
-    class Adopters < NormalPeople
+    class Adopters < Account
       include Dry.Types
       attribute :id, Integer.optional
       attribute :adopter_id, Strict::Integer
