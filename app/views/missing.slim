@@ -1,0 +1,32 @@
+html
+  head
+    title Report a Missing Pet
+    link rel="stylesheet" href="/styles.css" # Add a link to your stylesheet
+
+  body
+    .container
+      h2 Report a Missing Pet
+
+      form#missing-pet-form action="/report_missing_pet" method="post" enctype="multipart/form-data"
+        .form-group
+          label for="pet_name" Pet Name:
+          input type="text" name="pet_name" id="pet_name" required
+
+        .form-group
+          label for="description" Description:
+          textarea name="description" id="description" rows="4" required
+
+        .form-group
+          label for="last_seen_location" Last Seen Location:
+          input type="text" name="last_seen_location" id="last_seen_location" required
+
+        .form-group
+          label for="contact_info" Contact Information:
+          input type="text" name="contact_info" id="contact_info" required
+
+        .form-group
+          label for="pet_photo" Pet Photo:
+          input type="file" name="pet_photo" id="pet_photo" accept="image/*" required
+
+        .form-group
+          input.btn-submit type="submit" value="Report Missing Pet"

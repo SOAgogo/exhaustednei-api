@@ -1,0 +1,37 @@
+html
+  head
+    title Photo Upload with Preview
+    link rel="stylesheet" href="/styles.css" # Add a link to your stylesheet
+
+  body
+    .container
+      .header
+        h2 Photo Upload with Preview
+
+      form#upload-form action="/upload" method="post" enctype="multipart/form-data"
+        .form-group
+          label for="photo" Upload a Photo
+          input#photo-upload type="file" name="photo" id="photo" accept="image/*" onchange="previewImage(event)" required
+
+        .image-preview
+          img#preview-image.alt="Image Preview"
+
+        .form-group
+          label for="description" Description
+          textarea name="description" id="description" rows="4" placeholder="Enter a description..." required
+
+        .form-group
+          input.btn-submit type="submit" value="Upload and Preview"
+
+    script.
+      function previewImage(event) {
+        var input = event.target;
+        var preview = document.getElementById('preview-image');
+        var reader = new FileReader();
+
+        reader.onload = function(){
+          preview.src = reader.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+      }

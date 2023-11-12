@@ -65,28 +65,42 @@ module PetAdoption
         end
       end
 
-      r.post 'adopt' do
-        # Perform any necessary processing for the 'Adopt?' button click
-        # ...
-  
-        # Redirect to the desired page
-        r.redirect '/adopted'
+      routing.on 'adopt' do
+        # POST /adopt
+        routing.post do
+          # Perform any necessary processing for the 'Adopt?' button click
+          # ...
+    
+          # Render the 'adopt.slim' file
+          view 'adopt'
+    
+          # Redirect to the desired page
+        end
+      end
+      routing.on 'found' do
+        # POST /adopt
+        routing.post do
+          # Perform any necessary processing for the 'Adopt?' button click
+          # ...
+    
+          # Render the 'adopt.slim' file
+          view 'found'
+    
+          # Redirect to the desired page
+        end
       end
 
-      r.post 'found' do
-        # Perform any necessary processing for the 'Adopt?' button click
-        # ...
-  
-        # Redirect to the desired page
-        r.redirect '/found'
-      end
-
-      r.post 'missing' do
-        # Perform any necessary processing for the 'Adopt?' button click
-        # ...
-  
-        # Redirect to the desired page
-        r.redirect '/missing'
+      routing.on 'missing' do
+        # POST /adopt
+        routing.post do
+          # Perform any necessary processing for the 'Adopt?' button click
+          # ...
+    
+          # Render the 'adopt.slim' file
+          view 'missing'
+    
+          # Redirect to the desired page
+        end
       end
     end
   end
