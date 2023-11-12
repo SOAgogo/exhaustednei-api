@@ -16,7 +16,11 @@ module PetAdoption
         kind = animal_info['animal_kind']
         animal = DataMapper.new(animal_info).build_dog_entity if kind == '狗'
         animal = DataMapper.new(animal_info).build_cat_entity if kind == '貓'
-        animal
+        if %w[貓 狗].include?(kind)
+          [animal, true]
+        else
+          [animal, false]
+        end
       end
 
       def self.shelter_creation?(shelter_id, shelter_animal_mapping)
@@ -28,7 +32,8 @@ module PetAdoption
         shelter_animal_mapping = {}
         animal_info_list.each do |animal_info|
           animal_shelter = AnimalMapper.shelter_creation?(animal_info['animal_shelter_pkid'], shelter_animal_mapping)
-          animal_shelter[animal_info['animal_id']] = Info::AnimalMapper.find(animal_info)
+          animal, dogorcat = Info::AnimalMapper.find(animal_info)
+          animal_shelter[animal_info['animal_id']] = animal if dogorcat
         end
         shelter_animal_mapping
       end

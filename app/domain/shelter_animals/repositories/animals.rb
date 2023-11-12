@@ -80,6 +80,7 @@ module Repository
       def self.db_find_or_create(entity)
         # #<CodePraise::Entity::Member id=nil origin_id=1926704 username="soumyaray" email=nil>
         # to hash {:origin_id=>1926704, :username=>"soumyaray", :email=>nil}
+
         Database::ProjectOrm::AnimalOrm.find_or_create(entity.to_attr_hash)
       end
 

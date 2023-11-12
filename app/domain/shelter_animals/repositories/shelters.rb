@@ -46,7 +46,9 @@ module Repository
       end
 
       def self.db_find_or_create(entity)
-        Database::ProjectOrm::ShelterOrm.find_or_create(entity.to_attr_hash)
+        shelter_db_obj = Database::ProjectOrm::ShelterOrm.find_or_create(entity.to_attr_hash)
+        PersistShelter.new(entity).call
+        shelter_db_obj
       end
 
       # Helper class to persist project and its members to database
@@ -56,7 +58,8 @@ module Repository
         end
 
         def create_shelter
-          Database::ProjectOrm::ShelterOrm.create(@entity.to_attr_hash)
+          # Database::ProjectOrm::ShelterOrm.create(@entity.to_attr_hash)
+          Database::ProjectOrm::ShelterOrm.find_or_create(@entity.to_attr_hash)
         end
 
         def self.add_foeign_key_to_animal(animal_database_list, shelter)

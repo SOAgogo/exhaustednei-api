@@ -19,9 +19,8 @@ module Repository
 
       def self.store_shelter_info_to_db(project)
         project.request_body.each do |shelter_obj|
-          binding.pry
           shelter = PetAdoption::Info::ShelterMapper.get_shelter_obj(shelter_obj['animal_shelter_pkid'])
-          Repository::Info::For.entity(shelter).create(shelter)
+          Repository::Info::For.entity(shelter).db_find_or_create(shelter)
         end
       end
     end

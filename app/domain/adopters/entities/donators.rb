@@ -14,7 +14,10 @@ module PetAdoption
       attribute :created_at, Strict::String
       attribute :updated_at, Strict::String
 
-      def pay_money_to_shelter; end
+      def pay_money_to_shelter(shelter_pkid, amount)
+        shelter = shelters.find { |shelter| shelter.id == shelter_pkid }
+        shelter.money += amount
+      end
     end
   end
 end
