@@ -56,6 +56,7 @@ namespace :db do
     def app = PetAdoption::App
   end
 
+  # daily update database
   desc 'Run data initialization for database'
   task :datainit => :config do
     require_relative 'spec/helpers/init_database_data_helper'

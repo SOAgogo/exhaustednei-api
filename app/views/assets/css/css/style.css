@@ -104,3 +104,13 @@ button.btn.btn-missing {
   height: 100%;
   }
 }
+* {box-sizing: border-box}
+
+#success_message{ display: none;}
+
+
+
+
+
+
+

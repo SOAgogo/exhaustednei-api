@@ -22,6 +22,7 @@ module PetAdoption
       # GET /
       routing.root do
         view('login')
+        # view('signup')
       end
 
       routing.post 'login' do
@@ -34,6 +35,10 @@ module PetAdoption
           animal_pic = Repository::Info::Animals.web_page_cover
           view 'home', locals: { image_url: animal_pic }
         end
+      end
+
+      routing.on 'register' do
+        view('signup')
       end
 
       routing.on 'animal' do
@@ -81,7 +86,11 @@ module PetAdoption
         # ...
 
         # Redirect to the desired page
-        routing.redirect '/adopted'
+        routing.redirect '/adoption'
+      end
+
+      routing.on 'adoption' do
+        view('adoption')
       end
 
       routing.post 'found' do
