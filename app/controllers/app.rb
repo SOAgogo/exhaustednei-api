@@ -5,7 +5,8 @@ require 'slim'
 require 'json'
 require 'uri'
 require 'pry'
-
+require 'securerandom'
+require 'fileutils'
 module PetAdoption
   # Web App
   class App < Roda
@@ -14,6 +15,7 @@ module PetAdoption
     plugin :common_logger, $stderr
     plugin :halt
     plugin :json
+
 
     route do |routing|
       routing.assets # load CSS
@@ -78,17 +80,11 @@ module PetAdoption
         end
       end
       routing.on 'found' do
-        # POST /adopt
-        routing.post do
-          # Perform any necessary processing for the 'Adopt?' button click
-          # ...
-    
-          # Render the 'adopt.slim' file
-          view 'found'
-    
-          # Redirect to the desired page
-        end
+        view 'found' # Assume you have an "upload.slim" file for the form
+
+
       end
+
 
       routing.on 'missing' do
         # POST /adopt
@@ -102,6 +98,12 @@ module PetAdoption
           # Redirect to the desired page
         end
       end
+
+
+  
+
+
+
     end
   end
 end

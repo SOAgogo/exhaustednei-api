@@ -1,37 +1,44 @@
+doctype html
 html
   head
-    title Photo Upload with Preview
-    link rel="stylesheet" href="/styles.css" # Add a link to your stylesheet
-
+    title Image preview on realtime
+    meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+    script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"
   body
-    .container
-      .header
-        h2 Photo Upload with Preview
+    h3 Animal Image
+    form name="form0" id="form0"
+      input type="file" name="file0" id="file0" multiple="multiple"
+      br
+      img src="" id="img0"
 
-      form#upload-form action="/upload" method="post" enctype="multipart/form-data"
-        .form-group
-          label for="photo" Upload a Photo
-          input#photo-upload type="file" name="photo" id="photo" accept="image/*" onchange="previewImage(event)" required
 
-        .image-preview
-          img#preview-image.alt="Image Preview"
+      label for="picture_description" Found Location:
+      input type="text" name="picture_description" id="picture_description"
+      
+      label for="animal_description" Picture Description:
+      input type="text" name="animal_description" id="animal_description"
 
-        .form-group
-          label for="description" Description
-          textarea name="description" id="description" rows="4" placeholder="Enter a description..." required
+      button type="button" id="submitBtn" Submit
 
-        .form-group
-          input.btn-submit type="submit" value="Upload and Preview"
-
-    script.
-      function previewImage(event) {
-        var input = event.target;
-        var preview = document.getElementById('preview-image');
-        var reader = new FileReader();
-
-        reader.onload = function(){
-          preview.src = reader.result;
-        };
-
-        reader.readAsDataURL(input.files[0]);
+    javascript:  
+      $("#file0").change(function(){
+          var objUrl = getObjectURL(this.files[0]) ;
+          console.log("objUrl = "+objUrl) ;
+          if (objUrl) {
+              $("#img0").attr("src", objUrl) ;
+          }
+      }) ;
+      
+      function getObjectURL(file) {
+          var url = null ; 
+          if (window.createObjectURL!=undefined) { // basic
+              url = window.createObjectURL(file) ;
+          } else if (window.URL!=undefined) { // mozilla(firefox)
+              url = window.URL.createObjectURL(file) ;
+          } else if (window.webkitURL!=undefined) { // webkit or chrome
+              url = window.webkitURL.createObjectURL(file) ;
+          }
+          return url ;
+          console.log( url )
       }
+      
