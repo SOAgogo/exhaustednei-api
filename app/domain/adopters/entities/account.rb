@@ -7,6 +7,7 @@ module PetAdoption
     # user inputs from login page
     class Account < Dry::Struct
       include Dry.Types
+      attribute :sessionID, Strict::String
       attribute :username, Strict::String
       attribute :phone, Strict::String
       attribute :email, Strict::String.optional

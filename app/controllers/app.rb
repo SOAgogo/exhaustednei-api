@@ -2,9 +2,10 @@
 
 require 'roda'
 require 'slim'
+require 'slim/include'
 require 'json'
 require 'uri'
-require 'pry'
+require 'securerandom'
 
 module PetAdoption
   # Web App
@@ -15,35 +16,43 @@ module PetAdoption
     plugin :halt
     plugin :json
 
+    use Rack::MethodOverride
     route do |routing|
       routing.assets # load CSS
       response['Content-Type'] = 'text/html; charset=utf-8'
 
       # GET /
       routing.root do
-        view('login')
-        # view('signup')
+        session[:watching] ||= []
+        view('signup')
       end
 
-      routing.post 'login' do
+      routing.post 'signup' do
         # Handle login logic here
+        # add cookie here
+        # session[:watching].insert(0, project.fullname).uniq!
+        first_name = routing.params['first_name']
+        last_name = routing.params['last_name']
+        email = routing.params['email']
+        phone = routing.params['phone']
+        address = routing.params['address']
+        willingness = routing.params['state']
+        session_id = SecureRandom.uuid
+
+        session[:watching] = [session_id, first_name, last_name, email, phone, address, willingness]
         routing.redirect '/home'
       end
 
       routing.on 'home' do
+        
         routing.is do
           animal_pic = Repository::Info::Animals.web_page_cover
           view 'home', locals: { image_url: animal_pic }
         end
       end
 
-      routing.on 'register' do
-        view('signup')
-      end
-
       routing.on 'animal' do
         routing.is do
-          # POST /project/
           routing.post do
             animal_kind = routing.params['animal_kind'].downcase
             shelter_name = routing.params['shelter_name']
@@ -83,7 +92,6 @@ module PetAdoption
 
       routing.post 'adopt' do
         # Perform any necessary processing for the 'Adopt?' button click
-        # ...
 
         # Redirect to the desired page
         routing.redirect '/adoption'
@@ -95,7 +103,6 @@ module PetAdoption
 
       routing.post 'found' do
         # Perform any necessary processing for the 'Adopt?' button click
-        # ...
 
         # Redirect to the desired page
         routing.redirect '/found'
@@ -103,7 +110,6 @@ module PetAdoption
 
       routing.post 'missing' do
         # Perform any necessary processing for the 'Adopt?' button click
-        # ...
 
         # Redirect to the desired page
         routing.redirect '/missing'
