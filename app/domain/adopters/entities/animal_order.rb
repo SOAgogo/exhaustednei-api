@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'account'
+require_relative '../../shelter_animals/entities/animal'
 # module PetAdoption
 module PetAdoption
   module Entity
@@ -10,7 +11,7 @@ module PetAdoption
     class AnimalOrder < Account
       include Dry.Types
       attribute :adopter_id, Strict::Integer
-      attribute :animal_ids, Strict::Array.of(Integer)
+      attribute :animal_ids, Strict::Array.of(Animal)
       attribute :created_at, Strict::String
       attribute :updated_at, Strict::String
     end

@@ -26,6 +26,7 @@ module PetAdoption
       # GET /
       routing.root do
         session[:watching] ||= {}
+        routing.redirect '/home' if session[:watching][:session_id]
         view('signup')
       end
 

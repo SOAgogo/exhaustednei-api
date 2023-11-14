@@ -19,7 +19,10 @@ module PetAdoption
       Figaro.load
       def self.config = Figaro.env
 
-      use Rack::Session::Cookie, secret: config.SESSION_SECRET
+      use Rack::Session::Cookie, {
+        secret: config.SESSION_SECRET,
+        expire_after: 60
+      }
       # for testing and development, use sqlite
       configure :development, :test do
         ENV['DATABASE_URL'] = "sqlite://#{config.DB_FILENAME}"

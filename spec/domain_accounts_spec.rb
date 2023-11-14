@@ -4,6 +4,10 @@ require_relative 'spec_helper'
 require_relative 'helpers/vcr_helper'
 require_relative 'helpers/database_helper'
 
+# require 'headless'
+require 'webdrivers/chromedriver'
+require 'watir'
+
 describe 'Check the content of the cookie written to db is same as the file' do
   VcrHelper.setup_vcr
 
