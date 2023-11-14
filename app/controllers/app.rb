@@ -10,27 +10,26 @@ require 'securerandom'
 module PetAdoption
   # Web App
   class App < Roda
+    plugin :all_verbs
     plugin :render, engine: 'slim', views: 'app/views'
     plugin :assets, css: 'style.css', path: 'app/views/assets/css'
     plugin :common_logger, $stderr
     plugin :halt
     plugin :json
 
-    use Rack::MethodOverride
+    # use Rack::MethodOverride
+
     route do |routing|
       routing.assets # load CSS
       response['Content-Type'] = 'text/html; charset=utf-8'
 
       # GET /
       routing.root do
-        session[:watching] ||= []
+        session[:watching] ||= {}
         view('signup')
       end
 
       routing.post 'signup' do
-        # Handle login logic here
-        # add cookie here
-        # session[:watching].insert(0, project.fullname).uniq!
         first_name = routing.params['first_name']
         last_name = routing.params['last_name']
         email = routing.params['email']
@@ -39,12 +38,19 @@ module PetAdoption
         willingness = routing.params['state']
         session_id = SecureRandom.uuid
 
-        session[:watching] = [session_id, first_name, last_name, email, phone, address, willingness]
+        cookie_hash = { session_id:,
+                        first_name:,
+                        last_name:,
+                        email:,
+                        phone:,
+                        address:,
+                        willingness: }
+        File.write(ENV.fetch('TESTING_FILE'), cookie_hash.to_json) if ENV['RACK_ENV'] == 'test'
+        session[:watching] = cookie_hash
         routing.redirect '/home'
       end
 
       routing.on 'home' do
-        
         routing.is do
           animal_pic = Repository::Info::Animals.web_page_cover
           view 'home', locals: { image_url: animal_pic }

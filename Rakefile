@@ -82,7 +82,7 @@ namespace :db do
     end
 
     require_app('infrastructure')
-    require_relative 'spec/helpers/database_helper'
+    # require_relative 'spec/helpers/database_helper'
     DatabaseHelper.wipe_database
   end
 

@@ -25,6 +25,11 @@ module PetAdoption
         ENV['DATABASE_URL'] = "sqlite://#{config.DB_FILENAME}"
       end
 
+      configure :test do
+        ENV['RACK_ENV'] = 'test'
+        ENV['TESTING_FILE'] = config.TESTING_FILE.to_s
+      end
+
       # Database Setup
       @db = Sequel.connect(ENV.fetch('DATABASE_URL'))
       def self.db = @db # rubocop:disable Style/TrivialAccessors

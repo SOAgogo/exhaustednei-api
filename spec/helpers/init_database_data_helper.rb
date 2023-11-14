@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'database_helper'
 require_relative '../../app/infrastructure/download/curl_download_file'
-require 'pry'
 module Repository
   module App
     # init_database for initializing database

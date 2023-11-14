@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'helpers/spec_helper'
+require_relative 'spec_helper'
 require_relative 'helpers/vcr_helper'
 require_relative 'helpers/database_helper'
 
-describe 'Test Git Commands Mapper and Gateway' do
+describe 'Check the content of the cookie written to db is same as the file' do
   VcrHelper.setup_vcr
 
   before do
