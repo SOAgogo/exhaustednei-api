@@ -6,8 +6,6 @@ module PetAdoption
   module Entity
     # class Donators`
     class Donators < Account
-      attribute :id, Integer.optional
-      attribute :donater_id, Strict::Integer
       attribute :shelters, Strict::Array.of(Shelter)
       # each element in donate_money is the one gave to the shelter(one-one)
       attribute :donate_money, Strict::Array.of(Integer)

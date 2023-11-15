@@ -10,8 +10,7 @@ module PetAdoption
     # to identify which animal he(she) wants to adopt
     class AnimalOrder < Account
       include Dry.Types
-      attribute :adopter_id, Strict::Integer
-      attribute :animal_ids, Strict::Array.of(Animal)
+      attribute :animals, Strict::Array.of(Animal)
       attribute :created_at, Strict::String
       attribute :updated_at, Strict::String
     end

@@ -56,7 +56,6 @@ module Repository
 
       def self.find_full_animals_in_shelter(shelter_name)
         Database::ProjectOrm::AnimalOrm
-          # .right_join(:shelters, id: :shelter_id)
           .where(animal_place: shelter_name)
           .all
       end
@@ -78,9 +77,6 @@ module Repository
       #
       # create an entry for each contributor
       def self.db_find_or_create(entity)
-        # #<CodePraise::Entity::Member id=nil origin_id=1926704 username="soumyaray" email=nil>
-        # to hash {:origin_id=>1926704, :username=>"soumyaray", :email=>nil}
-
         Database::ProjectOrm::AnimalOrm.find_or_create(entity.to_attr_hash)
       end
 

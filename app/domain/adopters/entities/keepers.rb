@@ -9,9 +9,7 @@ module PetAdoption
     # class Info::adotpers`
     class Keepers < Account
       include Dry.Types
-      attribute :id, Integer.optional
       attribute :animals, Strict::Array.of(Animal)
-      attribute :keeper_id, Strict::Integer
       attribute :created_at, Strict::String
       attribute :updated_at, Strict::String
     end

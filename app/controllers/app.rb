@@ -46,7 +46,8 @@ module PetAdoption
                         phone:,
                         address:,
                         willingness: }
-        File.write(ENV.fetch('TESTING_FILE'), cookie_hash.to_json) if ENV['RACK_ENV'] == 'test'
+        # File.write(ENV.fetch('TESTING_FILE'), cookie_hash.to_json) if ENV['RACK_ENV'] == 'test'
+
         session[:watching] = cookie_hash
         routing.redirect '/home'
       end
