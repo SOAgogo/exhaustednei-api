@@ -6,7 +6,7 @@ html
     script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"
   body
     h3 Animal Image
-    form name="form0" id="form0"
+    form name="form0" action="found" id="form0" enctype="multipart/form-data"
       input type="file" name="file0" id="file0" multiple="multiple"
       br
       img src="" id="img0"
@@ -18,7 +18,7 @@ html
       label for="animal_description" Picture Description:
       input type="text" name="animal_description" id="animal_description"
 
-      button type="button" id="submitBtn" Submit
+      button type="button" id="submitBtn" onclick="submitForm()">Submit
 
     javascript:  
       $("#file0").change(function(){
@@ -41,6 +41,29 @@ html
           return url ;
           console.log( url )
       }
-    
-    p = output
+
+      function submitForm() {
+          var formData = new FormData($("#form0")[0]);
+          $.ajax({
+              type: 'POST',
+              url: '/found',
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function(response) {
+                  // Assuming response contains the output from the Open3 script
+                  $("#output").text(response);
+                  
+                  // Optional: You can also redirect or perform other actions based on the response
+                  // window.location.href = '/some_page';
+              },
+              error: function(error) {
+                  console.log('Error:', error);
+              }
+          });
+      }
       
+    - if p
+      p#output= p
+    - else
+      p#output No output available

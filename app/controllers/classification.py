@@ -1,3 +1,4 @@
+import sys
 from roboflow import Roboflow
 
 def predict_dog_breed(image_url):
@@ -15,7 +16,15 @@ def predict_dog_breed(image_url):
     
     return result
 
-# Example usage:
-image_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfoj6fo3z61ZH59hgmndWSs1h082AfOAeZKw&usqp=CAU"
-prediction_result = predict_dog_breed(image_url)
-print(prediction_result)
+if __name__ == "__main__":
+    # Check if the command line argument for image_url is provided
+    if len(sys.argv) < 2:
+        print("Usage: python script.py <image_url>")
+        sys.exit(1)
+
+    # Get the image_url from the command line argument
+    image_url = sys.argv[1]
+
+    # Call the predict_dog_breed function with the provided image_url
+    prediction_result = predict_dog_breed(image_url)
+    print(prediction_result)
