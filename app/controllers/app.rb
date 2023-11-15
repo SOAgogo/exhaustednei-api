@@ -7,6 +7,9 @@ require 'uri'
 require 'pry'
 require 'securerandom'
 require 'fileutils'
+require 'open3'
+
+
 module PetAdoption
   # Web App
   class App < Roda
@@ -80,9 +83,16 @@ module PetAdoption
         end
       end
       routing.on 'found' do
-        view 'found' # Assume you have an "upload.slim" file for the form
+        routing.post do
 
+        script_path = 'app/controllers/classification.py'
 
+        output = Open3.capture2("python3 #{script_path}")
+        view 'found', locals: {
+          output:
+        } # Assume you have an "upload.slim" file for the form
+
+        end
       end
 
 
