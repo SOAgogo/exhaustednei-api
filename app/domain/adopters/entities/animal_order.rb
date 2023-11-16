@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'dry-types'
 require 'dry-struct'
 require_relative '../../shelter_animals/entities/animal'
@@ -11,7 +12,6 @@ module PetAdoption
     class AnimalOrder < Dry::Struct
       include Dry.Types
       attribute :animals, Strict::Array.of(Animal)
-      
     end
   end
 end

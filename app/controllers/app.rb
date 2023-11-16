@@ -3,8 +3,9 @@
 require 'roda'
 require 'slim'
 require 'json'
+require 'slim/include'
 require 'uri'
-require 'pry'
+require 'securerandom'
 
 module PetAdoption
   # Web App

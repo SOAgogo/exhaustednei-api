@@ -9,10 +9,6 @@ require 'json'
 require 'pry'
 
 describe 'Check the content of the cookie written to db is same as the file' do
-  before do
-    # data = File.read('spec/testing_cookies/user_input.json')
-    # data = JSON.parse(data)
-  end
 
   it 'HAPPY: should get the same item in the files and cookies' do
     # read the cookie from the file that is created from one-time browsing
