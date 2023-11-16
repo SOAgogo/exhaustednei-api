@@ -29,7 +29,7 @@ module PetAdoption
       end
 
       configure :test do
-        ENV['RACK_ENV'] = 'test'
+        ENV['testing'] = true
         ENV['TESTING_FILE'] = config.TESTING_FILE.to_s
       end
 

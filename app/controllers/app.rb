@@ -50,8 +50,10 @@ module PetAdoption
                         'address' => address,
                         'willingness' => willingness }
 
-        open('spec/testing_cookies/user_input.json', 'w') do |file|
-          file << cookie_hash.to_json
+        if ENV['testing'] == 'true'
+          open('spec/testing_cookies/user_input.json', 'w') do |file|
+            file << cookie_hash.to_json
+          end
         end
         user = PetAdoption::Adopters::DonatorMapper.new(cookie_hash).find if willingness == 'donater'
         user = PetAdoption::Adopters::AdopterMapper.new(cookie_hash).find if willingness == 'adopter'
