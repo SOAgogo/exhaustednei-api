@@ -9,10 +9,9 @@ module PetAdoption
     # class PetAdoption::Entity::AnimalOrder`
     # when adopters adopt animals, we need to create a new animal order
     # to identify which animal he(she) wants to adopt
-    class AnimalOrder
-      def initialize(animal_hash)
-        @animal_hash = animal_hash
-      end
+    class AnimalOrder < Dry::Struct
+      include Dry.Types
+      attribute :animals, Strict::Array.of(Animal)
     end
   end
 end

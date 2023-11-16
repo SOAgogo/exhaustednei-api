@@ -50,8 +50,8 @@ module PetAdoption
                         'address' => address,
                         'willingness' => willingness }
 
-        open('spec/testing_cookies/user_input.json', 'w') do |f|
-          f << cookie_hash.to_json
+        open('spec/testing_cookies/user_input.json', 'w') do |file|
+          file << cookie_hash.to_json
         end
         user = PetAdoption::Adopters::DonatorMapper.new(cookie_hash).find if willingness == 'donater'
         user = PetAdoption::Adopters::AdopterMapper.new(cookie_hash).find if willingness == 'adopter'
@@ -87,7 +87,6 @@ module PetAdoption
 
         routing.on String, String do |animal_kind, shelter_name|
           # GET /project/owner/project
-          sn_ch = URI.decode_www_form_component(shelter_name)
           ak_ch = animal_kind == 'dog' ? '狗' : '貓'
           shelter_name = URI.decode_www_form_component(shelter_name)
           animal_kind = URI.decode_www_form_component(ak_ch)

@@ -28,14 +28,17 @@ module PetAdoption
         shelter_animal_mapping[shelter_id]
       end
 
-      def self.shelter_animal_mapping(animal_info_list)
-        shelter_animal_mapping = {}
+      def self.set_animal_mapping(animal_info_list, shelter_animal_mapping = {})
         animal_info_list.each do |animal_info|
           animal_shelter = AnimalMapper.shelter_creation?(animal_info['animal_shelter_pkid'], shelter_animal_mapping)
           animal, dogorcat = Info::AnimalMapper.find(animal_info)
           animal_shelter[animal_info['animal_id']] = animal if dogorcat
         end
         shelter_animal_mapping
+      end
+
+      def self.shelter_animal_mapping(animal_info_list)
+        set_animal_mapping(animal_info_list)
       end
 
       # # AnimalMapper::DataMapper
