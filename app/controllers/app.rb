@@ -58,7 +58,6 @@ module PetAdoption
         user = PetAdoption::Adopters::DonatorMapper.new(cookie_hash).find if willingness == 'donater'
         user = PetAdoption::Adopters::AdopterMapper.new(cookie_hash).find if willingness == 'adopter'
         user = PetAdoption::Adopters::KeeperMapper.new(cookie_hash).find if willingness == 'keeper'
-        # File.write(ENV.fetch('TESTING_FILE'), cookie_hash.to_json) if ENV['RACK_ENV'] == 'test'
 
         Repository::Adopters::Users.new(
           user.to_attr_hash.merge(
