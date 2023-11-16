@@ -7,14 +7,13 @@ Sequel.migration do
     create_table(:users) do
       primary_key :id
 
-      foreign_key :animal_id, :animals
-
       String :session_id, unique: true, null: false
       String :firstname, null: false
       String :lastname, null: false
       String :phone
       String :email
-
+      String :address
+      Integer :donate_money
       DateTime :created_at
       DateTime :updated_at
     end

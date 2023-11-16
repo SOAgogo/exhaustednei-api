@@ -4,18 +4,25 @@ require_relative 'spec_helper'
 require_relative 'helpers/vcr_helper'
 # require_relative 'helpers/database_helper'
 require_relative '../app/controllers/app'
+require 'securerandom'
+require 'json'
+require 'pry'
 
 describe 'Check the content of the cookie written to db is same as the file' do
   before do
-    # how do I use rake run to type user data during the test?
-    system('rake run')
+    # data = File.read('spec/testing_cookies/user_input.json')
+    # data = JSON.parse(data)
   end
 
   it 'HAPPY: should get the same item in the files and cookies' do
     # read the cookie from the file that is created from one-time browsing
-    broweser_cookie = File.read('spec/testing_cookies/cookies.json')
+    # broweser_cookie = File.read('spec/testing_cookies/cookies.json')
     # get the cookie from the database
-    pet_cookie = PetAdoption::Repository::For.entity(gh_project).create(gh_project)
+    # pet_cookie = PetAdoption::Repository::For.entity(gh_project).create(gh_project)
+
+    data = File.read('spec/testing_cookies/user_input.json')
+    data = JSON.parse(data)
+    PetAdoption::Adopters::KeeperMapper.new(data).find
     # compare the cookie from the file and the database
   end
 

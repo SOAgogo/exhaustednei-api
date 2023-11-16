@@ -1,17 +1,24 @@
 # frozen_string_literal: true
-
-require_relative 'account'
+require 'dry-types'
+require 'dry-struct'
 require_relative 'animal_order'
 require_relative '../../shelter_animals/entities/animal'
 module PetAdoption
   module Entity
     # class Info::adotpers`
-    class Adopters < Account
+    class Adopters < Dry::Struct
       include Dry.Types
-      attribute :animals, Strict::Array.of(Animal)
-      attribute :animal_order, AnimalOrder
-      attribute :created_at, Strict::String
-      attribute :updated_at, Strict::String
+      attribute :session_id, Strict::String
+      attribute :firstname, Strict::String
+      attribute :lastname, Strict::String
+      attribute :phone, Strict::String
+      attribute :email, Strict::String.optional
+      attribute :address, Strict::String.optional
+      attribute :donate_money, Strict::Integer
+      # attribute :animal_order, AnimalOrder
+      def to_attr_hash
+        to_hash.except(:address)
+      end
     end
   end
 end

@@ -1,23 +1,20 @@
 # frozen_string_literal: true
 
 require 'sequel'
-
+require 'pry'
 module Database
-  module UserOrm
+  module ProjectOrm
     # Object-Relational Mapper for Animals
     class UserOrm < Sequel::Model(:users)
-      many_to_one :shelter_relations,
-                  class: :'Database::ProjectOrm::ShelterOrm'
+      one_to_many :animal_relations,
+                  class: :'Database::ProjectOrm::AnimalOrm',
+                  key: :user_id
 
       plugin :timestamps, update_on_create: true
 
-      def self.find_or_create(animal_info)
-        first(animal_id: animal_info[:animal_id]) || create(animal_info)
+      def self.find_or_create(user_info)
+        first(session_id: user_info[:session_id]) || create(user_info)
       end
-
-      # def self.find_or_create_many(animal_info)
-      #   first(animal_variate: animal_info[:animal_variate]) || create(animal_info)
-      # end
     end
   end
 end

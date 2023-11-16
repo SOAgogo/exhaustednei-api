@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
 require_relative '../entities/shelter'
 require_relative '../entities/animal'
 
@@ -69,9 +68,6 @@ module PetAdoption
 
       def self.find(shelter_info, animal_map)
         DataMapper.new(shelter_info, animal_map).build_entity
-        # @shelter_object_list[shelter_obj.animal_area_pkid] = shelter_obj
-
-        # @animal_object_hash[animal_obj.animal_id] = animal_obj
       end
 
       # # ShelterMapper::DataMapper

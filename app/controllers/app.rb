@@ -12,7 +12,8 @@ module PetAdoption
   class App < Roda
     plugin :all_verbs
     plugin :render, engine: 'slim', views: 'app/views'
-    plugin :assets, css: 'style.css', path: 'app/views/assets/css'
+    plugin :assets, path: 'app/views/assets', css: 'style.css'
+    # plugin :assets, css: 'style.css', path: 'app/views/assets/css'
     plugin :common_logger, $stderr
     plugin :halt
     plugin :json
@@ -31,23 +32,37 @@ module PetAdoption
       end
 
       routing.post 'signup' do
-        first_name = routing.params['first_name']
-        last_name = routing.params['last_name']
+        firstname = routing.params['first_name']
+        lastname = routing.params['last_name']
         email = routing.params['email']
         phone = routing.params['phone']
         address = routing.params['address']
         willingness = routing.params['state']
         session_id = SecureRandom.uuid
 
-        cookie_hash = { session_id:,
-                        first_name:,
-                        last_name:,
-                        email:,
-                        phone:,
-                        address:,
-                        willingness: }
+        puts "session_id: #{session_id.class} willingness: #{willingness}"
+
+        cookie_hash = { 'session_id' => session_id,
+                        'firstname' => firstname,
+                        'lastname' => lastname,
+                        'phone' => phone,
+                        'email' => email,
+                        'address' => address,
+                        'willingness' => willingness }
+
+        open('spec/testing_cookies/user_input.json', 'w') do |f|
+          f << cookie_hash.to_json
+        end
+        user = PetAdoption::Adopters::DonatorMapper.new(cookie_hash).find if willingness == 'donater'
+        user = PetAdoption::Adopters::AdopterMapper.new(cookie_hash).find if willingness == 'adopter'
+        user = PetAdoption::Adopters::KeeperMapper.new(cookie_hash).find if willingness == 'keeper'
         # File.write(ENV.fetch('TESTING_FILE'), cookie_hash.to_json) if ENV['RACK_ENV'] == 'test'
 
+        Repository::Adopters::Users.new(
+          user.to_attr_hash.merge(
+            address: URI.decode_www_form_component(user.address)
+          )
+        ).create_user
         session[:watching] = cookie_hash
         routing.redirect '/home'
       end
