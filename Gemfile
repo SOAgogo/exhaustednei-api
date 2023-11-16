@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 source 'https://rubygems.org'
 
@@ -11,6 +10,7 @@ gem 'rake'
 gem 'puma', '~> 6.0'
 gem 'roda', '~> 3.0'
 gem 'slim', '~> 5.0'
+gem 'rack-session'
 
 # Data Validation
 gem 'dry-struct', '~> 1.0'
@@ -28,15 +28,26 @@ group :development, :test do
   gem 'sqlite3', '~> 1.0'
 end
 
-# Testing
-gem 'minitest', '~> 5'
-gem 'minitest-rg', '~> 5'
-gem 'simplecov', '~> 0'
-gem 'vcr', '~> 6'
-gem 'webmock', '~> 3'
+group :production do
+  gem 'pg'
+end
 
-# Debugging
-gem 'rerun', '~> 0'
+# Testing
+group :test do
+  gem 'minitest', '~> 5.0'
+  gem 'minitest-rg', '~> 5.0'
+  gem 'simplecov', '~> 0.0'
+  gem 'vcr', '~> 6.0'
+  gem 'webmock', '~> 3.0'
+end
+
+# Development
+group :development do
+  gem 'flog'
+  gem 'reek'
+  gem 'rerun', '~> 0.0'
+  gem 'rubocop', '~> 1.0'
+end
 
 # Code Quality
 gem 'flog'

@@ -8,6 +8,7 @@ Sequel.migration do
       primary_key :id
 
       foreign_key :shelter_id, :shelters
+      foreign_key :users_id, :users
 
       Integer :animal_id, unique: true, null: false
       String :animal_kind, null: false
