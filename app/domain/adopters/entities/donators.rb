@@ -23,17 +23,10 @@ module PetAdoption
         to_hash.except(:address)
       end
 
-<<<<<<< HEAD
-      def pay_money_to_shelter(shelter_pkid, amount)
-        shelter = shelters.find { |shelter| shelter.id == shelter_pkid }
-        shelter.money += amount
-      end
-=======
       # def pay_money_to_shelter(shelter_pkid, amount)
       #   shelter = shelters.find { |shelter| shelter.id == shelter_pkid }
       #   shelter.money += amount
       # end
->>>>>>> master
     end
   end
 end
