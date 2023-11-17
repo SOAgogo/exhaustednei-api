@@ -12,7 +12,6 @@ gem 'puma', '~> 6.0'
 gem 'rack-session', '~> 0.3'
 gem 'roda', '~> 3.0'
 gem 'slim', '~> 5.0'
-gem 'rack-session'
 
 # Data Validation
 gem 'dry-struct', '~> 1.0'
