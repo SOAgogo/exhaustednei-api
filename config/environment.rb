@@ -3,6 +3,7 @@
 require 'figaro'
 require 'roda'
 require 'rack/session'
+
 require 'sequel'
 require 'yaml'
 
