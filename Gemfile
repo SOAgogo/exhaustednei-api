@@ -52,6 +52,5 @@ group :development do
   gem 'rubocop', '~> 1.0'
 end
 
-
-gem 'rubypython'
+gem 'rubypython', '~> 0.6.0'
 

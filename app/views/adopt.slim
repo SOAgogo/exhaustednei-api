@@ -1,28 +1,215 @@
-h2 Adopt a Pet
+.formbar-wrap
+  .row
+    .col-lg-3
+      .form-group
+        |  請選擇欲查詢的資料
+    .col-lg-8
+      .row
+        .col-sm-12[style="text-align:left;"]
+          .form-group
+            #chk_0.form-check.form-check-inline
+              label.form-check-label
+                input#radPetType0.form-check-input[data-sval="0" type="radio" name="exampleRadios1" value="0"]
+                | 犬 
+                span.circle
+                  span.check
+            #chk_1.form-check.form-check-inline
+              label.form-check-label
+                input#radPetType1.form-check-input[data-sval="1" type="radio" name="exampleRadios1" value="1"]
+                | 貓 
+                span.circle
+                  span.check
+            #chk_O.form-check.form-check-inline
+              label.form-check-label
+                input#radPetTypeO.form-check-input[data-sval="O" type="radio" name="exampleRadios1" value="O"]
+                | 其他 
+                span.circle
+                  span.check
+            select#cobVariety.form-select[name="form-select"]
+              option[value="" selected=""]
+                | 選擇品種/物種
+      span.bmd-form-group
+        input#txtKeyWord.form-control[type="text" style="display: none" placeholder="晶片/特徵/遺失時間/遺失地點"]
+  .row
+    .col-lg-1
 
-form action="/adopt" method="post"
-  label for="animal_kind" Animal Kind:
-  select name="animal_kind" id="animal_kind"
-    option value="dog" Dog
-    option value="cat" Cat
-
-  label for="size" Size:
-  select name="size" id="size"
-    option value="small" Small
-    option value="medium" Medium
-    option value="large" Large
-
-  label for="color" Color:
-  select name="color" id="color"
-    option value="brown" Brown
-    option value="black" Black
-    option value="white" White
-    option value="gray" Gray
-
-  label for="location" Location:
-  select name="location" id="location"
-    option value="shelter1" Shelter 1
-    option value="shelter2" Shelter 2
-    option value="shelter3" Shelter 3
-
-  input type="submit" value="Find Pets"
+    .col-lg-10
+      .row
+        .form-inline.col-lg-5
+          .form-group
+            .form-label
+              | 收容所縣市 
+              select#sel_County.form-select[name="form-select" data-gtm-form-interact-field-id="0"]
+                option[value=""]
+                  | 選擇縣市
+                option[value="A"]
+                  | 新北市
+                option[value="V"]
+                  | 臺北市
+                option[value="S"]
+                  | 臺中市
+                option[value="U"]
+                  | 臺南市
+                option[value="W"]
+                  | 高雄市
+                option[value="C"]
+                  | 桃園市
+                option[value="B"]
+                  | 宜蘭縣
+                option[value="D"]
+                  | 新竹縣
+                option[value="E"]
+                  | 苗栗縣
+                option[value="G"]
+                  | 彰化縣
+                option[value="H"]
+                  | 南投縣
+                option[value="I"]
+                  | 雲林縣
+                option[value="J"]
+                  | 嘉義縣
+                option[value="M"]
+                  | 屏東縣
+                option[value="N"]
+                  | 臺東縣
+                option[value="O"]
+                  | 花蓮縣
+                option[value="P"]
+                  | 澎湖縣
+                option[value="Q"]
+                  | 基隆市
+                option[value="R"]
+                  | 新竹市
+                option[value="T"]
+                  | 嘉義市
+                option[value="Y"]
+                  | 金門縣
+                option[value="X"]
+                  | 連江縣
+        .form-inline.col-lg-5
+          .form-group
+            .form-label
+              | 收容所 
+              select#sel_shelter.form-select[name="form-select"]
+                option[value=""]
+                  | -- 選擇收容所 --
+                option[value="AAAAG"]
+                  | 新北市政府動物保護防疫處
+                option[value="AAACG"]
+                  | 新北市新店區公立動物之家
+                option[value="AAADG"]
+                  | 新北市板橋區公立動物之家
+                option[value="AAAEG"]
+                  | 新北市中和區公立動物之家
+                option[value="AAAFG"]
+                  | 新北市淡水區公立動物之家
+                option[value="AAAGG"]
+                  | 新北市瑞芳區公立動物之家
+                option[value="AAAHG"]
+                  | 新北市五股區公立動物之家
+                option[value="AAAIG"]
+                  | 新北市八里區公立動物之家
+                option[value="AAAJG"]
+                  | 新北市三芝區公立動物之家
+      .row
+        .form-inline.col-lg-5
+          .form-group
+            .form-label
+              | 動物性別 
+              select#cobSex.form-select[name="form-select"]
+                option[value="" selected=""]
+                  | 選擇性別
+                option[value="1" selected=""]
+                  | 公
+                option[value="0" selected=""]
+                  | 母
+        .form-inline.col-lg-5
+          .form-group
+            .form-label
+              | 入所年齡 
+              select#cobAge.form-select[name="form-select"]
+                option[value="" selected=""]
+                  | 選擇年齡
+                option[value="1"]
+                  | 未離乳
+                option[value="8"]
+                  | 幼齡(離乳~1歲)
+                option[value="9"]
+                  | 成年(1~7歲)
+                option[value="7"]
+                  | 老齡(7歲以上)
+      .row
+        .form-inline.col-lg-5
+          .form-group
+            .form-label
+              | 來源行政區 
+              select#cobCounty.form-select[name="form-select"]
+                option[value=""]
+                  | 選擇縣市
+                option[value="A"]
+                  | 新北市
+                option[value="V"]
+                  | 臺北市
+                option[value="S"]
+                  | 臺中市
+                option[value="U"]
+                  | 臺南市
+                option[value="W"]
+                  | 高雄市
+                option[value="C"]
+                  | 桃園市
+                option[value="B"]
+                  | 宜蘭縣
+                option[value="D"]
+                  | 新竹縣
+                option[value="E"]
+                  | 苗栗縣
+                option[value="G"]
+                  | 彰化縣
+                option[value="H"]
+                  | 南投縣
+                option[value="I"]
+                  | 雲林縣
+                option[value="J"]
+                  | 嘉義縣
+                option[value="M"]
+                  | 屏東縣
+                option[value="N"]
+                  | 臺東縣
+                option[value="O"]
+                  | 花蓮縣
+                option[value="P"]
+                  | 澎湖縣
+                option[value="Q"]
+                  | 基隆市
+                option[value="R"]
+                  | 新竹市
+                option[value="T"]
+                  | 嘉義市
+                option[value="Y"]
+                  | 金門縣
+                option[value="X"]
+                  | 連江縣
+              select#cobTown.form-select[name="form-select"]
+                option[value="" selected=""]
+                  | 選擇行政區
+        .form-inline.col-lg-5
+          .form-group
+            |  花色 
+          .form-group.bmd-form-group
+            input#txtHAIRCOLOR.form-control[type="text" placeholder="花色" maxlength="10"]
+      .row
+        .form-inline.col-lg-5.ACS
+          .form-group
+            .form-label
+              | 收容編號
+          .form-group.bmd-form-group
+            input#txtAcNum.form-control[type="text" placeholder="收容編號"]
+        .form-inline.col-lg-5
+          .form-group
+            |  動物晶片號碼 
+          .form-group.bmd-form-group
+            input#txtCNum.form-control[type="text" placeholder="動物晶片號碼"]
+        .col-lg-2
+          input#SelData.btn.btn-round.btn-success.btn-sm[type="button" onclick="QueryData()" value="查詢"]
+    .col-lg-1
