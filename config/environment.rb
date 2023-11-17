@@ -3,6 +3,7 @@
 require 'figaro'
 require 'roda'
 require 'rack/session'
+
 require 'sequel'
 require 'yaml'
 
@@ -19,19 +20,17 @@ module PetAdoption
       Figaro.load
       def self.config = Figaro.env
 
-      use Rack::Session::Cookie, {
-        secret: config.SESSION_SECRET,
-        expire_after: 30
-      }
       # for testing and development, use sqlite
       configure :development, :test do
         ENV['DATABASE_URL'] = "sqlite://#{config.DB_FILENAME}"
       end
 
       configure :test do
-        ENV['RACK_ENV'] = 'test'
+        ENV['testing'] = 'true'
         ENV['TESTING_FILE'] = config.TESTING_FILE.to_s
       end
+
+     
       # Database Setup
       @db = Sequel.connect(ENV.fetch('DATABASE_URL'))
       def self.db = @db # rubocop:disable Style/TrivialAccessors

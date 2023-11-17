@@ -2,6 +2,7 @@
 
 require 'roda'
 require 'slim'
+require 'slim/include'
 require 'json'
 require 'slim/include'
 require 'uri'
@@ -10,12 +11,15 @@ require 'securerandom'
 module PetAdoption
   # Web App
   class App < Roda
+    plugin :all_verbs
     plugin :render, engine: 'slim', views: 'app/views'
     plugin :assets, path: 'app/views/assets', css: 'style.css'
     # plugin :assets, css: 'style.css', path: 'app/views/assets/css'
     plugin :common_logger, $stderr
     plugin :halt
     plugin :json
+
+    # use Rack::MethodOverride
 
     route do |routing|
       routing.assets # load CSS
@@ -47,13 +51,14 @@ module PetAdoption
                         'address' => address,
                         'willingness' => willingness }
 
-        open('spec/testing_cookies/user_input.json', 'w') do |f|
-          f << cookie_hash.to_json
+        if ENV['testing'] == 'true'
+          open('spec/testing_cookies/user_input.json', 'w') do |file|
+            file << cookie_hash.to_json
+          end
         end
         user = PetAdoption::Adopters::DonatorMapper.new(cookie_hash).find if willingness == 'donater'
         user = PetAdoption::Adopters::AdopterMapper.new(cookie_hash).find if willingness == 'adopter'
         user = PetAdoption::Adopters::KeeperMapper.new(cookie_hash).find if willingness == 'keeper'
-        # File.write(ENV.fetch('TESTING_FILE'), cookie_hash.to_json) if ENV['RACK_ENV'] == 'test'
 
         Repository::Adopters::Users.new(
           user.to_attr_hash.merge(
@@ -73,16 +78,16 @@ module PetAdoption
 
       routing.on 'animal' do
         routing.is do
-          # POST /project/
           routing.post do
             animal_kind = routing.params['animal_kind'].downcase
             shelter_name = routing.params['shelter_name']
+            sn_ch = URI.decode_www_form_component(shelter_name)
 
-            routing.redirect "animal/#{shelter_name}/#{animal_kind}"
+            routing.redirect "animal/#{animal_kind}/#{sn_ch}"
           end
         end
 
-        routing.on String, String do |shelter_name, animal_kind|
+        routing.on String, String do |animal_kind, shelter_name|
           # GET /project/owner/project
           ak_ch = animal_kind == 'dog' ? '狗' : '貓'
           shelter_name = URI.decode_www_form_component(shelter_name)
@@ -108,6 +113,31 @@ module PetAdoption
             animal_obj_hash:
           }
         end
+      end
+
+      routing.post 'adopt' do
+        # Perform any necessary processing for the 'Adopt?' button click
+
+        # Redirect to the desired page
+        routing.redirect '/adoption'
+      end
+
+      routing.on 'adoption' do
+        view('adoption')
+      end
+
+      routing.post 'found' do
+        # Perform any necessary processing for the 'Adopt?' button click
+
+        # Redirect to the desired page
+        routing.redirect '/found'
+      end
+
+      routing.post 'missing' do
+        # Perform any necessary processing for the 'Adopt?' button click
+
+        # Redirect to the desired page
+        routing.redirect '/missing'
       end
     end
   end

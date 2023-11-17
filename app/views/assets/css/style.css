@@ -63,3 +63,54 @@ footer {
   font-size:11px;
   color:rgb(100, 100, 100);
 }
+
+
+/* Add these styles to your CSS file (styles.css) */
+button.btn {
+  color: #4CAF50;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px; /* Add border-radius for rounded corners */
+}
+
+button.btn.btn-adopt {
+  background-color: #4CAF50; /* Green */
+  color: green;
+
+}
+
+button.btn.btn-found {
+  background-color: #008CBA; /* Blue */
+  color: blue;
+
+}
+
+button.btn.btn-missing {
+  background-color: #f44336; /* Red */
+  color: red;
+
+}
+
+.bg-image-vertical {
+  position: relative;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: auto 100%;
+}
+  
+@media(min-width: 1025px) {
+  .h-custom-2 {
+  height: 100%;
+  }
+}
+* {box-sizing: border-box}
+
+#success_message{ display: none;}
+
+
+
+
+
+
+

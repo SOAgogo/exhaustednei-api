@@ -12,8 +12,8 @@ module Database
 
       plugin :timestamps, update_on_create: true
 
-      def self.find_or_create(member_info)
-        first(username: member_info[:username]) || create(member_info)
+      def self.find_or_create(shelter_info)
+        first(animal_shelter_pkid: shelter_info[:animal_shelter_pkid]) || create(shelter_info)
       end
     end
   end

@@ -16,5 +16,6 @@ begin
   response = http.request(request)
   body = JSON.parse(response.read_body)[1..20].to_json
   File.write('spec/fixtures/DogCat_results.json', body)
+
   # puts body.instance_of? Hash
 end
