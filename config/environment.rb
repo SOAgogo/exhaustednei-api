@@ -30,7 +30,7 @@ module PetAdoption
       end
 
       configure :test do
-        ENV['testing'] = true
+        ENV['testing'] = 'true'
         ENV['TESTING_FILE'] = config.TESTING_FILE.to_s
       end
 
