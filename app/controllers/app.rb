@@ -4,7 +4,6 @@ require 'roda'
 require 'slim'
 require 'slim/include'
 require 'json'
-require 'slim/include'
 require 'uri'
 require 'securerandom'
 
