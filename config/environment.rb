@@ -21,7 +21,7 @@ module PetAdoption
 
       use Rack::Session::Cookie, {
         secret: config.SESSION_SECRET,
-        expire_after: 60 * 60 * 24 * 365
+        expire_after: 60 * 60 * 24 * 730
       }
       # for testing and development, use sqlite
       configure :development, :test do
