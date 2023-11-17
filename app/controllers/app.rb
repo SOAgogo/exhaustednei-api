@@ -6,6 +6,11 @@ require 'slim/include'
 require 'json'
 require 'uri'
 require 'securerandom'
+require 'pry'
+require 'securerandom'
+require 'fileutils'
+require 'open3'
+
 
 module PetAdoption
   # Web App
@@ -18,7 +23,6 @@ module PetAdoption
     plugin :halt
     plugin :json
 
-    # use Rack::MethodOverride
 
     route do |routing|
       routing.assets # load CSS
@@ -112,30 +116,57 @@ module PetAdoption
         end
       end
 
-      routing.post 'adopt' do
-        # Perform any necessary processing for the 'Adopt?' button click
-
-        # Redirect to the desired page
-        routing.redirect '/adoption'
+      routing.on 'adopt' do
+        # POST /adopt
+        routing.post do
+          # Perform any necessary processing for the 'Adopt?' button click
+          # ...
+    
+          # Render the 'adopt.slim' file
+          view 'adopt'
+    
+          # Redirect to the desired page
+        end
+      end
+      routing.on 'found' do
+        routing.post do
+          script_path = 'app/controllers/classification.py'
+          if routing.params['file0'].is_a?(Hash)
+            uploaded_file = 'https://www.bobocw.com/uploads/202207/22/220722055233508.jpeg'
+          end
+        
+          # Use Open3 to run the Python script and capture the output
+          output, status = Open3.capture2("python3 #{script_path} #{uploaded_file}")
+      
+          # Assuming you have some logic to handle the output
+          # This could involve saving the output in a database or using it for further processing
+          # For now, we'll just set it as a variable to be used in the template
+          @output = output
+      
+          # You can render the 'found.slim' template here
+          view 'found'
+        end
       end
 
-      routing.on 'adoption' do
-        view('adoption')
+
+      routing.on 'missing' do
+        # POST /adopt
+        routing.post do
+          # Perform any necessary processing for the 'Adopt?' button click
+          # ...
+    
+          # Render the 'adopt.slim' file
+          view 'missing'
+    
+          # Redirect to the desired page
+        end
       end
 
-      routing.post 'found' do
-        # Perform any necessary processing for the 'Adopt?' button click
 
-        # Redirect to the desired page
-        routing.redirect '/found'
-      end
+  
 
-      routing.post 'missing' do
-        # Perform any necessary processing for the 'Adopt?' button click
 
-        # Redirect to the desired page
-        routing.redirect '/missing'
-      end
+
     end
   end
 end
