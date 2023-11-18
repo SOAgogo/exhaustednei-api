@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 require_relative '../../app/infrastructure/download/curl_download_file'
+require_relative '../../app/domain/shelter_animals/mappers/animal_shelter_initiator'
+require_relative '../../app/domain/shelter_animals/mappers/animal_mapper'
+require_relative '../../app/domain/shelter_animals/mappers/shelter_mapper'
+require_relative '../../app/domain/shelter_animals/repositories/for'
+
 module Repository
   module App
     # init_database for initializing database

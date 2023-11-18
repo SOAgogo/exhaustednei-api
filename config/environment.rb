@@ -3,7 +3,6 @@
 require 'figaro'
 require 'roda'
 require 'rack/session'
-
 require 'sequel'
 require 'yaml'
 
@@ -30,7 +29,10 @@ module PetAdoption
         ENV['TESTING_FILE'] = config.TESTING_FILE.to_s
       end
 
-     
+      use Rack::Session::Cookie, {
+        secret: config.SESSION_SECRET,
+        expire_after: 60 * 60 * 24 * 730
+      }
       # Database Setup
       @db = Sequel.connect(ENV.fetch('DATABASE_URL'))
       def self.db = @db # rubocop:disable Style/TrivialAccessors
