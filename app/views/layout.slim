@@ -28,10 +28,24 @@ html
 
     .container id='html_body'
       section
-        .row style="vertical-align: middle;"
-          .col-12
-            h1 
-              a.text-underline-hover href="/" Exhaustednei Animal Shelter
+        .row.align-items-center style="vertical-align: middle;"
+            .col-md-6
+              h1 
+                a.text-underline-hover href="/" Exhaustednei Animal Shelter
+            .col-md-6.text-end
+              .dropdown
+                button#dropdownMenuButton1.btn.btn-secondary.dropdown-toggle[type="button" data-bs-toggle="dropdown" aria-expanded="false"]
+                  |  Your Account
+                ul.dropdown-menu[aria-labelledby="dropdownMenuButton1"]
+                  li
+                    a.dropdown-item[href="/user/favorte-list"]
+                      | Your Animal favorite list
+                  li
+                    a.dropdown-item[href="/user/donate"]
+                      | Donate 
+                  li
+                    a.dropdown-item[href="/user/messages"]
+                      | Messages
 
       section
         == yield

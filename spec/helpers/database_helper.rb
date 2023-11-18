@@ -7,6 +7,7 @@ module DatabaseHelper
     PetAdoption::App.db.run('PRAGMA foreign_keys = OFF')
     Database::ProjectOrm::AnimalOrm.map(&:destroy)
     Database::ProjectOrm::ShelterOrm.map(&:destroy)
+    Database::ProjectOrm::UserOrm.map(&:destroy)
     PetAdoption::App.db.run('PRAGMA foreign_keys = ON')
   end
 end

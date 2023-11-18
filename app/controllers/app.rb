@@ -114,6 +114,11 @@ module PetAdoption
         end
       end
 
+      routing.on 'next-keeper' do
+        routing.is do
+          view 'next-keeper'
+        end
+      end
       routing.on 'adopt' do
         # POST /adopt
         routing.post do
