@@ -7,7 +7,6 @@ require 'json'
 require 'uri'
 require 'securerandom'
 require 'pry'
-require 'securerandom'
 require 'fileutils'
 require 'open3'
 
@@ -17,7 +16,6 @@ module PetAdoption
     plugin :all_verbs
     plugin :render, engine: 'slim', views: 'app/views'
     plugin :assets, path: 'app/views/assets', css: 'style.css'
-    # plugin :assets, css: 'style.css', path: 'app/views/assets/css'
     plugin :common_logger, $stderr
     plugin :halt
     plugin :json
@@ -30,7 +28,7 @@ module PetAdoption
       routing.root do
         session[:watching] ||= {}
         routing.redirect '/home' if session[:watching][:session_id]
-        view('signup')
+        view('signup') unless session[:watching][:session_id]
       end
 
       routing.post 'signup' do
@@ -52,8 +50,10 @@ module PetAdoption
                         'address' => address,
                         'willingness' => willingness }
 
-        open('spec/testing_cookies/user_input.json', 'w') do |file|
-          file << cookie_hash.to_json
+        if ENV['testing'] == 'true'
+          open('spec/testing_cookies/user_input.json', 'w') do |file|
+            file << cookie_hash.to_json
+          end
         end
         user = PetAdoption::Adopters::DonatorMapper.new(cookie_hash).find if willingness == 'donater'
         user = PetAdoption::Adopters::AdopterMapper.new(cookie_hash).find if willingness == 'adopter'
