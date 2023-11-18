@@ -6,7 +6,6 @@ require 'slim/include'
 require 'json'
 require 'uri'
 require 'securerandom'
-require 'pry'
 require 'fileutils'
 require 'open3'
 
@@ -27,8 +26,8 @@ module PetAdoption
       # GET /
       routing.root do
         session[:watching] ||= {}
-        routing.redirect '/home' if session[:watching][:session_id]
-        view('signup') unless session[:watching][:session_id]
+        routing.redirect '/home' if session[:watching]['session_id']
+        view('signup')
       end
 
       routing.post 'signup' do
@@ -40,7 +39,7 @@ module PetAdoption
         willingness = routing.params['state']
         session_id = SecureRandom.uuid
 
-        puts "session_id: #{session_id.class} willingness: #{willingness}"
+        puts "session_id: #{session_id} willingness: #{willingness}"
 
         cookie_hash = { 'session_id' => session_id,
                         'firstname' => firstname,
@@ -50,7 +49,7 @@ module PetAdoption
                         'address' => address,
                         'willingness' => willingness }
 
-        if ENV['testing'] == 'true'
+        if ENV['Testing'] == 'true'
           open('spec/testing_cookies/user_input.json', 'w') do |file|
             file << cookie_hash.to_json
           end
@@ -58,7 +57,6 @@ module PetAdoption
         user = PetAdoption::Adopters::DonatorMapper.new(cookie_hash).find if willingness == 'donater'
         user = PetAdoption::Adopters::AdopterMapper.new(cookie_hash).find if willingness == 'adopter'
         user = PetAdoption::Adopters::KeeperMapper.new(cookie_hash).find if willingness == 'keeper'
-        # File.write(ENV.fetch('TESTING_FILE'), cookie_hash.to_json) if ENV['RACK_ENV'] == 'test'
 
         Repository::Adopters::Users.new(
           user.to_attr_hash.merge(
@@ -95,7 +93,8 @@ module PetAdoption
           # animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name('狗', '高雄市壽山動物保護教育園區')
           animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
 
-          # include PetAdoption::Decoder
+          # can this follwoing codes which decode chinese words be put the other side?
+
           animal_obj_hash.each do |key, obj|
             obj.to_decode_hash.merge(
               animal_kind: URI.decode_www_form_component(obj.animal_kind),

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 module Repository
   # Maps over local and remote git repo infrastructure
   module Adopters

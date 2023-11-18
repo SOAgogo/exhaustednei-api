@@ -3,7 +3,6 @@
 require_relative 'spec_helper'
 require_relative 'helpers/vcr_helper'
 require_relative 'helpers/database_helper'
-require 'pry'
 
 describe 'Integration Tests of Github API and Database' do
   VcrHelper.setup_vcr
