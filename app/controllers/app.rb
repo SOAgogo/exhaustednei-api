@@ -7,7 +7,6 @@ require 'uri'
 require 'pry'
 require 'securerandom'
 require 'fileutils'
-require 'open3'
 
 
 module PetAdoption
@@ -86,12 +85,13 @@ module PetAdoption
         routing.post do
           script_path = 'app/controllers/classification.py'
           if routing.params['file0'].is_a?(Hash)
-            uploaded_file = 'https://www.bobocw.com/uploads/202207/22/220722055233508.jpeg'
+            #uploaded_file = File.basename(routing.params['file0'][:tempfile].path)
+            uploaded_file = routing.params['file0'][:tempfile].path
           end
         
           # Use Open3 to run the Python script and capture the output
-          output, status = Open3.capture2("python3 #{script_path} #{uploaded_file}")
-      
+          output, status = run_classification(script_path, uploaded_file)
+          puts uploaded_file
           # Assuming you have some logic to handle the output
           # This could involve saving the output in a database or using it for further processing
           # For now, we'll just set it as a variable to be used in the template

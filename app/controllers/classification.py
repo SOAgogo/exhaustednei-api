@@ -1,5 +1,6 @@
 import sys
 from roboflow import Roboflow
+import os
 
 def predict_dog_breed(image_url):
     # Replace 'tvNfa4TcFQ57IGJvtQ9q' with your actual Roboflow API key
@@ -12,10 +13,11 @@ def predict_dog_breed(image_url):
     model = project.version(1).model
 
     # Infer on an image hosted elsewhere
-    result = model.predict(image_url, hosted=True).json()
-    
-    return result
 
+    # Assuming your code is in the home directory
+
+    print (model.predict(image_url, hosted=False).json())
+    return (model.predict(image_url, hosted=False).json())
 if __name__ == "__main__":
     # Check if the command line argument for image_url is provided
     if len(sys.argv) < 2:
@@ -23,8 +25,6 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Get the image_url from the command line argument
-    image_url = sys.argv[1]
-
+    image_url = os.path.sys.argv[1]
     # Call the predict_dog_breed function with the provided image_url
-    prediction_result = predict_dog_breed(image_url)
-    print(prediction_result)
+    predict_dog_breed(image_url)
