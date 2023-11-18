@@ -108,7 +108,14 @@ button.btn.btn-missing {
 
 #success_message{ display: none;}
 
-
+.card
+    {display: flex;
+      justify-content: space-around;  
+      flex-wrap: wrap;}
+.card-content
+   { display: flex;
+    flex-direction: column;
+    align-items: center;}
 
 
 
