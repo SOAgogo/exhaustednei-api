@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 module Repository
   # Maps over local and remote git repo infrastructure
   module Adopters
@@ -27,6 +26,10 @@ module Repository
           address: user_db.address,
           donate_money: user_db.donate_money
         )
+      end
+
+      def self.find_by_session_id(session_id)
+        rebuild_entity(Database::ProjectOrm::UserOrm.first(session_id:))
       end
     end
   end
