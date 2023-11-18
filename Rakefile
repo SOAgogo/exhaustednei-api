@@ -63,7 +63,7 @@ namespace :db do
     require_app('infrastructure')
     require_app('models')
     puts 'puts all the data in the database'
-    DatabaseHelper.wipe_database
+    # DatabaseHelper.wipe_database
     Repository::App::PrepareDatabase.init_database
   end
 
