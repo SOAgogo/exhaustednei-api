@@ -2,7 +2,7 @@
   .row
     .col-lg-3
       .form-group
-        |  請選擇欲查詢的資料
+        |  Please Search your data
     .col-lg-8
       .row
         .col-sm-12[style="text-align:left;"]
@@ -10,26 +10,26 @@
             #chk_0.form-check.form-check-inline
               label.form-check-label
                 input#radPetType0.form-check-input[data-sval="0" type="radio" name="exampleRadios1" value="0"]
-                | 犬 
+                | Dog 
                 span.circle
                   span.check
             #chk_1.form-check.form-check-inline
               label.form-check-label
                 input#radPetType1.form-check-input[data-sval="1" type="radio" name="exampleRadios1" value="1"]
-                | 貓 
+                | Cat
                 span.circle
                   span.check
             #chk_O.form-check.form-check-inline
               label.form-check-label
                 input#radPetTypeO.form-check-input[data-sval="O" type="radio" name="exampleRadios1" value="O"]
-                | 其他 
+                | Others 
                 span.circle
                   span.check
             select#cobVariety.form-select[name="form-select"]
               option[value="" selected=""]
-                | 選擇品種/物種
+                | Other species
       span.bmd-form-group
-        input#txtKeyWord.form-control[type="text" style="display: none" placeholder="晶片/特徵/遺失時間/遺失地點"]
+        input#txtKeyWord.form-control[type="text" style="display: none" placeholder="IDcard/Features/Lossing time/Lossing location"]
   .row
     .col-lg-1
 
@@ -38,10 +38,10 @@
         .form-inline.col-lg-5
           .form-group
             .form-label
-              | 收容所縣市 
+              | the county where the shelter is located
               select#sel_County.form-select[name="form-select" data-gtm-form-interact-field-id="0"]
                 option[value=""]
-                  | 選擇縣市
+                  | County
                 option[value="A"]
                   | 新北市
                 option[value="V"]
@@ -89,10 +89,10 @@
         .form-inline.col-lg-5
           .form-group
             .form-label
-              | 收容所 
+              | Shelter 
               select#sel_shelter.form-select[name="form-select"]
                 option[value=""]
-                  | -- 選擇收容所 --
+                  | -- Choose Shelters --
                 option[value="AAAAG"]
                   | 新北市政府動物保護防疫處
                 option[value="AAACG"]
@@ -115,47 +115,47 @@
         .form-inline.col-lg-5
           .form-group
             .form-label
-              | 動物性別 
+              | Animal Sex  
               select#cobSex.form-select[name="form-select"]
                 option[value="" selected=""]
-                  | 選擇性別
+                  | Sex
                 option[value="1" selected=""]
-                  | 公
+                  | Male
                 option[value="0" selected=""]
-                  | 母
+                  | Female
         .form-inline.col-lg-5
           .form-group
             .form-label
-              | 入所年齡 
+              | Age 
               select#cobAge.form-select[name="form-select"]
                 option[value="" selected=""]
-                  | 選擇年齡
+                  | Choose Age 
                 option[value="1"]
-                  | 未離乳
+                  | young
                 option[value="8"]
-                  | 幼齡(離乳~1歲)
+                  | medium
                 option[value="9"]
-                  | 成年(1~7歲)
+                  | older
                 option[value="7"]
-                  | 老齡(7歲以上)
+                  | elder
       .row
         .form-inline.col-lg-5
           .form-group
-            |  花色 
+            |  Color 
           .form-group.bmd-form-group
-            input#txtHAIRCOLOR.form-control[type="text" placeholder="花色" maxlength="10"]
+            input#txtHAIRCOLOR.form-control[type="text" placeholder="Color" maxlength="10"]
       .row
         .form-inline.col-lg-5.ACS
           .form-group
             .form-label
-              | 收容編號
+              | AdoptedID
           .form-group.bmd-form-group
-            input#txtAcNum.form-control[type="text" placeholder="收容編號"]
+            input#txtAcNum.form-control[type="text" placeholder="AdoptedID"]
         .form-inline.col-lg-5
           .form-group
-            |  動物晶片號碼 
+            |  Animal ID no.
           .form-group.bmd-form-group
-            input#txtCNum.form-control[type="text" placeholder="動物晶片號碼"]
+            input#txtCNum.form-control[type="text" placeholder="Animal ID no."]
         .col-lg-2
-          input#SelData.btn.btn-round.btn-success.btn-sm[type="button" onclick="QueryData()" value="查詢"]
+          input#SelData.btn.btn-round.btn-success.btn-sm[type="button" onclick="QueryData()" value="lookup"]
     .col-lg-1

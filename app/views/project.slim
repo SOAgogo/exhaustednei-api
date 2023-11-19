@@ -41,8 +41,9 @@ body
                   p 
                     | RegisterDate : "#{obj.animal_opendate}"
                   p
-                    button.button
-                      | Add to favorite list 
+                     form[action="/user/add-favorite-list/#{obj.animal_id.to_s}" method="POST"]
+                      button.button type="submit"
+                        | Add to favorite list
                   
         
           

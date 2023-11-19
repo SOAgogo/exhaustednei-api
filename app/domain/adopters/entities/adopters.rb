@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require 'dry-types'
-require 'dry-struct'
-require_relative 'animal_order'
+# require 'dry-types'
+# require 'dry-struct'
+require_relative 'accounts'
+require_relative '../values/animal_order'
 require_relative '../../shelter_animals/entities/animal'
 module PetAdoption
   module Entity
@@ -11,6 +12,10 @@ module PetAdoption
       def initialize(accounts = PetAdoption::Entity::Accounts.new)
         @accounts = accounts
         @animal_order = PetAdoption::Entity::AnimalOrder.new
+      end
+
+      def to_attr_hash
+        @accounts.to_attr_hash
       end
     end
   end
