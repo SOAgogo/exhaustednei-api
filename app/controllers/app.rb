@@ -119,6 +119,7 @@ module PetAdoption
         animal_obj_list = Repository::Adopters::Users.get_animal_favorite_list_by_user(
           session[:watching]['session_id'], animal_id
         )
+        # don't store animal_obj_list to cookies, it's too big
         session[:watching]['animal_obj_list'] = animal_obj_list
 
         routing.is do
