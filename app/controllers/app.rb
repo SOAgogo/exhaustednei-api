@@ -93,11 +93,11 @@ module PetAdoption
           shelter_name = URI.decode_www_form_component(shelter_name)
           animal_kind = URI.decode_www_form_component(ak_ch)
           # animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name('狗', '高雄市壽山動物保護教育園區')
-          animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
+          animal_obj_list = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
 
           # can this follwoing codes which decode chinese words be put the other side?
 
-          animal_obj_hash.each do |key, obj|
+          animal_obj_list.each do |key, obj|
             obj.to_decode_hash.merge(
               animal_kind: URI.decode_www_form_component(obj.animal_kind),
               animal_variate: URI.decode_www_form_component(obj.animal_variate),
@@ -106,11 +106,11 @@ module PetAdoption
               animal_age: URI.decode_www_form_component(obj.animal_age),
               animal_color: URI.decode_www_form_component(obj.animal_color)
             )
-            animal_obj_hash[key] = obj
+            animal_obj_list[key] = obj
           end
 
           view 'project', locals: {
-            animal_obj_hash:
+            animal_obj_list:
           }
         end
       end
