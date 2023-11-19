@@ -116,10 +116,11 @@ module PetAdoption
       end
 
       routing.on 'user/add-favorite-list', String do |animal_id|
-        # POST /user/add-favorite/animal_id
+        animal_obj_list = Repository::Adopters::Users.get_animal_favorite_list_by_user(
+          session[:watching]['session_id'], animal_id
+        )
+        session[:watching]['animal_obj_list'] = animal_obj_list
 
-        Repository::Adopters::Users.add_animal_foreign_key_by_session_id(session[:watching]['session_id'], animal_id)
-        animal_obj_list = Repository::Adopters::Users.get_animal_favorite_list_by_user(session[:watching]['session_id'])
         routing.is do
           view 'favorite', locals: {
             animal_obj_list:
@@ -127,7 +128,15 @@ module PetAdoption
         end
       end
 
-      
+      routing.on 'user/favorite-list' do
+        routing.is do
+          animal_obj_list = session[:watching]['animal_obj_list']
+          view 'favorite', locals: {
+            animal_obj_list:
+          }
+        end
+      end
+
       routing.on 'next-keeper' do
         routing.is do
           view 'next-keeper'

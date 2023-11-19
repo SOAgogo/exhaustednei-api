@@ -49,7 +49,8 @@ module Repository
         end
       end
 
-      def self.get_animal_favorite_list_by_user(session_id)
+      def self.get_animal_favorite_list_by_user(session_id, animal_id)
+        Users.add_animal_foreign_key_by_session_id(session_id, animal_id)
         db_user_id = Database::ProjectOrm::UserOrm.first(session_id:).id
         db_project = Database::ProjectOrm::AnimalOrm
           .where(users_id: db_user_id)
