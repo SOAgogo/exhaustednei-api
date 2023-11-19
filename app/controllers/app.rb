@@ -14,7 +14,8 @@ module PetAdoption
   class App < Roda
     plugin :all_verbs
     plugin :render, engine: 'slim', views: 'app/views'
-    plugin :assets, path: 'app/views/assets', css: 'style.css'
+    plugin :assets, path: 'app/views/assets', css: 'style.css', js: 'popup.js'
+
     plugin :common_logger, $stderr
     plugin :halt
     plugin :json
@@ -27,7 +28,9 @@ module PetAdoption
       routing.root do
         session[:watching] ||= {}
         routing.redirect '/home' if session[:watching]['session_id']
+        # routing.redirect '/popup' if session[:watching]['session_id']
         view('signup')
+        # view('popup')
       end
 
       routing.post 'signup' do
@@ -54,9 +57,8 @@ module PetAdoption
             file << cookie_hash.to_json
           end
         end
-        user = PetAdoption::Adopters::DonatorMapper.new(cookie_hash).find if willingness == 'donater'
-        user = PetAdoption::Adopters::AdopterMapper.new(cookie_hash).find if willingness == 'adopter'
-        user = PetAdoption::Adopters::KeeperMapper.new(cookie_hash).find if willingness == 'keeper'
+
+        user = PetAdoption::Adopters::AccountMapper.new(cookie_hash).find
 
         Repository::Adopters::Users.new(
           user.to_attr_hash.merge(
@@ -109,6 +111,29 @@ module PetAdoption
 
           view 'project', locals: {
             animal_obj_hash:
+          }
+        end
+      end
+
+      routing.on 'user/add-favorite-list', String do |animal_id|
+        animal_obj_list = Repository::Adopters::Users.get_animal_favorite_list_by_user(
+          session[:watching]['session_id'], animal_id
+        )
+        # don't store animal_obj_list to cookies, it's too big
+        session[:watching]['animal_obj_list'] = animal_obj_list
+
+        routing.is do
+          view 'favorite', locals: {
+            animal_obj_list:
+          }
+        end
+      end
+
+      routing.on 'user/favorite-list' do
+        routing.is do
+          animal_obj_list = session[:watching]['animal_obj_list']
+          view 'favorite', locals: {
+            animal_obj_list:
           }
         end
       end

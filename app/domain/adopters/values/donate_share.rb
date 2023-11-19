@@ -9,6 +9,14 @@ module PetAdoption
         super
         @donate_share = donate_share
       end
+
+      def calculate_donate_money
+        return 0 if @donate_share.empty?
+
+        @donate_share.reduce(0) do |sum, share|
+          sum + share.amount
+        end
+      end
     end
   end
 end

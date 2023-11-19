@@ -12,10 +12,14 @@ module Repository
         rebuild_entity(Database::ProjectOrm::AnimalOrm.first(animal_id:))
       end
 
+      def self.find_animal_db_obj_by_id(animal_id)
+        Database::ProjectOrm::AnimalOrm.first(animal_id:)
+      end
+
       def self.web_page_cover
         Database::ProjectOrm::AnimalOrm
           # .right_join(:shelters, id: :shelter_id)
-          .where(:animal_file != '')
+          .exclude(album_file: '')
           .first.album_file
       end
 
