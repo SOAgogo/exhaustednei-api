@@ -12,25 +12,24 @@ require 'open3'
 module PetAdoption
   # Web App
   class App < Roda
+    plugin :halt
     plugin :all_verbs
-    plugin :render, engine: 'slim', views: 'app/views'
-    plugin :assets, path: 'app/views/assets', css: 'style.css', js: 'popup.js'
+    plugin :render, engine: 'slim', views: 'app/presentation/views_html'
+    plugin :assets, path: 'app/presentation/assets', css: 'style.css', js: 'popup.js'
 
     plugin :common_logger, $stderr
-    plugin :halt
     plugin :json
 
     route do |routing|
       routing.assets # load CSS
       response['Content-Type'] = 'text/html; charset=utf-8'
+      routing.public # load static files
 
       # GET /
       routing.root do
         session[:watching] ||= {}
         routing.redirect '/home' if session[:watching]['session_id']
-        # routing.redirect '/popup' if session[:watching]['session_id']
         view('signup')
-        # view('popup')
       end
 
       routing.post 'signup' do
@@ -41,8 +40,6 @@ module PetAdoption
         address = routing.params['address']
         willingness = routing.params['state']
         session_id = SecureRandom.uuid
-
-        puts "session_id: #{session_id} willingness: #{willingness}"
 
         cookie_hash = { 'session_id' => session_id,
                         'firstname' => firstname,
@@ -60,11 +57,12 @@ module PetAdoption
 
         user = PetAdoption::Adopters::AccountMapper.new(cookie_hash).find
 
-        Repository::Adopters::Users.new(
+        db_user = Repository::Adopters::Users.new(
           user.to_attr_hash.merge(
             address: URI.decode_www_form_component(user.address)
           )
         ).create_user
+        flash.now[:notice] = 'Your user creation failed...' if db_user.session_id.nil?
         session[:watching] = cookie_hash
         routing.redirect '/home'
       end
@@ -72,6 +70,11 @@ module PetAdoption
       routing.on 'home' do
         routing.is do
           animal_pic = Repository::Info::Animals.web_page_cover
+          unless animal_pic == ''
+            App.logger.error err.backtrace.join("DB READ COVER PAGE\n")
+            flash[:error] = 'Could not find the cover page.'
+            routing.redirect '/'
+          end
           view 'home', locals: { image_url: animal_pic }
         end
       end
@@ -79,10 +82,14 @@ module PetAdoption
       routing.on 'animal' do
         routing.is do
           routing.post do
-            animal_kind = routing.params['animal_kind'].downcase
-            shelter_name = routing.params['shelter_name']
-            sn_ch = URI.decode_www_form_component(shelter_name)
-
+            begin 
+              animal_kind = routing.params['animal_kind'].downcase
+              shelter_name = routing.params['shelter_name']
+              if anima_kind=='dog'|| anima_kind=='cat' || shelter_name.nil?
+                flash[:error] = 'Please select animal kind and shelter name correctly.'
+              end
+              sn_ch = URI.decode_www_form_component(shelter_name)
+            end
             routing.redirect "animal/#{animal_kind}/#{sn_ch}"
           end
         end
