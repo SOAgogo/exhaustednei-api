@@ -2,6 +2,8 @@ import sys
 from roboflow import Roboflow
 import os
 
+
+
 def predict_dog_breed(image_url):
     # Replace 'tvNfa4TcFQ57IGJvtQ9q' with your actual Roboflow API key
     rf = Roboflow(api_key="tvNfa4TcFQ57IGJvtQ9q")
@@ -15,9 +17,13 @@ def predict_dog_breed(image_url):
     # Infer on an image hosted elsewhere
 
     # Assuming your code is in the home directory
-
-    print (model.predict(image_url, hosted=False).json())
-    return (model.predict(image_url, hosted=False).json())
+    predictions = model.predict(image_url, hosted=False).json()
+    output = predictions['predictions'][0]['predictions'][0]
+    # Assuming your output string
+    # Define a regular expression pattern to match the desired string
+    # Search for the pattern in the output string
+    print(output)
+    return output
 if __name__ == "__main__":
     # Check if the command line argument for image_url is provided
     if len(sys.argv) < 2:
