@@ -153,7 +153,7 @@ module PetAdoption
           # For now, we'll just set it as a variable to be used in the template
           output = output[60..-1]
           # You can render the 'found.slim' template here
-          view 'found', locals: { output: }
+          view 'found', locals: { output:}
         end
       end
 

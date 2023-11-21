@@ -50,7 +50,11 @@ html
               contentType: false,
               success: function(response) {
                   // Update the output element with the response
-                  $("#output").html(unescape(response));
+
+                var outputText = $(response).find('#output').text();
+                
+                // Update the output element with the extracted content
+                $("#output").text(outputText);
               },
               error: function(error) {
                   console.log('Error:', error);
