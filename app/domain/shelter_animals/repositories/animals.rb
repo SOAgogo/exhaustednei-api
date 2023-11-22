@@ -53,6 +53,11 @@ module Repository
       # rubocop:enable Metrics/MethodLength
       def self.select_animal_by_shelter_name(animal_kind, shelter_name)
         db_record = Database::ProjectOrm::AnimalOrm.where(animal_kind:, animal_place: shelter_name).all
+        if db_record.empty?
+          DBError.new('DB error', 'DB cant find your data').tap do |rsp|
+            raise(rsp.error)
+          end
+        end
         rebuild_many(db_record)
       end
 
