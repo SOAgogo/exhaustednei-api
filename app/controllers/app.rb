@@ -5,9 +5,11 @@ require 'slim'
 require 'slim/include'
 require 'json'
 require 'uri'
+require 'pry'
 require 'securerandom'
 require 'fileutils'
 require 'open3'
+require 'securerandom'
 
 module PetAdoption
   # Web App
@@ -20,6 +22,9 @@ module PetAdoption
     plugin :halt
     plugin :json
 
+
+    # use Rack::MethodOverride
+
     route do |routing|
       routing.assets # load CSS
       response['Content-Type'] = 'text/html; charset=utf-8'
@@ -27,10 +32,8 @@ module PetAdoption
       # GET /
       routing.root do
         session[:watching] ||= {}
-        routing.redirect '/home' if session[:watching]['session_id']
-        # routing.redirect '/popup' if session[:watching]['session_id']
+        routing.redirect '/home' if session[:watching][:session_id]
         view('signup')
-        # view('popup')
       end
 
       routing.post 'signup' do
@@ -115,34 +118,6 @@ module PetAdoption
         end
       end
 
-      routing.on 'user/add-favorite-list', String do |animal_id|
-        animal_obj_list = Repository::Adopters::Users.get_animal_favorite_list_by_user(
-          session[:watching]['session_id'], animal_id
-        )
-        # don't store animal_obj_list to cookies, it's too big
-        session[:watching]['animal_obj_list'] = animal_obj_list
-
-        routing.is do
-          view 'favorite', locals: {
-            animal_obj_list:
-          }
-        end
-      end
-
-      routing.on 'user/favorite-list' do
-        routing.is do
-          animal_obj_list = session[:watching]['animal_obj_list']
-          view 'favorite', locals: {
-            animal_obj_list:
-          }
-        end
-      end
-
-      routing.on 'next-keeper' do
-        routing.is do
-          view 'next-keeper'
-        end
-      end
       routing.on 'adopt' do
         # POST /adopt
         routing.post do
@@ -159,19 +134,20 @@ module PetAdoption
         routing.post do
           script_path = 'app/controllers/classification.py'
           if routing.params['file0'].is_a?(Hash)
-            uploaded_file = 'https://www.bobocw.com/uploads/202207/22/220722055233508.jpeg'
+            #uploaded_file = File.basename(routing.params['file0'][:tempfile].path)
+            uploaded_file = routing.params['file0'][:tempfile].path
           end
 
           # Use Open3 to run the Python script and capture the output
           output, status = Open3.capture2("python3 #{script_path} #{uploaded_file}")
-
+      
           # Assuming you have some logic to handle the output
           # This could involve saving the output in a database or using it for further processing
           # For now, we'll just set it as a variable to be used in the template
           @output = output
-
+      
           # You can render the 'found.slim' template here
-          view 'found'
+          view 'found', locals: { output:}
         end
       end
 
@@ -187,6 +163,10 @@ module PetAdoption
           # Redirect to the desired page
         end
       end
+
+
+      
+
     end
   end
 end

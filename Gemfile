@@ -47,7 +47,6 @@ group :test do
   gem 'selenium-webdriver', '~> 4.11'
 end
 
-
 # Development
 group :development do
   gem 'flog'
@@ -55,6 +54,3 @@ group :development do
   gem 'rerun', '~> 0.0'
   gem 'rubocop', '~> 1.0'
 end
-
-gem 'rubypython', '~> 0.6.0'
-
