@@ -17,10 +17,15 @@ module Repository
       end
 
       def self.web_page_cover
-        Database::ProjectOrm::AnimalOrm
-          # .right_join(:shelters, id: :shelter_id)
+        first_record = Database::ProjectOrm::AnimalOrm
           .exclude(album_file: '')
-          .first.album_file
+          .first
+        if first_record.album_file == ''
+          DBError.new('DB error', 'DB cant find your data').tap do |rsp|
+            raise(rsp.error)
+          end
+        end
+        first_record.album_file
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -92,6 +97,16 @@ module Repository
 
         def create_project
           Database::ProjectOrm::AnimalOrm.create(@entity.to_attr_hash)
+        end
+      end
+
+      # DBError for custom error messages
+      class DBError < StandardError
+        attr_reader :thing
+
+        def initialize(msg = 'DB error', thing = 'DB cant find your data')
+          @thing = thing
+          super(msg)
         end
       end
     end

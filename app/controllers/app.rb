@@ -9,16 +9,17 @@ require 'pry'
 require 'securerandom'
 require 'fileutils'
 require 'open3'
-require 'securerandom'
 
 module PetAdoption
   # Web App
   class App < Roda
     plugin :halt
-    plugin :all_verbs
+    plugin :flash
+    plugin :all_verbs # allows HTTP verbs beyond GET/POST (e.g., DELETE)
     plugin :render, engine: 'slim', views: 'app/presentation/views_html'
-    plugin :assets, path: 'app/presentation/assets', css: 'style.css', js: 'popup.js'
-
+    plugin :public, root: 'app/presentation/public'
+    plugin :assets, path: 'app/presentation/assets',
+                    css: 'style.css', js: 'popup.js'
     plugin :common_logger, $stderr
     plugin :json
 
@@ -33,6 +34,7 @@ module PetAdoption
       routing.root do
         session[:watching] ||= {}
         routing.redirect '/home' if session[:watching]['session_id']
+        flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
         view('signup')
       end
 
@@ -73,11 +75,11 @@ module PetAdoption
 
       routing.on 'home' do
         routing.is do
-          animal_pic = Repository::Info::Animals.web_page_cover
-          unless animal_pic == ''
-            App.logger.error err.backtrace.join("DB READ COVER PAGE\n")
+          begin
+            animal_pic = Repository::Info::Animals.web_page_cover
+          rescue StandardError => e
+            App.logger.error e.backtrace.join("DB can't show COVER PAGE\n")
             flash[:error] = 'Could not find the cover page.'
-            routing.redirect '/'
           end
           view 'home', locals: { image_url: animal_pic }
         end
@@ -89,8 +91,13 @@ module PetAdoption
             begin
               animal_kind = routing.params['animal_kind'].downcase
               shelter_name = routing.params['shelter_name']
-              if anima_kind == 'dog' || anima_kind == 'cat' || shelter_name.nil?
-                flash[:error] = 'Please select animal kind and shelter name correctly.'
+              if animal_kind != 'dog' && animal_kind != 'cat'
+                flash[:error] = 'Please select animal kind correctly.'
+                routing.redirect '/home'
+              end
+              if shelter_name.nil?
+                flash[:error] = 'Dont leave shelter name blank.'
+                routing.redirect '/home'
               end
               sn_ch = URI.decode_www_form_component(shelter_name)
             end
@@ -103,10 +110,7 @@ module PetAdoption
           ak_ch = animal_kind == 'dog' ? '狗' : '貓'
           shelter_name = URI.decode_www_form_component(shelter_name)
           animal_kind = URI.decode_www_form_component(ak_ch)
-          # animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name('狗', '高雄市壽山動物保護教育園區')
           animal_obj_list = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
-
-          # can this follwoing codes which decode chinese words be put the other side?
 
           animal_obj_list.each do |key, obj|
             obj.to_decode_hash.merge(
@@ -129,32 +133,18 @@ module PetAdoption
       routing.on 'adopt' do
         # POST /adopt
         routing.post do
-          # Perform any necessary processing for the 'Adopt?' button click
-          # ...
-
-          # Render the 'adopt.slim' file
           view 'adopt'
-
-          # Redirect to the desired page
         end
       end
       routing.on 'found' do
         routing.post do
           script_path = 'app/controllers/classification.py'
-          if routing.params['file0'].is_a?(Hash)
-            # uploaded_file = File.basename(routing.params['file0'][:tempfile].path)
-            uploaded_file = routing.params['file0'][:tempfile].path
-          end
+          uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
 
-          # Use Open3 to run the Python script and capture the output
           output, status = Open3.capture2("python3 #{script_path} #{uploaded_file}")
 
-          # Assuming you have some logic to handle the output
-          # This could involve saving the output in a database or using it for further processing
-          # For now, we'll just set it as a variable to be used in the template
           @output = output
 
-          # You can render the 'found.slim' template here
           view 'found', locals: { output: }
         end
       end
@@ -162,13 +152,7 @@ module PetAdoption
       routing.on 'missing' do
         # POST /adopt
         routing.post do
-          # Perform any necessary processing for the 'Adopt?' button click
-          # ...
-
-          # Render the 'adopt.slim' file
           view 'missing'
-
-          # Redirect to the desired page
         end
       end
     end
