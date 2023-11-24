@@ -170,8 +170,7 @@ module PetAdoption
 
           output, = PetAdoption::ImageRecognition::Classification.new(uploaded_file).run
 
-          view 'found', locals: { output: PetAdoption::Views::ImageRecognition.new(output),
-                                  uploaded_file: PetAdoption::ImageRecognition::Classification.new(uploaded_file).uploaded_file }
+          view 'found', locals: { output: PetAdoption::Views::ImageRecognition.new(output)}
         end
       end
 

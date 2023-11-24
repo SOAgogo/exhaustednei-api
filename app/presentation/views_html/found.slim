@@ -56,10 +56,6 @@ html
                 // Update the output element with the extracted content
                 $("#output").text(outputText);
 
-                var uploaded_file = $(response).find('#uploaded_file').text();
-                
-                // Update the output element with the extracted content
-                $("#uploaded_file").text(uploaded_file);
 
               },
               error: function(error) {
@@ -70,6 +66,5 @@ html
     
     - if output
       p#output= output.image
-      p#uploaded_file= uploaded_file.image
     - else
       p#output No output available

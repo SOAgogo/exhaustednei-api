@@ -17,9 +17,6 @@ module PetAdoption
         run_classification(@script_path, @uploaded_file)
       end
 
-      def uploaded_file
-        uploaded_file
-      end
 
       def run_classification(script_path, uploaded_file)
         # Get the current working directory
