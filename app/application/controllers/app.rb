@@ -11,8 +11,6 @@ require 'fileutils'
 require 'open3'
 
 module PetAdoption
-  # Web App
-
   # for controller part
   class App < Roda
     plugin :halt
@@ -41,21 +39,25 @@ module PetAdoption
       end
 
       routing.post 'signup' do
-        firstname = routing.params['first_name']
-        lastname = routing.params['last_name']
-        email = routing.params['email']
-        phone = routing.params['phone']
-        address = routing.params['address']
-        willingness = routing.params['state']
-        session_id = SecureRandom.uuid
+        # url_request = Forms::UserDataValidator.new(routing.params).call
+        url_request = PetAdoption::Forms::UserDataValidator.new.call(routing.params.transform_keys(&:to_sym))
+        # url_request = PetAdoption::Forms::Testing.new(routing.params.transform_keys(&:to_sym))
+        if url_request.failure?
+          session[:watching] = {}
+          flash[:error] = PetAdoption::Forms::HumanReaderAble.make(url_request.errors.to_h)
+          # flash[:error] = url_request.errors.to_h
+          routing.redirect '/'
+        end
 
-        cookie_hash = { 'session_id' => session_id,
-                        'firstname' => firstname,
-                        'lastname' => lastname,
-                        'phone' => phone,
-                        'email' => email,
-                        'address' => address,
-                        'willingness' => willingness }
+        session_id = SecureRandom.uuid
+        cookie_hash = routing.params.merge('session_id' => session_id)
+        # cookie_hash = { 'session_id' => session_id,
+        #                 'firstname' => firstname,
+        #                 'lastname' => lastname,
+        #                 'phone' => phone,
+        #                 'email' => email,
+        #                 'address' => address,
+        #                 'willingness' => willingness }
 
         if ENV['testing'] == 'true'
           open('spec/testing_cookies/user_input.json', 'w') do |file|
