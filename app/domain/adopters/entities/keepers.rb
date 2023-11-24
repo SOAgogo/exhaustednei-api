@@ -8,7 +8,7 @@ module PetAdoption
   module Entity
     # class Info::adotpers`
     class Keepers
-      def initialize(accounts = PetAdoption::Entity::Accounts.new, animal_info)
+      def initialize(animal_info, accounts = PetAdoption::Entity::Accounts.new)
         @accounts = accounts
         @animal_info = animal_info
       end

@@ -12,6 +12,8 @@ require 'open3'
 
 module PetAdoption
   # Web App
+
+  # for controller part
   class App < Roda
     plugin :halt
     plugin :flash
@@ -55,7 +57,7 @@ module PetAdoption
                         'address' => address,
                         'willingness' => willingness }
 
-        if ENV['Testing'] == 'true'
+        if ENV['testing'] == 'true'
           open('spec/testing_cookies/user_input.json', 'w') do |file|
             file << cookie_hash.to_json
           end
@@ -166,10 +168,7 @@ module PetAdoption
           # script_path = 'app/controllers/classification.py'
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
 
-          output, status = PetAdoption::ImageRecognition::Classification.new(uploaded_file).run
-          # output, status = Open3.capture2("python3 #{script_path} #{uploaded_file}")
-
-          # @output = output
+          output, = PetAdoption::ImageRecognition::Classification.new(uploaded_file).run
 
           view 'found', locals: { output: PetAdoption::Views::ImageRecognition.new(output) }
         end

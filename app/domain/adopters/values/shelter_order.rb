@@ -10,11 +10,10 @@ module PetAdoption
     # when adopters adopt animals, we need to create a new animal order
     # to identify which animal he(she) wants to adopt
     class ShelterOrder
-      def initialize(animal_order = PetAdoption::Entity::AnimalOrder.new)
+      def initialize(_animal_order = PetAdoption::Entity::AnimalOrder.new)
         @shelter = shelter
         @animal_order_list = []
       end
-      
     end
   end
 end

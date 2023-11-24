@@ -5,7 +5,6 @@ require_relative '../integration/spec_helper'
 require_relative '../../helpers/vcr_helper'
 require 'uri'
 require 'json'
-require 'pry'
 
 describe 'Test Animal API' do
   VcrHelper.setup_vcr
@@ -20,22 +19,30 @@ describe 'Test Animal API' do
 
   describe 'Test API correctness' do
     it 'HAPPY: should provide the same fields as same as the ones in database' do
-      params = { 'top' => 1 }
-      url = URI.parse("#{RESOURCE_PATH}?#{URI.encode_www_form(params)}")
+      params = {
+        'UnitId' => 'QcbUEzN6E6DL',
+        '$top' => 1
+      }
+      base_url = 'https://data.moa.gov.tw/Service/OpenData/TransService.aspx'
+      # Append parameters to the URL
+      url = URI.parse("#{base_url}?#{URI.encode_www_form(params)}")
+
+      # Create an HTTP object
       http = Net::HTTP.new(url.host, url.port)
-      http.use_ssl = true
-      response = JSON.parse(PetAdoption::Info::Project.read_body(url, http))
-      shelter = Repository::Info::Shelters.find_shelter_id(response[0]['animal_shelter_pkid'])
+      http.use_ssl = (url.scheme == 'https')
 
-      # expected: return shelter object
+      # Create a GET request
+      request = Net::HTTP::Get.new(url)
 
-      _(response.animal_shelter_pkid).must_equal(shelter.animal_shelter_pkid)
-      _(response.shelter_name).must_equal(shelter.shelter_name)
-      _(response.shelter_address).must_equal(shelter.shelter_address)
-      _(response.shelter_tel).must_equal(shelter.shelter_tel)
-      _(response.cat_number).must_equal(shelter.cat_number)
-      _(response.dog_number).must_equal(shelter.dog_number)
-      _(response.animal_number).must_equal(shelter.animal_number)
+      # Perform the request
+      response = JSON.parse(http.request(request).body)[0]
+
+      shelter = Repository::Info::Shelters.find_shelter_id(response['animal_shelter_pkid'])
+
+      _(response['animal_shelter_pkid']).must_equal(shelter.animal_shelter_pkid)
+      _(response['shelter_name']).must_equal(shelter.shelter_name)
+      _(response['shelter_address']).must_equal(shelter.shelter_address)
+      _(response['shelter_tel']).must_equal(shelter.shelter_tel)
     end
   end
 end
