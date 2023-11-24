@@ -14,7 +14,7 @@ module PetAdoption
       attribute :phone, Strict::String
       attribute :email, Strict::String.optional
       attribute :address, Strict::String.optional
-
+      attribute :donate_money, Strict::Integer
       # attribute :animal_order, AnimalOrder
       def to_attr_hash
         to_hash.except(:address)

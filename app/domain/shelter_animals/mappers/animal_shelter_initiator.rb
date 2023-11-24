@@ -34,10 +34,6 @@ module PetAdoption
         shelter_data_hash
       end
 
-      # def get_the_shelter_mapper(animal_shelter_pkid)
-      #   @shelter_mapper_hash[animal_shelter_pkid]
-      # end
-
       # for creating the shelter_mapper to add the animal_obj
       def create_animal_shelter_object(shelter_data, animal_data)
         animal_obj = AnimalMapper.new(animal_data).find

@@ -12,10 +12,12 @@ task :update do
   sh 'ruby app/data_init.rb'
 end
 
-desc 'Run tests once'
-Rake::TestTask.new(:spec) do |t|
-  t.pattern = 'spec/*_spec.rb'
-  t.warning = false
+namespace :spec do
+  desc 'Run unit and integration tests'
+  Rake::TestTask.new(:default) do |t|
+    t.pattern = 'spec/tests/{integration,unit}/**/*_spec.rb'
+    t.warning = false
+  end
 end
 
 desc 'Keep rerunning tests upon changes'
@@ -23,9 +25,14 @@ task :respec do
   sh "rerun -c 'rake spec' --ignore 'coverage/*'"
 end
 
-desc 'Run web app'
-task :run do
-  sh 'bundle exec puma'
+desc 'Run web app in default mode'
+task run: ['run:default']
+
+namespace :run do
+  desc 'Run web app in development or production'
+  task :default do
+    sh 'bundle exec puma'
+  end
 end
 
 desc 'Keep rerunning web app upon changes'
@@ -63,7 +70,7 @@ namespace :db do
     require_app('infrastructure')
     require_app('models')
     puts 'puts all the data in the database'
-    DatabaseHelper.wipe_database
+    # DatabaseHelper.wipe_database
     Repository::App::PrepareDatabase.init_database
   end
 
@@ -82,7 +89,6 @@ namespace :db do
     end
 
     require_app('infrastructure')
-    # require_relative 'spec/helpers/database_helper'
     DatabaseHelper.wipe_database
   end
 

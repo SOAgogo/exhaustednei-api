@@ -12,11 +12,20 @@ module Repository
         rebuild_entity(Database::ProjectOrm::AnimalOrm.first(animal_id:))
       end
 
+      def self.find_animal_db_obj_by_id(animal_id)
+        Database::ProjectOrm::AnimalOrm.first(animal_id:)
+      end
+
       def self.web_page_cover
-        Database::ProjectOrm::AnimalOrm
-          # .right_join(:shelters, id: :shelter_id)
-          .where(:animal_file != '')
-          .first.album_file
+        first_record = Database::ProjectOrm::AnimalOrm
+          .exclude(album_file: '')
+          .first
+        if first_record.album_file == ''
+          DBError.new('DB error', 'DB cant find your data').tap do |rsp|
+            raise(rsp.error)
+          end
+        end
+        first_record.album_file
       end
 
       # rubocop:disable Metrics/MethodLength
@@ -44,6 +53,11 @@ module Repository
       # rubocop:enable Metrics/MethodLength
       def self.select_animal_by_shelter_name(animal_kind, shelter_name)
         db_record = Database::ProjectOrm::AnimalOrm.where(animal_kind:, animal_place: shelter_name).all
+        if db_record.empty?
+          DBError.new('DB error', 'DB cant find your data').tap do |rsp|
+            raise(rsp.error)
+          end
+        end
         rebuild_many(db_record)
       end
 
@@ -88,6 +102,16 @@ module Repository
 
         def create_project
           Database::ProjectOrm::AnimalOrm.create(@entity.to_attr_hash)
+        end
+      end
+
+      # DBError for custom error messages
+      class DBError < StandardError
+        attr_reader :thing
+
+        def initialize(msg = 'DB error', thing = 'DB cant find your data')
+          @thing = thing
+          super(msg)
         end
       end
     end

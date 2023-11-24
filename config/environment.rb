@@ -2,9 +2,9 @@
 
 require 'figaro'
 require 'roda'
+require 'logger'
 require 'rack/session'
 require 'sequel'
-require 'yaml'
 
 module PetAdoption
   # Configuration for the App
@@ -36,6 +36,11 @@ module PetAdoption
       # Database Setup
       @db = Sequel.connect(ENV.fetch('DATABASE_URL'))
       def self.db = @db # rubocop:disable Style/TrivialAccessors
+
+      @logger = Logger.new($stderr)
+      class << self
+        attr_reader :logger
+      end
     end
   end
 end

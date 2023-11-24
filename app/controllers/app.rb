@@ -5,35 +5,39 @@ require 'slim'
 require 'slim/include'
 require 'json'
 require 'uri'
-require 'securerandom'
+require 'pry'
 require 'securerandom'
 require 'fileutils'
-
+require 'open3'
 
 module PetAdoption
   # Web App
-  class App < Roda
-    plugin :all_verbs
-    plugin :render, engine: 'slim', views: 'app/views'
-    plugin :assets, path: 'app/views/assets', css: 'style.css'
-    # plugin :assets, css: 'style.css', path: 'app/views/assets/css'
-    plugin :common_logger, $stderr
-    plugin :halt
-    plugin :json
 
+  # for controller part
+  class App < Roda
+    plugin :halt
+    plugin :flash
+    plugin :all_verbs # allows HTTP verbs beyond GET/POST (e.g., DELETE)
+    plugin :render, engine: 'slim', views: 'app/presentation/views_html'
+    plugin :public, root: 'app/presentation/public'
+    plugin :assets, path: 'app/presentation/assets',
+                    css: 'style.css', js: 'popup.js'
+    plugin :common_logger, $stderr
+    plugin :json
 
     # use Rack::MethodOverride
 
     route do |routing|
       routing.assets # load CSS
       response['Content-Type'] = 'text/html; charset=utf-8'
+      routing.public # load static files
 
       # GET /
       routing.root do
         session[:watching] ||= {}
-        routing.redirect 'home' if session[:watching][:session_id]
+        routing.redirect '/home' if session[:watching]['session_id']
+        flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
         view('signup')
-        # view('addtolist')
       end
 
       routing.post 'signup' do
@@ -44,8 +48,6 @@ module PetAdoption
         address = routing.params['address']
         willingness = routing.params['state']
         session_id = SecureRandom.uuid
-
-        puts "session_id: #{session_id.class} willingness: #{willingness}"
 
         cookie_hash = { 'session_id' => session_id,
                         'firstname' => firstname,
@@ -60,122 +62,123 @@ module PetAdoption
             file << cookie_hash.to_json
           end
         end
-        user = PetAdoption::Adopters::DonatorMapper.new(cookie_hash).find if willingness == 'donater'
-        user = PetAdoption::Adopters::AdopterMapper.new(cookie_hash).find if willingness == 'adopter'
-        user = PetAdoption::Adopters::KeeperMapper.new(cookie_hash).find if willingness == 'keeper'
 
-        Repository::Adopters::Users.new(
+        user = PetAdoption::Adopters::AccountMapper.new(cookie_hash).find
+
+        db_user = Repository::Adopters::Users.new(
           user.to_attr_hash.merge(
             address: URI.decode_www_form_component(user.address)
           )
         ).create_user
+        flash.now[:notice] = 'Your user creation failed...' if db_user.session_id.nil?
         session[:watching] = cookie_hash
         routing.redirect '/home'
       end
 
       routing.on 'home' do
         routing.is do
-          animal_pic = Repository::Info::Animals.web_page_cover
-          view 'home', locals: { image_url: animal_pic }
+          begin
+            animal_pic = Repository::Info::Animals.web_page_cover
+          rescue StandardError => e
+            App.logger.error e.backtrace.join("DB can't show COVER PAGE\n")
+            flash[:error] = 'Could not find the cover page.'
+          end
+          view 'home', locals: { image_url: PetAdoption::Views::Picture.new(animal_pic).cover }
         end
       end
 
       routing.on 'animal' do
         routing.is do
           routing.post do
-            animal_kind = routing.params['animal_kind'].downcase
-            shelter_name = routing.params['shelter_name']
-            sn_ch = URI.decode_www_form_component(shelter_name)
-
+            begin
+              animal_kind = routing.params['animal_kind'].downcase
+              shelter_name = routing.params['shelter_name']
+              if animal_kind != 'dog' && animal_kind != 'cat'
+                flash[:error] = 'Please select animal kind correctly.'
+                routing.redirect '/home'
+              end
+              if shelter_name.nil?
+                flash[:error] = 'Dont leave shelter name blank.'
+                routing.redirect '/home'
+              end
+              sn_ch = URI.decode_www_form_component(shelter_name)
+            end
             routing.redirect "animal/#{animal_kind}/#{sn_ch}"
           end
         end
 
         routing.on String, String do |animal_kind, shelter_name|
-          # GET /project/owner/project
           ak_ch = animal_kind == 'dog' ? '狗' : '貓'
           shelter_name = URI.decode_www_form_component(shelter_name)
           animal_kind = URI.decode_www_form_component(ak_ch)
-          # animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name('狗', '高雄市壽山動物保護教育園區')
-          animal_obj_hash = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
+          begin
+            animal_obj_list = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
+            view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
 
-          # can this follwoing codes which decode chinese words be put the other side?
-
-          animal_obj_hash.each do |key, obj|
-            obj.to_decode_hash.merge(
-              animal_kind: URI.decode_www_form_component(obj.animal_kind),
-              animal_variate: URI.decode_www_form_component(obj.animal_variate),
-              animal_place: URI.decode_www_form_component(obj.animal_place),
-              animal_found_place: URI.decode_www_form_component(obj.animal_found_place),
-              animal_age: URI.decode_www_form_component(obj.animal_age),
-              animal_color: URI.decode_www_form_component(obj.animal_color)
-            )
-            animal_obj_hash[key] = obj
+            view 'project', locals: {
+              view_obj:
+            }
+          rescue StandardError => e
+            App.logger.error e.backtrace.join("DB can't find the results\n")
+            flash[:error] = 'Could not find the results.'
+            routing.redirect '/home'
           end
+        end
+      end
 
-          view 'project', locals: {
-            animal_obj_hash:
+      routing.on 'user/add-favorite-list', String do |animal_id|
+        animal_obj_list = Repository::Adopters::Users.get_animal_favorite_list_by_user(
+          session[:watching]['session_id'], animal_id
+        )
+        # don't store animal_obj_list to cookies, it's too big
+        session[:watching]['animal_obj_list'] = animal_obj_list
+
+        view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
+        routing.is do
+          view 'favorite', locals: {
+            view_obj:
           }
         end
       end
 
-      routing.on 'adopt' do
-        # POST /adopt
-        routing.post do
-          # Perform any necessary processing for the 'Adopt?' button click
-          # ...
-    
-          # Render the 'adopt.slim' file
-          view 'adopt'
-    
-          # Redirect to the desired page
+      routing.on 'user/favorite-list' do
+        routing.is do
+          animal_obj_list = session[:watching]['animal_obj_list']
+          view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
+          view 'favorite', locals: {
+            view_obj:
+          }
         end
       end
+
+      routing.on 'next-keeper' do
+        routing.is do
+          view 'next-keeper'
+        end
+      end
+
+      routing.on 'adopt' do
+        routing.post do
+          view 'adopt'
+        end
+      end
+
       routing.on 'found' do
         routing.post do
-          script_path = 'app/controllers/classification.py'
-          if routing.params['file0'].is_a?(Hash)
-            #uploaded_file = File.basename(routing.params['file0'][:tempfile].path)
-            uploaded_file = routing.params['file0'][:tempfile].path
-          end
-        
-          # Use Open3 to run the Python script and capture the output
-          output = run_classification(script_path, uploaded_file)
-          puts uploaded_file
-          puts "ok"
-          # Define a regular expression pattern to match the desired string
-          puts output[60..-1]
-          puts "ok"
+          # script_path = 'app/controllers/classification.py'
+          uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
 
-          
-          # Assuming you have some logic to handle the output
-          # This could involve saving the output in a database or using it for further processing
-          # For now, we'll just set it as a variable to be used in the template
-          output = output[60..-1]
-          # You can render the 'found.slim' template here
-          view 'found', locals: { output:}
+          output, = PetAdoption::ImageRecognition::Classification.new(uploaded_file).run
+
+          view 'found', locals: { output: PetAdoption::Views::ImageRecognition.new(output) }
         end
       end
-
 
       routing.on 'missing' do
-        # POST /adopt
         routing.post do
-          # Perform any necessary processing for the 'Adopt?' button click
-          # ...
-    
-          # Render the 'adopt.slim' file
           view 'missing'
-    
-          # Redirect to the desired page
         end
       end
-
-
-  
-
-
-
     end
   end
 end
