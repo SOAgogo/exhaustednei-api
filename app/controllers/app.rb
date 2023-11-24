@@ -81,7 +81,7 @@ module PetAdoption
             App.logger.error e.backtrace.join("DB can't show COVER PAGE\n")
             flash[:error] = 'Could not find the cover page.'
           end
-          view 'home', locals: { image_url: animal_pic }
+          view 'home', locals: { image_url: PetAdoption::Views::Picture.new(animal_pic).cover }
         end
       end
 
@@ -106,25 +106,15 @@ module PetAdoption
         end
 
         routing.on String, String do |animal_kind, shelter_name|
-          # GET /project/owner/project
           ak_ch = animal_kind == 'dog' ? '狗' : '貓'
           shelter_name = URI.decode_www_form_component(shelter_name)
           animal_kind = URI.decode_www_form_component(ak_ch)
           begin
             animal_obj_list = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
-            animal_obj_list.each do |key, obj|
-              obj.to_decode_hash.merge(
-                animal_kind: URI.decode_www_form_component(obj.animal_kind),
-                animal_variate: URI.decode_www_form_component(obj.animal_variate),
-                animal_place: URI.decode_www_form_component(obj.animal_place),
-                animal_found_place: URI.decode_www_form_component(obj.animal_found_place),
-                animal_age: URI.decode_www_form_component(obj.animal_age),
-                animal_color: URI.decode_www_form_component(obj.animal_color)
-              )
-              animal_obj_list[key] = obj
-            end
+            view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
+
             view 'project', locals: {
-              animal_obj_list:
+              view_obj:
             }
           rescue StandardError => e
             App.logger.error e.backtrace.join("DB can't find the results\n")
@@ -134,27 +124,58 @@ module PetAdoption
         end
       end
 
+      routing.on 'user/add-favorite-list', String do |animal_id|
+        animal_obj_list = Repository::Adopters::Users.get_animal_favorite_list_by_user(
+          session[:watching]['session_id'], animal_id
+        )
+        # don't store animal_obj_list to cookies, it's too big
+        session[:watching]['animal_obj_list'] = animal_obj_list
+
+        view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
+        routing.is do
+          view 'favorite', locals: {
+            view_obj:
+          }
+        end
+      end
+
+      routing.on 'user/favorite-list' do
+        routing.is do
+          animal_obj_list = session[:watching]['animal_obj_list']
+          view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
+          view 'favorite', locals: {
+            view_obj:
+          }
+        end
+      end
+
+      routing.on 'next-keeper' do
+        routing.is do
+          view 'next-keeper'
+        end
+      end
+
       routing.on 'adopt' do
-        # POST /adopt
         routing.post do
           view 'adopt'
         end
       end
+
       routing.on 'found' do
         routing.post do
-          script_path = 'app/controllers/classification.py'
+          # script_path = 'app/controllers/classification.py'
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
 
-          output, status = Open3.capture2("python3 #{script_path} #{uploaded_file}")
+          output, status = PetAdoption::ImageRecognition::Classification.new(uploaded_file).run
+          # output, status = Open3.capture2("python3 #{script_path} #{uploaded_file}")
 
-          @output = output
+          # @output = output
 
-          view 'found', locals: { output: }
+          view 'found', locals: { output: PetAdoption::Views::ImageRecognition.new(output) }
         end
       end
 
       routing.on 'missing' do
-        # POST /adopt
         routing.post do
           view 'missing'
         end
