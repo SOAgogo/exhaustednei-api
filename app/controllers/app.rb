@@ -169,6 +169,7 @@ module PetAdoption
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
 
           output, = PetAdoption::ImageRecognition::Classification.new(uploaded_file).run
+          output = output.gsub(/loading roboflow workspace\.\.\./i, "").gsub(/loading roboflow project\.\.\./i, "")
 
           view 'found', locals: { output: PetAdoption::Views::ImageRecognition.new(output) }
         end

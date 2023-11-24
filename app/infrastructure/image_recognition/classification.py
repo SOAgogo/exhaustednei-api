@@ -1,7 +1,7 @@
 import sys
 from roboflow import Roboflow
 import os
-
+import json
 
 
 def predict_dog_breed(image_url):
@@ -24,6 +24,62 @@ def predict_dog_breed(image_url):
     # Search for the pattern in the output string
     print(output)
     return output
+
+
+def predict_cat_breed(image_url):
+    # Replace 'tvNfa4TcFQ57IGJvtQ9q' with your actual Roboflow API key
+    rf = Roboflow(api_key="tvNfa4TcFQ57IGJvtQ9q")
+
+    # Replace 'dog-breed-xpaq6' with your actual Roboflow project name
+    project = rf.workspace().project("cat-breed-classification")
+    
+    # Replace '1' with the version of the model you want to use
+    model = project.version(1).model
+
+    # Infer on an image hosted elsewhere
+
+    # Assuming your code is in the home directory
+
+    predictions = model.predict(image_url).json()
+    output = [{'class': item['class'], 'confidence': item['confidence']} for item in predictions['predictions']]
+
+    # Assuming your output string
+    # Define a regular expression pattern to match the desired string
+    # Search for the pattern in the output string
+    print(output)
+    return output
+
+
+def predict_dog_or_cat(image_url):
+    # Replace 'tvNfa4TcFQ57IGJvtQ9q' with your actual Roboflow API key
+    rf = Roboflow(api_key="tvNfa4TcFQ57IGJvtQ9q")
+
+    project = rf.workspace().project("cat-dog-classification-bglyr")
+
+
+    # Replace '1' with the version of the model you want to use
+    model = project.version(1).model
+
+    # Infer on an image hosted elsewhere
+
+    # Assuming your code is in the home directory
+    predictions = model.predict(image_url).json()
+    output = predictions['predictions'][0]['predictions'][0]['class']
+    # Assuming your output string
+    # Define a regular expression pattern to match the desired string
+    # Search for the pattern in the output string
+    if output == 'Dog':
+        predict_dog_breed(image_url)
+    elif output == 'Cat':
+        predict_cat_breed(image_url)
+    else:
+        return 'classification error, wrong animal'
+
+
+
+
+
+
 if __name__ == "__main__":
     # Check if the command line argument for image_url is provided
     if len(sys.argv) < 2:
@@ -33,4 +89,4 @@ if __name__ == "__main__":
     # Get the image_url from the command line argument
     image_url = os.path.sys.argv[1]
     # Call the predict_dog_breed function with the provided image_url
-    predict_dog_breed(image_url)
+    predict_dog_or_cat(image_url)
