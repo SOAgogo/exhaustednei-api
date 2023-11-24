@@ -8,8 +8,8 @@ module PetAdoption
     class UserDataValidator < Dry::Validation::Contract
       # binding.pry
       params do
-        required(:first_name).filled(:str?)
-        required(:last_name).filled(:str?)
+        required(:firstname).filled(:str?)
+        required(:lastname).filled(:str?)
         required(:email).filled
         required(:phone).filled
         required(:address).filled(:str?)
@@ -30,7 +30,7 @@ module PetAdoption
       rule(:address) do
         key.failure('must contain 縣(市)') unless value.match?(/[縣市]/)
         key.failure('must contain 鄉(鎮)(區)') unless value.match?(/[區鄉鎮]/)
-        key.failure('must contain 路') unless value.include?('路')
+        key.failure('must contain 路(街)') unless value.include?('路') || value.include?('街')
         key.failure('must contain 號') unless value.include?('號')
       end
       rule(:state) do
@@ -41,8 +41,8 @@ module PetAdoption
     end
 
     # Form validation for Github project URL
-    class HumanReaderAble
-      def self.make(hash)
+    class HumanReadAble
+      def self.error(hash)
         string = ''
         hash.map do |key, list_value|
           string += "#{key} \t"

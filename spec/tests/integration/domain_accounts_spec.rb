@@ -2,7 +2,7 @@
 
 require_relative 'spec_helper'
 require_relative '../../helpers/vcr_helper'
-require_relative '../../../app/controllers/app'
+require_relative '../../../app/application/controllers/app'
 require 'securerandom'
 require 'json'
 

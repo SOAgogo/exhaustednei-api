@@ -40,38 +40,21 @@ module PetAdoption
 
       routing.post 'signup' do
         # url_request = Forms::UserDataValidator.new(routing.params).call
-        url_request = PetAdoption::Forms::UserDataValidator.new.call(routing.params.transform_keys(&:to_sym))
+        url_request = Forms::UserDataValidator.new.call(routing.params.transform_keys(&:to_sym))
         # url_request = PetAdoption::Forms::Testing.new(routing.params.transform_keys(&:to_sym))
         if url_request.failure?
           session[:watching] = {}
-          flash[:error] = PetAdoption::Forms::HumanReaderAble.make(url_request.errors.to_h)
-          # flash[:error] = url_request.errors.to_h
+          flash[:error] = Forms::HumanReadAble.error(url_request.errors.to_h)
           routing.redirect '/'
         end
 
         session_id = SecureRandom.uuid
         cookie_hash = routing.params.merge('session_id' => session_id)
-        # cookie_hash = { 'session_id' => session_id,
-        #                 'firstname' => firstname,
-        #                 'lastname' => lastname,
-        #                 'phone' => phone,
-        #                 'email' => email,
-        #                 'address' => address,
-        #                 'willingness' => willingness }
 
-        if ENV['testing'] == 'true'
-          open('spec/testing_cookies/user_input.json', 'w') do |file|
-            file << cookie_hash.to_json
-          end
-        end
+        # for domain testing
+        Forms::TestForDomain.new(cookie_hash).call
+        db_user = Services::CreateUserAccounts.new(cookie_hash).call
 
-        user = PetAdoption::Adopters::AccountMapper.new(cookie_hash).find
-
-        db_user = Repository::Adopters::Users.new(
-          user.to_attr_hash.merge(
-            address: URI.decode_www_form_component(user.address)
-          )
-        ).create_user
         flash.now[:notice] = 'Your user creation failed...' if db_user.session_id.nil?
         session[:watching] = cookie_hash
         routing.redirect '/home'
@@ -80,7 +63,7 @@ module PetAdoption
       routing.on 'home' do
         routing.is do
           begin
-            animal_pic = Repository::Info::Animals.web_page_cover
+            animal_pic = Services::PickAnimalCover.call
           rescue StandardError => e
             App.logger.error e.backtrace.join("DB can't show COVER PAGE\n")
             flash[:error] = 'Could not find the cover page.'
@@ -114,7 +97,7 @@ module PetAdoption
           shelter_name = URI.decode_www_form_component(shelter_name)
           animal_kind = URI.decode_www_form_component(ak_ch)
           begin
-            animal_obj_list = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
+            animal_obj_list = Services::SelectAnimal.call(animal_kind, shelter_name)
             view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
 
             view 'project', locals: {
@@ -129,9 +112,10 @@ module PetAdoption
       end
 
       routing.on 'user/add-favorite-list', String do |animal_id|
-        animal_obj_list = Repository::Adopters::Users.get_animal_favorite_list_by_user(
-          session[:watching]['session_id'], animal_id
-        )
+        # animal_obj_list = Repository::Adopters::Users.get_animal_favorite_list_by_user(
+        #   session[:watching]['session_id'], animal_id
+        # )
+        animal_obj_list = Services::FavoriteListUser.call(session[:watching]['session_id'], animal_id)
         # don't store animal_obj_list to cookies, it's too big
         session[:watching]['animal_obj_list'] = animal_obj_list
 
