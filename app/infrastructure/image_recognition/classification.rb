@@ -17,6 +17,10 @@ module PetAdoption
         run_classification(@script_path, @uploaded_file)
       end
 
+      def uploaded_file
+        uploaded_file
+      end
+
       def run_classification(script_path, uploaded_file)
         # Get the current working directory
         # Create the absolute path by joining the directory of the current file and the relative file path
