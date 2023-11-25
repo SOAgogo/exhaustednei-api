@@ -107,11 +107,13 @@ module PetAdoption
       end
 
       routing.on 'user/add-favorite-list', String do |animal_id|
-        animal_obj_list = PetAdoption::Services::FavoriteListUser.call(session[:watching]['session_id'], animal_id)
+        animal_obj_list = PetAdoption::Services::FavoriteListUser.new.call({
+                                                                             session_id: session[:watching]['session_id'], animal_id:
+                                                                           })
         # don't store animal_obj_list to cookies, it's too big
-        session[:watching]['animal_obj_list'] = animal_obj_list
+        session[:watching]['animal_obj_list'] = animal_obj_list.value![:animals]
 
-        view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
+        view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list.value![:animals])
         routing.is do
           view 'favorite', locals: {
             view_obj:
@@ -142,12 +144,12 @@ module PetAdoption
       end
 
       routing.on 'found' do
+        view 'found'
         routing.post do
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
-
-          output, = PetAdoption::ImageRecognition::Classification.new(uploaded_file).run
-
-          view 'found', locals: { output: PetAdoption::Views::ImageRecognition.new(output) }
+          output, = Services::ImageRecognition.new.call({ uploaded_file: })
+          output_view = PetAdoption::Views::ImageRecognition.new(output.value![:output])
+          view 'found', locals: { output: output_view }
         end
       end
 

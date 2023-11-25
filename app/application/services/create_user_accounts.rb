@@ -43,10 +43,21 @@ module PetAdoption
 
     # class PickAnimalShelters`
     class FavoriteListUser
-      def self.call(session_id, animal_id)
-        Repository::Adopters::Users.get_animal_favorite_list_by_user(
-          session_id, animal_id
+      include Dry::Transaction
+
+      step :get_favorite_list
+
+      private
+
+      def get_favorite_list(input)
+        animals = Repository::Adopters::Users.get_animal_favorite_list_by_user(
+          input[:session_id], input[:animal_id]
         )
+        raise 'animal cannot be added to favorite list' if animals.empty?
+
+        Success(animals:)
+      rescue StandardError => e
+        Failure(e.message)
       end
     end
   end
