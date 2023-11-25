@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'dry/transaction'
+require 'pry'
 
 module PetAdoption
   module Services
@@ -12,11 +13,12 @@ module PetAdoption
       private
 
       def dog_recognition(input)
-        output, = PetAdoption::ImageRecognition::Classification.new(input[:uploaded_file]).run
-        if output.nil?
-          Failure('no recognition output')
+        output, status = PetAdoption::ImageRecognition::Classification.new(input[:uploaded_file]).run
+
+        if status.success?
+          Success(output:)
         else
-          Success(:output)
+          Failure('no recognition output')
         end
       rescue StandardError => e
         Failure(e.message)

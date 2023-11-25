@@ -144,12 +144,19 @@ module PetAdoption
       end
 
       routing.on 'found' do
-        view 'found'
         routing.post do
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
-          output, = Services::ImageRecognition.new.call({ uploaded_file: })
-          output_view = PetAdoption::Views::ImageRecognition.new(output.value![:output])
-          view 'found', locals: { output: output_view }
+          if uploaded_file.nil?
+            view 'found', locals: { output: nil }
+          else
+            output = Services::ImageRecognition.new.call({ uploaded_file: })
+            if output.failure?
+              flash[:error] = 'No recognition output, please try again.'
+              routing.redirect '/found'
+            end
+            output_view = PetAdoption::Views::ImageRecognition.new(output.value![:output])
+            view 'found', locals: { output: output_view }
+          end
         end
       end
 
