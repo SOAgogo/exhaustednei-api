@@ -4,15 +4,22 @@ module PetAdoption
   module Services
     # class TestForDomain`
     class TestForDomain
-      def initialize(cookie_hash)
-        @cookie_hash = cookie_hash
-      end
+      include Dry::Transaction
 
-      def call
-        return unless ENV['testing'] == 'true'
+      step :test_for_cookies
 
-        open('spec/testing_cookies/user_input.json', 'w') do |file|
-          file << @cookie_hash.to_json
+      private
+
+      def test_for_cookies(input)
+        return Success('no testing') unless ENV['testing'] == 'true'
+
+        begin
+          open('spec/testing_cookies/user_input.json', 'w') do |file|
+            file << input[:cookie_hash].to_json
+          end
+          Success('successfully testing')
+        rescue StandardError => e
+          Failure(e.message)
         end
       end
     end

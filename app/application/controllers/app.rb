@@ -48,7 +48,7 @@ module PetAdoption
         end
 
         # for domain testing
-        # Services::TestForDomain.new(cookie_hash).call
+        Services::TestForDomain.new.call(cookie_hash = routing.params)
         db_user = Services::CreateUserAccounts.new.call(url_request:)
 
         flash.now[:notice] = 'Your user creation failed...' if db_user.failure?
@@ -58,13 +58,12 @@ module PetAdoption
 
       routing.on 'home' do
         routing.is do
-          begin
-            animal_pic = Services::PickAnimalCover.call
-          rescue StandardError => e
-            App.logger.error e.backtrace.join("DB can't show COVER PAGE\n")
-            flash[:error] = 'Could not find the cover page.'
-          end
-          view 'home', locals: { image_url: PetAdoption::Views::Picture.new(animal_pic).cover }
+          animal_pic = Services::PickAnimalCover.new.call
+          cover_page = PetAdoption::Views::Picture.new(animal_pic.value![:cover]).cover
+          view 'home', locals: { image_url: cover_page }
+        rescue StandardError => e
+          App.logger.error e.backtrace.join("DB can't show COVER PAGE\n")
+          flash[:error] = 'Could not find the cover page.'
         end
       end
 
@@ -93,8 +92,8 @@ module PetAdoption
           shelter_name = URI.decode_www_form_component(shelter_name)
           animal_kind = URI.decode_www_form_component(ak_ch)
           begin
-            animal_obj_list = Services::SelectAnimal.call(animal_kind, shelter_name)
-            view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
+            response = Services::SelectAnimal.new.call({ animal_kind:, shelter_name: })
+            view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(response.value![:animal_obj_list])
 
             view 'project', locals: {
               view_obj:

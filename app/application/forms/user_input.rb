@@ -6,7 +6,6 @@ module PetAdoption
   module Forms
     # Form validation for Github project URL
     class UserDataValidator < Dry::Validation::Contract
-      # binding.pry
       params do
         required(:session_id).filled(:string)
         required(:firstname).filled(:string)

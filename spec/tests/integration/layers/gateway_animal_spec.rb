@@ -63,7 +63,6 @@ describe 'Tests Animal API ' do
     ## TODO:
     it 'HAPPY: get the right animal id and its information' do
       # _, shelter_mapper = @animal_shelter_mapper.get_shelter_mapper(rand_shelter_id)
-      # binding.pry
       random_id = file[random]['animal_id']
       animal = PetAdoption::Info::ShelterMapper.find_animal_in_shelter(rand_shelter_id, random_id)
 

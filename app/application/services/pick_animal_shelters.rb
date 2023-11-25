@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'pry'
 module PetAdoption
   module Services
     # class PickAnimalShelters`
@@ -20,15 +21,31 @@ module PetAdoption
 
     # class PickAnimalInfo`
     class PickAnimalCover
-      def self.call
-        Repository::Info::Animals.web_page_cover
+      include Dry::Transaction
+
+      step :pick_animal_cover
+
+      def pick_animal_cover
+        cover = Repository::Info::Animals.web_page_cover
+        Success(cover:)
+      rescue StandardError => e
+        Failure(e.message)
       end
     end
 
     # class SelectAnimal`
     class SelectAnimal
-      def self.call(animal_kind, shelter_name)
-        Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
+      include Dry::Transaction
+
+      step :select_animal
+
+      def select_animal(input)
+        animal_obj_list = Repository::Info::Animals
+          .select_animal_by_shelter_name(input[:animal_kind],
+                                         input[:shelter_name])
+        Success(animal_obj_list:)
+      rescue StandardError => e
+        Failure(e.message)
       end
     end
   end
