@@ -5,13 +5,13 @@ require 'slim'
 require 'slim/include'
 require 'json'
 require 'uri'
-require 'pry'
 require 'securerandom'
 require 'fileutils'
 require 'open3'
 
 module PetAdoption
   # for controller part
+
   class App < Roda
     plugin :halt
     plugin :flash
@@ -24,7 +24,6 @@ module PetAdoption
     plugin :json
 
     # use Rack::MethodOverride
-
     route do |routing|
       routing.assets # load CSS
       response['Content-Type'] = 'text/html; charset=utf-8'
@@ -39,24 +38,21 @@ module PetAdoption
       end
 
       routing.post 'signup' do
-        # url_request = Forms::UserDataValidator.new(routing.params).call
+        session_id = SecureRandom.uuid
+        routing.params.merge!('session_id' => session_id)
         url_request = Forms::UserDataValidator.new.call(routing.params.transform_keys(&:to_sym))
-        # url_request = PetAdoption::Forms::Testing.new(routing.params.transform_keys(&:to_sym))
         if url_request.failure?
           session[:watching] = {}
           flash[:error] = Forms::HumanReadAble.error(url_request.errors.to_h)
           routing.redirect '/'
         end
 
-        session_id = SecureRandom.uuid
-        cookie_hash = routing.params.merge('session_id' => session_id)
-
         # for domain testing
-        Forms::TestForDomain.new(cookie_hash).call
-        db_user = Services::CreateUserAccounts.new(cookie_hash).call
+        # Services::TestForDomain.new(cookie_hash).call
+        db_user = Services::CreateUserAccounts.new.call(url_request:)
 
-        flash.now[:notice] = 'Your user creation failed...' if db_user.session_id.nil?
-        session[:watching] = cookie_hash
+        flash.now[:notice] = 'Your user creation failed...' if db_user.failure?
+        session[:watching] = routing.params
         routing.redirect '/home'
       end
 
@@ -112,10 +108,7 @@ module PetAdoption
       end
 
       routing.on 'user/add-favorite-list', String do |animal_id|
-        # animal_obj_list = Repository::Adopters::Users.get_animal_favorite_list_by_user(
-        #   session[:watching]['session_id'], animal_id
-        # )
-        animal_obj_list = Services::FavoriteListUser.call(session[:watching]['session_id'], animal_id)
+        animal_obj_list = PetAdoption::Services::FavoriteListUser.call(session[:watching]['session_id'], animal_id)
         # don't store animal_obj_list to cookies, it's too big
         session[:watching]['animal_obj_list'] = animal_obj_list
 
@@ -151,7 +144,6 @@ module PetAdoption
 
       routing.on 'found' do
         routing.post do
-          # script_path = 'app/controllers/classification.py'
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
 
           output, = PetAdoption::ImageRecognition::Classification.new(uploaded_file).run

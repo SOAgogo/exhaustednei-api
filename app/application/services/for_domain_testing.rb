@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PetAdoption
-  module Forms
+  module Services
     # class TestForDomain`
     class TestForDomain
       def initialize(cookie_hash)

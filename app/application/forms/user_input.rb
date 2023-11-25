@@ -8,13 +8,14 @@ module PetAdoption
     class UserDataValidator < Dry::Validation::Contract
       # binding.pry
       params do
-        required(:firstname).filled(:str?)
-        required(:lastname).filled(:str?)
+        required(:session_id).filled(:string)
+        required(:firstname).filled(:string)
+        required(:lastname).filled(:string)
         required(:email).filled
         required(:phone).filled
-        required(:address).filled(:str?)
-        required(:state).filled(:str?)
-        required(:comment).filled(:str?)
+        required(:address).filled(:string)
+        required(:state).filled(:string)
+        required(:comment).filled(:string)
       end
 
       EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
