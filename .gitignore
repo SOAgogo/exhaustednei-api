@@ -3,6 +3,8 @@ config/secrets.yml
 coverage/*
 !coverage/.resultset.json
 .DS_Store
+config/.DS_Store
+spec/.DS_Store
 *.db
 db/local/*
 /spec/testing_cookies/*
