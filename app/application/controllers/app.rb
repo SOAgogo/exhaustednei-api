@@ -146,6 +146,7 @@ module PetAdoption
       routing.on 'found' do
         routing.post do
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
+
           if uploaded_file.nil?
             view 'found', locals: { output: nil }
           else

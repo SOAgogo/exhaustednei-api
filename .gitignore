@@ -6,3 +6,4 @@ coverage/*
 *.db
 db/local/*
 /spec/testing_cookies/*
+/spec/tests/integration/services/testing_recognition/*

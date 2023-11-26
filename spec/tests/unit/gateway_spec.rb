@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # test the data coming from gateway api are the same as the data in the database
-require_relative '../integration/spec_helper'
+require_relative '../integration/layers/spec_helper'
 require_relative '../../helpers/vcr_helper'
 require 'uri'
 require 'json'
