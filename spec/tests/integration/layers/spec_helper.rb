@@ -11,7 +11,7 @@ require 'minitest/rg'
 require 'vcr'
 require 'webmock'
 
-require_relative '../../../require_app'
+require_relative '../../../../require_app'
 require_app
 DOWNLOAD_PATH = 'spec/fixtures/DogCat_results.json'
 json_file = File.read(DOWNLOAD_PATH)

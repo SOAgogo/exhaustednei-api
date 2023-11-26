@@ -5,15 +5,14 @@ require 'slim'
 require 'slim/include'
 require 'json'
 require 'uri'
-require 'pry'
 require 'securerandom'
 require 'fileutils'
 require 'open3'
 
 module PetAdoption
-  # Web App
-
   # for controller part
+
+  # rubocop:disable Metrics/ClassLength
   class App < Roda
     plugin :halt
     plugin :flash
@@ -41,49 +40,33 @@ module PetAdoption
       end
 
       routing.post 'signup' do
-        firstname = routing.params['first_name']
-        lastname = routing.params['last_name']
-        email = routing.params['email']
-        phone = routing.params['phone']
-        address = routing.params['address']
-        willingness = routing.params['state']
         session_id = SecureRandom.uuid
-
-        cookie_hash = { 'session_id' => session_id,
-                        'firstname' => firstname,
-                        'lastname' => lastname,
-                        'phone' => phone,
-                        'email' => email,
-                        'address' => address,
-                        'willingness' => willingness }
-
-        if ENV['testing'] == 'true'
-          open('spec/testing_cookies/user_input.json', 'w') do |file|
-            file << cookie_hash.to_json
-          end
+        routing.params.merge!('session_id' => session_id)
+        url_request = Forms::UserDataValidator.new.call(routing.params.transform_keys(&:to_sym))
+        if url_request.failure?
+          session[:watching] = {}
+          flash[:error] = Forms::HumanReadAble.error(url_request.errors.to_h)
+          routing.redirect '/'
         end
 
-        user = PetAdoption::Adopters::AccountMapper.new(cookie_hash).find
+        # for domain testing
+        cookie_hash = routing.params
+        Services::TestForDomain.new.call(cookie_hash)
+        db_user = Services::CreateUserAccounts.new.call(url_request:)
 
-        db_user = Repository::Adopters::Users.new(
-          user.to_attr_hash.merge(
-            address: URI.decode_www_form_component(user.address)
-          )
-        ).create_user
-        flash.now[:notice] = 'Your user creation failed...' if db_user.session_id.nil?
-        session[:watching] = cookie_hash
+        flash.now[:notice] = 'Your user creation failed...' if db_user.failure?
+        session[:watching] = routing.params
         routing.redirect '/home'
       end
 
       routing.on 'home' do
         routing.is do
-          begin
-            animal_pic = Repository::Info::Animals.web_page_cover
-          rescue StandardError => e
-            App.logger.error e.backtrace.join("DB can't show COVER PAGE\n")
-            flash[:error] = 'Could not find the cover page.'
-          end
-          view 'home', locals: { image_url: PetAdoption::Views::Picture.new(animal_pic).cover }
+          animal_pic = Services::PickAnimalCover.new.call
+          cover_page = PetAdoption::Views::Picture.new(animal_pic.value![:cover]).cover
+          view 'home', locals: { image_url: cover_page }
+        rescue StandardError
+          # App.logger.error e.backtrace.join("DB can't show COVER PAGE\n")
+          flash[:error] = 'Could not find the cover page.'
         end
       end
 
@@ -112,14 +95,14 @@ module PetAdoption
           shelter_name = URI.decode_www_form_component(shelter_name)
           animal_kind = URI.decode_www_form_component(ak_ch)
           begin
-            animal_obj_list = Repository::Info::Animals.select_animal_by_shelter_name(animal_kind, shelter_name)
-            view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
+            response = Services::SelectAnimal.new.call({ animal_kind:, shelter_name: })
+            view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(response.value![:animal_obj_list])
 
             view 'project', locals: {
               view_obj:
             }
-          rescue StandardError => e
-            App.logger.error e.backtrace.join("DB can't find the results\n")
+          rescue StandardError
+            # App.logger.error err.backtrace.join("DB can't find the results\n")
             flash[:error] = 'Could not find the results.'
             routing.redirect '/home'
           end
@@ -127,13 +110,14 @@ module PetAdoption
       end
 
       routing.on 'user/add-favorite-list', String do |animal_id|
-        animal_obj_list = Repository::Adopters::Users.get_animal_favorite_list_by_user(
-          session[:watching]['session_id'], animal_id
-        )
+        animal_obj_list = PetAdoption::Services::FavoriteListUser
+          .new.call({
+                      session_id: session[:watching]['session_id'], animal_id:
+                    })
         # don't store animal_obj_list to cookies, it's too big
-        session[:watching]['animal_obj_list'] = animal_obj_list
+        session[:watching]['animal_obj_list'] = animal_obj_list.value![:animals]
 
-        view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
+        view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list.value![:animals])
         routing.is do
           view 'favorite', locals: {
             view_obj:
@@ -165,15 +149,24 @@ module PetAdoption
 
       routing.on 'found' do
         routing.post do
-          # script_path = 'app/controllers/classification.py'
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
 
-          output, = PetAdoption::ImageRecognition::Classification.new(uploaded_file).run
-          output = output.gsub(/loading roboflow workspace\.\.\./i, "").gsub(/loading roboflow project\.\.\./i, "")
-
-          view 'found', locals: { output: PetAdoption::Views::ImageRecognition.new(output) }
+          if uploaded_file.nil?
+            view 'found', locals: { output: nil }
+          else
+            output = Services::ImageRecognition.new.call({ uploaded_file: })
+            if output.failure?
+              flash[:error] = 'No recognition output, please try again.'
+              routing.redirect '/found'
+            end
+            output = output.gsub(/loading roboflow workspace\.\.\./i, "").gsub(/loading roboflow project\.\.\./i, "")
+            output_view = PetAdoption::Views::ImageRecognition.new(output.value![:output])
+            view 'found', locals: { output: output_view }
+          end
         end
       end
+
+
 
       routing.on 'missing' do
         routing.post do
@@ -182,4 +175,5 @@ module PetAdoption
       end
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

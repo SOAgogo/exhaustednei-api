@@ -20,12 +20,13 @@ module Repository
         first_record = Database::ProjectOrm::AnimalOrm
           .exclude(album_file: '')
           .first
-        if first_record.album_file == ''
+        album_file = first_record.album_file
+        if album_file == ''
           DBError.new('DB error', 'DB cant find your data').tap do |rsp|
             raise(rsp.error)
           end
         end
-        first_record.album_file
+        album_file
       end
 
       # rubocop:disable Metrics/MethodLength

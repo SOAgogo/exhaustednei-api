@@ -55,13 +55,15 @@ html
                 
                 // Update the output element with the extracted content
                 $("#output").text(outputText);
+
+
               },
               error: function(error) {
                   console.log('Error:', error);
               }
           });
       }
-
+    
     - if output
       p#output= output.image
     - else
