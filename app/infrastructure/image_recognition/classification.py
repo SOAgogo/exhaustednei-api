@@ -22,6 +22,12 @@ def predict_dog_breed(image_url):
     # Assuming your output string
     # Define a regular expression pattern to match the desired string
     # Search for the pattern in the output string
+    if output['confidence'] >= 0.5 :
+        output
+    else : 
+        output = {'class': 'hybrid', 'confidence': 1}
+    # Add a default item if no items pass the condition
+
     print(output)
     return output
 
@@ -41,8 +47,11 @@ def predict_cat_breed(image_url):
     # Assuming your code is in the home directory
 
     predictions = model.predict(image_url).json()
-    output = [{'class': item['class'], 'confidence': item['confidence']} for item in predictions['predictions']]
+        
+    output = [{'class': item['class'], 'confidence': item['confidence']} for item in predictions['predictions'] if item['confidence'] >= 0.5]
 
+    # Add a default item if no items pass the condition
+    output.append({'class': 'hybrid', 'confidence': 1} if not output else {})
     # Assuming your output string
     # Define a regular expression pattern to match the desired string
     # Search for the pattern in the output string
