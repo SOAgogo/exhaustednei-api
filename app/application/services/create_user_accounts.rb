@@ -17,8 +17,9 @@ module PetAdoption
       private
 
       def create_user_account(input)
-        if input[:url_request].success?
-          covert_key_to_s = input[:url_request].to_h.transform_keys(&:to_s)
+        request = input[:url_request]
+        if request.success?
+          covert_key_to_s = request.to_h.transform_keys(&:to_s)
           user = PetAdoption::Adopters::AccountMapper.new(covert_key_to_s).find
 
           Success(user:)
@@ -28,12 +29,11 @@ module PetAdoption
       end
 
       def store_user_account(user)
+        user = user[:user]
         db_user = Repository::Adopters::Users.new(
-          user[:user].to_attr_hash.merge(
-            address: URI.decode_www_form_component(user[:user].address)
-          )
+          user.to_attr_hash.merge(address: URI.decode_www_form_component(user.address))
         ).create_user
-        if db_user.session_id.nil?
+        if db_user.session_id
           Failure('User cannot be stored in Database')
         else
           Success(db_user:)

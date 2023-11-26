@@ -12,6 +12,7 @@ require 'open3'
 module PetAdoption
   # for controller part
 
+  # rubocop:disable Metrics/ClassLength
   class App < Roda
     plugin :halt
     plugin :flash
@@ -24,6 +25,7 @@ module PetAdoption
     plugin :json
 
     # use Rack::MethodOverride
+
     route do |routing|
       routing.assets # load CSS
       response['Content-Type'] = 'text/html; charset=utf-8'
@@ -48,7 +50,8 @@ module PetAdoption
         end
 
         # for domain testing
-        Services::TestForDomain.new.call(cookie_hash = routing.params)
+        cookie_hash = routing.params
+        Services::TestForDomain.new.call(cookie_hash)
         db_user = Services::CreateUserAccounts.new.call(url_request:)
 
         flash.now[:notice] = 'Your user creation failed...' if db_user.failure?
@@ -61,8 +64,8 @@ module PetAdoption
           animal_pic = Services::PickAnimalCover.new.call
           cover_page = PetAdoption::Views::Picture.new(animal_pic.value![:cover]).cover
           view 'home', locals: { image_url: cover_page }
-        rescue StandardError => e
-          App.logger.error e.backtrace.join("DB can't show COVER PAGE\n")
+        rescue StandardError
+          # App.logger.error e.backtrace.join("DB can't show COVER PAGE\n")
           flash[:error] = 'Could not find the cover page.'
         end
       end
@@ -98,8 +101,8 @@ module PetAdoption
             view 'project', locals: {
               view_obj:
             }
-          rescue StandardError => e
-            App.logger.error e.backtrace.join("DB can't find the results\n")
+          rescue StandardError
+            # App.logger.error err.backtrace.join("DB can't find the results\n")
             flash[:error] = 'Could not find the results.'
             routing.redirect '/home'
           end
@@ -107,9 +110,10 @@ module PetAdoption
       end
 
       routing.on 'user/add-favorite-list', String do |animal_id|
-        animal_obj_list = PetAdoption::Services::FavoriteListUser.new.call({
-                                                                             session_id: session[:watching]['session_id'], animal_id:
-                                                                           })
+        animal_obj_list = PetAdoption::Services::FavoriteListUser
+          .new.call({
+                      session_id: session[:watching]['session_id'], animal_id:
+                    })
         # don't store animal_obj_list to cookies, it's too big
         session[:watching]['animal_obj_list'] = animal_obj_list.value![:animals]
 
@@ -168,4 +172,5 @@ module PetAdoption
       end
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

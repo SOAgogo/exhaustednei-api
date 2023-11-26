@@ -46,10 +46,14 @@ module PetAdoption
         string = ''
         hash.map do |key, list_value|
           string += "#{key} \t"
-          list_value.map do |v|
-            string += " #{v} \t"
-          end
+          string = HumanReadAble.error_message(list_value, string)
           string += ",\t"
+        end
+      end
+
+      def self.error_message(list_value, string)
+        list_value.map do |value|
+          string += " #{value} \t"
         end
         string
       end

@@ -14,10 +14,10 @@ module PetAdoption
       end
 
       def run
-        run_classification(@script_path, @uploaded_file)
+        Classification.run_classification(@script_path, @uploaded_file)
       end
 
-      def run_classification(script_path, uploaded_file)
+      def self.run_classification(script_path, uploaded_file)
         output, status = Open3.capture2("python3 #{script_path} #{uploaded_file}")
         [output, status]
       end
