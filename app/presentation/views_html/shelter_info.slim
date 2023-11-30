@@ -124,11 +124,18 @@
 
 
   div.gallery
-      - output.each do |key,val| 
+      - shelter.each do |key,val| 
         .row
           .column
                   p
-                    | #{key} : "#{val}"
+                    | #{key} : "#{val.county_num_sterilizations}"
+                  p
+                    | "#{val.county_num_no_sterilizations}"
+                  p
+                    | "#{val.county_num_animal_bacterin}"
+                  p  
+                    | "#{county_num_animal_no_bacterin}"
+                  
                  
                   
   

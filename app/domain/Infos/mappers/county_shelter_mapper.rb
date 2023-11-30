@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../../shelter_animals/repositories/animals'
+require_relative 'shelter_info_mapper'
 module PetAdoption
   # Maps over local and remote git repo infrastructure
   module ShelterInfo
@@ -14,7 +15,7 @@ module PetAdoption
       def build_entity
         county_info = {}
         @county_shelters.each do |shelter_name|
-          county_info[shelter_name] = ShelterMapper.new(shelter_name).build_entity
+          county_info[shelter_name] = ShelterInfoMapper.new(shelter_name).build_entity
         end
         Entity::CountyShelterStats.new(county_info)
       end

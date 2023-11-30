@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'shelters'
+require_relative 'shelters_info'
 
 module PetAdoption
   module Entity

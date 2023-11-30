@@ -175,13 +175,13 @@ module PetAdoption
       routing.on 'shelter_statistics' do
         routing.is do
           # stats_output = Services::ShelterStatistics.new.call
-          shelter = PetAdoption::ShelterInfo::ShelterInfoMapper.new('臺中市動物之家南屯園區').build_entity
+          shelter = PetAdoption::ShelterInfo::CountyShelterMapper.new('臺中市').build_entity
 
-          output = { 'sterilization' => shelter.count_num_sterilizations,
-                     'no_sterilizations' => shelter.count_num_no_sterilizations,
-                     'for_bacterin' => shelter.count_num_animal_bacterin,
-                     'no_bacterin' => shelter.count_num_animal_no_bacterin }
-          view 'shelter_info', locals: { output: }
+          # output = { 'sterilization' => shelter.count_num_sterilizations,
+          #            'no_sterilizations' => shelter.count_num_no_sterilizations,
+          #            'for_bacterin' => shelter.count_num_animal_bacterin,
+          #            'no_bacterin' => shelter.count_num_animal_no_bacterin }
+          view 'shelter_info', locals: { shelter: }
         end
       end
     end
