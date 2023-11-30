@@ -43,5 +43,17 @@ module Repository
           'no_animal_bacterin' => animal_for_no_animal_bacterin }
       end
     end
+
+    # county shelter stats
+    class CountyShelterStats
+      def self.find_shelters_in_county(county_name)
+        shelter_db = Database::ProjectOrm::ShelterOrm.where { shelter_name.like("#{county_name}%") }.all
+        shelter_db.map(&:shelter_name)
+      end
+
+      def self.county_intro(county_name)
+        CountyShelterStats.find_shelters_in_county(county_name)
+      end
+    end
   end
 end
