@@ -6,24 +6,41 @@ module Repository
   module ShelterInfo
     # Repository for UserOrm
     class ShelterStats
+      def self.outputs_from_orm_query(query)
+        animal_db_obj = Database::ProjectOrm::AnimalOrm.handle_with_custom_query(query)
+        Repository::Info::Animals.rebuild_many(animal_db_obj)
+      end
+
       def self.animal_for_sterilization(shelter_name)
-        animal_sterilizations = Database::ProjectOrm::AnimalOrm.find_all_animals_with_sterilization_by_shelter(shelter_name)
-        Repository::Info::Animals.rebuild_many(animal_sterilizations)
-        # ShelterStats.recorded_to_shelter_info('animal_sterilization',
-        #                                       animal_sterilizations_db)
+        query = { animal_sterilization: true, animal_place: shelter_name }
+        outputs_from_orm_query(query)
       end
 
       def self.animal_for_no_sterilization(shelter_name)
-        animal_no_sterilizations = Database::ProjectOrm::AnimalOrm.find_all_animals_with_no_sterilization_by_shelter(shelter_name)
-        Repository::Info::Animals.rebuild_many(animal_no_sterilizations)
-        # ShelterStats.recorded_to_shelter_info('animal_no_sterilization',
-        #                                       animal_no_sterilizations_db)
+        query = { animal_sterilization: false, animal_place: shelter_name }
+        outputs_from_orm_query(query)
+      end
+
+      def self.animal_for_animal_bacterin(shelter_name)
+        query = { animal_bacterin: true, animal_place: shelter_name }
+        outputs_from_orm_query(query)
+      end
+
+      def self.animal_for_no_animal_bacterin(shelter_name)
+        query = { animal_bacterin: false, animal_place: shelter_name }
+        outputs_from_orm_query(query)
       end
 
       def self.shelter_intro(shelter_name)
         animal_sterilizations = ShelterStats.animal_for_sterilization(shelter_name)
         animal_no_sterilizations = ShelterStats.animal_for_no_sterilization(shelter_name)
-        [animal_no_sterilizations, animal_sterilizations]
+        animal_for_animal_bacterin = ShelterStats.animal_for_animal_bacterin(shelter_name)
+        animal_for_no_animal_bacterin = ShelterStats.animal_for_no_animal_bacterin(shelter_name)
+
+        { 'sterilization' => animal_sterilizations,
+          'no_sterilization' => animal_no_sterilizations,
+          'animal_bacterin' => animal_for_animal_bacterin,
+          'no_animal_bacterin' => animal_for_no_animal_bacterin }
       end
     end
   end

@@ -11,8 +11,10 @@ module PetAdoption
 
       def build_entity
         Entity::ShelterStats.new(
-          animal_no_sterilizations: @shelter_info[0],
-          animal_sterilizations: @shelter_info[1]
+          animal_no_sterilizations: @shelter_info['no_sterilization'],
+          animal_sterilizations: @shelter_info['sterilization'],
+          animal_for_bacterin: @shelter_info['animal_bacterin'],
+          animal_for_no_bacterin: @shelter_info['no_animal_bacterin']
         )
       end
     end
