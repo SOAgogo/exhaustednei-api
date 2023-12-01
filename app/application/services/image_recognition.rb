@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'dry/transaction'
-require 'pry'
 
 module PetAdoption
   module Services

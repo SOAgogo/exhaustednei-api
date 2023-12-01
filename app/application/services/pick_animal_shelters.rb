@@ -1,24 +1,7 @@
 # frozen_string_literal: true
 
-require 'pry'
 module PetAdoption
   module Services
-    # class PickAnimalShelters`
-    # class PickAnimalShelters
-    #   def initialize(cookie_hash)
-    #     @cookie_hash = cookie_hash
-    #   end
-
-    #   def call
-    #     animal = PetAdoption::Adopters::AnimalMapper.new(@cookie_hash).find
-    #     Repository::Adopters::Animals.new(
-    #       animal.to_attr_hash.merge(
-    #         address: URI.decode_www_form_component(animal.address)
-    #       )
-    #     ).create_animal
-    #   end
-    # end
-
     # class PickAnimalInfo`
     class PickAnimalCover
       include Dry::Transaction

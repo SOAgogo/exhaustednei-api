@@ -1,16 +1,13 @@
 # frozen_string_literal: true
 
 require 'dry/transaction'
-require 'pry'
+
 module PetAdoption
   module Services
     # class CreateUserAccounts`
     class CreateUserAccounts
       include Dry::Transaction
 
-      # def initialize(cookie_hash)
-      #   @cookie_hash = cookie_hash
-      # end
       step :create_user_account
       step :store_user_account
 

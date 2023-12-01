@@ -14,6 +14,7 @@ module PetAdoption
 
       def county_num_sterilizations
         sum = 0
+        binding.pry
         @county_info.each do |_, shelter_info|
           sum += shelter_info.count_num_sterilizations
         end
@@ -22,6 +23,7 @@ module PetAdoption
 
       def county_num_no_sterilizations
         sum = 0
+        binding.pry
         @county_info.each do |_, shelter_info|
           sum += shelter_info.count_num_no_sterilizations
         end
@@ -30,6 +32,7 @@ module PetAdoption
 
       def county_num_animal_bacterin
         sum = 0
+        binding.pry
         @county_info.each do |_, shelter_info|
           sum += shelter_info.count_num_animal_bacterin
         end
@@ -38,6 +41,7 @@ module PetAdoption
 
       def county_num_animal_no_bacterin
         sum = 0
+        binding.pry
         @county_info.each do |_, shelter_info|
           sum += shelter_info.count_num_animal_no_bacterin
         end

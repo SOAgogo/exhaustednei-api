@@ -174,16 +174,27 @@ module PetAdoption
 
       routing.on 'shelter_statistics' do
         routing.is do
-          # stats_output = Services::ShelterStatistics.new.call
-          shelter = PetAdoption::ShelterInfo::CountyShelterMapper.new('臺中市').build_entity
+          # session[:all_county_stats] ||= {}
+          # session[:query_country_stats] ||= {}
 
-          # output = { 'sterilization' => shelter.count_num_sterilizations,
-          #            'no_sterilizations' => shelter.count_num_no_sterilizations,
-          #            'for_bacterin' => shelter.count_num_animal_bacterin,
-          #            'no_bacterin' => shelter.count_num_animal_no_bacterin }
+          # response['Set-Cookie'] = 'example_cookie=cookie_value; path=/; HttpOnly; SameSite=Lax'
+
+          all_county_stats = Services::CountryOverView.new.call
+          final_stats = all_county_stats.value![:final_stats]
+          all_county_stats = all_county_stats.value![:county_stats]
+
+          binding.pry
+          # view 'shelter_info', locals: { all_county_stats: session[:all_county_stats] }
+
           view 'shelter_info', locals: { shelter: }
         end
       end
+
+      # routing.on 'get_cookie' do
+      #   # Retrieve the value from the cookie
+      #   cookie_value = request.cookies['example_cookie']
+      #   "Cookie value: #{cookie_value}"
+      # end
     end
   end
   # rubocop:enable Metrics/ClassLength

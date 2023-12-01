@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+require 'pry'
 require_relative '../../shelter_animals/repositories/animals'
+require_relative '../lib/county_lister'
 module Repository
   # Maps over local and remote git repo infrastructure
   module ShelterInfo
