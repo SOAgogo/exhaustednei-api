@@ -36,6 +36,7 @@ module PetAdoption
         session[:watching] ||= {}
         routing.redirect '/home' if session[:watching]['session_id']
         flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
+        # view('shelter_info')
         view('signup')
       end
 
@@ -149,25 +150,50 @@ module PetAdoption
 
       routing.on 'found' do
         routing.post do
+          founding_list = File.read("example.txt")
+          founding_list = founding_list.lines
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
+          File.open("example.txt", "a") do |file|
+            # Append additional text to the file
+            file.puts uploaded_file
+          end
 
           if uploaded_file.nil?
-            view 'found', locals: { output: nil }
+            view 'found', locals: { output: nil ,
+                                    founding_list: }
           else
             output = Services::ImageRecognition.new.call({ uploaded_file: })
             if output.failure?
               flash[:error] = 'No recognition output, please try again.'
               routing.redirect '/found'
             end
+            #output = output.gsub(/loading roboflow workspace\.\.\./i, "").gsub(/loading roboflow project\.\.\./i, "")
             output_view = PetAdoption::Views::ImageRecognition.new(output.value![:output])
-            view 'found', locals: { output: output_view }
+            view 'found', locals: { output: output_view ,  
+                                    founding_list: }
           end
+
         end
       end
+
+
 
       routing.on 'missing' do
         routing.post do
           view 'missing'
+        end
+      end
+
+      routing.on 'shelter_statistics' do
+        routing.is do
+          # stats_output = Services::ShelterStatistics.new.call
+          shelter = PetAdoption::ShelterInfo::ShelterInfoMapper.new('臺中市動物之家南屯園區').build_entity
+
+          output = { 'sterilization' => shelter.count_num_sterilizations,
+                     'no_sterilizations' => shelter.count_num_no_sterilizations,
+                     'for_bacterin' => shelter.count_num_animal_bacterin,
+                     'no_bacterin' => shelter.count_num_animal_no_bacterin }
+          view 'shelter_info', locals: { output: }
         end
       end
     end

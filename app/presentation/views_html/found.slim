@@ -68,3 +68,17 @@ html
       p#output= output.image
     - else
       p#output No output available
+
+  body
+    div.gallery
+        - founding_list.each do |obj| 
+          .row
+            .column
+              .card
+                .card-content
+                  img[src="#{obj}" class="img-thumbnail" alt="Cinque Terre" width = 200 height = 200]
+
+                    
+          
+            
+        
