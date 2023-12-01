@@ -150,20 +150,29 @@ module PetAdoption
 
       routing.on 'found' do
         routing.post do
+          founding_list = File.read("example.txt")
+          founding_list = founding_list.lines
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
+          File.open("example.txt", "a") do |file|
+            # Append additional text to the file
+            file.puts uploaded_file
+          end
 
           if uploaded_file.nil?
-            view 'found', locals: { output: nil }
+            view 'found', locals: { output: nil ,
+                                    founding_list: }
           else
             output = Services::ImageRecognition.new.call({ uploaded_file: })
             if output.failure?
               flash[:error] = 'No recognition output, please try again.'
               routing.redirect '/found'
             end
-            output = output.gsub(/loading roboflow workspace\.\.\./i, "").gsub(/loading roboflow project\.\.\./i, "")
+            #output = output.gsub(/loading roboflow workspace\.\.\./i, "").gsub(/loading roboflow project\.\.\./i, "")
             output_view = PetAdoption::Views::ImageRecognition.new(output.value![:output])
-            view 'found', locals: { output: output_view }
+            view 'found', locals: { output: output_view ,  
+                                    founding_list: }
           end
+
         end
       end
 
