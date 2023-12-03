@@ -16,13 +16,7 @@ module PetAdoption
   class App < Roda
     plugin :halt
     plugin :flash
-    plugin :all_verbs # allows HTTP verbs beyond GET/POST (e.g., DELETE)
-    plugin :render, engine: 'slim', views: 'app/presentation/views_html'
-    plugin :public, root: 'app/presentation/public'
-    plugin :assets, path: 'app/presentation/assets',
-                    css: 'style.css', js: 'popup.js'
-    plugin :common_logger, $stderr
-    plugin :json
+    plugin :all_verbs
 
     # use Rack::MethodOverride
 
