@@ -40,12 +40,10 @@ module PetAdoption
 
     # class Info::Cat`
     class Cat < Animal
-
     end
 
     # class Info::Dog`
     class Dog < Animal
-
     end
   end
 end
