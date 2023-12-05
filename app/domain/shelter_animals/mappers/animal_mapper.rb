@@ -52,38 +52,38 @@ module PetAdoption
         def build_dog_entity
           PetAdoption::Entity::Dog.new(
             id:,
-            animal_id:,
-            animal_kind:,
-            animal_variate:,
-            animal_age:,
-            animal_sex:,
-            animal_sterilization:,
-            animal_bacterin:,
+            remote_id:,
+            cat_or_dog:,
+            species:,
+            age:,
+            color:,
+            sex:,
+            sterilized:,
             animal_bodytype:,
-            album_file:,
-            animal_place:,
-            animal_opendate:,
-            animal_color:,
-            animal_found_place:
+            vaccinated:,
+            bodytype:,
+            image_url:,
+            shelter:,
+            registration_date:
           )
         end
 
         def build_cat_entity
           PetAdoption::Entity::Cat.new(
             id:,
-            animal_id:,
-            animal_kind:,
-            animal_variate:,
-            animal_age:,
-            animal_color:,
-            animal_sex:,
-            animal_sterilization:,
-            animal_bacterin:,
+            remote_id:,
+            cat_or_dog:,
+            species:,
+            age:,
+            color:,
+            sex:,
+            sterilized:,
             animal_bodytype:,
-            album_file:,
-            animal_place:,
-            animal_opendate:,
-            animal_found_place:
+            vaccinated:,
+            bodytype:,
+            image_url:,
+            shelter:,
+            registration_date:
           )
         end
 
@@ -94,55 +94,55 @@ module PetAdoption
           rand(1..1000)
         end
 
-        def animal_id
+        def remote_id
           @data['animal_id']
         end
 
-        def animal_kind
+        def cat_or_dog
           @data['animal_kind']
         end
 
-        def animal_variate
+        def variate
           @data['animal_Variety']
         end
 
-        def animal_sex
+        def sex
           @data['animal_sex']
         end
 
-        def animal_sterilization
+        def sterilized
           @data['animal_sterilization'] == 'T'
         end
 
-        def animal_bacterin
+        def vaccinated
           @data['animal_bacterin'] == 'T'
         end
 
-        def animal_bodytype
+        def bodytype
           @data['animal_bodytype']
         end
 
-        def album_file
+        def image_url
           @data['album_file']
         end
 
-        def animal_place
-          @data['animal_place']
+        def shelter
+
         end
 
         def animal_opendate
           @data['animal_opendate']
         end
 
-        def animal_age
+        def age
           @data['animal_age']
         end
 
-        def animal_color
+        def color
           @data['animal_colour']
         end
 
-        def animal_found_place
+        def registration_date
           @data['animal_foundplace']
         end
       end

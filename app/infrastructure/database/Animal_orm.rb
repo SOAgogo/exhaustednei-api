@@ -23,11 +23,6 @@ module Database
         # query is a hash with symbol
         where(query).all
       end
-
-      # for county queries
-      # def self.find_all_animals_with_no_sterilization_by_county(county_name)
-      #   where { animal_place.like("#{county_name}%") }.where(animal_sterilization: false).all
-      # end
     end
   end
 end

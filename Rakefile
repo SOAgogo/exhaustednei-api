@@ -18,6 +18,12 @@ namespace :spec do
     t.pattern = 'spec/tests/{integration,unit}/**/*_spec.rb'
     t.warning = false
   end
+
+  desc 'Run unit, integration, and acceptance tests'
+  Rake::TestTask.new(:all) do |t|
+    t.pattern = 'spec/tests/**/*_spec.rb'
+    t.warning = false
+  end
 end
 
 desc 'Keep rerunning tests upon changes'
