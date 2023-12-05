@@ -53,7 +53,6 @@ module PetAdoption
           PetAdoption::Entity::Dog.new(
             id:,
             remote_id:,
-            cat_or_dog:,
             species:,
             age:,
             color:,
@@ -63,7 +62,6 @@ module PetAdoption
             vaccinated:,
             bodytype:,
             image_url:,
-            shelter:,
             registration_date:
           )
         end
@@ -72,7 +70,6 @@ module PetAdoption
           PetAdoption::Entity::Cat.new(
             id:,
             remote_id:,
-            cat_or_dog:,
             species:,
             age:,
             color:,
@@ -82,7 +79,6 @@ module PetAdoption
             vaccinated:,
             bodytype:,
             image_url:,
-            shelter:,
             registration_date:
           )
         end
@@ -124,10 +120,6 @@ module PetAdoption
 
         def image_url
           @data['album_file']
-        end
-
-        def shelter
-
         end
 
         def animal_opendate

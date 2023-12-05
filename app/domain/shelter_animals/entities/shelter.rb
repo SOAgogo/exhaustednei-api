@@ -7,9 +7,10 @@ module PetAdoption
   module Entity
     # class Info::Shelter`
     class Shelter
-      def initialize(shelter_info)
+      def initialize(shelter_info, animal_obj_list)
         @shelter_info = Value::ShelterInfo.new(shelter_info)
-        @animal_object_list = Types::HashedArrays.new
+        @animal_object_list = Types::HashedArrays.new(animal_obj_list)
+        # @maximize_animal =
       end
 
       def promote_to_user

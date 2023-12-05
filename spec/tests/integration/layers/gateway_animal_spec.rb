@@ -66,10 +66,10 @@ describe 'Tests Animal API ' do
       random_id = file[random]['animal_id']
       animal = PetAdoption::Info::ShelterMapper.find_animal_in_shelter(rand_shelter_id, random_id)
 
-      _(animal.animal_id).must_equal file[random]['animal_id']
-      _(animal.animal_bodytype).must_equal file[random]['animal_bodytype']
-      _(animal.animal_variate).must_equal file[random]['animal_Variety']
-      _(animal.animal_place).must_equal file[random]['animal_place']
+      _(animal.origin_id).must_equal file[random]['animal_id']
+      _(animal.bodytype).must_equal file[random]['animal_bodytype']
+      _(animal.variate).must_equal file[random]['animal_Variety']
+      _(animal.place).must_equal file[random]['animal_place']
     end
 
     it 'SAD: should raise exception on incorrect url' do

@@ -15,8 +15,6 @@ module PetAdoption
       attribute :name, Strict::String
       attribute :address, Strict::String
       attribute :phone_number, Strict::String
-      # add animal object list to shelter
-      attribute :animal_object_list, Hash.map(Strict::Integer, Animal) # key=animal_id,value=animal_object
       attribute :cat_number, Strict::Integer
       attribute :dog_number, Strict::Integer
       attribute :animal_number, Strict::Integer

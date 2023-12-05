@@ -13,16 +13,14 @@ module PetAdoption
       include Dry.Types
       attribute :id,        Integer.optional
       attribute :remote_id, Strict::Integer
-      attribute :cat_or_dog, Cat || Dog
       attribute :species, String.optional
-      attribute :age, Strict::String('CHILD' || 'ADULT')
+      attribute :age, Strict::String
       attribute :color, Strict::String
       attribute :sex, Strict::String
       attribute :sterilized, Strict::Bool
       attribute :vaccinated, Strict::Bool
       attribute :bodytype, Strict::String
       attribute :image_url, String.optional
-      attribute :shelter, Shelter
       attribute :registration_date, Strict::DateTime
 
       def to_attr_hash
@@ -30,12 +28,10 @@ module PetAdoption
       end
 
       def to_decode_hash
-        to_hash.except(:animal_kind,
-                       :animal_variate,
-                       :animal_found_place,
-                       :animal_age,
-                       :animal_color,
-                       :animal_place)
+        to_hash.except(
+          :species,
+          :color
+        )
       end
     end
 

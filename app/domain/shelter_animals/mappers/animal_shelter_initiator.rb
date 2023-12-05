@@ -34,13 +34,6 @@ module PetAdoption
         shelter_data_hash
       end
 
-      # for creating the shelter_mapper to add the animal_obj
-      def create_animal_shelter_object(shelter_data, animal_data)
-        animal_obj = AnimalMapper.new(animal_data).find
-        shelter_mapper = create_shelter_mapper(shelter_data)
-        AnimalShelterMapper.shelter_setting(shelter_mapper, animal_data, animal_obj)
-      end
-
       # refactor for some reek errors
       def animal_parser
         animal_data_list = []

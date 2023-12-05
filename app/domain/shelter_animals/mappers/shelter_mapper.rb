@@ -38,24 +38,15 @@ module PetAdoption
           shelter_id = shelter_info['animal_shelter_pkid']
           ShelterMapper.set_shelter_obj_map(shelter_id,
                                             ShelterMapper.find(shelter_info, shelter_animal_map[shelter_id]))
-          # end
         end
       end
 
       def self.calculate_dog_nums
-        num = 0
-        ShelterMapper.shelter_obj_map.each do |_, shelter_obj|
-          num += shelter_obj.dog_number
-        end
-        num
+        ShelterMapper.shelter_obj_map.reduce(0) { |sum, (_, shelter_obj)| sum + shelter_obj.dog_number }
       end
 
       def self.calculate_cat_nums
-        num = 0
-        ShelterMapper.shelter_obj_map.each do |_, shelter_obj|
-          num += shelter_obj.cat_number
-        end
-        num
+        ShelterMapper.shelter_obj_map.reduce(0) { |sum, (_, shelter_obj)| sum + shelter_obj.cat_number }
       end
 
       def self.find_animal_in_shelter(shelter_id, animal_id)
@@ -81,41 +72,39 @@ module PetAdoption
         def build_entity
           PetAdoption::Entity::Shelter.new(
             # @animal_attributes
-            id:,
-            animal_shelter_pkid:,
-            shelter_name:,
-            shelter_address:,
-            shelter_tel:,
-            animal_object_list:,
-            cat_number:,
-            dog_number:,
-            animal_number:
+            { id:,
+              origin_id:,
+              name:,
+              address:,
+              shelter_tel:,
+              animal_object_list:,
+              cat_number:,
+              dog_number:,
+              animal_number: },
+            animal_object_list
           )
         end
 
         # rubocop:enable Metrics/MethodLength
         private
 
-        # def animal_area_pkid
-        #   @data['animal_area_pkid']
-        # end
         def id
           rand(1..1000)
         end
 
-        def animal_shelter_pkid
+        def origin_id
           @data['animal_shelter_pkid']
         end
 
-        def shelter_name
+        def name
           @data['shelter_name']
         end
 
-        def shelter_address
+        def address
           @data['shelter_address']
         end
 
-        def shelter_tel
+        def phone_number
           @data['shelter_tel']
         end
 
@@ -124,19 +113,11 @@ module PetAdoption
         end
 
         def cat_number
-          sum = 0
-          @animal_map.each do |_, animal_obj|
-            sum += 1 if animal_obj.instance_of?(PetAdoption::Entity::Cat)
-          end
-          sum
+          @animal_map.reduce(0) { |sum, (_, animal_obj)| sum + 1 if animal_obj.instance_of?(PetAdoption::Entity::Cat) }
         end
 
         def dog_number
-          sum = 0
-          @animal_map.each do |_, animal_obj|
-            sum += 1 if animal_obj.instance_of?(PetAdoption::Entity::Dog)
-          end
-          sum
+          @animal_map.reduce(0) { |sum, (_, animal_obj)| sum + 1 if animal_obj.instance_of?(PetAdoption::Entity::Dog) }
         end
 
         def animal_number
