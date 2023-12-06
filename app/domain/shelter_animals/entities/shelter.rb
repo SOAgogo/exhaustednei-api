@@ -9,6 +9,7 @@ module PetAdoption
     class Shelter
       def initialize(shelter_info, animal_obj_list)
         @shelter_info = Value::ShelterInfo.new(shelter_info)
+        @shelter_stats = Value::ShelterStats.new(animal_obj_list)
         @animal_object_list = Types::HashedArrays.new(animal_obj_list)
         # @maximize_animal =
       end

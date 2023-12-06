@@ -3,7 +3,7 @@
 require_relative '../../shelter_animals/repositories/animals'
 module Repository
   # Maps over local and remote git repo infrastructure
-  module Adopters
+  module Accounts
     # Repository for UserOrm
     class Users
       def initialize(user_info)

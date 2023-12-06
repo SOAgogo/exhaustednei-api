@@ -2,28 +2,28 @@
 
 require 'pry'
 module PetAdoption
-  module Adopters
+  module Accounts
     # class Info::ShelterMapper`
-    class DonatorMapper
-      attr_reader :donator_info
+    class KeeperMapper
+      attr_reader :keeper_info
 
-      def initialize(donator_info)
-        @donator_info = donator_info
+      def initialize(keeper_info)
+        @keeper_info = keeper_info
       end
 
       def find
-        DataMapper.new(@donator_info).build_donator_entity
+        DataMapper.new(@keeper_info).build_keeper_entity
       end
     end
 
     # Datamapper for donator
     class DataMapper
-      def initialize(donator_info)
-        @data = donator_info
+      def initialize(keeper_info)
+        @data = keeper_info
       end
 
-      def build_donator_entity
-        PetAdoption::Entity::Donators.new(
+      def build_keeper_entity
+        PetAdoption::Entity::Keepers.new(
           session_id:,
           firstname:,
           lastname:,

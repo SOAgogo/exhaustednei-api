@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module PetAdoption
-  module Adopters
+  module Accounts
     # class Info::ShelterMapper`
-    class AccountMapper
+    class AdopterMapper
       attr_reader :adopter_info
 
       def initialize(adopter_info)
@@ -11,7 +11,7 @@ module PetAdoption
       end
 
       def find
-        DataMapper.new(@adopter_info).build_account_info_entity
+        DataMapper.new(@adopter_info).build_adopter_info_entity
       end
     end
 
@@ -21,8 +21,8 @@ module PetAdoption
         @data = adopter_info_info
       end
 
-      def build_account_info_entity
-        PetAdoption::Entity::Accounts.new(
+      def build_adopter_info_entity
+        PetAdoption::Entity::Adopters.new(
           session_id:,
           firstname:,
           lastname:,

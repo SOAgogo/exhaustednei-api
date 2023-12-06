@@ -7,9 +7,8 @@ module PetAdoption
   module Entity
     # class Info::adotpers`
     class Adopters
-      def initialize(accounts = PetAdoption::Entity::Accounts.new)
-        @accounts = accounts
-        @animal_order = PetAdoption::Value::AnimalOrder.new
+      def initialize(animal_favorite_list)
+        @animal_favorite_list = animal_favorite_list
         @confirm_order = PetAdoption::Value::AnimalOrder.new
       end
 

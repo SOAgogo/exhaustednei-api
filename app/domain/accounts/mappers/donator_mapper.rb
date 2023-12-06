@@ -1,28 +1,29 @@
 # frozen_string_literal: true
 
+require 'pry'
 module PetAdoption
-  module Adopters
+  module Accounts
     # class Info::ShelterMapper`
-    class AdopterMapper
-      attr_reader :adopter_info
+    class DonatorMapper
+      attr_reader :donator_info
 
-      def initialize(adopter_info)
-        @adopter_info = adopter_info
+      def initialize(donator_info)
+        @donator_info = donator_info
       end
 
       def find
-        DataMapper.new(@adopter_info).build_adopter_info_entity
+        DataMapper.new(@donator_info).build_donator_entity
       end
     end
 
-    # Datamapper for adopter_info
+    # Datamapper for donator
     class DataMapper
-      def initialize(adopter_info_info)
-        @data = adopter_info_info
+      def initialize(donator_info)
+        @data = donator_info
       end
 
-      def build_adopter_info_entity
-        PetAdoption::Entity::Adopters.new(
+      def build_donator_entity
+        PetAdoption::Entity::Donators.new(
           session_id:,
           firstname:,
           lastname:,
