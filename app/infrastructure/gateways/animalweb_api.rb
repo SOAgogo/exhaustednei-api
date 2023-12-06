@@ -25,7 +25,7 @@ module PetAdoption
       end
 
       def self.read_body(url, http)
-        request = Net::HTTP::Get.new(url)
+        request = Net::HTTP::Get.new( )
         request['accept'] = 'application/json'
         http.request(request).read_body
       end
