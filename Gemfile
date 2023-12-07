@@ -66,3 +66,6 @@ group :development do
   gem 'rerun', '~> 0.0'
   gem 'rubocop', '~> 1.0'
 end
+
+
+gem  'aws-sdk-s3'

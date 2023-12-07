@@ -8,6 +8,7 @@ require 'uri'
 require 'securerandom'
 require 'fileutils'
 require 'open3'
+require 'aws-sdk-s3'
 
 module PetAdoption
   # for controller part
@@ -25,6 +26,15 @@ module PetAdoption
     plugin :json
 
     # use Rack::MethodOverride
+
+    plugin :indifferent_params
+
+    Aws.config.update(
+      region: 'ap-northeast-2',
+      credentials: Aws::Credentials.new('AKIATZHPFFZAUY3OL4AZ', '5GSMAnItUNVfjelW5Xfg+VpGkjepgclt/cgnm6Z6')
+    )
+  
+    S3_BUCKET_NAME = 'soapicture'
 
     route do |routing|
       routing.assets # load CSS
@@ -150,18 +160,44 @@ module PetAdoption
 
       routing.on 'found' do
         routing.post do
+          s3 = Aws::S3::Client.new(region: 'ap-northeast-2')
+          response = s3.list_objects_v2(bucket: S3_BUCKET_NAME, prefix: 'uploads/tmp/')
+
+          # Iterate through each object and make it public
+          response.contents.each do |object|
+            object_key = object.key
+        
+            # Set the ACL of the object to public-read
+            s3.put_object_acl(
+              bucket: S3_BUCKET_NAME,
+              key: object_key,
+              acl: 'public-read'
+            )
+          end
+          
           founding_list = File.read("example.txt")
           founding_list = founding_list.lines
+
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
-          File.open("example.txt", "a") do |file|
-            # Append additional text to the file
-            file.puts uploaded_file
-          end
+          url_prefix = 'https://soapicture.s3.ap-northeast-2.amazonaws.com/uploads'
+          founding_list = founding_list.map { |line| "#{url_prefix}#{line}" }
 
           if uploaded_file.nil?
             view 'found', locals: { output: nil ,
                                     founding_list: }
           else
+            File.open("example.txt", "a") do |file|
+              # Append additional text to the file
+              file.puts uploaded_file
+            end
+
+            object_key = "uploads#{uploaded_file}"
+  
+            s3 = Aws::S3::Resource.new
+            s3.bucket(S3_BUCKET_NAME).object(object_key).upload_file(uploaded_file, content_type: 'image/png;image/jpg')
+
+            "File uploaded successfully to #{S3_BUCKET_NAME}/#{object_key}"
+    
             output = Services::ImageRecognition.new.call({ uploaded_file: })
             if output.failure?
               flash[:error] = 'No recognition output, please try again.'
