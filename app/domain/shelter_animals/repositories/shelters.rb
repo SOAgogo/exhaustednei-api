@@ -2,8 +2,8 @@
 
 require_relative 'animals'
 
-module Repository
-  module Info
+module PetAdoption
+  module Repository
     # Repository for Project Entities
     class Shelters
       def self.all

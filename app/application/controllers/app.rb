@@ -183,7 +183,6 @@ module PetAdoption
           final_stats = all_county_stats.value![:final_stats]
           all_county_stats = all_county_stats.value![:county_stats]
 
-          binding.pry
           # view 'shelter_info', locals: { all_county_stats: session[:all_county_stats] }
 
           view 'shelter_info', locals: { shelter: }

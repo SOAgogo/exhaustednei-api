@@ -5,7 +5,7 @@ require_relative '../../app/domain/shelter_animals/mappers/animal_shelter_initia
 require_relative '../../app/domain/shelter_animals/mappers/animal_mapper'
 require_relative '../../app/domain/shelter_animals/mappers/shelter_mapper'
 require_relative '../../app/domain/shelter_animals/repositories/for'
-
+require 'pry'
 module Repository
   module App
     # init_database for initializing database
@@ -14,6 +14,7 @@ module Repository
         project = PetAdoption::CurlDownload::FileDownloader.new
         animal_shelter_initator = PetAdoption::Info::AnimalShelterInitiator.new(project)
         shelter_mapper, animal_mapper = animal_shelter_initator.init
+
         shelter_mapper.create_all_shelter_animal_obj(
           PetAdoption::Info::AnimalMapper.shelter_animal_mapping(animal_mapper.animal_info_list)
         )

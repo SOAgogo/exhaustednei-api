@@ -3,7 +3,7 @@
 # create an animal object instance
 module PetAdoption
   module Mixins
-    # class Info::ShelterMapper`
+    # class SimilarityCalculator`
     module SimilarityCalculator
       def similarity(animal_feature_user_want_ratio_hash, feature)
         feature.reduce(0) do |sum, (key, _value)|

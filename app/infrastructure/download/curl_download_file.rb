@@ -2,6 +2,7 @@
 
 # download by command curl
 
+# FILE_PATH = 'spec/fixtures/DogCat_results.json'
 FILE_PATH = 'spec/fixtures/DogCat_results.json'
 API_PATH = 'https://data.moa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL'
 module PetAdoption
@@ -27,7 +28,7 @@ module PetAdoption
           puts 'Error downloading the file.'
         end
         puts 'parse the json file, it may take a while...'
-        JSON.parse(File.read('spec/fixtures/DogCat_results.json'))[0..7000]
+        JSON.parse(File.read('spec/fixtures/DogCat_results.json'))[0..5]
       end
     end
   end

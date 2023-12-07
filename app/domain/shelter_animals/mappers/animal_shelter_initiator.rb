@@ -4,7 +4,7 @@
 require_relative 'animal_mapper'
 require_relative 'shelter_mapper'
 module PetAdoption
-  module Info
+  module Mapper
     # class Info::ShelterMapper`
     class AnimalShelterInitiator
       attr_reader :shelter_mapper_hash

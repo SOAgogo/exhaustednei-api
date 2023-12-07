@@ -3,8 +3,8 @@
 require_relative 'animals'
 require_relative 'shelters'
 
-module Repository
-  module Info
+module PetAdoption
+  module Repository
     # Finds the right repository for an entity object or class
     module For
       ENTITY_REPOSITORY = {

@@ -16,7 +16,7 @@ module PetAdoption
       attribute :vaccinated, Strict::Bool
       attribute :bodytype, Strict::String
       attribute :image_url, String.optional
-      attribute :registration_date, Strict::DateTime
+      attribute :registration_date, Strict::Time
     end
   end
 end

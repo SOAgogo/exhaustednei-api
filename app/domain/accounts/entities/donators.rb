@@ -25,8 +25,6 @@ module PetAdoption
         target_shelter = shelters.find { |s| s.name == shelter_name }
         target_shelter.money += amount
       end
-
-
     end
   end
 end

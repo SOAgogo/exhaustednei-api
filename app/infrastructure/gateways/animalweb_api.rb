@@ -25,7 +25,7 @@ module PetAdoption
       end
 
       def self.read_body(url, http)
-        request = Net::HTTP::Get.new( )
+        request = Net::HTTP::Get.new(url)
         request['accept'] = 'application/json'
         http.request(request).read_body
       end
@@ -33,7 +33,6 @@ module PetAdoption
       def connection
         url, http = setup_url
         response_body = Project.read_body(url, http)
-        # raise 'not found' if response_body == '[]'
 
         JSON.parse(response_body)[1..20]
       end

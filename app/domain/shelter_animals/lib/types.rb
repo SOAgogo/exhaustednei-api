@@ -4,8 +4,8 @@ module PetAdoption
   module Types
     # Hash type that returns empty array when key not found
     class HashedAnimals
-      def self.new(animal_obj)
-        Hash.new { |hash, key| hash[key] = animal_obj }
+      def self.new(animal_obj_list)
+        animal_obj_list
       end
     end
 

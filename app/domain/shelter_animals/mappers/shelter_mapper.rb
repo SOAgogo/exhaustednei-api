@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require_relative '../entities/shelter'
-require_relative '../entities/animal'
-
+require_relative '../entities/shelters'
+require_relative '../entities/animals'
+require 'pry'
 module PetAdoption
-  module Info
-    # we should create more than one shelterMapper objects?
-
+  module Mapper
     # class Info::ShelterMapper`
     class ShelterMapper
       attr_reader :shelter_info_list
@@ -41,21 +39,21 @@ module PetAdoption
         end
       end
 
-      def self.calculate_dog_nums
-        ShelterMapper.shelter_obj_map.reduce(0) { |sum, (_, shelter_obj)| sum + shelter_obj.dog_number }
-      end
+      # def self.calculate_dog_nums
+      #   ShelterMapper.shelter_obj_map.reduce(0) { |sum, (_, shelter_obj)| sum + shelter_obj.dog_number }
+      # end
 
-      def self.calculate_cat_nums
-        ShelterMapper.shelter_obj_map.reduce(0) { |sum, (_, shelter_obj)| sum + shelter_obj.cat_number }
-      end
+      # def self.calculate_cat_nums
+      #   ShelterMapper.shelter_obj_map.reduce(0) { |sum, (_, shelter_obj)| sum + shelter_obj.cat_number }
+      # end
 
-      def self.find_animal_in_shelter(shelter_id, animal_id)
-        ShelterMapper.shelter_obj_map[shelter_id].animal_object_list[animal_id]
-      end
+      # def self.find_animal_in_shelter(shelter_id, animal_id)
+      #   ShelterMapper.shelter_obj_map[shelter_id].animal_object_list[animal_id]
+      # end
 
-      def self.animal_size_in_shelter(rand_shelter_id)
-        ShelterMapper.shelter_obj_map[rand_shelter_id].animal_number
-      end
+      # def self.animal_size_in_shelter(rand_shelter_id)
+      #   ShelterMapper.shelter_obj_map[rand_shelter_id].animal_number
+      # end
 
       def self.find(shelter_info, animal_map)
         DataMapper.new(shelter_info, animal_map).build_entity
@@ -68,29 +66,19 @@ module PetAdoption
           @animal_map = animal_map
         end
 
-        # rubocop:disable Metrics/MethodLength
         def build_entity
           PetAdoption::Entity::Shelter.new(
-            # @animal_attributes
-            { id:,
+            {
               origin_id:,
               name:,
               address:,
-              shelter_tel:,
-              animal_object_list:,
-              cat_number:,
-              dog_number:,
-              animal_number: },
+              phone_number:
+            },
             animal_object_list
           )
         end
 
-        # rubocop:enable Metrics/MethodLength
         private
-
-        def id
-          rand(1..1000)
-        end
 
         def origin_id
           @data['animal_shelter_pkid']
@@ -110,18 +98,6 @@ module PetAdoption
 
         def animal_object_list
           @animal_map
-        end
-
-        def cat_number
-          @animal_map.reduce(0) { |sum, (_, animal_obj)| sum + 1 if animal_obj.instance_of?(PetAdoption::Entity::Cat) }
-        end
-
-        def dog_number
-          @animal_map.reduce(0) { |sum, (_, animal_obj)| sum + 1 if animal_obj.instance_of?(PetAdoption::Entity::Dog) }
-        end
-
-        def animal_number
-          @animal_map.size
         end
       end
     end

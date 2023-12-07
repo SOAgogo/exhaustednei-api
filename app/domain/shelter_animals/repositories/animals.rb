@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Repository
-  module Info
+module PetAdoption
+  module Repository
     # Repository for Members
     class Animals
       def self.find_all_animal
@@ -34,7 +34,6 @@ module Repository
         return nil unless db_record
 
         PetAdoption::Entity::Animal.new(
-          id: db_record.id,
           remote_id: db_record.remote_id,
           species: db_record.species,
           age: db_record.age,
