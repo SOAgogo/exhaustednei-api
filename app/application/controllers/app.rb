@@ -28,10 +28,16 @@ module PetAdoption
     # use Rack::MethodOverride
 
     plugin :indifferent_params
+    # Load the YAML file
+    secrets = YAML.load_file('secret.yml')
+
+    # Access the keys
+    access_key_id = secrets['access_key_id']
+    secret_key_id = secrets['secret_key_id']
 
     Aws.config.update(
       region: 'ap-northeast-2',
-      credentials: Aws::Credentials.new('AKIATZHPFFZAUY3OL4AZ', '5GSMAnItUNVfjelW5Xfg+VpGkjepgclt/cgnm6Z6')
+      credentials: Aws::Credentials.new(access_key_id, secret_key_id)
     )
   
     S3_BUCKET_NAME = 'soapicture'
