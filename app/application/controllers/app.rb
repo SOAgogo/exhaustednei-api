@@ -29,7 +29,7 @@ module PetAdoption
 
     plugin :indifferent_params
     # Load the YAML file
-    secrets = YAML.load_file('secret.yml')
+    secrets = YAML.load_file('config/secrets.yml')
 
     # Access the keys
     access_key_id = secrets['access_key_id']
