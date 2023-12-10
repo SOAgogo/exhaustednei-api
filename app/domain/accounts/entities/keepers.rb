@@ -2,7 +2,7 @@
 
 require 'dry-types'
 require 'dry-struct'
-require_relative '../../shelter_animals/entities/animal'
+require_relative '../../shelter_animals/entities/animals'
 
 module PetAdoption
   module Entity
@@ -18,7 +18,10 @@ module PetAdoption
       end
 
       def find_animal_sitter
-        
+        # query the user table to find the user who is a sitter
+        @animal_keeping_list.each do |animal_id, animal|
+          return animal_id if animal.sitter
+        end
       end
     end
   end

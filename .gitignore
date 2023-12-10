@@ -13,3 +13,5 @@ requirements.txt
 runtime.txt
 .buikdpacks
 /app/infrastructure/gateways/.env
+spec/tests/unit/test_messages/* 
+spec/tests/unit/picture_messages/* 

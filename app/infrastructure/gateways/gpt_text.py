@@ -7,7 +7,7 @@ if len(sys.argv) > 1:
     client = OpenAI()
     message_from_ruby = sys.argv[1]
     completion = client.chat.completions.create(
-      model="gpt-3.5-turbo",
+      model="gpt-3.5-turbo-1106",
       messages=[
         {"role": "system", "content": message_from_ruby},
       ]

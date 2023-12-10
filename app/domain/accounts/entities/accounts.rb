@@ -7,11 +7,12 @@ module PetAdoption
   module Entity
     # class Info::adotpers`
     class Accounts
-      def initialize(adopter, keeper, donator, sitter)
+      def initialize(adopter, keeper, donator, sitter, user_info)
         @adopter = adopter
         @keeper = keeper
         @donator = donator
         @sitter = sitter
+        @user_info = PetAdoption::Values::UserInfo.new(user_info)
       end
 
       def premium_donator_account

@@ -16,7 +16,7 @@ namespace :spec do
   desc 'Run unit and integration tests'
   Rake::TestTask.new(:default) do |t|
     # t.pattern = 'spec/tests/{integration,unit}/**/*_spec.rb'
-    t.pattern = 'spec/tests/integration/layers/gateway_animal_spec.rb'
+    t.pattern = 'spec/tests/unit/gpt_gateway_spec.rb'
     t.warning = false
   end
 

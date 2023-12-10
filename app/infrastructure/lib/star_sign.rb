@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+require 'date'
 module PetAdoption
   module StarSign
     # class Starsign`
-    module Starsign
+    module Predict
       def which_star_sign(birth_date) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
+        birth_date = Date.parse(birth_date)
         month = birth_date.month
         day = birth_date.day
         case month

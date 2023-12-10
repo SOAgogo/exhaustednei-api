@@ -2,7 +2,7 @@
 
 # require 'dry-types'
 # require 'dry-struct'
-require_relative '../../shelter_animals/entities/shelter'
+require_relative '../../shelter_animals/entities/shelters'
 module PetAdoption
   module Entity
     # class Donators`

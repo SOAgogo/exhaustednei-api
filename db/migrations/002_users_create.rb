@@ -7,7 +7,6 @@ Sequel.migration do
     create_table(:users) do
       primary_key :id
 
-      String :session_id, unique: true, null: false
       String :firstname, null: false
       String :lastname, null: false
       String :phone
