@@ -5,13 +5,12 @@ module PetAdoption
   module Mixins
     # class SimilarityCalculator`
     module SimilarityCalculator
-      def similarity(animal_feature_user_want_ratio_hash, feature)
-        feature.reduce(0) do |sum, (key, _value)|
-          if animal_feature_user_want_ratio_hash.key?(key) && animal_feature_user_want_ratio_hash[key] != 0
-            sum += animal_feature_user_want_ratio_hash[key] * 0.01
-          end
-          sum
+      def similarity(feature_condition, feature_user_want_ratio, feature)
+        similarity_score = 0
+        feature_condition.each_with_index do |(key, value), index|
+          similarity_score += feature_user_want_ratio[index] if feature[key] == value
         end
+        similarity_score
       end
     end
   end

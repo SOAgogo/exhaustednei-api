@@ -24,14 +24,14 @@ module PetAdoption
         end
       end
 
-      def self.shelter_creation?(shelter_id, shelter_animal_mapping)
-        shelter_animal_mapping[shelter_id] = {} unless shelter_animal_mapping.key?(shelter_id)
-        shelter_animal_mapping[shelter_id]
+      def self.shelter_creation?(shelter_name, shelter_animal_mapping)
+        shelter_animal_mapping[shelter_name] = {} unless shelter_animal_mapping.key?(shelter_name)
+        shelter_animal_mapping[shelter_name]
       end
 
       def self.set_animal_mapping(animal_info_list, shelter_animal_mapping = {})
         animal_info_list.each do |animal_info|
-          animal_shelter = AnimalMapper.shelter_creation?(animal_info['animal_shelter_pkid'], shelter_animal_mapping)
+          animal_shelter = AnimalMapper.shelter_creation?(animal_info['animal_place'], shelter_animal_mapping)
           animal, dogorcat = AnimalMapper.find(animal_info)
           animal_shelter[animal_info['animal_id']] = animal if dogorcat
         end

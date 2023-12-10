@@ -2,7 +2,7 @@
 
 # manage the relationship between shelter and animal
 require_relative 'animal_mapper'
-require_relative 'shelter_mapper'
+require_relative 'county_shelter_mapper'
 module PetAdoption
   module Mapper
     # class Info::ShelterMapper`
@@ -54,9 +54,9 @@ module PetAdoption
       def init
         animal_data_list = animal_parser
         shelter_data_list = shelter_parser
-        shelter_mapper = ShelterMapper.new(shelter_data_list)
+        countyshelter_mapper = CountyShelterMapper.new(shelter_data_list)
         animal_mapper = AnimalMapper.new(animal_data_list)
-        [shelter_mapper, animal_mapper]
+        [countyshelter_mapper, animal_mapper]
       end
     end
   end

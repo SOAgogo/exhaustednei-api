@@ -19,41 +19,25 @@ module PetAdoption
         attr_reader :shelter_obj_map
       end
 
-      def self.set_shelter_obj_map(shelter_id, shelter_obj)
-        ShelterMapper.shelter_obj_map[shelter_id] = shelter_obj
+      def self.set_shelter_obj_map(shelter_name, shelter_obj)
+        ShelterMapper.shelter_obj_map[shelter_name] = shelter_obj
       end
 
-      def self.get_shelter_obj(shelter_id)
-        ShelterMapper.shelter_obj_map[shelter_id]
+      def self.get_shelter_obj(shelter_name)
+        ShelterMapper.shelter_obj_map[shelter_name]
       end
 
-      def self.shelter_size
-        ShelterMapper.shelter_obj_map.size
-      end
+      # def self.shelter_size
+      #   ShelterMapper.shelter_obj_map.size
+      # end
 
       def create_all_shelter_animal_obj(shelter_animal_map)
         @shelter_info_list.each do |shelter_info|
-          shelter_id = shelter_info['animal_shelter_pkid']
-          ShelterMapper.set_shelter_obj_map(shelter_id,
-                                            ShelterMapper.find(shelter_info, shelter_animal_map[shelter_id]))
+          shelter_name = shelter_info['shelter_name']
+          ShelterMapper.set_shelter_obj_map(shelter_name,
+                                            ShelterMapper.find(shelter_info, shelter_animal_map[shelter_name]))
         end
       end
-
-      # def self.calculate_dog_nums
-      #   ShelterMapper.shelter_obj_map.reduce(0) { |sum, (_, shelter_obj)| sum + shelter_obj.dog_number }
-      # end
-
-      # def self.calculate_cat_nums
-      #   ShelterMapper.shelter_obj_map.reduce(0) { |sum, (_, shelter_obj)| sum + shelter_obj.cat_number }
-      # end
-
-      # def self.find_animal_in_shelter(shelter_id, animal_id)
-      #   ShelterMapper.shelter_obj_map[shelter_id].animal_object_list[animal_id]
-      # end
-
-      # def self.animal_size_in_shelter(rand_shelter_id)
-      #   ShelterMapper.shelter_obj_map[rand_shelter_id].animal_number
-      # end
 
       def self.find(shelter_info, animal_map)
         DataMapper.new(shelter_info, animal_map).build_entity

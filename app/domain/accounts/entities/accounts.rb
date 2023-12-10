@@ -14,6 +14,9 @@ module PetAdoption
         @sitter = sitter
       end
 
+      def premium_donator_account
+        '語音辨識' if @donator.premium_donators?
+      end
     end
   end
 end

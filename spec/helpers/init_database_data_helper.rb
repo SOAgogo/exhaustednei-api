@@ -12,18 +12,21 @@ module Repository
     class PrepareDatabase
       def self.init_database
         project = PetAdoption::CurlDownload::FileDownloader.new
-        animal_shelter_initator = PetAdoption::Info::AnimalShelterInitiator.new(project)
-        shelter_mapper, animal_mapper = animal_shelter_initator.init
+        animal_shelter_initator = PetAdoption::Mapper::AnimalShelterInitiator.new(project)
+        countyshelter_mapper, animal_mapper = animal_shelter_initator.init
 
-        shelter_mapper.create_all_shelter_animal_obj(
-          PetAdoption::Info::AnimalMapper.shelter_animal_mapping(animal_mapper.animal_info_list)
+        countyshelter_mapper.create_all_shelter_animal_obj(
+          PetAdoption::Mapper::AnimalMapper.shelter_animal_mapping(animal_mapper.animal_info_list)
         )
+
+        a = countyshelter_mapper.build_entity('臺北市')
+        binding.pry 
         PrepareDatabase.store_shelter_info_to_db(project)
       end
 
       def self.store_shelter_info_to_db(project)
         project.request_body.each do |shelter_obj|
-          shelter = PetAdoption::Info::ShelterMapper.get_shelter_obj(shelter_obj['animal_shelter_pkid'])
+          shelter = PetAdoption::Mapper::ShelterMapper.get_shelter_obj(shelter_obj['shelter_name'])
           Repository::Info::For.entity(shelter).db_find_or_create(shelter)
         end
       end

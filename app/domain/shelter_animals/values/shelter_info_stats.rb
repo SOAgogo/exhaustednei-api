@@ -48,7 +48,7 @@ module PetAdoption
       def stay_too_long_animals
         include PetAdoption::Mixins::TimeDifferenceCalculator
         old_animal_num = @animal_obj_list.reduce(0) do |sum, (_, animal_obj)|
-          caculate_time_difference(animal_obj) > 1000 ? sum + 1 : 0
+          calculate_time_difference(animal_obj) > 1000 ? sum + 1 : 0
         end
         0 if old_animal_num.nil?
         old_animal_num

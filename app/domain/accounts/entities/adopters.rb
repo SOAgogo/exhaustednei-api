@@ -7,8 +7,9 @@ module PetAdoption
   module Entity
     # class Info::adotpers`
     class Adopters
-      def initialize(animal_favorite_list)
+      def initialize(animal_favorite_list, messages)
         @animal_favorite_list = animal_favorite_list
+        @user_preference = messages # user preference is like hair=red, age=young
         @confirm_order = PetAdoption::Value::AnimalOrder.new
       end
 

@@ -1,44 +1,29 @@
 # frozen_string_literal: true
 
-require_relative 'shelters_info'
+require_relative '../values/shelter_info_stats'
 
 module PetAdoption
   module Entity
     # class Info::adotpers`
-    class CountyShelter < SimpleDelegator
-      attr_reader :county_info
+    class CountyShelter
+      attr_reader :county_shelter_list
 
       def initialize(county_info)
-        @shelter_map = shelters_in_county
+        @county_shelter_list = county_info
       end
 
-      def shelters_in_county
-
-      end
-
-
-      def county_num_sterilizations
-        @county_info.reduce(0) do |sum, (_, shelter_info)|
-          sum + shelter_info.count_num_sterilizations
+      def caculate_each_shelter_severity_of_old_animals
+        @county_shelter_list.reduce(0) do |sum, (_, shelter)|
+          sum += 1 if shelter.shelter_stats.severity_of_old_animals == 'severe'
+          sum
         end
       end
 
-      def county_num_no_sterilizations
-        @county_info.reduce(0) do |sum, (_, shelter_info)|
-          sum + shelter_info.count_num_no_sterilizations
-        end
-      end
-
-      def county_num_animal_bacterin
-        @county_info.reduce(0) do |sum, (_, shelter_info)|
-          sum + shelter_info.count_num_animal_bacterin
-        end
-      end
-
-      def county_num_animal_no_bacterin
-        @county_info.reduce(0) do |sum, (_, shelter_info)|
-          sum + shelter_info.count_num_animal_no_bacterin
-        end
+      def county_severity_of_old_animals
+        ratio = caculate_each_shelter_severity_of_old_animals / county_shelter_list.size * 100
+        'severe' if ratio > 50
+        'moderate' if ratio > 20
+        'mild'
       end
     end
   end
