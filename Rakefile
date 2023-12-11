@@ -54,6 +54,44 @@ namespace :vcr do
   end
 end
 
+require 'rake/testtask'
+require_relative 'require_app'
+
+task :default do
+  puts `rake -T`
+end
+
+desc 'Run unit and integration tests'
+Rake::TestTask.new(:spec) do |t|
+  t.pattern = 'spec/tests/**/*_spec.rb'
+  t.warning = false
+end
+
+desc 'Keep rerunning unit/integration tests upon changes'
+task :respec do
+  sh "rerun -c 'rake spec' --ignore 'coverage/*' --ignore 'repostore/*'"
+end
+
+desc 'Run the webserver and application and restart if code changes'
+task :rerun do
+  sh "rerun -c --ignore 'coverage/*' --ignore 'repostore/*' -- bundle exec puma"
+end
+
+desc 'Run web app in default (dev) mode'
+task run: ['run:default']
+
+namespace :run do
+  desc 'Run API in dev mode'
+  task :default do
+    sh 'rerun -c "bundle exec puma -p 9090"'
+  end
+
+  desc 'Run API in test mode'
+  task :test do
+    sh 'RACK_ENV=test bundle exec puma -p 9090'
+  end
+end
+
 namespace :db do
   task :config do
     require 'sequel'

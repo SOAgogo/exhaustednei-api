@@ -35,6 +35,7 @@ module PetAdoption
         response.status = result_response.http_status_code
         result_response.to_json
       end
+
     end
     # rubocop:enable Metrics/BlockLength
   end

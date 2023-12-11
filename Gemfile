@@ -66,3 +66,7 @@ group :development do
   gem 'rerun', '~> 0.0'
   gem 'rubocop', '~> 1.0'
 end
+
+gem 'rack-test'
+gem 'multi_json', '~> 1.15'
+gem 'roar', '~> 1.1'
