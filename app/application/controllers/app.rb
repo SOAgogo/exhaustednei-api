@@ -21,9 +21,8 @@ module PetAdoption
     # use Rack::MethodOverride
 
     route do |routing|
-      routing.assets # load CSS
-      response['Content-Type'] = 'text/html; charset=utf-8'
-      routing.public # load static files
+      response['Content-Type'] = 'application/json'
+
 
       # GET /
       routing.root do
