@@ -13,11 +13,11 @@ module PetAdoption
       end
 
       def add_animal(animal)
-        @animal_order_list[animal.id] = animal
+        @animal_order_list[animal.origin_id] = animal
       end
 
-      def delete_animal(animal_id)
-        @animal_order_list.delete(animal_id)
+      def delete_animal(origin_id)
+        @animal_order_list.delete(origin_id)
       end
     end
   end

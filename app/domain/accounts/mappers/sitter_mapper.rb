@@ -3,16 +3,16 @@
 module PetAdoption
   module Accounts
     # class Info::ShelterMapper`
-    class AdopterMapper
+    class SitterMapper
       def self.find
-        DataMapper.build_adopter_info_entity
+        DataMapper.build_sitter_entity
       end
     end
 
     # Datamapper for adopter_info
     class DataMapper
-      def self.build_adopter_info_entity
-        PetAdoption::Entity::Adopters.new
+      def self.build_sitter_entity
+        PetAdoption::Entity::Sitters.new
       end
     end
   end

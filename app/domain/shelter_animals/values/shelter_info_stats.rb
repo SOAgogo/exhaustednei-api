@@ -62,8 +62,6 @@ module PetAdoption
 
         'mild'
       end
-
-
     end
   end
 end

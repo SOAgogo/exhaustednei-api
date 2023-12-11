@@ -20,6 +20,10 @@ Sequel.migration do
       String :age
       String :image_url
       Time :registration_date, null: false
+
+      Time :birth_date
+      String :health_condition
+      String :personality
       DateTime :created_at
       DateTime :updated_at
     end

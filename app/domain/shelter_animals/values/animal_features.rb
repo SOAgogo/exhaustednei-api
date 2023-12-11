@@ -17,6 +17,10 @@ module PetAdoption
       attribute :bodytype, Strict::String
       attribute :image_url, String.optional
       attribute :registration_date, Strict::Time
+
+      attribute :birth_date, Strict::Time.optional
+      attribute :health_condition, Strict::String.optional
+      attribute :personality, Strict::String.optional
     end
   end
 end

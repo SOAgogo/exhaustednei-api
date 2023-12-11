@@ -14,10 +14,6 @@ module PetAdoption
         @sitter = sitter
         @user_info = PetAdoption::Values::UserInfo.new(user_info)
       end
-
-      def premium_donator_account
-        '語音辨識' if @donator.premium_donators?
-      end
     end
   end
 end

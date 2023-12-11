@@ -32,6 +32,11 @@ module PetAdoption
       def similarity_checking(feature_condition, feature_user_want_ratio, top = 1)
         similarity(feature_condition, feature_user_want_ratio, feature, top)
       end
+
+      def advanced_similarity_checking(feature_condition, feature_user_want_ratio, top = 1)
+        # return a float number
+        similarity(feature_condition, feature_user_want_ratio, feature, top)
+      end
     end
 
     # class Info::Dog`

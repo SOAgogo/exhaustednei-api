@@ -19,9 +19,8 @@ module Repository
         return nil unless user_db
 
         PetAdoption::Entity::Accounts.new(
-          session_id: user_db.session_id,
-          firstname: user_db.firstname,
-          lastname: user_db.lastname,
+          # session_id: user_db.session_id,
+          name: user_db.name,
           phone: user_db.phone,
           email: user_db.email,
           address: user_db.address,
@@ -29,16 +28,16 @@ module Repository
         )
       end
 
-      def self.find_by_session_id(session_id)
-        rebuild_entity(Database::ProjectOrm::UserOrm.first(session_id:))
+      def self.find_by_name(name)
+        rebuild_entity(Database::ProjectOrm::UserOrm.first(name:))
       end
 
-      def self.find_row_id(session_id)
-        Database::ProjectOrm::UserOrm.first(session_id:).id
+      def self.find_row_id(name)
+        Database::ProjectOrm::UserOrm.first(name:).id
       end
 
-      def self.add_animal_foreign_key_by_session_id(session_id, animal_id)
-        row_id = Database::ProjectOrm::UserOrm.first(session_id:).id
+      def self.add_animal_foreign_key_by_name(name, animal_id)
+        row_id = Database::ProjectOrm::UserOrm.first(name:).id
         animal_db = Repository::Info::Animals.find_animal_db_obj_by_id(animal_id)
         animal_db.update(users_id: row_id)
       end
@@ -49,13 +48,19 @@ module Repository
         end
       end
 
-      def self.get_animal_favorite_list_by_user(session_id, animal_id)
-        Users.add_animal_foreign_key_by_session_id(session_id, animal_id)
+      def self.get_animal_favorite_list_by_user(name, animal_id)
+        Users.add_animal_foreign_key_by_name(name, animal_id)
         db_user_id = Database::ProjectOrm::UserOrm.first(session_id:).id
         db_project = Database::ProjectOrm::AnimalOrm
           .where(users_id: db_user_id)
           .all
         Repository::Info::Animals.rebuild_many(db_project)
+      end
+
+      # get the user's animal keeping list
+      def self.find_keeper_animal_list(name)
+        animal_adopted_by_one_user = Databae::ProjectOrm::AnimalOrm.where(name:).all
+        Repository::Info::Animals.rebuild_many(animal_adopted_by_one_user)
       end
     end
   end

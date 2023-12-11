@@ -13,6 +13,7 @@ Sequel.migration do
       String :email
       String :address
       Integer :donate_money
+
       DateTime :created_at
       DateTime :updated_at
     end

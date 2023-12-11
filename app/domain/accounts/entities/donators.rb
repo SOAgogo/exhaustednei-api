@@ -25,6 +25,11 @@ module PetAdoption
         target_shelter = shelters.find { |s| s.name == shelter_name }
         target_shelter.money += amount
       end
+
+      def premium_donator_account?
+        'image recognition' if premium_donators == 'GoldDonator'
+        'text recommendation' if premium_donators == 'SilverDonator'
+      end
     end
   end
 end

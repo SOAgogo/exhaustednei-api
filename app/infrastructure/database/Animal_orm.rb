@@ -14,7 +14,7 @@ module Database
       plugin :timestamps, update_on_create: true
 
       def self.find_or_create(animal_info)
-        first(animal_id: animal_info[:animal_id]) || create(animal_info)
+        first(origin_id: animal_info[:origin_id]) || create(animal_info)
       end
 
       # for combination queries

@@ -43,6 +43,7 @@ module PetAdoption
       routing.post 'signup' do
         session_id = SecureRandom.uuid
         routing.params.merge!('session_id' => session_id)
+
         url_request = Forms::UserDataValidator.new.call(routing.params.transform_keys(&:to_sym))
         if url_request.failure?
           session[:watching] = {}
@@ -56,6 +57,8 @@ module PetAdoption
         db_user = Services::CreateUserAccounts.new.call(url_request:)
 
         flash.now[:notice] = 'Your user creation failed...' if db_user.failure?
+        # creae user account
+
         session[:watching] = routing.params
         routing.redirect '/home'
       end
