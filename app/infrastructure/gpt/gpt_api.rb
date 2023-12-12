@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'pry'
+
 require 'open3'
 require_relative '../lib/star_sign'
 

@@ -6,7 +6,7 @@ require_relative 'donator_mapper'
 require_relative 'sitter_mapper'
 
 module PetAdoption
-  module Accounts
+  module LossingPets
     # class Info::ShelterMapper`
     class AccountMapper
       attr_reader :account_info
@@ -27,11 +27,11 @@ module PetAdoption
       end
 
       def build_account_entity
-        PetAdoption::Entity::Accounts.new(
-          PetAdoption::Accounts::AdopterMapper.find,
-          PetAdoption::Accounts::DonatorMapper.find,
-          PetAdoption::Accounts::KeeperMapper.find,
-          PetAdoption::Accounts::SitterMapper.find,
+        PetAdoption::Entity::LossingPets.new(
+          PetAdoption::LossingPets::AdopterMapper.find,
+          PetAdoption::LossingPets::DonatorMapper.find,
+          PetAdoption::LossingPets::KeeperMapper.find,
+          PetAdoption::LossingPets::SitterMapper.find,
           { firstname:,
             lastname:,
             phone:,

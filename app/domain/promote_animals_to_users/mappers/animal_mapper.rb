@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../entities/animals'
-require 'pry'
+
 # create an animal object instance
 module PetAdoption
   module Mapper

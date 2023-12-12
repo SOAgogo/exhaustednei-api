@@ -3,7 +3,6 @@
 require_relative '../entities/animals'
 require_relative '../entities/county_shelters'
 require_relative '../lib/types'
-require 'pry'
 
 # create an animal object instance
 module PetAdoption

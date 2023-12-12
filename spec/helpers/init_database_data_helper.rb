@@ -5,7 +5,7 @@ require_relative '../../app/domain/shelter_animals/mappers/animal_shelter_initia
 require_relative '../../app/domain/shelter_animals/mappers/animal_mapper'
 require_relative '../../app/domain/shelter_animals/mappers/shelter_mapper'
 require_relative '../../app/domain/shelter_animals/repositories/for'
-require 'pry'
+
 module Repository
   module App
     # init_database for initializing database
@@ -19,8 +19,6 @@ module Repository
           PetAdoption::Mapper::AnimalMapper.shelter_animal_mapping(animal_mapper.animal_info_list)
         )
 
-        a = countyshelter_mapper.build_entity('臺北市')
-        binding.pry 
         PrepareDatabase.store_shelter_info_to_db(project)
       end
 

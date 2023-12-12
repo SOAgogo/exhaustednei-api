@@ -85,8 +85,6 @@ module PetAdoption
         end
       end
 
-      #
-      # create an entry for each contributor
       def self.db_find_or_create(entity)
         Database::ProjectOrm::AnimalOrm.find_or_create(entity.to_attr_hash)
       end

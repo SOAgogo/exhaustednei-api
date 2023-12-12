@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # classification.rb
-require 'pry'
+
 require 'open3'
 
 module PetAdoption

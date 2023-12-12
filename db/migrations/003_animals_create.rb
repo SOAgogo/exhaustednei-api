@@ -10,7 +10,7 @@ Sequel.migration do
       foreign_key :shelter_id, :shelters
       foreign_key :users_id, :users
 
-      Integer :remote_id, unique: true, null: false
+      Integer :origin_id, unique: true, null: false
       String :species
       String :sex, null: false
       Boolean :sterilized
@@ -20,7 +20,6 @@ Sequel.migration do
       String :age
       String :image_url
       Time :registration_date, null: false
-
       Time :birth_date
       String :health_condition
       String :personality

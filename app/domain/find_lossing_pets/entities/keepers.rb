@@ -9,14 +9,15 @@ module PetAdoption
   module Entity
     # class Info::adotpers`
     class Keepers
-      attr_reader :animal_keeping_list, :takecare_instr
+      attr_reader :pet_traits, :pet_picture_path
 
-      def initialize
-        @animal_keeping_list = {}
+      def initialize(lossing_animals_list, animal_description_list)
+        @lossing_animals_list = lossing_animals_list
+        @pet_traits = animal_description_list
       end
 
       # transfer the ownership of the animal to the keeper
-      def transfer_animal_to_other_keeper(animal_id, other_keeper)
+      def transfer_animal_to_other_keeper(other_keeper)
         @animal_keeping_list.remove(animal_id)
         other_keeper.animal_keeping_list[animal_id] = @animal_keeping_list[animal_id]
       end

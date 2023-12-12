@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 # verify your identification
-require 'dry-types'
-require 'dry-struct'
 require_relative 'shelters'
 require_relative '../lib/similarity_calculator'
 require_relative '../values/animal_features'

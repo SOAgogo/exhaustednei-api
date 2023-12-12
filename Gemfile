@@ -29,6 +29,10 @@ gem 'dry-types', '~> 1.0'
 # INFRASTRUCTURE LAYER
 # Networking
 gem 'http', '~> 5.0'
+gem 'geocoder', '~> 1.3', '>= 1.3.7'
+# gem 'geokit', '~> 1.13'
+gem 'google-maps', '~> 3.0.7'
+gem 'open-uri', '~> 0.1'
 
 # Database
 gem 'hirb'

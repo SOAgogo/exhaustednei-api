@@ -8,8 +8,6 @@ module Database
     class AnimalOrm < Sequel::Model(:animals)
       many_to_one :shelter_relations,
                   class: :'Database::ProjectOrm::ShelterOrm'
-      many_to_one :user_relations,
-                  class: :'Database::ProjectOrm::UserOrm'
 
       plugin :timestamps, update_on_create: true
 
