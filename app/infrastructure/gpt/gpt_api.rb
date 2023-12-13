@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-
 require 'open3'
 require_relative '../lib/star_sign'
+require 'pry'
 
 module PetAdoption
   module GptConversation
@@ -34,13 +34,43 @@ module PetAdoption
     # class ImageConversation`
     class ImageConversation
       include StarSign::Predict
-      def initialize(image_path)
+      def initialize
+        @image_path = ''
+      end
+
+      def image_path(image_path)
         @image_path = image_path
       end
 
-      def generate_words_from_image(birth_date)
+      def generate_words_by_star_sign(birth_date)
         star_sign = which_star_sign(birth_date)
-        @result = `python app/infrastructure/gateways/gpt_image.py "#{@image_path}" "#{star_sign}"`
+        `python app/infrastructure/gpt/gpt_image.py "#{@image_path}" "#{star_sign}"`
+        # @result = `python gpt_image.py "#{@image_path}" "#{star_sign}"`
+      end
+
+      def generate_words_for_takecare_instructions
+        # `python app/infrastructure/gpt/gpt_image.py "#{@image_path}"`
+        @result = `python gpt_image.py "#{@image_path}"`
+        binding.pry
+      end
+    end
+
+    # class ImageConparision
+    class ImageComparision
+      def initialize
+        @image_path1 = ''
+        @image_path2 = ''
+      end
+
+      def image_path(image_path1, image_path2)
+        @image_path1 = image_path1
+        @image_path2 = image_path2
+      end
+
+      def generate_similarity
+        @result = `python app/infrastructure/gpt/gpt_image.py "#{@image_path1}" "#{@image_path2}"`
+        # @result = `python gpt_image.py "#{@image_path1}" "#{@image_path2}"`
+        @result.match(/(\d+)%/)[1].to_i / 100.0
       end
     end
   end
