@@ -4,18 +4,21 @@ require 'uri'
 require 'net/http'
 require 'google-maps'
 require 'geocoder'
+require 'pry'
 
 module PetAdoption
   module GeoLocation
     # class Conversation`
     class GoogleMapApi
       PUBLIC_IP_SOURCE = 'https://api.bigdatacloud.net/data/client-ip'
+      DISTANCE_SEARCH_SOURCE = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
       attr_reader :location
 
       def self.google_map_config
         Google::Maps.configure do |config|
           config.authentication_mode = Google::Maps::Configuration::API_KEY
-          config.api_key = App.config.MAP_TOKEN
+          # config.api_key = App.config.MAP_TOKEN
+          config.api_key = 'AIzaSyATOozXnKChk0k5eLSum2NylBwk0Jtu_ZQ'
         end
       end
 
@@ -24,6 +27,11 @@ module PetAdoption
         @location = location
         @current_location = current_location
         @county = @current_location.data['county']
+      end
+
+      def longtitude_latitude
+        latitude, longitude = current_location.data['loc'].split(',')
+        [latitude, longitude]
       end
 
       def public_ip
@@ -35,7 +43,7 @@ module PetAdoption
         JSON.parse(http.request(request).read_body)['ipString']
       end
 
-      def calculate_desctination_longtitude_latitude
+      def calculate_destination_longtitude_latitude
         # Geocoder.search(@location).first.coordinates
         places = Google::Maps.geocode(@location)
         [places.first.latitude, places.first.longitude]
@@ -43,6 +51,17 @@ module PetAdoption
 
       def current_location
         Geocoder.search(public_ip).first
+      end
+
+      def find_popular_veterinary(distance, top_ratings)
+        latitude, longtitude = longtitude_latitude
+        location = "#{latitude}%2C#{longtitude}"
+        type = 'veterinary_care'
+        keyword = 'pet%20clinic'
+
+        res = `curl -L -X GET '#{DISTANCE_SEARCH_SOURCE}?location=#{location}&radius=#{distance}&type=#{type}&keyword=#{keyword}&key=AIzaSyATOozXnKChk0k5eLSum2NylBwk0Jtu_ZQ'`
+        res = JSON.parse(res)['results']
+        res.sort_by { |hash| -hash['rating'] }[0...top_ratings]
       end
     end
   end

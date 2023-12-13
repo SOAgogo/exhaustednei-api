@@ -1,37 +1,43 @@
 # frozen_string_literal: true
 
-require 'dry-types'
-require 'dry-struct'
-require_relative '../../shelter_animals/entities/animals'
-require_relative '../values/takecare_requirements'
-
 module PetAdoption
   module Entity
     # class Info::adotpers`
     class Keepers
       attr_reader :pet_traits, :pet_picture_path
 
-      def initialize(lossing_animals_list, animal_description_list)
+      def initialize(lossing_animals_list, animal_information, user_info, s3_images_url)
         @lossing_animals_list = lossing_animals_list
-        @pet_traits = animal_description_list
+        @pet_traits = animal_information
+        @user_info = user_info
+        @s3_images_url = s3_images_url
       end
 
       # transfer the ownership of the animal to the keeper
-      def transfer_animal_to_other_keeper(other_keeper)
-        @animal_keeping_list.remove(animal_id)
-        other_keeper.animal_keeping_list[animal_id] = @animal_keeping_list[animal_id]
+      def how_many_similar_results
+        @lossing_animals_list.size
       end
 
       # watch if there is an animal sitter in database
-      def find_animal_sitter(origin_id)
-        # query the user table to find the user who is a sitter
-        @animal_keeping_list.each do |animal_id, animal|
-          return animal if animal_id == origin_id
+      def notify_posters
+        # send email to the user
+        information = []
+        lossing_animals_list.each_with_object({}) do |info, hash|
+          hash['name'] = info['name'] if info['name'] != ''
+          hash['phone_number'] = info['phone_number']
+          hash['email'] = info['email']
+          information << hash
         end
+        information
       end
 
-      def takecare_requirements(animal_introduction)
-        @takecare_instr = PetAdoption::Value::TakecareRequirements.new(animal_introduction)
+      def contact_me
+        information_hash = {}
+        information_hash['name'] = @user_info['name']
+        information_hash['phone_number'] = @user_info['phone_number']
+        information_hash['email'] = @user_info['email']
+        informtation_hash['animal_traits'] = @pet_traits
+        information_hash
       end
     end
   end

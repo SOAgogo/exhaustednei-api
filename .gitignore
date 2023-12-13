@@ -1,5 +1,6 @@
 _snippets/
 config/secrets.yml
+config/storage.yml
 coverage/*
 !coverage/.resultset.json
 .DS_Store
@@ -15,3 +16,4 @@ runtime.txt
 /app/infrastructure/gateways/.env
 spec/tests/unit/test_messages/* 
 spec/tests/unit/picture_messages/* 
+app/infrastructure/gpt/.env

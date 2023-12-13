@@ -1,70 +1,47 @@
 # frozen_string_literal: true
 
-require_relative 'adopter_mapper'
-require_relative 'keeper_mapper'
-require_relative 'donator_mapper'
-require_relative 'sitter_mapper'
-
 module PetAdoption
   module LossingPets
-    # class Info::ShelterMapper`
-    class AccountMapper
-      attr_reader :account_info
-
-      def initialize(account_info)
-        @account_info = account_info
+    # class KeeperMapper`
+    class PosterMapper
+      # animal_information is an user-input
+      def initialize(s3_images_url, user_info)
+        @s3_images_url = s3_images_url
+        @contact_info = user_info # user_info is personal data(email,phone)
+        @users = Repository::LossingPets::Users.new
       end
 
-      def find
-        DataMapper.new(@account_info).build_account_info_entity
-      end
-    end
-
-    # Datamapper for adopter_info
-    class DataMapper
-      def initialize(account_info)
-        @data = account_info
-      end
-
-      def build_account_entity
-        PetAdoption::Entity::LossingPets.new(
-          PetAdoption::LossingPets::AdopterMapper.find,
-          PetAdoption::LossingPets::DonatorMapper.find,
-          PetAdoption::LossingPets::KeeperMapper.find,
-          PetAdoption::LossingPets::SitterMapper.find,
-          { firstname:,
-            lastname:,
-            phone:,
-            email:,
-            address:,
-            donate_money: }
-        )
+      def fetch_useful_information_for_finding_vets(res)
+        res.map do |result|
+          { name: result['name'],
+            open_time: result['opening_hours'],
+            which_road: result['vicinity'],
+            address: result['plus_code']['compound_code'],
+            longitude: result['geometry']['location']['lng'],
+            latitude: result['geometry']['location']['lat'],
+            rating: result['rating'],
+            total_ratings: result['user_ratings_total'] }
+        end
       end
 
-      private
-
-      def firstname
-        @data['firstname']
+      def fetch_take_care_pets_information(res)
+        res.match(/content='(.+?)'/)[1]
       end
 
-      def lastname
-        @data['lastname']
+      def recommends_some_vets(how_far_from_here = 500, top_ratings = 5)
+        res = users.find_veterinary(how_far_from_here, top_ratings)
+        fetch_useful_information_for_finding_vets(res)
       end
 
-      def phone
-        @data['phone']
+      def give_some_take_care_pets_information
+        res = users.find_take_care_instructions(s3_images_url)
+        fetch_take_care_pets_information(res)
       end
 
-      def email
-        @data['email']
-      end
-
-      def address
-        @data['address']
-      end
-
-      def donate_money
-        0
+      def build_entity(how_far_from_here = 500, top_ratings = 5)
+        vet_info = recommends_some_vets(how_far_from_here, top_ratings)
+        take_care_info = give_some_take_care_pets_information
+        Entity::Posters.new(take_care_info, s3_images_url, contact_info, vet_info)
       end
     end
   end

@@ -37,7 +37,7 @@ describe 'Test Gpt API' do
     it 'it should provide the pictures information of animal breeds' do
       @pictures.each do |query|
         image_conversation = PetAdoption::GptConversation::ImageConversation.new(query['image_path'])
-        output = image_conversation.generate_words_from_image(query['birth_date'])
+        output = image_conversation.generate_words_by_star_sign(query['birth_date'])
         contain_probability = true if output =~ /\d/
         _(contain_probability).must_equal(true)
       end
