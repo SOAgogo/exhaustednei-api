@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'sequel'
-require 'pry'
 
 module Database
   module ProjectOrm
@@ -15,6 +14,14 @@ module Database
 
       def self.find_or_create(shelter_info)
         first(origin_id: shelter_info[:origin_id]) || create(shelter_info)
+      end
+
+      def self.find_name(name)
+        where(name:).first
+      end
+
+      def self.find_id(origin_id)
+        where(origin_id:).first
       end
     end
   end

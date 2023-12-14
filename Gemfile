@@ -15,6 +15,7 @@ gem 'slim', '~> 5.0'
 gem 'puma', '~> 6.0'
 gem 'rack-session', '~> 0.3'
 gem 'roda', '~> 3.0'
+gem 'aws-sdk-s3', '~> 1.141'
 
 # Controllers and services
 gem 'dry-monads', '~> 1.4'
@@ -33,6 +34,8 @@ gem 'geocoder', '~> 1.3', '>= 1.3.7'
 # gem 'geokit', '~> 1.13'
 gem 'google-maps', '~> 3.0.7'
 gem 'open-uri', '~> 0.1'
+
+
 
 # Database
 gem 'hirb'

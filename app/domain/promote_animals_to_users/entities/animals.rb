@@ -26,7 +26,6 @@ module PetAdoption
       end
 
       def to_attr_hash
-        binding.pry
         @feature.to_attr_hash
       end
     end
@@ -49,6 +48,7 @@ module PetAdoption
     class Dog < Animal
       include PetAdoption::Mixins::SimilarityCalculator
 
+      # feature_condition: bodytype, color, age, species
       def similarity_checking(feature_condition, feature_user_want_ratio, top = 1)
         # return a float number
         similarity(feature_condition, feature_user_want_ratio, feature, top)

@@ -15,7 +15,8 @@ module PetAdoption
       end
 
       def generate_words
-        @result = `python app/infrastructure/gateways/gpt_text.py "#{@messages}"`
+        @result = `python app/infrastructure/gpt/gpt_text.py "#{@messages}"`
+        # @result = `python gpt_text.py"#{@messages}"`
         begin
           output = parse_the_word(@result)
           raise StandardError if output.nil?
@@ -45,12 +46,13 @@ module PetAdoption
       def generate_words_by_star_sign(birth_date)
         star_sign = which_star_sign(birth_date)
         `python app/infrastructure/gpt/gpt_image.py "#{@image_path}" "#{star_sign}"`
+        # `python gpt_image.py "#{@image_path}" "#{star_sign}"`
         # @result = `python gpt_image.py "#{@image_path}" "#{star_sign}"`
       end
 
       def generate_words_for_takecare_instructions
-        # `python app/infrastructure/gpt/gpt_image.py "#{@image_path}"`
-        @result = `python gpt_image.py "#{@image_path}"`
+        `python app/infrastructure/gpt/gpt_image.py "#{@image_path}"`
+        # @result = `python gpt_image.py "#{@image_path}"`
       end
     end
 

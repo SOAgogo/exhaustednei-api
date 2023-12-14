@@ -1,27 +1,26 @@
 # frozen_string_literal: true
 
 require_relative 'animals'
-require 'pry'
 
 module PetAdoption
   module Repository
     # Repository for Project Entities
     class Shelters
       def self.all
-        Database::ShelterOrm.all.map { |db_project| rebuild_entity(db_project) }
+        Database::ProjectOrm::ShelterOrm.all.map { |db_project| rebuild_entity(db_project) }
       end
 
       def self.find(entity)
         find_shelter_id(entity.origin_id)
       end
 
-      def self.find_shelter_by_name(shelter_name)
-        db_record = Database::ProjectOrm::ShelterOrm.where(shelter_name:).first
+      def self.find_shelter_by_name(name)
+        db_record = Database::ProjectOrm::ShelterOrm.find_name(name)
         rebuild_entity(db_record)
       end
 
       def self.find_shelter_id(origin_id)
-        db_record = Database::ProjectOrm::ShelterOrm.where(origin_id:).first
+        db_record = Database::ProjectOrm::ShelterOrm.find_id(origin_id)
         rebuild_entity(db_record)
       end
 

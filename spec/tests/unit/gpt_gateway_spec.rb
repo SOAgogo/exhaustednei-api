@@ -4,6 +4,7 @@
 require_relative '../../helpers/vcr_helper'
 require 'uri'
 require 'json'
+require 'pry'
 
 describe 'Test Gpt API' do
   VcrHelper.setup_vcr
@@ -26,6 +27,9 @@ describe 'Test Gpt API' do
     end
     it 'it should provide the key words as same as user inputs' do
       @messages['queries'].each_with_index do |message, index|
+        # Expected "The tallest building in the United Kingdom is The Shard, which stands at a height of 309.6 meters (1,016 feet)." to include # encoding: US-ASCII
+        # valid: true
+        # "310"
         output = PetAdoption::GptConversation::Conversation.new(message['query']).generate_words
         correct = @answers[index]['tallest_building'].values
         correct.each do |value|
@@ -36,7 +40,8 @@ describe 'Test Gpt API' do
 
     it 'it should provide the pictures information of animal breeds' do
       @pictures.each do |query|
-        image_conversation = PetAdoption::GptConversation::ImageConversation.new(query['image_path'])
+        image_conversation = PetAdoption::GptConversation::ImageConversation.new
+        image_conversation.image_path(query['image_path'])
         output = image_conversation.generate_words_by_star_sign(query['birth_date'])
         contain_probability = true if output =~ /\d/
         _(contain_probability).must_equal(true)

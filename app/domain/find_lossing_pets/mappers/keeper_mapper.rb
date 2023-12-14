@@ -1,27 +1,35 @@
 # frozen_string_literal: true
 
 require_relative '../lib/distance_calculator'
+require_relative '../repositories/lossing_pets'
 module PetAdoption
   module LossingPets
     # class KeeperMapper`
     class KeeperMapper
       # animal_information is an user-input
-      include Mixins::DistanceCaculator
+      include Mixins::DistanceCalculator
       def initialize(s3_images_url, animal_information, user_info)
         @s3_images_url = s3_images_url
-        @animal_information = animal_information
+        @animal_information = animal_information # keeper describe animals' traits
         @user_info = user_info # user_info is personal data(email,phone)
-        @users = Repository::LossingPets::Users.new
+        @users = PetAdoption::Repositories::Users.new
       end
 
-      def transfer_pets_ownership
-        @users.create_db_entity(user_info)
-      end
+      # use the fields of personality,health_condition,animal_age
+      # not yet: implement
+      # def transfer_pets_ownership
+      #   @users.create_db_entity(user_info)
+      # end
 
-      def build_entity(how_far_the_pets_lost, _how_long_the_pets_lost, according_to_your_county)
+      def build_entity(how_far_the_pets_lost, according_to_your_county)
         lossing_pets = find_possible_lossing_pets(how_far_the_pets_lost, _how_long_the_pets_lost,
                                                   according_to_your_county)
         Entity::Keepers.new(lossing_pets[:name], animal_information, user_info, s3_images_url)
+      end
+
+      def store_user_info
+        user_information = user_info.merge(s3_images_url:)
+        @users.create_db_entity(user_information)
       end
 
       def lossing_animals(according_to_your_county = false) # rubocop:disable Style/OptionalBooleanParameter
@@ -37,7 +45,7 @@ module PetAdoption
         users.image_comparison.generate_similarity
       end
 
-      def find_possible_lossing_pets(how_far_the_pets_lost, _how_long_the_pets_lost = 0,
+      def find_possible_lossing_pets(how_far_the_pets_lost,
                                      according_to_your_county = false) # rubocop:disable Style/OptionalBooleanParameter
 
         lost_animals = lossing_animals(according_to_your_county)

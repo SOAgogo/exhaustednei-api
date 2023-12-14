@@ -21,6 +21,7 @@ module PetAdoption
         shelter_info.to_attr_hash.merge(shelter_stats.to_attr_hash)
       end
 
+      # e.g feature_condition =
       def calculate_all_animals_similarity(feature_condition, feature_user_want_ratio)
         shelter_stats.animal_object_list.map do |_, animal_obj|
           animal_obj.similarity_checking(feature_condition, feature_user_want_ratio)

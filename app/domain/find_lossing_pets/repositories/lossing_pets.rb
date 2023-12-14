@@ -2,21 +2,21 @@
 
 require_relative '../../../infrastructure/geo_location/googlemap_api'
 require_relative '../../../infrastructure/gpt/gpt_api'
-module Repository
+module PetAdoption
   # Maps over local and remote git repo infrastructure
-  module LossingPets
+  module Repositories
     # Repository for UserOrm
     class Users
       # user_info = {'name': 'xxx', 'phone_number': 'xxx', 'email': 'xxx'}
       def initialize
         @google_map = PetAdoption::GeoLocation::GoogleMapApi.new
         @image_conversation = PetAdoption::GptConversation::ImageConversation.new
-        @image_comparison = PetAdoption::GptConversation::ImageConparision.new
+        @image_comparison = PetAdoption::GptConversation::ImageComparision.new
       end
 
       def create_db_entity(user_info)
         latitude, longitude = longtitude_latitude
-        user_information = user_info.merge(county: current_location.data['city'],
+        user_information = user_info.merge(county: google_map.current_location.data['city'],
                                            latitude:,
                                            longitude:)
         Database::ProjectOrm::UserOrm.find_or_create(user_information)
