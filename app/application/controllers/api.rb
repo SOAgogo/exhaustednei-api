@@ -36,6 +36,32 @@ module PetAdoption
         result_response.to_json
       end
 
+      routing.on 'api/v1' do
+        routing.on 'projects' do
+          routing.on String, String do |animal_kind, shelter_name|
+            routing.get do
+              path_request = Request::ProjectPath.new(
+                shelter_name, animal_kind, request
+              )
+
+              result = Services::SelectAnimal.new.call(requested: path_request)
+              
+              if result.failure?
+                failed = Representer::HttpResponse.new(result.failure)
+                routing.halt failed.http_status_code, failed.to_json
+              end
+
+              http_response = Representer::HttpResponse.new(result.value!)
+              response.status = http_response.http_status_code
+
+              Representer::ProjectFolderContributions.new(
+                result.value!.message
+              ).to_json
+            end
+          end
+
+        end
+      end
     end
     # rubocop:enable Metrics/BlockLength
   end
