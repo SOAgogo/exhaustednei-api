@@ -3,6 +3,8 @@
 require_relative '../../helpers/init_database_data_helper'
 require_relative '../../helpers/vcr_helper'
 require_relative '../../helpers/database_helper'
+require_relative '../integration/layers/spec_helper.rb'
+
 require 'rack/test'
 
 def app
@@ -23,8 +25,8 @@ describe 'Test API routes' do
     VcrHelper.eject_vcr
   end
 
-  describe 'Root route' do
-    it 'should successfully return root information' do
+  describe 'Test root route' do
+    it 'HAPPY: should successfully return root information' do
       get '/'
       _(last_response.status).must_equal 200
 

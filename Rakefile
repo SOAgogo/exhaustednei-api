@@ -54,9 +54,6 @@ namespace :vcr do
   end
 end
 
-require 'rake/testtask'
-require_relative 'require_app'
-
 task :default do
   puts `rake -T`
 end
