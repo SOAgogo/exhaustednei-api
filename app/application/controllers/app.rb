@@ -8,7 +8,7 @@ require 'uri'
 require 'securerandom'
 require 'fileutils'
 require 'open3'
-require 'aws-sdk-s3'
+require 'pry'
 
 module PetAdoption
   # for controller part
@@ -28,19 +28,7 @@ module PetAdoption
     # use Rack::MethodOverride
 
     plugin :indifferent_params
-    # Load the YAML file
-    secrets = YAML.load_file('config/secrets.yml')
 
-    # Access the keys
-    access_key_id = secrets['access_key_id']
-    secret_key_id = secrets['secret_key_id']
-
-    Aws.config.update(
-      region: 'ap-northeast-2',
-      credentials: Aws::Credentials.new(access_key_id, secret_key_id)
-    )
-  
-    S3_BUCKET_NAME = 'soapicture'
 
     route do |routing|
       routing.assets # load CSS
@@ -49,6 +37,7 @@ module PetAdoption
 
       # GET /
       routing.root do
+        routing.redirect '/home'
         session[:watching] ||= {}
         routing.redirect '/home' if session[:watching]['session_id']
         flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
@@ -115,6 +104,7 @@ module PetAdoption
             response = Services::SelectAnimal.new.call({ animal_kind:, shelter_name: })
             view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(response.value![:animal_obj_list])
 
+            
             view 'project', locals: {
               view_obj:
             }
@@ -166,21 +156,9 @@ module PetAdoption
 
       routing.on 'found' do
         routing.post do
-          s3 = Aws::S3::Client.new(region: 'ap-northeast-2')
-          response = s3.list_objects_v2(bucket: S3_BUCKET_NAME, prefix: 'uploads/tmp/')
 
-          # Iterate through each object and make it public
-          response.contents.each do |object|
-            object_key = object.key
-        
-            # Set the ACL of the object to public-read
-            s3.put_object_acl(
-              bucket: S3_BUCKET_NAME,
-              key: object_key,
-              acl: 'public-read'
-            )
-          end
-          
+          PetAdoption::ImageRecognition::S3.S3_init
+
           founding_list = File.read("example.txt")
           founding_list = founding_list.lines
 
@@ -197,13 +175,8 @@ module PetAdoption
               file.puts uploaded_file
             end
 
-            object_key = "uploads#{uploaded_file}"
-  
-            s3 = Aws::S3::Resource.new
-            s3.bucket(S3_BUCKET_NAME).object(object_key).upload_file(uploaded_file, content_type: 'image/png;image/jpg')
+            PetAdoption::ImageRecognition::S3.upload_image_to_s3(uploaded_file)
 
-            "File uploaded successfully to #{S3_BUCKET_NAME}/#{object_key}"
-    
             output = Services::ImageRecognition.new.call({ uploaded_file: })
             if output.failure?
               flash[:error] = 'No recognition output, please try again.'
