@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require '../../../infrastructure/geo_location/googlemap_api'
-require '../../../infrastructure/gpt/gpt_api'
+require_relative '../../../infrastructure/geo_location/googlemap_api'
+require_relative '../../../infrastructure/gpt/gpt_api'
 module Repository
   # Maps over local and remote git repo infrastructure
   module LossingPets

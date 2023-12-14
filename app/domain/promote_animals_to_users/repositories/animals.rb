@@ -18,9 +18,9 @@ module PetAdoption
 
       def self.web_page_cover
         first_record = Database::ProjectOrm::AnimalOrm
-          .exclude(album_file: '')
+          .exclude(image_url: '')
           .first
-        album_file = first_record.album_file
+        album_file = first_record.image_url
         if album_file == ''
           DBError.new('DB error', 'DB cant find your data').tap do |rsp|
             raise(rsp.error)
@@ -34,7 +34,7 @@ module PetAdoption
         return nil unless db_record
 
         PetAdoption::Entity::Animal.new(
-          remote_id: db_record.remote_id,
+          origin_id: db_record.origin_id,
           species: db_record.species,
           age: db_record.age,
           color: db_record.color,

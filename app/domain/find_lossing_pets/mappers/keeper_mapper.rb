@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+require_relative '../lib/distance_calculator'
 module PetAdoption
   module LossingPets
     # class KeeperMapper`
     class KeeperMapper
       # animal_information is an user-input
+      include Mixins::DistanceCaculator
       def initialize(s3_images_url, animal_information, user_info)
         @s3_images_url = s3_images_url
         @animal_information = animal_information
@@ -30,10 +32,6 @@ module PetAdoption
         end
       end
 
-      def distance_between_the_point_and_current_location(point1)
-        users.google_map.distance_between(point1, users.longtiude_latitude) * 1.609344
-      end
-
       def determine_two_pictures_similarity(image_url)
         users.animal_images_path_for_comparison(@s3_images_url, image_url)
         users.image_comparison.generate_similarity
@@ -46,7 +44,7 @@ module PetAdoption
         lost_animals.reduce([]) do |acc, animal|
           animal = animal.to_hash
           distance = distance_between_the_point_and_current_location([animal['latitude'],
-                                                                      animal['longitude']]) * 1.609344
+                                                                      animal['longitude']])
           if distance <= how_far_the_pets_lost && (determine_two_pictures_similarity(animal['s3_image_url']) > 0.5)
             acc << animal
           end

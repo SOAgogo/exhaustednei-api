@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'sequel'
+require 'pry'
 
 module Database
   module ProjectOrm
@@ -12,6 +13,7 @@ module Database
       plugin :timestamps, update_on_create: true
 
       def self.find_or_create(animal_info)
+        binding.pry
         first(origin_id: animal_info[:origin_id]) || create(animal_info)
       end
 

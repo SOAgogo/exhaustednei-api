@@ -2,7 +2,6 @@
 
 require_relative '../entities/animals'
 require_relative '../entities/county_shelters'
-require_relative '../lib/types'
 
 # create an animal object instance
 module PetAdoption
@@ -34,6 +33,10 @@ module PetAdoption
           set_shelter_obj_map(county_name,
                               ShelterMapper.find(shelter_info, shelter_animal_map[shelter_name]))
         end
+      end
+
+      def shelter_size
+        shelter_obj_map.size
       end
 
       def build_entity(county_name)

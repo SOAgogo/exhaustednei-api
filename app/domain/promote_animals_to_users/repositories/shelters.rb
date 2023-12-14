@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'animals'
+require 'pry'
 
 module PetAdoption
   module Repository
@@ -11,7 +12,7 @@ module PetAdoption
       end
 
       def self.find(entity)
-        find_shelter_id(entity.animal_shelter_pkid)
+        find_shelter_id(entity.origin_id)
       end
 
       def self.find_shelter_by_name(shelter_name)
@@ -19,8 +20,8 @@ module PetAdoption
         rebuild_entity(db_record)
       end
 
-      def self.find_shelter_id(animal_shelter_pkid)
-        db_record = Database::ProjectOrm::ShelterOrm.where(animal_shelter_pkid:).first
+      def self.find_shelter_id(origin_id)
+        db_record = Database::ProjectOrm::ShelterOrm.where(origin_id:).first
         rebuild_entity(db_record)
       end
 
@@ -73,7 +74,7 @@ module PetAdoption
 
         def call
           # if owner is not in database, create one, otherwise, return it
-          animal_database_list = Animals.store_several(@entity.animal_object_list)
+          animal_database_list = Animals.store_several(@entity.shelter_stats.animal_obj_list)
 
           shelter = create_shelter
           PersistShelter.add_foeign_key_to_animal(animal_database_list, shelter)

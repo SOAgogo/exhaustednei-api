@@ -20,3 +20,11 @@ GPT_TOKEN = PetAdoption::App.config.GPT_TOKEN
 RESOURCE_PATH = 'https://data.moa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL'
 CASSETTES_FOLDER = 'spec/fixtures/cassettes'
 CASSETTE_FILE = 'animals-record'
+
+module RandomCounty
+  class County
+    def self.random_county(county_list)
+      county_list[rand(0..county_list.size - 1)]
+    end
+  end
+end

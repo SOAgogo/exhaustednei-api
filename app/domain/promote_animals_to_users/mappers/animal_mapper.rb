@@ -52,14 +52,14 @@ module PetAdoption
         # rubocop:disable Metrics/MethodLength
         def build_dog_entity
           PetAdoption::Entity::Dog.new(
-            remote_id:,
+            origin_id:,
             species:,
             age:,
             color:,
             sex:,
             sterilized:,
-            bodytype:,
             vaccinated:,
+            bodytype:,
             image_url:,
             registration_date:
           )
@@ -67,14 +67,14 @@ module PetAdoption
 
         def build_cat_entity
           PetAdoption::Entity::Cat.new(
-            remote_id:,
+            origin_id:,
             species:,
             age:,
             color:,
             sex:,
             sterilized:,
-            bodytype:,
             vaccinated:,
+            bodytype:,
             image_url:,
             registration_date:
           )
@@ -83,7 +83,7 @@ module PetAdoption
         # rubocop:enable Metrics/MethodLength
         private
 
-        def remote_id
+        def origin_id
           @data['animal_id']
         end
 

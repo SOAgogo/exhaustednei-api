@@ -10,6 +10,9 @@ module PetAdoption
     # class Info::Animal`
     class Animal
       def initialize(feature)
+        feature[:birth_date] = nil
+        feature[:health_condition] = nil
+        feature[:personality] = nil
         @feature = Value::AnimalInfo.new(feature)
       end
 
@@ -20,6 +23,11 @@ module PetAdoption
           'sterilized' => @feature.sterilized,
           'vaccinated' => @feature.vaccinated,
           'bodytype' => @feature.bodytype }
+      end
+
+      def to_attr_hash
+        binding.pry
+        @feature.to_attr_hash
       end
     end
 

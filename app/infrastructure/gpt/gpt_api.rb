@@ -51,7 +51,6 @@ module PetAdoption
       def generate_words_for_takecare_instructions
         # `python app/infrastructure/gpt/gpt_image.py "#{@image_path}"`
         @result = `python gpt_image.py "#{@image_path}"`
-        binding.pry
       end
     end
 

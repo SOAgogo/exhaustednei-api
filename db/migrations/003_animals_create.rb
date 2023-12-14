@@ -8,7 +8,6 @@ Sequel.migration do
       primary_key :id
 
       foreign_key :shelter_id, :shelters
-      foreign_key :users_id, :users
 
       Integer :origin_id, unique: true, null: false
       String :species
@@ -20,9 +19,9 @@ Sequel.migration do
       String :age
       String :image_url
       Time :registration_date, null: false
-      Time :birth_date
-      String :health_condition
-      String :personality
+      Time :birth_date, null: true
+      String :health_condition, null: true
+      String :personality, null: true
       DateTime :created_at
       DateTime :updated_at
     end

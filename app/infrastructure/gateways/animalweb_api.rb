@@ -7,9 +7,9 @@ require 'yaml'
 # verify your identification
 
 module PetAdoption
-  module Info
+  module Gateway
     # class Info::Project`
-    class Project
+    class AnimalAPI
       attr_reader :request_body, :shelter_list
 
       def initialize(uri)
@@ -32,7 +32,7 @@ module PetAdoption
 
       def connection
         url, http = setup_url
-        response_body = Project.read_body(url, http)
+        response_body = AnimalAPI.read_body(url, http)
 
         JSON.parse(response_body)[1..20]
       end

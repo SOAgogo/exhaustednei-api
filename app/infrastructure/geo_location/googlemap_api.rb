@@ -17,8 +17,7 @@ module PetAdoption
       def self.google_map_config
         Google::Maps.configure do |config|
           config.authentication_mode = Google::Maps::Configuration::API_KEY
-          # config.api_key = App.config.MAP_TOKEN
-          config.api_key = 'AIzaSyATOozXnKChk0k5eLSum2NylBwk0Jtu_ZQ'
+          config.api_key = App.config.MAP_TOKEN
         end
       end
 
@@ -53,11 +52,11 @@ module PetAdoption
         Geocoder.search(public_ip).first
       end
 
-      def find_popular_veterinary(distance, top_ratings)
+      def find_most_recommendations(distance, top_ratings, type, keyword)
         latitude, longtitude = longtitude_latitude
         location = "#{latitude}%2C#{longtitude}"
-        type = 'veterinary_care'
-        keyword = 'pet%20clinic'
+        # type = 'veterinary_care'
+        # keyword = 'pet%20clinic'
 
         res = `curl -L -X GET '#{DISTANCE_SEARCH_SOURCE}?location=#{location}&radius=#{distance}&type=#{type}&keyword=#{keyword}&key=AIzaSyATOozXnKChk0k5eLSum2NylBwk0Jtu_ZQ'`
         res = JSON.parse(res)['results']

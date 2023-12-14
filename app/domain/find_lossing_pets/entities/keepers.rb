@@ -36,7 +36,7 @@ module PetAdoption
         information_hash['name'] = @user_info['name']
         information_hash['phone_number'] = @user_info['phone_number']
         information_hash['email'] = @user_info['email']
-        informtation_hash['animal_traits'] = @pet_traits
+        information_hash['animal_traits'] = @pet_traits
         information_hash
       end
     end

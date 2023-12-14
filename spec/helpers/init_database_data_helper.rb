@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative '../../app/infrastructure/download/curl_download_file'
-require_relative '../../app/domain/shelter_animals/mappers/animal_shelter_initiator'
-require_relative '../../app/domain/shelter_animals/mappers/animal_mapper'
-require_relative '../../app/domain/shelter_animals/mappers/shelter_mapper'
-require_relative '../../app/domain/shelter_animals/repositories/for'
-
+require_relative '../../app/domain/promote_animals_to_users/mappers/animal_shelter_initiator'
+require_relative '../../app/domain/promote_animals_to_users/mappers/animal_mapper'
+require_relative '../../app/domain/promote_animals_to_users/mappers/shelter_mapper'
+require_relative '../../app/domain/promote_animals_to_users/repositories/for'
+require 'pry'
 module Repository
   module App
     # init_database for initializing database
@@ -19,13 +19,14 @@ module Repository
           PetAdoption::Mapper::AnimalMapper.shelter_animal_mapping(animal_mapper.animal_info_list)
         )
 
-        PrepareDatabase.store_shelter_info_to_db(project)
+        PrepareDatabase.store_shelter_info_to_db(countyshelter_mapper, project)
       end
 
-      def self.store_shelter_info_to_db(project)
+      def self.store_shelter_info_to_db(countyshelter_mapper, project)
         project.request_body.each do |shelter_obj|
-          shelter = PetAdoption::Mapper::ShelterMapper.get_shelter_obj(shelter_obj['shelter_name'])
-          Repository::Info::For.entity(shelter).db_find_or_create(shelter)
+          shelter = countyshelter_mapper.get_shelter_obj(shelter_obj['shelter_name'][0..2])
+
+          PetAdoption::Repository::For.entity(shelter).db_find_or_create(shelter)
         end
       end
     end

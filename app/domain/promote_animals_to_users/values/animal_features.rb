@@ -3,11 +3,12 @@
 require 'dry-types'
 require 'dry-struct'
 module PetAdoption
+  # Value objects for animal
   module Value
     # class AnimalFeature`
     class AnimalInfo < Dry::Struct
       include Dry.Types
-      attribute :remote_id, Strict::Integer
+      attribute :origin_id, Strict::Integer
       attribute :species, String.optional
       attribute :age, Strict::String
       attribute :color, Strict::String
@@ -18,9 +19,13 @@ module PetAdoption
       attribute :image_url, String.optional
       attribute :registration_date, Strict::Time
 
-      attribute :birth_date, Strict::Time.optional
-      attribute :health_condition, Strict::String.optional
-      attribute :personality, Strict::String.optional
+      attribute :birth_date, Time.optional
+      attribute :health_condition, String.optional
+      attribute :personality, String.optional
+
+      def to_attr_hash
+        to_hash
+      end
     end
   end
 end

@@ -2,8 +2,8 @@
 
 require 'dry-types'
 require 'dry-struct'
-require_relative '../../shelter_animals/entities/animals'
-require_relative '../values/user_donations'
+require_relative '../entities/animals'
+require_relative 'user_donations'
 module PetAdoption
   module Value
     # class Info::adotpers`
@@ -14,18 +14,37 @@ module PetAdoption
       attribute :name, Strict::String
       attribute :address, Strict::String
       attribute :phone_number, Strict::String
+
+      def to_attr_hash
+        {
+          origin_id:,
+          name:,
+          address:,
+          phone_number:
+        }
+      end
     end
 
     # class ShelterStats`
     class ShelterStats
+      attr_reader :animal_obj_list, :donate_money, :cat_num, :dog_num
+
       def initialize(animal_obj_list)
         @animal_obj_list = animal_obj_list
-        @cat_num = cat_num
-        @dog_num = dog_num
-        @donate_money = PetAdoption::Value::UserDonations
+        @cat_num = calculate_cat_num
+        @dog_num = calculate_dog_num
+        @donate_money = PetAdoption::Value::UserDonations.new
       end
 
-      def cat_num
+      def to_attr_hash
+        {
+          cat_num:,
+          dog_num:,
+          donate_money: donate_money.accumulated_money
+        }
+      end
+
+      def calculate_cat_num
         cat_num = @animal_obj_list.reduce(0) do |sum, (_, animal_obj)|
           sum + (animal_obj.instance_of?(PetAdoption::Entity::Cat) ? 1 : 0)
         end
@@ -33,7 +52,7 @@ module PetAdoption
         cat_num
       end
 
-      def dog_num
+      def calculate_dog_num
         dog_num = @animal_obj_list.reduce(0) do |sum, (_, animal_obj)|
           sum + (animal_obj.instance_of?(PetAdoption::Entity::Dog) ? 1 : 0)
         end

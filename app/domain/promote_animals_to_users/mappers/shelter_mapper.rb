@@ -10,34 +10,34 @@ module PetAdoption
       attr_reader :shelter_info_list
 
       # store the shelter hash that can access shelter object
-      @shelter_obj_map = {}
+      # @shelter_obj_map = {}
       def initialize(shelter_info_list)
         @shelter_info_list = shelter_info_list
       end
 
-      class << self
-        attr_reader :shelter_obj_map
-      end
+      # class << self
+      #   attr_reader :shelter_obj_map
+      # end
 
-      def self.set_shelter_obj_map(shelter_name, shelter_obj)
-        ShelterMapper.shelter_obj_map[shelter_name] = shelter_obj
-      end
+      # def self.set_shelter_obj_map(shelter_name, shelter_obj)
+      #   ShelterMapper.shelter_obj_map[shelter_name] = shelter_obj
+      # end
 
-      def self.get_shelter_obj(shelter_name)
-        ShelterMapper.shelter_obj_map[shelter_name]
-      end
+      # def self.get_shelter_obj(shelter_name)
+      #   ShelterMapper.shelter_obj_map[shelter_name]
+      # end
 
       # def self.shelter_size
       #   ShelterMapper.shelter_obj_map.size
       # end
 
-      def create_all_shelter_animal_obj(shelter_animal_map)
-        @shelter_info_list.each do |shelter_info|
-          shelter_name = shelter_info['shelter_name']
-          ShelterMapper.set_shelter_obj_map(shelter_name,
-                                            ShelterMapper.find(shelter_info, shelter_animal_map[shelter_name]))
-        end
-      end
+      # def create_all_shelter_animal_obj(shelter_animal_map)
+      #   @shelter_info_list.each do |shelter_info|
+      #     shelter_name = shelter_info['shelter_name']
+      #     ShelterMapper.set_shelter_obj_map(shelter_name,
+      #                                       ShelterMapper.find(shelter_info, shelter_animal_map[shelter_name]))
+      #   end
+      # end
 
       def self.find(shelter_info, animal_map)
         DataMapper.new(shelter_info, animal_map).build_entity

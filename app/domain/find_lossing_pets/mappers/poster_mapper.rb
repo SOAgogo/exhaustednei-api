@@ -28,8 +28,8 @@ module PetAdoption
         res.match(/content='(.+?)'/)[1]
       end
 
-      def recommends_some_vets(how_far_from_here = 500, top_ratings = 5)
-        res = users.find_veterinary(how_far_from_here, top_ratings)
+      def recommends_some_vets(how_far_from_here, top_ratings, type, keyword)
+        res = users.find_most_recommendations(how_far_from_here, top_ratings, type, keyword)
         fetch_useful_information_for_finding_vets(res)
       end
 
@@ -38,9 +38,14 @@ module PetAdoption
         fetch_take_care_pets_information(res)
       end
 
+      # def find_the_nearest_shelter(how_far_from_here)
+      #   find_nearest(how_far_from_here, 'shelter', 'animal%20shelter')
+      # end
+
       def build_entity(how_far_from_here = 500, top_ratings = 5)
-        vet_info = recommends_some_vets(how_far_from_here, top_ratings)
+        vet_info = recommends_some_vets(how_far_from_here, top_ratings, 'veterinary_care', 'pet%20clinic')
         take_care_info = give_some_take_care_pets_information
+        # shelter_info = find_the_nearest_shelter(how_far_from_here, 'shelter', 'animal%20shelter')
         Entity::Posters.new(take_care_info, s3_images_url, contact_info, vet_info)
       end
     end
