@@ -17,11 +17,12 @@ module Database
       end
 
       def self.find_name(name)
-        where(name:).first
+        first(name:)
       end
 
       def self.find_id(origin_id)
-        where(origin_id:).first
+        # where(origin_id:).first
+        first(origin_id:)
       end
     end
   end

@@ -2,6 +2,8 @@
 
 require_relative '../lib/distance_calculator'
 require_relative '../repositories/lossing_pets'
+require 'pry'
+
 module PetAdoption
   module LossingPets
     # class KeeperMapper`
@@ -22,7 +24,9 @@ module PetAdoption
       # end
 
       def build_entity(how_far_the_pets_lost, according_to_your_county)
-        lossing_pets = find_possible_lossing_pets(how_far_the_pets_lost, _how_long_the_pets_lost,
+        # lossing_pets = find_possible_lossing_pets(how_far_the_pets_lost, _how_long_the_pets_lost,
+        #                                           according_to_your_county)
+        lossing_pets = find_possible_lossing_pets(how_far_the_pets_lost,
                                                   according_to_your_county)
         Entity::Keepers.new(lossing_pets[:name], animal_information, user_info, s3_images_url)
       end
@@ -34,15 +38,15 @@ module PetAdoption
 
       def lossing_animals(according_to_your_county = false) # rubocop:disable Style/OptionalBooleanParameter
         if according_to_your_county
-          users.find_all_animals_in_county
+          @users.find_all_animals_in_county
         else
-          users.find_all_animals
+          @users.find_all_animals
         end
       end
 
       def determine_two_pictures_similarity(image_url)
-        users.animal_images_path_for_comparison(@s3_images_url, image_url)
-        users.image_comparison.generate_similarity
+        @users.animal_images_path_for_comparison(@s3_images_url, image_url)
+        @users.image_comparison.generate_similarity
       end
 
       def find_possible_lossing_pets(how_far_the_pets_lost,

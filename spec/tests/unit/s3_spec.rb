@@ -20,13 +20,13 @@ describe 'Test Gpt API' do
     before do
       @s3 = PetAdoption::Storage::S3.S3_init
     end
-    it 'HAPPY: should lists all images on S3' do
-      picture_obj_list = PetAdoption::Storage::S3.download_image_from_s3(@s3)[1]
-      _(picture_obj_list).must_be_instance_of(Aws::Xml::DefaultList)
-    end
     it 'HAPPY: should upload image to S3' do
       res = PetAdoption::Storage::S3.upload_image_to_s3('spec/test_s3_upload_image/margis.jpeg')
       _(res).must_equal('File uploaded successfully to soapicture/uploadsspec/test_s3_upload_image/margis.jpeg')
+    end
+    it 'HAPPY: should lists all images on S3' do
+      picture_obj_list = PetAdoption::Storage::S3.download_image_from_s3(@s3)[1]
+      _(picture_obj_list).must_be_instance_of(Aws::Xml::DefaultList)
     end
   end
 end

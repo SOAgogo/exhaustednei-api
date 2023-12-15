@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'animals'
+require 'pry'
 
 module PetAdoption
   module Repository
@@ -15,6 +16,7 @@ module PetAdoption
       end
 
       def self.find_shelter_by_name(name)
+        # still can't get the data from database
         db_record = Database::ProjectOrm::ShelterOrm.find_name(name)
         rebuild_entity(db_record)
       end

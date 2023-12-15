@@ -3,7 +3,6 @@
 require_relative 'test_helper'
 require_relative '../../../../app/application/controllers/app'
 require 'json'
-require 'pry'
 
 BASE_URL = PetAdoption::Storage::BASE_URL
 BUCKET_NAME = PetAdoption::Storage::BUCKET_NAME
@@ -35,7 +34,6 @@ describe 'Check how many surronding animals' do
 
     keeper_mapper = PetAdoption::LossingPets::KeeperMapper.new(s3_picture_url_list.sample, animal_info, user_info)
     keeper = keeper_mapper.build_entity(500, true)
-    binding.pry
     keeper.how_many_similar_results.must_be_instance_of(Integer)
   end
 end

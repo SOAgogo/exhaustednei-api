@@ -5,6 +5,7 @@ require 'net/http'
 require 'google-maps'
 require 'geocoder'
 require 'pry'
+require_relative '../lib/chinese_translator'
 
 module PetAdoption
   module GeoLocation
@@ -12,7 +13,7 @@ module PetAdoption
     class GoogleMapApi
       PUBLIC_IP_SOURCE = 'https://api.bigdatacloud.net/data/client-ip'
       DISTANCE_SEARCH_SOURCE = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-      attr_reader :location
+      attr_reader :county, :current_location
 
       def self.google_map_config
         Google::Maps.configure do |config|
@@ -20,16 +21,17 @@ module PetAdoption
           config.api_key = App.config.MAP_TOKEN
         end
       end
+      include PetAdoption::ChineseTranslator::Util
 
       def initialize(location = String.new)
         GoogleMapApi.google_map_config
         @location = location
-        @current_location = current_location
-        @county = @current_location.data['county']
+        @current_location = location_right_now
+        @county = translate_county_to_chinese(@current_location.data['city'])
       end
 
       def longtitude_latitude
-        latitude, longitude = current_location.data['loc'].split(',')
+        latitude, longitude = @current_location.data['loc'].split(',')
         [latitude, longitude]
       end
 
@@ -48,7 +50,7 @@ module PetAdoption
         [places.first.latitude, places.first.longitude]
       end
 
-      def current_location
+      def location_right_now
         Geocoder.search(public_ip).first
       end
 

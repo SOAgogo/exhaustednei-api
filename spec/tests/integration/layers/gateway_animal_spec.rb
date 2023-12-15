@@ -58,7 +58,7 @@ describe 'Tests Animal API ' do
 
     it 'SAD: should raise exception on incorrect url' do
       path = "#{RESOURCE_PATH}/error_here"
-      project = PetAdoption::Info::Project.new(path)
+      project = PetAdoption::Gateway::AnimalAPI.new(path)
       project.connection
       _(
         project.request_body.to_s
