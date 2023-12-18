@@ -4,7 +4,7 @@ require 'base64'
 require 'dry/monads'
 require 'json'
 
-module CodePraise
+module PetAdoption
   module Request
     # Project list request parser
     class EncodedProjectList
