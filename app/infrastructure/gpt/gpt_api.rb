@@ -71,7 +71,11 @@ module PetAdoption
       def generate_similarity
         @result = `python app/infrastructure/gpt/gpt_image.py "#{@image_path1}" "#{@image_path2}"`
         # @result = `python gpt_image.py "#{@image_path1}" "#{@image_path2}"`
-        @result.match(/(\d+)%/)[1].to_i / 100.0
+        if @result.match(/(\d+)%/)[1]
+          @result.match(/(\d+)%/)[1].to_i / 100.0
+        else
+          0
+        end
       end
     end
   end

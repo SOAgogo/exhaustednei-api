@@ -59,7 +59,7 @@ elif len(sys.argv) ==4:
         "content": [
           {
             "type": "text",
-            "text": "What are both dog species or cat species in the pictures? And if they are same species, please give me the similarity of two pictures(the answer must contain a percentage number,eg: 80% or 80 percent)",
+            "text": "What are both dog species or cat species in the pictures? And if they are same species, please give me the similarity of two pictures(the answer must contain a percentage number,eg: 80%)",
           },
           {
             "type": "image_url",
@@ -76,7 +76,7 @@ elif len(sys.argv) ==4:
         ],
       }
     ],
-    max_tokens=500,
+    max_tokens=600,
   )
     print(response.choices[0])
     

@@ -21,18 +21,24 @@ module PetAdoption
           config.api_key = App.config.MAP_TOKEN
         end
       end
-      include PetAdoption::ChineseTranslator::Util
+      # include PetAdoption::ChineseTranslator::Util
+
+      def self.count_two_points_distance(point1, point2)
+        Geocoder::Calculations.distance_between(point1, point2) * 1.609344
+      end
 
       def initialize(location = String.new)
         GoogleMapApi.google_map_config
         @location = location
         @current_location = location_right_now
-        @county = translate_county_to_chinese(@current_location.data['city'])
+        # @county = translate_county_to_chinese(@current_location.data['city'])
+        @county = @current_location.data['city']
+        binding.pry
       end
 
       def longtitude_latitude
         latitude, longitude = @current_location.data['loc'].split(',')
-        [latitude, longitude]
+        [latitude.to_f, longitude.to_f]
       end
 
       def public_ip
@@ -54,13 +60,12 @@ module PetAdoption
         Geocoder.search(public_ip).first
       end
 
-      def find_most_recommendations(distance, top_ratings, type, keyword)
+      def find_most_recommendations(_distance, top_ratings, _type, _keyword)
         latitude, longtitude = longtitude_latitude
         location = "#{latitude}%2C#{longtitude}"
-        # type = 'veterinary_care'
-        # keyword = 'pet%20clinic'
 
-        res = `curl -L -X GET '#{DISTANCE_SEARCH_SOURCE}?location=#{location}&radius=#{distance}&type=#{type}&keyword=#{keyword}&key=AIzaSyATOozXnKChk0k5eLSum2NylBwk0Jtu_ZQ'`
+        # res = `curl -L -X GET '#{DISTANCE_SEARCH_SOURCE}?location=#{location}&radius=#{distance}&type=#{type}&keyword=#{keyword}&key=AIzaSyATOozXnKChk0k5eLSum2NylBwk0Jtu_ZQ'`
+        res = `curl -L -X GET '#{DISTANCE_SEARCH_SOURCE}?location=#{location}&radius=#{distance}&type=#{type}&keyword=#{keyword}&key=#{MAP_TOKEN}'`
         res = JSON.parse(res)['results']
         res.sort_by { |hash| -hash['rating'] }[0...top_ratings]
       end

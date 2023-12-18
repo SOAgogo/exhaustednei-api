@@ -9,20 +9,35 @@ module PetAdoption
     # Repository for UserOrm
     class Users
       # user_info = {'name': 'xxx', 'phone_number': 'xxx', 'email': 'xxx'}
-      attr_reader :google_map, :image_conversation, :image_comparison
+      attr_reader :google_map, :image_conversation, :image_comparison, :s3
 
       def initialize
         @google_map = PetAdoption::GeoLocation::GoogleMapApi.new
         @image_conversation = PetAdoption::GptConversation::ImageConversation.new
         @image_comparison = PetAdoption::GptConversation::ImageComparision.new
+        @s3 = PetAdoption::Storage::S3.new
       end
 
+      # user_info is a hash with name,phone_number,county
       def create_db_entity(user_info)
-        latitude, longitude = longtitude_latitude
+        latitude, longtitude = google_map.longtitude_latitude
         user_information = user_info.merge(county: google_map.current_location.data['city'],
                                            latitude:,
-                                           longitude:)
-        Database::ProjectOrm::UserOrm.find_or_create(user_information)
+                                           longtitude:)
+
+        Database::ProjectOrm::LossingPetsOrm.find_or_create(user_information)
+      end
+
+      def find_all_animals_in_county
+        Database::ProjectOrm::LossingPetsOrm.find_all_lost_animals_in_county(@google_map.county)
+      end
+
+      def find_all_animals
+        Database::ProjectOrm::LossingPetsOrm.all
+      end
+
+      def find_user_info_by_image_url(s3_image_url)
+        Database::ProjectOrm::LossingPetsOrm.find_user_info_by_image_url(s3_image_url)
       end
 
       def animal_image_path(image_path)
@@ -42,12 +57,8 @@ module PetAdoption
         image_comparison.generate_words_for_takecare_instructions
       end
 
-      def find_all_animals_in_county
-        Database::ProjectOrm::LossingPetsOrm.find_all_lost_animals_in_county(@google_map.county)
-      end
-
-      def find_all_animals
-        Database::ProjectOrm::LossingPetsOrm.all
+      def upload_image_to_s3(image_path)
+        PetAdoption::Storage::S3.upload_image_to_s3(image_path)
       end
     end
   end

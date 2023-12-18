@@ -5,7 +5,7 @@ require_relative '../../helpers/vcr_helper'
 require 'uri'
 require 'json'
 
-describe 'Test Gpt API' do
+describe 'Test S3 API' do
   VcrHelper.setup_vcr
 
   before do
@@ -18,14 +18,15 @@ describe 'Test Gpt API' do
 
   describe 'Unit test of S3 upload image' do
     before do
-      @s3 = PetAdoption::Storage::S3.S3_init
+      @aws_s3 = PetAdoption::Storage::S3.new
     end
     it 'HAPPY: should upload image to S3' do
-      res = PetAdoption::Storage::S3.upload_image_to_s3('spec/test_s3_upload_image/margis.jpeg')
-      _(res).must_equal('File uploaded successfully to soapicture/uploadsspec/test_s3_upload_image/margis.jpeg')
+      base_url, object_key = PetAdoption::Storage::S3.upload_image_to_s3('spec/test_s3_upload_image/margis3.jpeg')
+      @aws_s3.make_image_public(object_key)
+      _("#{base_url}/#{object_key}").must_equal('https://soapicture.s3.ap-northeast-2.amazonaws.com/uploadsspec/test_s3_upload_image/margis3.jpeg')
     end
     it 'HAPPY: should lists all images on S3' do
-      picture_obj_list = PetAdoption::Storage::S3.download_image_from_s3(@s3)[1]
+      picture_obj_list = @aws_s3.view_image_from_s3[1]
       _(picture_obj_list).must_be_instance_of(Aws::Xml::DefaultList)
     end
   end

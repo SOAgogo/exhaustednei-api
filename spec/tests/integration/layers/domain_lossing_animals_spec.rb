@@ -23,17 +23,35 @@ describe 'Check how many surronding animals' do
     VCR.eject_cassette
   end
 
-  it 'HAPPY: should get the correct number of animals nearby you' do
-    s3 = PetAdoption::Storage::S3.S3_init
-    picture_obj_list = PetAdoption::Storage::S3.download_image_from_s3(s3)[1]
-    animal_info = { hair: 'long', body_type: 'big', kind: 'dog' }
-    s3_picture_url_list = picture_obj_list.map do |picture_obj|
-      "#{BASE_URL}/#{picture_obj.key}"
+  describe 'HAPPY: should get the correct number of animals nearby you' do
+    # fine
+    before do
+      @keeper = PetAdoption::LossingPets::KeeperMapper.new(
+        { hair: 'long', body_type: 'big', kind: 'dog' },
+        { name: 'user2', user_email: 'ton@gmail.com', phone_number: '08-7488121' }
+      )
+      @keeper.upload_image('spec/test_s3_upload_image/schooldog.jpg')
+      @keeper.store_user_info
     end
-    user_info = { 'user_id' => '12345', 'user_name' => 'test_user', 'user_email' => '' }
 
-    keeper_mapper = PetAdoption::LossingPets::KeeperMapper.new(s3_picture_url_list.sample, animal_info, user_info)
-    keeper = keeper_mapper.build_entity(500, true)
-    keeper.how_many_similar_results.must_be_instance_of(Integer)
+    # fine
+    it 'should get the image public url from s3' do
+      _(@keeper.s3_images_url).must_equal('https://soapicture.s3.ap-northeast-2.amazonaws.com/uploadsspec/test_s3_upload_image/margis3.jpeg')
+    end
+
+    # fine
+    it 'should store the keeper info to DB and examine the stored data is correct' do
+      keeper_db = @keeper.users.find_user_info_by_image_url(@keeper.s3_images_url)
+      _(keeper_db[:name]).must_equal('user2')
+      _(keeper_db[:phone_number]).must_equal('08-7488121')
+      _(keeper_db[:user_email]).must_equal('ton@gmail.com')
+    end
+
+    # not yet
+    it 'should get the correct number of animals nearby you' do
+      # picture_obj_list = PetAdoption::Storage::S3.download_image_from_s3(s3)[1]
+      keeper_entity = @keeper.build_entity(300, true)
+      keeper_entity.how_many_similar_results.must_be_instance_of(Integer)
+    end
   end
 end
