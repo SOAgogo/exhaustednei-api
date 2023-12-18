@@ -35,9 +35,9 @@ module PetAdoption
         response.status = result_response.http_status_code
         result_response.to_json
       end
-
       routing.on 'api/v1' do
         routing.on 'projects' do
+          #curl localhost:9292/api/v1/projects/250831
           routing.on String do |animal_id|
             routing.get do
               path_request = Request::AnimalRequest.new(
@@ -56,7 +56,7 @@ module PetAdoption
             end
           end
         end
-
+        #curl localhost:9292/api/v1/animals/dog/宜蘭縣流浪動物中途之家
         routing.on 'animals' do
           routing.on String, String do |animal_kind, shelter_name|
             routing.get do
