@@ -23,9 +23,24 @@ module PetAdoption
       step :select_animal
       
       def select_animal(input)
+
         animal_obj_list = Repository::Info::Animals
           .select_animal_by_shelter_name(input[:requested].animal_kind,
                                         input[:requested].shelter_name)
+                       
+        Success(Response::ApiResult.new(status: :ok, message: animal_obj_list))
+      rescue StandardError => e
+        Failure(Response::ApiResult.new(status: :not_found, message: e.to_s))
+
+      end
+    end
+
+    class SelectAnimal_by_ID
+      include Dry::Transaction
+      step :select_animal_by_ID
+      def select_animal_by_ID(input)
+        animal_obj_list = Repository::Info::Animals
+          .find_animal_db_obj_by_id(input[:requested].animal_id)
                                         
         Success(Response::ApiResult.new(status: :ok, message: animal_obj_list))
       rescue StandardError => e

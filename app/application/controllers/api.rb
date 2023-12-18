@@ -38,9 +38,29 @@ module PetAdoption
 
       routing.on 'api/v1' do
         routing.on 'projects' do
+          routing.on String do |animal_id|
+            routing.get do
+              path_request = Request::AnimalRequest.new(
+                animal_id
+              )
+              result = Services::SelectAnimal_by_ID.new.call(requested: path_request)
+              if result.failure?
+                failed = Representer::HttpResponse.new(result.failure)
+                routing.halt failed.http_status_code, failed.to_json
+              end
+              http_response = Representer::HttpResponse.new(result.value!)
+              response.status = http_response.http_status_code
+              Representer::Animal.new(
+                result.value!.message
+              ).to_json
+            end
+          end
+        end
+
+        routing.on 'animals' do
           routing.on String, String do |animal_kind, shelter_name|
             routing.get do
-              path_request = Request::ProjectPath.new(
+              path_request = Request::ShelterRequestList.new(
                 shelter_name, animal_kind
               )
               result = Services::SelectAnimal.new.call(requested: path_request)
@@ -50,13 +70,9 @@ module PetAdoption
               end
               http_response = Representer::HttpResponse.new(result.value!)
               response.status = http_response.http_status_code
-
-              Representer::AnimalCollectionDecorator.new(
-                result.value!.message
-              ).to_json
+              result.value!.message.keys.to_json
             end
           end
-
         end
       end
     end

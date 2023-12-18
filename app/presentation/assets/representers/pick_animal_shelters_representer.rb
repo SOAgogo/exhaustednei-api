@@ -2,15 +2,15 @@
 
 require 'roar/decorator'
 require 'roar/json'
-require_relative 'animal_representer'
+require_relative 'animal_list'
 
 module PetAdoption
   module Representer
-    # Represents a collection of animals
-    class AnimalCollectionDecorator < Roar::Decorator
+    # Represents a list of animal IDs
+    class AnimalIdList < Roar::Decorator
       include Roar::JSON
-
-      collection :animals, class: OpenStruct, extend: Representer::Animal
+      collection :animal_ids, extend: Representer::IntegerRepresenter, class: OpenStruct
     end
   end
 end
+
