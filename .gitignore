@@ -13,7 +13,6 @@ db/local/*
 requirements.txt
 runtime.txt
 .buikdpacks
-/app/infrastructure/gateways/.env
 spec/tests/unit/test_messages/* 
 spec/test_s3_upload_image/*
 spec/fixtures/cassettes/*
