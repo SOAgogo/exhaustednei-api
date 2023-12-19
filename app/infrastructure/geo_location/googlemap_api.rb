@@ -33,7 +33,6 @@ module PetAdoption
         @current_location = location_right_now
         # @county = translate_county_to_chinese(@current_location.data['city'])
         @county = @current_location.data['city']
-        binding.pry
       end
 
       def longtitude_latitude
