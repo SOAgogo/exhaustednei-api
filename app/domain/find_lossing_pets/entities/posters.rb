@@ -26,7 +26,7 @@ module PetAdoption
         popular_vet.max_by { |vet| vet[:rating] }
       end
 
-      def settle_down_animals
+      def animals_take_care_suggestions
         take_care_info
       end
 

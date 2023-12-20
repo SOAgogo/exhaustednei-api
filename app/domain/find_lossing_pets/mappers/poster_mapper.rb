@@ -5,8 +5,8 @@ module PetAdoption
     # class KeeperMapper`
     class PosterMapper
       # animal_information is an user-input
-      def initialize(s3_images_url, user_info)
-        @s3_images_url = s3_images_url
+      def initialize(user_info)
+        @s3_images_url = ''
         @contact_info = user_info # user_info is personal data(email,phone)
         @users = Repository::LossingPets::Users.new
       end
@@ -24,6 +24,21 @@ module PetAdoption
         end
       end
 
+      def images_url(image_path)
+        @s3_images_url = image_path
+      end
+
+      def upload_image(image_path)
+        base_url, object_key = @users.upload_image_to_s3(image_path)
+        images_url("#{base_url}/#{object_key}")
+        @users.s3.make_image_public(object_key)
+      end
+
+      def store_user_info
+        user_information = @user_info.merge(s3_image_url: @s3_images_url)
+        @users.create_db_entity(user_information)
+      end
+
       def fetch_take_care_pets_information(res)
         res.match(/content='(.+?)'/)[1]
       end
@@ -34,7 +49,7 @@ module PetAdoption
       end
 
       def give_some_take_care_pets_information
-        res = users.find_take_care_instructions(s3_images_url)
+        res = users.find_take_care_instructions(@s3_images_url)
         fetch_take_care_pets_information(res)
       end
 

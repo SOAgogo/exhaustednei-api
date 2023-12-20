@@ -11,19 +11,20 @@ module PetAdoption
       # user_info = {'name': 'xxx', 'phone_number': 'xxx', 'email': 'xxx'}
       attr_reader :google_map, :image_conversation, :image_comparison, :s3
 
-      def initialize
-        @google_map = PetAdoption::GeoLocation::GoogleMapApi.new
+      def initialize(county, landmark)
+        @google_map = PetAdoption::GeoLocation::GoogleMapApi.new(county, landmark)
         @image_conversation = PetAdoption::GptConversation::ImageConversation.new
-        @image_comparison = PetAdoption::GptConversation::ImageComparision.new
+        @image_comparison = PetAdoption::ImageRecognition::Classification.new
         @s3 = PetAdoption::Storage::S3.new
       end
 
       # user_info is a hash with name,phone_number,county
       def create_db_entity(user_info)
         latitude, longtitude = google_map.longtitude_latitude
-        user_information = user_info.merge(county: google_map.current_location.data['city'],
-                                           latitude:,
-                                           longtitude:)
+        user_information = user_info.merge(
+          latitude:,
+          longtitude:
+        )
 
         Database::ProjectOrm::LossingPetsOrm.find_or_create(user_information)
       end
@@ -40,10 +41,6 @@ module PetAdoption
         Database::ProjectOrm::LossingPetsOrm.find_user_info_by_image_url(s3_image_url)
       end
 
-      def animal_image_path(image_path)
-        @image_conversation.image_path(image_path)
-      end
-
       def animal_images_path_for_comparison(image_path1, image_path2)
         @image_comparison.image_path(image_path1, image_path2)
       end
@@ -53,8 +50,8 @@ module PetAdoption
       end
 
       def find_take_care_instructions(s3_images_url)
-        image_comparison.image_path(s3_images_url)
-        image_comparison.generate_words_for_takecare_instructions
+        @image_conversation.image_path(s3_images_url)
+        @image_conversation.generate_words_for_takecare_instructions
       end
 
       def upload_image_to_s3(image_path)

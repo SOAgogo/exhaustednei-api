@@ -34,8 +34,8 @@ gem 'geocoder', '~> 1.3', '>= 1.3.7'
 # gem 'geokit', '~> 1.13'
 gem 'google-maps', '~> 3.0.7'
 gem 'open-uri', '~> 0.1'
-gem 'activerecord'  
-
+gem 'activerecord', '~> 5.0', '>= 5.0.0.1'
+gem 'execjs'
 
 
 # Database
