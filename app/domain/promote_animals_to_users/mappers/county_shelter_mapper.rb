@@ -25,6 +25,10 @@ module PetAdoption
         shelter_obj_map[county_name]
       end
 
+      def get_shelter_obj(county_name, shelter_name)
+        shelter_obj_map[county_name][shelter_name]
+      end
+
       def create_all_shelter_animal_obj(shelter_animal_map)
         shelter_data_list.each do |shelter_info|
           shelter_name = shelter_info['shelter_name']

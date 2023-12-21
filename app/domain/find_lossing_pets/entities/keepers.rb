@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'pry'
 module PetAdoption
   module Entity
     # class Info::adotpers`
@@ -9,7 +10,7 @@ module PetAdoption
       def initialize(lossing_animals_list, animal_information, user_info)
         @lossing_animals_list = lossing_animals_list
         @pet_traits = animal_information
-        @keeper_info = build_value(user_info)
+        @keeper_info = user_info
       end
 
       # transfer the ownership of the animal to the keeper
@@ -40,10 +41,11 @@ module PetAdoption
       end
 
       def build_value(user_info)
-        Values::ContactInfo.new(
+        PetAdoption::Values::ContactInfo.new(
           name: user_info[:name],
           phone_number: user_info[:phone_number],
-          user_email: user_info[:email]
+          user_email: user_info[:email],
+          county: user_info[:county]
         )
       end
     end

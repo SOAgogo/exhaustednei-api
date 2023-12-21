@@ -33,8 +33,8 @@ module PetAdoption
     class Cat < Animal
       include PetAdoption::Mixins::SimilarityCalculator
 
-      def similarity_checking(feature_condition, feature_user_want_ratio, top = 1)
-        similarity(feature_condition, feature_user_want_ratio, feature, top)
+      def similarity_checking(feature_condition, feature_user_want_ratio)
+        similarity(feature_condition, feature_user_want_ratio, feature)
       end
     end
 
@@ -43,9 +43,9 @@ module PetAdoption
       include PetAdoption::Mixins::SimilarityCalculator
 
       # feature_condition: bodytype, color, age, species
-      def similarity_checking(feature_condition, feature_user_want_ratio, top = 1)
+      def similarity_checking(feature_condition, feature_user_want_ratio)
         # return a float number
-        similarity(feature_condition, feature_user_want_ratio, feature, top)
+        similarity(feature_condition, feature_user_want_ratio, feature)
       end
     end
   end

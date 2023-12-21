@@ -52,5 +52,25 @@ module PetAdoption
         `python app/infrastructure/gpt/gpt_image.py "#{@image_path}"`
       end
     end
+
+    # class ImageConparision
+    class SpeicesIndentifier
+      attr_reader :species
+
+      def initialize
+        @species = ''
+      end
+
+      def run(url)
+        @result = `python app/infrastructure/gpt/gpt_species.py "#{url}" `
+        # @result = `python gpt_species.py "#{@image_path1}" `
+        match = @result.match(/'content'='([^']+)'[^)]*\)/)
+        @species = if match
+                     match[1]
+                   else
+                     'hybrid'
+                   end
+      end
+    end
   end
 end

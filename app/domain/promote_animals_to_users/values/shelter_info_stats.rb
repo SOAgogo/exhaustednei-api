@@ -68,6 +68,7 @@ module PetAdoption
 
       def stay_too_long_animals
         old_animal_num = @animal_obj_list.reduce(0) do |sum, (_, animal_obj)|
+          # animal stay over 1000 days is too old
           calculate_time_difference(animal_obj) > 1000 ? sum + 1 : 0
         end
         0 if old_animal_num.nil?

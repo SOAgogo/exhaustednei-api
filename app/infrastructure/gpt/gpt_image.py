@@ -48,37 +48,7 @@ elif len(sys.argv) == 3:
       max_tokens=300,
     )
     print(response.choices[0])
-elif len(sys.argv) ==4:
-    image_path1 = sys.argv[1]
-    image_path2 = sys.argv[2]
-    response = client.chat.completions.create(
-    model="gpt-4-vision-preview",
-    messages=[
-      {
-        "role": "user",
-        "content": [
-          {
-            "type": "text",
-            "text": "What are both dog species or cat species in the pictures? And if they are same species, please give me the similarity of two pictures(the answer must contain a percentage number,eg: 80%)",
-          },
-          {
-            "type": "image_url",
-            "image_url": {
-              "url": image_path1,
-            },
-          },
-          {
-            "type": "image_url",
-            "image_url": {
-              "url": image_path2,
-            },
-          },
-        ],
-      }
-    ],
-    max_tokens=600,
-  )
-    print(response.choices[0])
+
     
 else:
     print("No message received from Ruby.")

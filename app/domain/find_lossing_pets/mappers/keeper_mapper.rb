@@ -2,7 +2,6 @@
 
 require_relative '../lib/distance_calculator'
 require_relative '../repositories/lossing_pets'
-require 'pry'
 
 module PetAdoption
   module LossingPets

@@ -74,15 +74,23 @@ describe 'Check how many surronding animals' do
     end
 
     it 'should get the correct number of animals nearby you' do
-      keeper_entity = @keeper.build_entity(300, false)
+      keeper_entity = @keeper.build_entity(7000, false)
+      binding.pry
       _(keeper_entity.how_many_results).must_be_instance_of(Integer)
     end
 
     it 'should get the distance between you and the animal' do
-      keeper_entity = @keeper.build_entity(300, false)
+      keeper_entity = @keeper.build_entity(50_000, false)
+      binding.pry
       _(keeper_entity.lossing_animals_list.each do |obj|
         _(obj[:distance]).must_be_instance_of(Float)
       end)
+    end
+
+    it 'shoould notify the finder' do
+      keeper_entity = @keeper.build_entity(50_000, false)
+      binding.pry
+      _(keeper_entity.notify_finders).must_be_instance_of(Array)
     end
   end
 end

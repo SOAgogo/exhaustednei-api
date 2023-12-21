@@ -14,7 +14,7 @@ module PetAdoption
       def initialize(county, landmark)
         @google_map = PetAdoption::GeoLocation::GoogleMapApi.new(county, landmark)
         @image_conversation = PetAdoption::GptConversation::ImageConversation.new
-        @image_classification = PetAdoption::ImageRecognition::Classification.new
+        @image_classification = PetAdoption::GptConversation::SpeicesIndentifier.new
         @s3 = PetAdoption::Storage::S3.new
       end
 
