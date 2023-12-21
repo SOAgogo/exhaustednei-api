@@ -4,22 +4,21 @@ module PetAdoption
   module Entity
     # class Info::adotpers`
     class Keepers
-      attr_reader :pet_traits, :pet_picture_path
+      attr_reader :pet_traits, :user_info, :lossing_animals_list
 
-      def initialize(lossing_animals_list, animal_information, user_info, s3_images_url)
+      def initialize(lossing_animals_list, animal_information, user_info)
         @lossing_animals_list = lossing_animals_list
         @pet_traits = animal_information
-        @user_info = user_info
-        @s3_images_url = s3_images_url
+        @keeper_info = build_value(user_info)
       end
 
       # transfer the ownership of the animal to the keeper
-      def how_many_similar_results
+      def how_many_results
         @lossing_animals_list.size
       end
 
       # watch if there is an animal sitter in database
-      def notify_posters
+      def notify_finders
         # send email to the user
         information = []
         lossing_animals_list.each_with_object({}) do |info, hash|
@@ -38,6 +37,14 @@ module PetAdoption
         information_hash['email'] = @user_info['email']
         information_hash['animal_traits'] = @pet_traits
         information_hash
+      end
+
+      def build_value(user_info)
+        Values::ContactInfo.new(
+          name: user_info[:name],
+          phone_number: user_info[:phone_number],
+          user_email: user_info[:email]
+        )
       end
     end
   end

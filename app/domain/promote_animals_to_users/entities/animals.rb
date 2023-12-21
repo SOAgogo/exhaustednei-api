@@ -10,9 +10,6 @@ module PetAdoption
     # class Info::Animal`
     class Animal
       def initialize(feature)
-        feature[:birth_date] = nil
-        feature[:health_condition] = nil
-        feature[:personality] = nil
         @feature = Value::AnimalInfo.new(feature)
       end
 
@@ -22,7 +19,9 @@ module PetAdoption
           'sex' => @feature.sex,
           'sterilized' => @feature.sterilized,
           'vaccinated' => @feature.vaccinated,
-          'bodytype' => @feature.bodytype }
+          'bodytype' => @feature.bodytype,
+          'registration_date' => @feature.registration_date,
+          'species' => @feature.species }
       end
 
       def to_attr_hash
@@ -37,11 +36,6 @@ module PetAdoption
       def similarity_checking(feature_condition, feature_user_want_ratio, top = 1)
         similarity(feature_condition, feature_user_want_ratio, feature, top)
       end
-
-      def advanced_similarity_checking(feature_condition, feature_user_want_ratio, top = 1)
-        # return a float number
-        similarity(feature_condition, feature_user_want_ratio, feature, top)
-      end
     end
 
     # class Info::Dog`
@@ -50,11 +44,6 @@ module PetAdoption
 
       # feature_condition: bodytype, color, age, species
       def similarity_checking(feature_condition, feature_user_want_ratio, top = 1)
-        # return a float number
-        similarity(feature_condition, feature_user_want_ratio, feature, top)
-      end
-
-      def advanced_similarity_checking(feature_condition, feature_user_want_ratio, top = 1)
         # return a float number
         similarity(feature_condition, feature_user_want_ratio, feature, top)
       end

@@ -5,12 +5,15 @@ require 'net/http'
 require 'google-maps'
 require 'geocoder'
 require 'pry'
-require_relative '../lib/chinese_translator'
 
 module PetAdoption
   module GeoLocation
     # class Conversation`
     class GoogleMapApi
+      class Errors
+        SearchDistanceTooShort = Class.new(StandardError)
+      end
+
       DISTANCE_SEARCH_SOURCE = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
       attr_reader :county, :current_location, :landmark
 
@@ -23,7 +26,7 @@ module PetAdoption
       # include PetAdoption::ChineseTranslator::Util
 
       def self.count_two_points_distance(point1, point2)
-        Geocoder::Calculations.distance_between(point1, point2) * 1.609344
+        Geocoder::Calculations.distance_between(point1, point2) * 1000
       end
 
       def initialize(county, landmark)
@@ -31,8 +34,6 @@ module PetAdoption
         @landmark = landmark
         @county = county
         @current_location = location_right_now
-        # @county = translate_county_to_chinese(@current_location.data['city'])
-        # @county = @current_location.data['city']
       end
 
       def longtitude_latitude
@@ -41,18 +42,26 @@ module PetAdoption
         [latitude.to_f, longitude.to_f]
       end
 
+      def address
+        @current_location.data['display_name']
+      end
+
       def location_right_now
         Geocoder.search("#{@landmark},#{@county}").min_by { |obj| -obj.data['importance'] }
       end
 
-      def find_most_recommendations(_distance, top_ratings, _type, _keyword)
+      def find_most_recommendations(distance, top_ratings, type, keyword)
         latitude, longtitude = longtitude_latitude
         location = "#{latitude}%2C#{longtitude}"
 
-        res = `curl -L -X GET '#{DISTANCE_SEARCH_SOURCE}?location=#{location}&radius=#{distance}&
-        type=#{type}&keyword=#{keyword}&key=#{MAP_TOKEN}'`
+        # nearby search api
+        res = `curl -L -X GET '#{DISTANCE_SEARCH_SOURCE}?location=#{location}&radius=#{distance}&type=#{type}&keyword=#{keyword}&key=#{App.config.MAP_TOKEN}'` # rubocop:disable Layout/LineLength
+
+        return nil, Errors::SearchDistanceTooShort if res == ''
+
         res = JSON.parse(res)['results']
-        res.sort_by { |hash| -hash['rating'] }[0...top_ratings]
+
+        [res.sort_by { |hash| -hash['rating'] }[0...top_ratings], nil]
       end
     end
   end

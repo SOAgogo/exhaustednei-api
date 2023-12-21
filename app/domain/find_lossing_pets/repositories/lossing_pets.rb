@@ -9,12 +9,12 @@ module PetAdoption
     # Repository for UserOrm
     class Users
       # user_info = {'name': 'xxx', 'phone_number': 'xxx', 'email': 'xxx'}
-      attr_reader :google_map, :image_conversation, :image_comparison, :s3
+      attr_reader :google_map, :image_conversation, :image_classification, :s3
 
       def initialize(county, landmark)
         @google_map = PetAdoption::GeoLocation::GoogleMapApi.new(county, landmark)
         @image_conversation = PetAdoption::GptConversation::ImageConversation.new
-        @image_comparison = PetAdoption::ImageRecognition::Classification.new
+        @image_classification = PetAdoption::ImageRecognition::Classification.new
         @s3 = PetAdoption::Storage::S3.new
       end
 
@@ -25,8 +25,7 @@ module PetAdoption
           latitude:,
           longtitude:
         )
-
-        Database::ProjectOrm::LossingPetsOrm.find_or_create(user_information)
+        Database::ProjectOrm::LossingPetsOrm.lost_animals_create(user_information)
       end
 
       def find_all_animals_in_county
@@ -34,22 +33,22 @@ module PetAdoption
       end
 
       def find_all_animals
-        Database::ProjectOrm::LossingPetsOrm.all
+        Database::ProjectOrm::LossingPetsOrm.find_all_lost_animals_in_country
       end
 
       def find_user_info_by_image_url(s3_image_url)
         Database::ProjectOrm::LossingPetsOrm.find_user_info_by_image_url(s3_image_url)
       end
 
-      def animal_images_path_for_comparison(image_path1, image_path2)
-        @image_comparison.image_path(image_path1, image_path2)
+      def s3_image_uploaded_or_not?(image_path)
+        Database::ProjectOrm::LossingPetsOrm.s3_image_uploaded_or_not(image_path)
       end
 
       def find_veterinary(how_far_from_your_location, top_ratings = 5)
         google_map.find_popular_veterinary(how_far_from_your_location, top_ratings)
       end
 
-      def find_take_care_instructions(s3_images_url)
+      def take_care_instructions(s3_images_url)
         @image_conversation.image_path(s3_images_url)
         @image_conversation.generate_words_for_takecare_instructions
       end

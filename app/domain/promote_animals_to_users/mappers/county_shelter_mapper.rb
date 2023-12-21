@@ -2,6 +2,7 @@
 
 require_relative '../entities/animals'
 require_relative '../entities/county_shelters'
+require_relative '../lib/types'
 
 # create an animal object instance
 module PetAdoption
@@ -12,16 +13,15 @@ module PetAdoption
 
       # use repository to get all the shelter info
       def initialize(shelter_data_list)
-        # key:county_name, value:[county_shelter_obj](list)
         @shelter_data_list = shelter_data_list
-        @shelter_obj_map = {}
+        @shelter_obj_map = Types::HashedHashes.new
       end
 
       def set_shelter_obj_map(county_name, shelter_obj)
-        shelter_obj_map[county_name] = shelter_obj
+        shelter_obj_map[county_name][shelter_obj.shelter_info.name] = shelter_obj
       end
 
-      def get_shelter_obj(county_name)
+      def get_shelter_obj_list(county_name)
         shelter_obj_map[county_name]
       end
 
@@ -35,8 +35,8 @@ module PetAdoption
         end
       end
 
-      def shelter_size
-        shelter_obj_map.size
+      def shelter_size_in_county(county_name)
+        shelter_obj_map[county_name].size
       end
 
       def build_entity(county_name)

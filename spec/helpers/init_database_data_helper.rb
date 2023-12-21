@@ -24,9 +24,11 @@ module Repository
 
       def self.store_shelter_info_to_db(countyshelter_mapper, project)
         project.request_body.each do |shelter_obj|
-          shelter = countyshelter_mapper.get_shelter_obj(shelter_obj['shelter_name'][0..2])
+          shelter_list = countyshelter_mapper.get_shelter_obj_list(shelter_obj['shelter_name'][0..2])
 
-          PetAdoption::Repository::For.entity(shelter).db_find_or_create(shelter)
+          shelter_list.map do |_, shelter|
+            PetAdoption::Repository::For.entity(shelter).db_find_or_create(shelter)
+          end
         end
       end
     end

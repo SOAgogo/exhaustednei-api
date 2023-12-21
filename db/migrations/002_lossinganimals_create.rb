@@ -11,9 +11,12 @@ Sequel.migration do
       String :phone_number, null: false, unique: true
       String :user_email, unique: true
       String :county
+      String :species, null: false
       String :s3_image_url, null: false, unique: true
-      Float :longtitude, null: false, unique: true
-      Float :latitude, null: false, unique: true
+      String :address
+      Boolean :keeper_or_finder, null: false
+      Float :longtitude, null: false
+      Float :latitude, null: false
 
       DateTime :created_at
       DateTime :updated_at

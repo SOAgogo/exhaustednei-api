@@ -51,16 +51,17 @@ module PetAdoption
         @s3.list_objects_v2(bucket: BUCKET_NAME, prefix: 'uploadsspec/test_s3_upload_image/')
       end
 
-      def self.upload_image_to_s3(uploaded_file)
-        # Load the YAML file
-        s3_init
-        object_key = "uploads#{uploaded_file}"
+      # examine the s3 object has been uploaded
+      def self.object_url(uploaded_file)
+        [BASE_URL, "uploads#{uploaded_file}"]
+      end
 
+      def self.upload_image_to_s3(uploaded_file)
+        s3_init
+        _, object_key = object_url(uploaded_file)
         aws_s3 = Aws::S3::Resource.new
         aws_s3.bucket(BUCKET_NAME).object(object_key).upload_file(uploaded_file,
                                                                   content_type: 'image/png;image/jpg;image/jpeg')
-        # "#{BASE_URL}/#{object_key}"
-        [BASE_URL, object_key]
       end
     end
   end

@@ -9,30 +9,30 @@ module PetAdoption
   module ImageRecognition
     # class Info::Project`
     class Classification
-      attr_reader :current_file, :other_files_on_s3
+      attr_reader :species
 
       def initialize
         @script_path = 'app/infrastructure/image_recognition/classification.py'
-        @current_file = ''
-        @other_files_on_s3 = ''
+        @species = ''
       end
 
-      def image_path(current_file, other_files_on_s3)
-        @current_file = current_file
-        @other_files_on_s3 = other_files_on_s3
+      def run(image_path)
+        current_output, = run_classification(image_path)
+        animal_species(current_output)
       end
 
-      def run
-        # Classification.run_classification
-        run_classification
+      def animal_species(current_output)
+        @species = if current_output.match(/'class': '\d+\.(.*?)'/).nil?
+                     'hybrid'
+                   else
+                     current_output.match(/'class': '\d+\.(.*?)'/)[1]
+                   end
       end
 
-      def run_classification
-        current_output, current_status = Open3.capture2("python3 #{@script_path} #{@current_file}")
-        other_output, other_status = Open3.capture2("python3 #{@script_path} #{@other_files_on_s3}")
-        [current_output, current_status, other_output, other_status]
+      def run_classification(image_path)
+        current_output, current_status = Open3.capture2("python3 #{@script_path} #{image_path}")
 
-        # [output, status]
+        [current_output, current_status]
       end
     end
   end

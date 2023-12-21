@@ -19,10 +19,6 @@ module PetAdoption
       attribute :image_url, String.optional
       attribute :registration_date, Strict::Time
 
-      attribute :birth_date, Time.optional
-      attribute :health_condition, String.optional
-      attribute :personality, String.optional
-
       def to_attr_hash
         to_hash
       end

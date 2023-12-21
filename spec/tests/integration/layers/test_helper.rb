@@ -13,9 +13,9 @@ require 'webmock'
 
 require_relative '../../../../require_app'
 require_app
-DOWNLOAD_PATH = 'spec/fixtures/DogCat_results.json'
-json_file = File.read(DOWNLOAD_PATH)
-CORRECT = JSON.parse(json_file)[0..19]
+# DOWNLOAD_PATH = 'spec/fixtures/DogCat_results.json'
+# json_file = File.read(DOWNLOAD_PATH)
+# CORRECT = JSON.parse(json_file)[0..19]
 GPT_TOKEN = PetAdoption::App.config.GPT_TOKEN
 RESOURCE_PATH = 'https://data.moa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL'
 CASSETTES_FOLDER = 'spec/fixtures/cassettes'

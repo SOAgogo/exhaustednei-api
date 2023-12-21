@@ -4,6 +4,7 @@ require 'dry-types'
 require 'dry-struct'
 require_relative '../entities/animals'
 require_relative 'user_donations'
+require_relative '../lib/time_difference_calculator'
 module PetAdoption
   module Value
     # class Info::adotpers`
@@ -27,6 +28,7 @@ module PetAdoption
 
     # class ShelterStats`
     class ShelterStats
+      include PetAdoption::Mixins::TimeDifferenceCalculator
       attr_reader :animal_obj_list, :donate_money, :cat_num, :dog_num
 
       def initialize(animal_obj_list)
@@ -65,7 +67,6 @@ module PetAdoption
       end
 
       def stay_too_long_animals
-        include PetAdoption::Mixins::TimeDifferenceCalculator
         old_animal_num = @animal_obj_list.reduce(0) do |sum, (_, animal_obj)|
           calculate_time_difference(animal_obj) > 1000 ? sum + 1 : 0
         end

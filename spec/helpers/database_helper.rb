@@ -10,4 +10,10 @@ module DatabaseHelper
     Database::ProjectOrm::LossingPetsOrm.map(&:destroy)
     PetAdoption::App.db.run('PRAGMA foreign_keys = ON')
   end
+
+  def self.wipe_lossing_database
+    PetAdoption::App.db.run('PRAGMA foreign_keys = OFF')
+    Database::ProjectOrm::LossingPetsOrm.map(&:destroy)
+    PetAdoption::App.db.run('PRAGMA foreign_keys = ON')
+  end
 end

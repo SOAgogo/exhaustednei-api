@@ -19,9 +19,7 @@ Sequel.migration do
       String :age
       String :image_url
       Time :registration_date, null: false
-      Time :birth_date, null: true
-      String :health_condition, null: true
-      String :personality, null: true
+
       DateTime :created_at
       DateTime :updated_at
     end

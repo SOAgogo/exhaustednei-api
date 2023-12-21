@@ -1,20 +1,32 @@
-# # frozen_string_literal: true
+# frozen_string_literal: true
 
 # require 'dry-types'
 # require 'dry-struct'
 # # this is for calculating how much a member donate money to a shelter
+
+# # for telephone number
+# module Types
+#   include Dry::Types.module
+
+#   Phone = ConstrainedTypes::String.constrained(
+#     format: /\A\d{8}\z/,
+#     size: 8
+#   )
+#   Email = ConstrainedTypes::String.constrained(
+#     format: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\z/
+#   )
+# end
+
 # module PetAdoption
+#   # user info
 #   module Values
-#     # DonationCalculator
+#     include Dry::Types.module
+#     # class ContactInfo`
 #     class ContactInfo < Dry::Struct
 #       include Dry.Types
-#       attribute :name, Strict.optional
-#       attribute :email, Strict.optional
-#       attribute :phone, Strict.optional
-#       attribute :county, Strict::String
-#       attribute :latitude, Strict::Float
-#       attribute :longitude, Strict::Float
-#       attribute :picture_path, Strict::String.optional
+#       attribute :name, Strict.Optional
+#       attribute :phone_number, Types::Phone
+#       attribute :user_email, Types::Email
 #     end
 #   end
 # end

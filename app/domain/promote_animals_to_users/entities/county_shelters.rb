@@ -13,14 +13,15 @@ module PetAdoption
       end
 
       def caculate_each_shelter_severity_of_old_animals
-        @county_shelter_list.reduce(0) do |sum, (_, shelter)|
-          sum += 1 if shelter.shelter_stats.severity_of_old_animals == 'severe'
-          sum
+        sum = 0
+        @county_shelter_list.map do |_, shelter_obj|
+          sum += 1 if shelter_obj.shelter_stats.severity_of_old_animals == 'severe'
         end
+        sum
       end
 
       def county_severity_of_old_animals
-        ratio = caculate_each_shelter_severity_of_old_animals / county_shelter_list.size * 100
+        ratio = caculate_each_shelter_severity_of_old_animals / @county_shelter_list.size * 100
         'severe' if ratio > 50
         'moderate' if ratio > 20
         'mild'

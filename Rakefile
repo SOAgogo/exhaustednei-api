@@ -29,6 +29,17 @@ namespace :spec do
   end
 end
 
+namespace :another do
+  desc 'Run unit and integration tests'
+  Rake::TestTask.new(:domain) do |t|
+    t.pattern = 'spec/tests/{integration}/{domain}/*_spec.rb'
+    # t.pattern = 'spec/tests/{unit}/*_spec.rb'
+    # t.pattern = 'spec/tests/{integration,unit}/**/*_spec.rb'
+    # t.pattern = 'spec/tests/integration/layers/gateway_animal_spec.rb'
+    t.warning = false
+  end
+end
+
 desc 'Keep rerunning tests upon changes'
 task :respec do
   sh "rerun -c 'rake spec' --ignore 'coverage/*'"

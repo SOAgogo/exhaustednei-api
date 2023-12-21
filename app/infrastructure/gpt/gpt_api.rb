@@ -46,36 +46,10 @@ module PetAdoption
       def generate_words_by_star_sign(birth_date)
         star_sign = which_star_sign(birth_date)
         `python app/infrastructure/gpt/gpt_image.py "#{@image_path}" "#{star_sign}"`
-        # `python gpt_image.py "#{@image_path}" "#{star_sign}"`
-        # @result = `python gpt_image.py "#{@image_path}" "#{star_sign}"`
       end
 
       def generate_words_for_takecare_instructions
         `python app/infrastructure/gpt/gpt_image.py "#{@image_path}"`
-        # @result = `python gpt_image.py "#{@image_path}"`
-      end
-    end
-
-    # class ImageConparision
-    class ImageComparision
-      def initialize
-        @image_path1 = ''
-        @image_path2 = ''
-      end
-
-      def image_path(image_path1, image_path2)
-        @image_path1 = image_path1
-        @image_path2 = image_path2
-      end
-
-      def generate_similarity
-        @result = `python app/infrastructure/gpt/gpt_image.py "#{@image_path1}" "#{@image_path2}"`
-        # @result = `python gpt_image.py "#{@image_path1}" "#{@image_path2}"`
-        if @result.match(/(\d+)%/)[1]
-          @result.match(/(\d+)%/)[1].to_i / 100.0
-        else
-          0
-        end
       end
     end
   end
