@@ -75,11 +75,6 @@ group :development do
   gem 'rubocop', '~> 1.0'
 end
 
-<<<<<<< HEAD
 gem 'rack-test'
 gem 'multi_json', '~> 1.15'
 gem 'roar', '~> 1.1'
-=======
-
-gem  'aws-sdk-s3'
->>>>>>> exhaustednei/justin
