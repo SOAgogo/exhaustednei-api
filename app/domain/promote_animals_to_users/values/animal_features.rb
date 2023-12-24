@@ -10,6 +10,7 @@ module PetAdoption
       include Dry.Types
       attribute :origin_id, Strict::Integer
       attribute :species, String.optional
+      attribute :kind, Strict::String
       attribute :age, Strict::String
       attribute :color, Strict::String
       attribute :sex, Strict::String

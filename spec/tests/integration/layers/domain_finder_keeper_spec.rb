@@ -75,22 +75,28 @@ describe 'Check how many surronding animals' do
 
     it 'should get the correct number of animals nearby you' do
       keeper_entity = @keeper.build_entity(7000, false)
-      binding.pry
       _(keeper_entity.how_many_results).must_be_instance_of(Integer)
     end
 
     it 'should get the distance between you and the animal' do
       keeper_entity = @keeper.build_entity(50_000, false)
-      binding.pry
       _(keeper_entity.lossing_animals_list.each do |obj|
         _(obj[:distance]).must_be_instance_of(Float)
       end)
     end
 
-    it 'shoould notify the finder' do
+    it 'should notify the finder' do
       keeper_entity = @keeper.build_entity(50_000, false)
-      binding.pry
       _(keeper_entity.notify_finders).must_be_instance_of(Array)
+      _(keeper_entity.contact_me).must_be_instance_of(PetAdoption::Values::ContactInfo)
+    end
+
+    it 'posters should find the first contact vet' do
+      poster = @poster2.build_entity(50_000, 5)
+      # _(poster.first_contact_vet).must_be_instance_of(PetAdoption::Values::VetInfo)
+      _(poster.first_contact_vet).must_raise PetAdoption::Entity::Finders::Errors::CantFindTheVets
+      _(poster.animals_take_care_suggestions).must_be_instance_of(PetAdoption::Values::TakeCareInfo)
+      _(poster.contact_me).must_be_instance_of(PetAdoption::Values::ContactInfo)
     end
   end
 end

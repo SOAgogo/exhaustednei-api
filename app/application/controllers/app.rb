@@ -36,13 +36,12 @@ module PetAdoption
         session[:watching] ||= {}
         routing.redirect '/home' if session[:watching]['session_id']
         flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
-        # view('shelter_info')
         view('signup')
       end
 
       routing.post 'signup' do
-        session_id = SecureRandom.uuid
-        routing.params.merge!('session_id' => session_id)
+        # session_id = SecureRandom.uuid
+        # routing.params.merge!('session_id' => session_id)
 
         url_request = Forms::UserDataValidator.new.call(routing.params.transform_keys(&:to_sym))
         if url_request.failure?
@@ -50,14 +49,6 @@ module PetAdoption
           flash[:error] = Forms::HumanReadAble.error(url_request.errors.to_h)
           routing.redirect '/'
         end
-
-        # for domain testing
-        cookie_hash = routing.params
-        Services::TestForDomain.new.call(cookie_hash)
-        db_user = Services::CreateUserAccounts.new.call(url_request:)
-
-        flash.now[:notice] = 'Your user creation failed...' if db_user.failure?
-        # creae user account
 
         session[:watching] = routing.params
         routing.redirect '/home'
@@ -100,8 +91,8 @@ module PetAdoption
           animal_kind = URI.decode_www_form_component(ak_ch)
           begin
             response = Services::SelectAnimal.new.call({ animal_kind:, shelter_name: })
-            view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(response.value![:animal_obj_list])
 
+            view_obj = response.value![:animal_obj_list]
             view 'project', locals: {
               view_obj:
             }
@@ -142,12 +133,6 @@ module PetAdoption
       routing.on 'next-keeper' do
         routing.is do
           view 'next-keeper'
-        end
-      end
-
-      routing.on 'adopt' do
-        routing.post do
-          view 'adopt'
         end
       end
 
@@ -192,11 +177,23 @@ module PetAdoption
         end
       end
 
-      # routing.on 'get_cookie' do
-      #   # Retrieve the value from the cookie
-      #   cookie_value = request.cookies['example_cookie']
-      #   "Cookie value: #{cookie_value}"
-      # end
+      routing.on 'adopt' do
+        view 'adopt'
+      end
+
+      routing.post 'promote-user-animals' do
+        # puts routing.params
+
+        # params = routing.params
+        keys_to_exclude = %w[name email phone birthdate address]
+        user_preference = session[:watching].except(*keys_to_exclude)
+        county = session[:watching]['address'][0..2]
+
+        user_preference['county'] = county if routing.params['searchcounty'] == 'yes'
+
+        binding.pry
+        Services::PromoteUserAnimals.new.call(user_preference, routing.params['animal_kind'])
+      end
     end
   end
   # rubocop:enable Metrics/ClassLength

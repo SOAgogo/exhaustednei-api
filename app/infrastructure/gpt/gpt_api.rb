@@ -2,7 +2,6 @@
 
 require 'open3'
 require_relative '../lib/star_sign'
-require 'pry'
 
 module PetAdoption
   module GptConversation
@@ -64,9 +63,10 @@ module PetAdoption
       def run(url)
         @result = `python app/infrastructure/gpt/gpt_species.py "#{url}" `
         # @result = `python gpt_species.py "#{@image_path1}" `
-        match = @result.match(/'content'='([^']+)'[^)]*\)/)
+        match = @result.match(/[A-Z][a-z]+(?=\s[A-Z])(?:\s[A-Z][a-z]+)+/)
+
         @species = if match
-                     match[1]
+                     match[0]
                    else
                      'hybrid'
                    end

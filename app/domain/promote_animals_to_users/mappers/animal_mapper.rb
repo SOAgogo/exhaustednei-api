@@ -53,6 +53,7 @@ module PetAdoption
         def build_dog_entity
           PetAdoption::Entity::Dog.new(
             origin_id:,
+            kind:,
             species:,
             age:,
             color:,
@@ -68,6 +69,7 @@ module PetAdoption
         def build_cat_entity
           PetAdoption::Entity::Cat.new(
             origin_id:,
+            kind:,
             species:,
             age:,
             color:,
@@ -85,6 +87,10 @@ module PetAdoption
 
         def origin_id
           @data['animal_id']
+        end
+
+        def kind
+          @data['animal_kind']
         end
 
         def species

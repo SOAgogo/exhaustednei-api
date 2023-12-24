@@ -10,6 +10,7 @@ Sequel.migration do
       foreign_key :shelter_id, :shelters
 
       Integer :origin_id, unique: true, null: false
+      String :kind, null: false
       String :species
       String :sex, null: false
       Boolean :sterilized

@@ -11,8 +11,12 @@ module PetAdoption
         required(:email).filled
         required(:phone).filled
         required(:address).filled(:string)
-        required(:state).filled(:string)
-        required(:comment).filled(:string)
+        required(:age).filled(:string)
+        required(:sex).filled(:string)
+        required(:sterilized).filled(:string)
+        required(:vaccinated).filled(:string)
+        required(:bodytype).filled(:string)
+
       end
 
       EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -31,10 +35,24 @@ module PetAdoption
         key.failure('must contain 路(街)') unless value.include?('路') || value.include?('街')
         key.failure('must contain 號') unless value.include?('號')
       end
-      rule(:state) do
-        unless value.include?('keeper') || value.include?('donater') || value.include?('adopter')
-          key.failure('must be one of these three values: keeper,donater,adopter')
-        end
+
+      rule(:age) do
+        key.failure('must be CHILD or ADULT') unless value == 'CHILD' || value == 'ADULT'
+      end
+
+      rule(:sterilized) do
+        key.failure('must be yes or no') unless value == 'yes' || value == 'no'
+      end
+
+      rule(:vaccinated) do
+        key.failure('must be yes or no') unless value == 'yes' || value == 'no'
+      end
+      rule(:bodytype) do
+        key.failure('must be SMALL or MEDIUM or LARGE') unless value == 'SMALL' || value == 'MEDIUM' || value == 'LARGE'
+      end
+
+      rule(:sex) do
+        key.failure('must be GIRL or BOY') unless value == 'girl' || value == 'boy'
       end
     end
 

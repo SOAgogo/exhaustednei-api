@@ -21,7 +21,9 @@ module PetAdoption
           'vaccinated' => @feature.vaccinated,
           'bodytype' => @feature.bodytype,
           'registration_date' => @feature.registration_date,
-          'species' => @feature.species }
+          'species' => @feature.species,
+          'image_url' => @feature.image_url,
+          'origin_id' => @feature.origin_id }
       end
 
       def to_attr_hash
@@ -42,7 +44,7 @@ module PetAdoption
     class Dog < Animal
       include PetAdoption::Mixins::SimilarityCalculator
 
-      # feature_condition: bodytype, color, age, species
+      # feature_condition: bodytype, color, age, species,vaccinated
       def similarity_checking(feature_condition, feature_user_want_ratio)
         # return a float number
         similarity(feature_condition, feature_user_want_ratio, feature)

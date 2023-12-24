@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'pry'
 module PetAdoption
   module Repository
     # Repository for Members
@@ -35,13 +36,14 @@ module PetAdoption
 
         PetAdoption::Entity::Animal.new(
           origin_id: db_record.origin_id,
+          kind: db_record.kind,
           species: db_record.species,
           age: db_record.age,
           color: db_record.color,
           sex: db_record.sex,
           sterilized: db_record.sterilized,
           vaccinated: db_record.vaccinated,
-          body_type: db_record.body_type,
+          bodytype: db_record.bodytype,
           image_url: db_record.image_url,
           registration_date: db_record.registration_date
         )
@@ -49,7 +51,8 @@ module PetAdoption
 
       # rubocop:enable Metrics/MethodLength
       def self.select_animal_by_shelter_name(animal_kind, shelter_name)
-        db_record = Database::ProjectOrm::AnimalOrm.where(animal_kind:, animal_place: shelter_name).all
+        db_record = Database::ProjectOrm::AnimalOrm.graph(:shelters, id: :shelter_id)
+          .where(kind: animal_kind, name: shelter_name).all
         if db_record.empty?
           DBError.new('DB error', 'DB cant find your data').tap do |rsp|
             raise(rsp.error)
