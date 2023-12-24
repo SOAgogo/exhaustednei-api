@@ -13,7 +13,16 @@ module Database
       plugin :timestamps, update_on_create: true
 
       def self.find_or_create(shelter_info)
-        first(animal_shelter_pkid: shelter_info[:animal_shelter_pkid]) || create(shelter_info)
+        first(origin_id: shelter_info[:origin_id]) || create(shelter_info)
+      end
+
+      def self.find_name(name)
+        first(name:)
+      end
+
+      def self.find_id(origin_id)
+        # where(origin_id:).first
+        first(origin_id:)
       end
     end
   end

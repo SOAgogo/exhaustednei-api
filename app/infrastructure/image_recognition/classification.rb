@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 # classification.rb
-require 'pry'
+
 require 'open3'
 require 'aws-sdk-s3'
+require 'pry'
 
 module PetAdoption
   module ImageRecognition
@@ -56,18 +57,30 @@ module PetAdoption
 
 
     class Classification
-      def initialize(uploaded_file)
+      attr_reader :species
+
+      def initialize
         @script_path = 'app/infrastructure/image_recognition/classification.py'
-        @uploaded_file = uploaded_file
+        @species = ''
       end
 
-      def run
-        Classification.run_classification(@script_path, @uploaded_file)
+      def run(image_path)
+        current_output, = run_classification(image_path)
+        animal_species(current_output)
       end
 
-      def self.run_classification(script_path, uploaded_file)
-        output, status = Open3.capture2("python3 #{script_path} #{uploaded_file}")
-        [output, status]
+      def animal_species(current_output)
+        @species = if current_output.match(/'class': '\d+\.(.*?)'/).nil?
+                     'hybrid'
+                   else
+                     current_output.match(/'class': '\d+\.(.*?)'/)[1]
+                   end
+      end
+
+      def run_classification(image_path)
+        current_output, current_status = Open3.capture2("python3 #{@script_path} #{image_path}")
+
+        [current_output, current_status]
       end
     end
   end

@@ -47,6 +47,7 @@ module PetAdoption
       routing.post 'signup' do
         session_id = SecureRandom.uuid
         routing.params.merge!('session_id' => session_id)
+
         url_request = Forms::UserDataValidator.new.call(routing.params.transform_keys(&:to_sym))
         if url_request.failure?
           session[:watching] = {}
@@ -60,6 +61,8 @@ module PetAdoption
         db_user = Services::CreateUserAccounts.new.call(url_request:)
 
         flash.now[:notice] = 'Your user creation failed...' if db_user.failure?
+        # creae user account
+
         session[:watching] = routing.params
         routing.redirect '/home'
       end
@@ -200,14 +203,18 @@ module PetAdoption
 
       routing.on 'shelter_statistics' do
         routing.is do
-          # stats_output = Services::ShelterStatistics.new.call
-          shelter = PetAdoption::ShelterInfo::ShelterInfoMapper.new('臺中市動物之家南屯園區').build_entity
+          # session[:all_county_stats] ||= {}
+          # session[:query_country_stats] ||= {}
 
-          output = { 'sterilization' => shelter.count_num_sterilizations,
-                     'no_sterilizations' => shelter.count_num_no_sterilizations,
-                     'for_bacterin' => shelter.count_num_animal_bacterin,
-                     'no_bacterin' => shelter.count_num_animal_no_bacterin }
-          view 'shelter_info', locals: { output: }
+          # response['Set-Cookie'] = 'example_cookie=cookie_value; path=/; HttpOnly; SameSite=Lax'
+
+          all_county_stats = Services::CountryOverView.new.call
+          final_stats = all_county_stats.value![:final_stats]
+          all_county_stats = all_county_stats.value![:county_stats]
+
+          # view 'shelter_info', locals: { all_county_stats: session[:all_county_stats] }
+
+          view 'shelter_info', locals: { shelter: }
         end
       end
     end

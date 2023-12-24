@@ -15,7 +15,27 @@ end
 namespace :spec do
   desc 'Run unit and integration tests'
   Rake::TestTask.new(:default) do |t|
-    t.pattern = 'spec/tests/{integration,unit}/**/*_spec.rb'
+    t.pattern = 'spec/tests/{integration}/{layers}/*_spec.rb'
+    # t.pattern = 'spec/tests/{unit}/*_spec.rb'
+    # t.pattern = 'spec/tests/{integration,unit}/**/*_spec.rb'
+    # t.pattern = 'spec/tests/integration/layers/gateway_animal_spec.rb'
+    t.warning = false
+  end
+
+  desc 'Run unit, integration, and acceptance tests'
+  Rake::TestTask.new(:all) do |t|
+    t.pattern = 'spec/tests/**/*_spec.rb'
+    t.warning = false
+  end
+end
+
+namespace :another do
+  desc 'Run unit and integration tests'
+  Rake::TestTask.new(:domain) do |t|
+    t.pattern = 'spec/tests/{integration}/{domain}/*_spec.rb'
+    # t.pattern = 'spec/tests/{unit}/*_spec.rb'
+    # t.pattern = 'spec/tests/{integration,unit}/**/*_spec.rb'
+    # t.pattern = 'spec/tests/integration/layers/gateway_animal_spec.rb'
     t.warning = false
   end
 end
@@ -137,11 +157,6 @@ namespace :db do
     FileUtils.rm(PetAdoption::App.config.DB_FILENAME)
     puts "Deleted #{PetAdoption::App.config.DB_FILENAME}"
   end
-end
-
-desc 'Run application console'
-task :console do
-  sh 'pry -r ./load_all'
 end
 
 namespace :vcr do

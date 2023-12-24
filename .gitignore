@@ -1,5 +1,6 @@
 _snippets/
 config/secrets.yml
+config/storage.yml
 coverage/*
 !coverage/.resultset.json
 .DS_Store
@@ -12,3 +13,8 @@ db/local/*
 requirements.txt
 runtime.txt
 .buikdpacks
+spec/tests/unit/test_messages/* 
+spec/test_s3_upload_image/*
+spec/fixtures/cassettes/*
+spec/tests/unit/picture_messages/* 
+app/infrastructure/gpt/.env
