@@ -1,7 +1,11 @@
 {
   "RSpec": {
     "coverage": {
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/require_app.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/require_app.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -16,12 +20,20 @@
           1,
           null,
           1,
+<<<<<<< HEAD
           51,
+=======
+          35,
+>>>>>>> exhaustednei/justin
           null,
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/config/environment.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/config/environment.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -72,7 +84,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/infrastructure/database/Animal_orm.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/infrastructure/database/Animal_orm.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -91,6 +107,7 @@
           null,
           1,
           0,
+<<<<<<< HEAD
           null,
           null,
           null,
@@ -103,13 +120,19 @@
           null,
           null,
           null,
+=======
+>>>>>>> exhaustednei/justin
           null,
           null,
           null,
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/infrastructure/database/shelter_orm.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/infrastructure/database/shelter_orm.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -133,7 +156,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/infrastructure/database/user_orm.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/infrastructure/database/user_orm.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -157,7 +184,49 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/infrastructure/gateways/animalweb_api.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/infrastructure/download/curl_download_file.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/justinkao/SOA/exhaustednei/app/infrastructure/gateways/animalweb_api.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -203,7 +272,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/infrastructure/image_recognition/classification.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/infrastructure/image_recognition/classification.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -233,7 +306,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/presentation/assets/representers/http_response_representer.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/presentation/view_objects/animal_info.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -276,6 +353,7 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/presentation/responses/api_result.rb": {
         "lines": [
           null,
@@ -643,6 +721,9 @@
         ]
       },
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/entities/accounts.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/entities/accounts.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -670,7 +751,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/entities/adopters.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/entities/adopters.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -703,7 +788,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/values/animal_order.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/values/animal_order.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -733,7 +822,66 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/entities/donators.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/shelter_animals/entities/animal.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/entities/donators.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -764,7 +912,45 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/entities/keepers.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/shelter_animals/entities/shelter.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/entities/keepers.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -789,7 +975,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/init.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/init.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -801,12 +991,16 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/lib/donate_money_counter.rb": {
         "lines": [
 
         ]
       },
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/values/donate_share.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/values/donate_share.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -832,7 +1026,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/values/shelter_order.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/values/shelter_order.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -855,7 +1053,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/repositories/users.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/repositories/users.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -921,7 +1123,135 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/mappers/account_mapper.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/shelter_animals/repositories/animals.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/mappers/account_mapper.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -992,7 +1322,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/mappers/adopter_mapper.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/mappers/adopter_mapper.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -1063,7 +1397,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/mappers/donator_mapper.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/mappers/donator_mapper.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -1135,7 +1473,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/domain/adopters/mappers/keeper_mapper.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/adopters/mappers/keeper_mapper.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -1147,6 +1489,7 @@
           1,
           null,
           1,
+<<<<<<< HEAD
           0,
           null,
           null,
@@ -1382,13 +1725,63 @@
           1,
           0,
           0,
+=======
           0,
+          null,
+          null,
+          1,
           0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          0,
+          null,
+          null,
+          1,
+>>>>>>> exhaustednei/justin
+          0,
+          null,
+<<<<<<< HEAD
+          1,
+          null,
+          1,
+=======
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           1,
           null,
           1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+>>>>>>> exhaustednei/justin
           0,
           null,
           null,
@@ -1400,7 +1793,693 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/application/services/country_stat_overviews.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/domain/shelter_animals/mappers/animal_mapper.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/justinkao/SOA/exhaustednei/app/domain/shelter_animals/mappers/animal_shelter_initiator.rb": {
+        "lines": [
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/justinkao/SOA/exhaustednei/app/domain/shelter_animals/mappers/shelter_mapper.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          0,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          1,
+          0,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/justinkao/SOA/exhaustednei/app/domain/shelter_animals/repositories/for.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/justinkao/SOA/exhaustednei/app/domain/shelter_animals/repositories/shelters.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          null,
+          1,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          1,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          1,
+          1,
+          0,
+          null,
+          null,
+          1,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/justinkao/SOA/exhaustednei/app/application/controllers/app.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/justinkao/SOA/exhaustednei/app/application/forms/user_input.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -1462,6 +2541,10 @@
           0,
           0,
           null,
+          null,
+          null,
+          1,
+          0,
           0,
           0,
           0,
@@ -1473,7 +2556,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/application/services/create_user_accounts.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/application/services/create_user_accounts.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -1538,7 +2625,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/application/services/for_domain_testing.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/application/services/for_domain_testing.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -1569,7 +2660,11 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/application/services/image_recognition.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/application/services/image_recognition.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
@@ -1600,34 +2695,113 @@
           null
         ]
       },
+<<<<<<< HEAD
       "/home/justinkao/SOA/exhaustednei-api/app/application/services/pick_animal_shelters.rb": {
+=======
+      "/home/justinkao/SOA/exhaustednei/app/application/services/pick_animal_shelters.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          1,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "/home/justinkao/SOA/exhaustednei/spec/helpers/vcr_helper.rb": {
+>>>>>>> exhaustednei/justin
         "lines": [
           null,
           null,
           1,
           1,
           null,
+<<<<<<< HEAD
+=======
+          null,
+          1,
+>>>>>>> exhaustednei/justin
           1,
           1,
           null,
+          1,
+<<<<<<< HEAD
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+=======
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+>>>>>>> exhaustednei/justin
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          null,
+<<<<<<< HEAD
           1,
           null,
           1,
           0,
-          0,
-          null,
-          0,
-          null,
-          null,
-          null,
-          null,
-          1,
-          1,
-          null,
-          1,
-          null,
-          1,
-          0,
           null,
           null,
           0,
@@ -1636,10 +2810,16 @@
           null,
           null,
           null,
+=======
+>>>>>>> exhaustednei/justin
           null
         ]
       }
     },
+<<<<<<< HEAD
     "timestamp": 1702527522
+=======
+    "timestamp": 1701020057
+>>>>>>> exhaustednei/justin
   }
 }

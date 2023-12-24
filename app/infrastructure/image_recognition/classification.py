@@ -37,24 +37,27 @@ def predict_cat_breed(image_url):
     rf = Roboflow(api_key="tvNfa4TcFQ57IGJvtQ9q")
 
     # Replace 'dog-breed-xpaq6' with your actual Roboflow project name
-    project = rf.workspace().project("cat-breed-classification")
-    
-    # Replace '1' with the version of the model you want to use
-    model = project.version(1).model
+    #project = rf.workspace().project("cat-breed-classification")
+    project = rf.workspace().project("cat-breeds-obw8e")
+    model = project.version(2).model
 
     # Infer on an image hosted elsewhere
 
     # Assuming your code is in the home directory
-
-    predictions = model.predict(image_url).json()
-        
-    output = [{'class': item['class'], 'confidence': item['confidence']} for item in predictions['predictions'] if item['confidence'] >= 0.5]
-
-    # Add a default item if no items pass the condition
-    output.append({'class': 'hybrid', 'confidence': 1} if not output else {})
+    predictions = model.predict(image_url, hosted=False).json()
+    output = predictions['predictions'][0]['predictions'][0]
     # Assuming your output string
     # Define a regular expression pattern to match the desired string
     # Search for the pattern in the output string
+    if output['confidence'] >= 0.5 :
+        output
+    else : 
+        output = {'class': 'hybrid', 'confidence': 1}
+    # Add a default item if no items pass the condition
+
+    print(output)
+    return output
+
     print(output)
     return output
 
