@@ -37,12 +37,16 @@ module PetAdoption
       end
       routing.on 'api/v1' do
         routing.on 'projects' do
+
           #curl localhost:9292/api/v1/projects/250831
           routing.on String do |animal_id|
+            binding.pry
+
             routing.get do
               path_request = Request::AnimalRequest.new(
                 animal_id
               )
+
               result = Services::SelectAnimal_by_ID.new.call(requested: path_request)
               if result.failure?
                 failed = Representer::HttpResponse.new(result.failure)
