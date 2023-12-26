@@ -3,7 +3,6 @@
 # classification.rb
 
 require 'open3'
-require 'pry'
 
 module PetAdoption
   module ImageRecognition

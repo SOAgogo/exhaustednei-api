@@ -5,19 +5,19 @@ html
     meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
     script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"
   body
-    h3 Animal Image
+    legend
+      | Upload lost animals information and recommend some vets for you !!
+
     form name="form0" action="found" id="form0" enctype="multipart/form-data"
+      label for="picture_description" Where do you find this cat(dog) ?
+      input type="text" name="location" id="file0"
+      br
       input type="file" name="file0" id="file0" multiple="multiple"
       br
       img src="" id="img0"
-
-      label for="picture_description" Found Location:
-      input type="text" name="picture_description" id="picture_description"
-
-      label for="animal_description" Picture Description:
-      input type="text" name="animal_description" id="animal_description"
-
+      br
       button type="button" id="submitBtn" onclick="submitForm()">Submit
+    
 
     javascript:
       $("#file0").change(function(){
@@ -28,6 +28,7 @@ html
           }
       });
 
+      
       function getObjectURL(file) {
           var url = null ; 
           if (window.createObjectURL!=undefined) { // basic
@@ -49,14 +50,10 @@ html
               processData: false,
               contentType: false,
               success: function(response) {
-                  // Update the output element with the response
 
                 var outputText = $(response).find('#output').text();
                 
-                // Update the output element with the extracted content
                 $("#output").text(outputText);
-
-
               },
               error: function(error) {
                   console.log('Error:', error);

@@ -140,6 +140,15 @@ module PetAdoption
         routing.post do
           uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
 
+          selected_keys = %w[name email phone address]
+          finder_info = session[:watching].slice(*selected_keys).transform_keys(&:to_sym)
+          finder_info[:county] = finder_info[:address][0..1]
+          finder_info.delete(:address)
+          finder_info[:location] = "#{routing.params['location']},#{finder_info[:county]}"
+          finder_info[:file] = uploaded_file
+          res = Services::FinderUploadImages.new.call({ finder_info: })
+
+          binding.pry
           if uploaded_file.nil?
             view 'found', locals: { output: nil }
           else
@@ -182,8 +191,6 @@ module PetAdoption
       end
 
       routing.post 'promote-user-animals' do
-        puts routing.params
-
         keys_to_exclude = %w[name email phone birthdate address]
         user_preference = session[:watching].except(*keys_to_exclude)
         county = session[:watching]['address'][0..2]

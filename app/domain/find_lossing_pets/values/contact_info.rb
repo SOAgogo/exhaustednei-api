@@ -13,8 +13,8 @@ module PetAdoption
     class ContactInfo < Dry::Struct
       include Dry.Types
       attribute :name, Strict::String
-      attribute :phone_number, Strict::String
-      attribute :user_email, Strict::String
+      attribute :phone, Strict::String
+      attribute :email, Strict::String
       attribute :county, Strict::String
     end
   end

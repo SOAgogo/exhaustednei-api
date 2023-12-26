@@ -29,7 +29,6 @@ module PetAdoption
         end
       end
 
-
       # watch if there is an animal sitter in database
       def notify_finders
         @finder_info.values
