@@ -14,7 +14,7 @@ module PetAdoption
       end
 
       def feature
-        { 'animal_age' => @feature.age,
+        { 'age' => @feature.age,
           'color' => @feature.color,
           'sex' => @feature.sex,
           'sterilized' => @feature.sterilized,

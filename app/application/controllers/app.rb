@@ -8,7 +8,7 @@ require 'uri'
 require 'securerandom'
 require 'fileutils'
 require 'open3'
-
+require 'pry'
 module PetAdoption
   # for controller part
 
@@ -182,7 +182,7 @@ module PetAdoption
       end
 
       routing.post 'promote-user-animals' do
-        # puts routing.params
+        puts routing.params
 
         # params = routing.params
         keys_to_exclude = %w[name email phone birthdate address]
@@ -191,8 +191,8 @@ module PetAdoption
 
         user_preference['county'] = county if routing.params['searchcounty'] == 'yes'
 
-        binding.pry
-        Services::PromoteUserAnimals.new.call(user_preference, routing.params['animal_kind'])
+        input = [user_preference, routing.params]
+        Services::PromoteUserAnimals.new.call(input)
       end
     end
   end

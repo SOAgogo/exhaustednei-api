@@ -52,7 +52,7 @@ module PetAdoption
       end
 
       rule(:sex) do
-        key.failure('must be GIRL or BOY') unless value == 'girl' || value == 'boy'
+        key.failure('must be GIRL or BOY') unless value == 'M' || value == 'F'
       end
     end
 

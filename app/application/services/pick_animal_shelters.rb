@@ -27,7 +27,7 @@ module PetAdoption
 
       def select_animal(input)
         animal_obj_list = PetAdoption::Repository::Animals
-          .select_animal_by_shelter_name(input[:animal_kind],
+          .select_animal_by_shelter_name_kind(input[:animal_kind],
                                          input[:shelter_name])
 
         Success(animal_obj_list:)

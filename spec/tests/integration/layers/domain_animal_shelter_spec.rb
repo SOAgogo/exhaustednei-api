@@ -50,7 +50,6 @@ describe 'Tests Animal API ' do
       res = @county_shelter.county_shelter_list.map do |_, shelter|
         shelter.promote_to_user(feature_condition, feature_user_want_ratio, 1)
       end
-      # res = @county_shelter.county_shelter_list[0].promote_to_user(feature_condition, feature_user_want_ratio, 1)
 
       _(res.size).must_equal @county_shelter.county_shelter_list.size
     end

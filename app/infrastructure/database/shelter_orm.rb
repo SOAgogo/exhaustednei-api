@@ -21,8 +21,11 @@ module Database
       end
 
       def self.find_id(origin_id)
-        # where(origin_id:).first
         first(origin_id:)
+      end
+
+      def self.find_shelters_county(county)
+        where(Sequel.like(:name, "#{county}%")).all
       end
     end
   end

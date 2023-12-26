@@ -11,6 +11,11 @@ module PetAdoption
         Database::ProjectOrm::ShelterOrm.all.map { |db_project| rebuild_entity(db_project) }
       end
 
+      def self.find_all_shelters_by_county(county)
+        shelters_in_county = Database::ProjectOrm::ShelterOrm.find_shelters_county(county)
+        shelters_in_county.map(&:name)
+      end
+
       def self.find(entity)
         find_shelter_id(entity.origin_id)
       end
@@ -74,7 +79,6 @@ module PetAdoption
         end
 
         def call
-          # if owner is not in database, create one, otherwise, return it
           animal_database_list = Animals.store_several(@entity.shelter_stats.animal_obj_list)
 
           shelter = create_shelter
