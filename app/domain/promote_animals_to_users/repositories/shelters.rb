@@ -7,27 +7,18 @@ module PetAdoption
   module Repository
     # Repository for Project Entities
     class Shelters
-      def self.all
-        Database::ProjectOrm::ShelterOrm.all.map { |db_project| rebuild_entity(db_project) }
-      end
-
       def self.find_all_shelters_by_county(county)
         shelters_in_county = Database::ProjectOrm::ShelterOrm.find_shelters_county(county)
         shelters_in_county.map(&:name)
       end
 
-      def self.find(entity)
-        find_shelter_id(entity.origin_id)
+      def self.all_shelter_names
+        Database::ProjectOrm::ShelterOrm.all.map(&:name)
       end
 
       def self.find_shelter_by_name(name)
         # still can't get the data from database
         db_record = Database::ProjectOrm::ShelterOrm.find_name(name)
-        rebuild_entity(db_record)
-      end
-
-      def self.find_shelter_id(origin_id)
-        db_record = Database::ProjectOrm::ShelterOrm.find_id(origin_id)
         rebuild_entity(db_record)
       end
 
@@ -43,7 +34,7 @@ module PetAdoption
       def self.rebuild_entity(db_record)
         return nil unless db_record
 
-        db_animals = Animals.find_full_animals_in_shelter(db_record.shelter_name)
+        db_animals = Animals.find_full_animals_in_shelter(db_record.name)
 
         PetAdoption::Entity::Shelter.new(
           db_record.to_hash.merge(

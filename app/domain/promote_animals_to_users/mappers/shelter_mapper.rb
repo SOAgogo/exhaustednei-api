@@ -18,10 +18,8 @@ module PetAdoption
         DataMapper.new(shelter_info, animal_map).build_entity
       end
 
-      def self.db_data_mapper(shelter_data, animal_map); end
-
-      # class DBDataMapper
-      class DBDataMapper
+      # # ShelterMapper::DataMapper
+      class DataMapper
         def initialize(shelter_data, animal_map)
           @data = shelter_data
           @animal_map = animal_map
@@ -42,65 +40,23 @@ module PetAdoption
         private
 
         def origin_id
-          @data.origin_id
+          @data['animal_shelter_pkid']
         end
 
         def name
-          @data.name
+          @data['shelter_name']
         end
 
         def address
-          @data.address
+          @data['shelter_address']
         end
 
         def phone_number
-          @data.phone_number
+          @data['shelter_tel']
         end
 
         def animal_object_list
           @animal_map
-        end
-
-        # # ShelterMapper::DataMapper
-        class DataMapper
-          def initialize(shelter_data, animal_map)
-            @data = shelter_data
-            @animal_map = animal_map
-          end
-
-          def build_entity
-            PetAdoption::Entity::Shelter.new(
-              {
-                origin_id:,
-                name:,
-                address:,
-                phone_number:
-              },
-              animal_object_list
-            )
-          end
-
-          private
-
-          def origin_id
-            @data['animal_shelter_pkid']
-          end
-
-          def name
-            @data['shelter_name']
-          end
-
-          def address
-            @data['shelter_address']
-          end
-
-          def phone_number
-            @data['shelter_tel']
-          end
-
-          def animal_object_list
-            @animal_map
-          end
         end
       end
     end

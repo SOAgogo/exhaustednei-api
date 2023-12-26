@@ -22,6 +22,11 @@ module PetAdoption
         album_file
       end
 
+      def self.find_full_animals_in_shelter(shelter_name)
+        Database::ProjectOrm::AnimalOrm.graph(:shelters, id: :shelter_id)
+          .where(name: shelter_name).all
+      end
+
       # rubocop:disable Metrics/MethodLength,Lint/MissingCopEnableDirective
       def self.rebuild_entity(db_record) # rubocop:disable Metrics/AbcSize
         return nil unless db_record
@@ -69,8 +74,7 @@ module PetAdoption
       end
 
       def self.select_animals_by_shelter(shelter_name)
-        db_record = Database::ProjectOrm::AnimalOrm.graph(:shelters, id: :shelter_id)
-          .where(name: shelter_name).all
+        db_record = find_full_animals_in_shelter(shelter_name)
         if db_record.empty?
           DBError.new('DB error', 'DB cant find your data').tap do |rsp|
             raise(rsp.error)
@@ -84,12 +88,6 @@ module PetAdoption
 
         db_project = PersistProject.new(entity).call
         rebuild_entity(db_project)
-      end
-
-      def self.find_full_animals_in_shelter(shelter_name)
-        Database::ProjectOrm::AnimalOrm
-          .where(animal_place: shelter_name)
-          .all
       end
 
       def self.rebuild_many(db_records)

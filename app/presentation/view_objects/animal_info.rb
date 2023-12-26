@@ -21,11 +21,7 @@ module PetAdoption
         feature['color'] = URI.decode_www_form_component(feature['color'])
         feature['species'] = URI.decode_www_form_component(feature['species'])
         feature['sex'] = sex
-        # feature.merge(
-        #   sex:,
-        #   species: URI.decode_www_form_component(feature['species']),
-        #   color: URI.decode_www_form_component(feature['color'])
-        # )
+
         feature
       end
 
@@ -44,6 +40,32 @@ module PetAdoption
       end
 
       attr_reader :image
+    end
+
+    # View for animal promotions
+    class AnimalPromotion
+      attr_reader :prefer_animals
+
+      def initialize(prefer_animals)
+        @prefer_animals = animals_in_each_shelter(prefer_animals)
+      end
+
+      def animals_in_each_shelter(prefer_animals)
+        shelter_hash = Hash.new { |hash, key| hash[key] = [] }
+        prefer_animals.each do |shelter_animal, score|
+          shelter_hash[shelter_animal[0]] = shelter_hash[shelter_animal[0]] << [shelter_animal[1], score]
+        end
+        view_feature(shelter_hash)
+      end
+
+      def view_feature(shelter_hash)
+        shelter_hash.each do |key, value|
+          features = value.map do |entity, score|
+            entity.feature.merge('score' => score)
+          end
+          shelter_hash[key] = features
+        end
+      end
     end
   end
 end

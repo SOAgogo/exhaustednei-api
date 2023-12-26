@@ -184,7 +184,6 @@ module PetAdoption
       routing.post 'promote-user-animals' do
         puts routing.params
 
-        # params = routing.params
         keys_to_exclude = %w[name email phone birthdate address]
         user_preference = session[:watching].except(*keys_to_exclude)
         county = session[:watching]['address'][0..2]
@@ -192,7 +191,17 @@ module PetAdoption
         user_preference['county'] = county if routing.params['searchcounty'] == 'yes'
 
         input = [user_preference, routing.params]
-        Services::PromoteUserAnimals.new.call(input)
+        output = Services::PromoteUserAnimals.new.call(input)
+        prefer_animals = output.value![:sorted_animals]
+
+        if output.failure?
+          flash[:error] = 'Recommendation failed, please try again.'
+          routing.redirect '/adopt'
+        end
+
+        output_view = PetAdoption::Views::AnimalPromotion.new(prefer_animals)
+
+        view 'recommendation', locals: { output: output_view }
       end
     end
   end
