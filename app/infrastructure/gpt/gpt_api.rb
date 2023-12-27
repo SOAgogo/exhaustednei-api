@@ -63,10 +63,11 @@ module PetAdoption
       def run(url)
         @result = `python app/infrastructure/gpt/gpt_species.py "#{url}" `
         # @result = `python gpt_species.py "#{@image_path1}" `
-        match = @result.match(/[A-Z][a-z]+(?=\s[A-Z])(?:\s[A-Z][a-z]+)+/)
+        # match = @result.match(/[A-Z][a-z]+(?=\s[A-Z])(?:\s[A-Z][a-z]+)+/)
+        match = @result.match(/content='([^']+)'/)
 
         @species = if match
-                     match[0]
+                     match[1]
                    else
                      'hybrid'
                    end

@@ -4,12 +4,14 @@ require 'dry-types'
 require 'dry-struct'
 require_relative 'animals'
 require_relative '../values/shelter_info_stats'
+require_relative '../lib/shelter_capacity'
 require 'pry'
 
 module PetAdoption
   module Entity
     # class Info::Shelter`
     class Shelter
+      include PetAdoption::Mixins::ShelterCapacity
       attr_reader :shelter_stats, :shelter_info
 
       def initialize(shelter_info, animal_obj_list)
@@ -35,12 +37,8 @@ module PetAdoption
         shelter_stats.animal_obj_list.values.sort_by.with_index { |_, index| score_list[index] }.reverse[0...top]
       end
 
-      def accept_donation(money)
-        shelter_stats.donate_money.add_money(money)
-      end
-
-      def show_the_total_donations
-        shelter_stats.donate_money.accumulated_money
+      def capacity_ratio
+        shelter_stats.animal_num / shelter_capacity(shelter_info.name[0..2])
       end
     end
   end

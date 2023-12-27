@@ -13,11 +13,10 @@ module PetAdoption
       end
 
       def caculate_each_shelter_severity_of_old_animals
-        sum = 0
-        @county_shelter_list.map do |_, shelter_obj|
+        @county_shelter_list.reduce(0) do |sum, shelter_obj|
           sum += 1 if shelter_obj.shelter_stats.severity_of_old_animals == 'severe'
+          sum
         end
-        sum
       end
 
       def county_severity_of_old_animals

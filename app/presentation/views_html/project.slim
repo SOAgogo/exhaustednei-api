@@ -2,9 +2,6 @@ div.gallery {
   display: flex
 }
 
-  .row
-    .img_wrap
-      img src="https://im.marieclaire.com.tw/m800c533h100b0/assets/mc/201907/5D19A650F04EF1561962064.png"  alt="一張圖片"
 
   body
   div.gallery
@@ -38,8 +35,33 @@ div.gallery {
                      form[action="/user/add-favorite-list/#{obj['origin_id'].to_s}" method="POST"]
                       button.button type="submit"
                         | Add to favorite list
+                  p
+                      form.count-point-form[action="/user/count-point" method="POST" data-animal-id="#{obj['origin_id']}"]
+                        button.button type="button" class="count-point-btn"
+                          | Count the score of the animal
+                      span.result-message
                   
-        
+javascript.
+  :plain
+    $(document).ready(function() {
+      // Handle click on count-point button
+      $('.count-point-btn').click(function() {
+        var animalId = $(this).closest('form').data('animal-id');
+  
+        $.ajax({
+          type: 'POST',
+          url: '/user/count-point',
+          data: { animalId: animalId },
+          success: function(response) {
+            // Update the result message
+            $(this).siblings('.result-message').text(response.score);
+          },
+          error: function(error) {
+            console.error('Error:', error);
+          }
+        });
+      });
+    });    
           
       
 

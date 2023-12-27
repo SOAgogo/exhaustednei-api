@@ -38,14 +38,6 @@ module PetAdoption
                               ShelterMapper.find(shelter_info, shelter_animal_map[shelter_name]))
         end
       end
-
-      def shelter_size_in_county(county_name)
-        shelter_obj_map[county_name].size
-      end
-
-      def build_entity(county_name)
-        PetAdoption::Entity::CountyShelter.new(shelter_obj_map[county_name])
-      end
     end
   end
 end

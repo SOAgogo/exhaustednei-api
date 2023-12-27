@@ -10,10 +10,10 @@ module PetAdoption
       end
       attr_reader :take_care_info, :vet_info, :contact_info
 
-      def initialize(take_care_info, contact_info, vet_info)
+      def initialize(take_care_info, contact_info, vet_info, top)
         @take_care_info = PetAdoption::Values::TakeCareInfo.new({ instruction: take_care_info })
         @contact_info = PetAdoption::Values::ContactInfo.new(contact_info)
-        @vet_info = PetAdoption::Value::PetReview.new(vet_info)
+        @vet_info = PetAdoption::Value::PetReview.new(vet_info, top)
       end
 
       # transfer the animal to the shelter

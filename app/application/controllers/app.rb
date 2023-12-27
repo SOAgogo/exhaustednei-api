@@ -20,7 +20,9 @@ module PetAdoption
     plugin :render, engine: 'slim', views: 'app/presentation/views_html'
     plugin :public, root: 'app/presentation/public'
     plugin :assets, path: 'app/presentation/assets',
-                    css: 'style.css', js: 'popup.js'
+                    css: ['style.css', 'googlemaps.css'],
+                    js: 'map.js'
+
     plugin :common_logger, $stderr
     plugin :json
 
@@ -30,12 +32,14 @@ module PetAdoption
       routing.assets # load CSS
       response['Content-Type'] = 'text/html; charset=utf-8'
       routing.public # load static files
+      session[:map_key] = App.config.MAP_TOKEN
 
       # GET /
       routing.root do
         session[:watching] ||= {}
         routing.redirect '/home' if session[:watching]['session_id']
         flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
+        # view('googlemap')
         view('signup')
       end
 
@@ -146,43 +150,18 @@ module PetAdoption
           finder_info.delete(:address)
           finder_info[:location] = "#{routing.params['location']},#{finder_info[:county]}"
           finder_info[:file] = uploaded_file
+          finder_info[:number] = routing.params['number'].to_i
           res = Services::FinderUploadImages.new.call({ finder_info: })
 
-          binding.pry
-          if uploaded_file.nil?
-            view 'found', locals: { output: nil }
-          else
-            output = Services::ImageRecognition.new.call({ uploaded_file: })
-            if output.failure?
-              flash[:error] = 'No recognition output, please try again.'
-              routing.redirect '/found'
-            end
-            output_view = PetAdoption::Views::ImageRecognition.new(output.value![:output])
-            view 'found', locals: { output: output_view }
-          end
+
+          view 'found', locals: { output: output_view }
         end
+        view 'found', locals: { output: nil }
       end
 
       routing.on 'missing' do
         routing.post do
           view 'missing'
-        end
-      end
-
-      routing.on 'shelter_statistics' do
-        routing.is do
-          # session[:all_county_stats] ||= {}
-          # session[:query_country_stats] ||= {}
-
-          # response['Set-Cookie'] = 'example_cookie=cookie_value; path=/; HttpOnly; SameSite=Lax'
-
-          all_county_stats = Services::CountryOverView.new.call
-          final_stats = all_county_stats.value![:final_stats]
-          all_county_stats = all_county_stats.value![:county_stats]
-
-          # view 'shelter_info', locals: { all_county_stats: session[:all_county_stats] }
-
-          view 'shelter_info', locals: { shelter: }
         end
       end
 

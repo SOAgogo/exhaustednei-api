@@ -8,8 +8,10 @@ Sequel.migration do
       primary_key :id
 
       String :name
-      String :phone_number, null: false, unique: true
-      String :user_email, unique: true
+      # String :phone_number, null: false, unique: true
+      String :phone, null: false
+      # String :user_email, unique: true
+      String :email
       String :county
       String :species, null: false
       String :s3_image_url, null: false, unique: true

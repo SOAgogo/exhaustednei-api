@@ -6,11 +6,14 @@ html
     script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"
   body
     legend
-      | Upload lost animals information and recommend some vets for you !!
+      | Upload the lost animal picture and recommend some vets for you !!
 
     form name="form0" action="found" id="form0" enctype="multipart/form-data"
       label for="picture_description" Where do you find this cat(dog) ?
       input type="text" name="location" id="file0"
+      br
+      label for="top_n_vets" How many results of vets?
+      input type="text" name="number" id="vets"
       br
       input type="file" name="file0" id="file0" multiple="multiple"
       br

@@ -79,12 +79,12 @@ module PetAdoption
         fetch_take_care_pets_information(res)
       end
 
-      def build_entity(how_far_from_here = 500, top_ratings = 5)
-        vet_info, err = recommends_some_vets(how_far_from_here, top_ratings, 'veterinary_care', 'pet%20clinic')
+      def build_entity(how_far_from_here = 500, top_ratings = 3)
+        vet_info, err = recommends_some_vets(how_far_from_here, top_ratings, 'clinic', 'vet')
         raise err unless err.nil?
 
         take_care_info = give_some_take_care_pets_information
-        Entity::Finders.new(take_care_info, @contact_info, vet_info)
+        Entity::Finders.new(take_care_info, @contact_info, vet_info, top_ratings)
       end
     end
   end
