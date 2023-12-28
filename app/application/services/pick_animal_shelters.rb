@@ -21,7 +21,6 @@ module PetAdoption
       include Dry::Transaction
 
       step :select_animal
-      step :decode_chinese_words
 
       private
 
@@ -30,13 +29,7 @@ module PetAdoption
           .select_animal_by_shelter_name_kind(input[:animal_kind],
                                               input[:shelter_name])
 
-        Success(animal_obj_list:)
-      rescue StandardError => e
-        Failure(e.message)
-      end
-
-      def decode_chinese_words(input)
-        animal_obj_list = PetAdoption::Views::ChineseWordsCanBeEncoded.to_decode_hash(input[:animal_obj_list])
+        animal_obj_list = animal_obj_list.values
         Success(animal_obj_list:)
       rescue StandardError => e
         Failure(e.message)

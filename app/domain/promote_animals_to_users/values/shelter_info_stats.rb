@@ -29,7 +29,7 @@ module PetAdoption
     class ShelterStats
       include PetAdoption::Mixins::TimeDifferenceCalculator
 
-      attr_reader :animal_obj_list, :donate_money, :cat_num, :dog_num
+      attr_reader :animal_obj_list, :cat_num, :dog_num
 
       def initialize(animal_obj_list)
         @animal_obj_list = animal_obj_list
@@ -40,8 +40,7 @@ module PetAdoption
       def to_attr_hash
         {
           cat_num:,
-          dog_num:,
-          donate_money: donate_money.accumulated_money
+          dog_num:
         }
       end
 

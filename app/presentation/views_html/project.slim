@@ -4,7 +4,7 @@ div.gallery {
 
   body
   div.gallery
-      - view_obj.each do |_,obj| 
+      - view_obj.animal_obj_list.each do |obj| 
         .row
           .column
             .card
@@ -31,10 +31,6 @@ div.gallery {
                   p 
                     | RegisterDate : "#{obj['registration_date']}"
                   p
-                     form[action="/user/add-favorite-list/#{obj['origin_id'].to_s}" method="POST"]
-                      button.button type="submit"
-                        | Add to favorite list
-                  p
                     button.button type="button" class="count-point-btn" data-animal-id="#{obj['origin_id'].to_s}" onclick="sendAnimalScoreRequest(#{obj['origin_id'].to_s})"
                       | Count the score of the animal
                     
@@ -49,8 +45,8 @@ javascript:
       data: { animalId: animalId },
       dataType: 'json',
       success: function(response) {
-        console.log('Success:', response.score);
-        $('#' + animalId).text('Score: ' + response.score);
+        console.log('score ', response.score);
+        $('#' + animalId).text('How many features which matches your preference: ' + response.score);
       },
       error: function(error) {
         console.error('Error:', error);

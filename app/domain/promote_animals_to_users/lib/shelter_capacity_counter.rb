@@ -7,47 +7,47 @@ module PetAdoption
       def shelter_capacity(county_name) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity
         case county_name # rubocop:disable Style/HashLikeCase
         when '臺北市'
-          5066
+          610
         when '新北市'
-          2085
+          1995
         when '桃園市'
-          4168
+          850
         when '臺中市'
-          2709
+          1000
         when '臺南市'
-          3771
+          760
         when '高雄市'
-          3590
+          950
         when '基隆市'
-          268
+          150
         when '新竹市'
-          433
+          400
         when '嘉義市'
-          100
+          120
         when '新竹縣'
-          424
+          174
         when '苗栗縣'
-          2391
+          355
         when '彰化縣'
-          1636
+          251
         when '南投縣'
-          639
+          370
         when '雲林縣'
-          158
+          300
         when '屏東縣'
-          620
+          672
         when '宜蘭縣'
-          1653
+          330
         when '花蓮縣'
           350
         when '臺東縣'
-          586
+          120
         when '澎湖縣'
-          730
+          418
         when '金門縣'
-          455
+          260
         when '連江縣' # rubocop:disable Lint/DuplicateBranch
-          100
+          120
         end
       end
     end

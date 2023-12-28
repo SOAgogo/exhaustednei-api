@@ -38,10 +38,6 @@ body
 
                     p.lead 
                         | Score : #{obj['score'].to_s}
-                    p
-                        form[action="/user/add-favorite-list/#{obj['origin_id'].to_s}" method="POST"]
-                        button.button type="submit"
-                            | Add to favorite list
                     
             
             

@@ -15,6 +15,12 @@ module PetAdoption
 
     # View for an animal object
     class ChineseWordsCanBeEncoded
+      attr_reader :animal_obj_list
+
+      def initialize(animal_obj_list)
+        @animal_obj_list = to_decode_hash(animal_obj_list)
+      end
+
       def self.merge(feature)
         sex = 'Female'
         sex = 'Male' if feature['sex'] == 'M'
@@ -25,10 +31,10 @@ module PetAdoption
         feature
       end
 
-      def self.to_decode_hash(animal_obj_list)
-        animal_obj_list.each do |key, obj|
+      def to_decode_hash(animal_obj_list)
+        animal_obj_list.map do |obj|
           obj = ChineseWordsCanBeEncoded.merge(obj.feature)
-          animal_obj_list[key] = obj
+          obj
         end
       end
     end

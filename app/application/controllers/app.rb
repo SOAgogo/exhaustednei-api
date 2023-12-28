@@ -97,7 +97,7 @@ module PetAdoption
           begin
             response = Services::SelectAnimal.new.call({ animal_kind:, shelter_name: })
 
-            view_obj = response.value![:animal_obj_list]
+            view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(response.value![:animal_obj_list])
 
             view 'project', locals: {
               view_obj:
@@ -125,38 +125,6 @@ module PetAdoption
         end
       rescue StandardError
         flash[:error] = 'Could not count the score.'
-      end
-
-      routing.on 'user/add-favorite-list', String do |animal_id|
-        animal_obj_list = PetAdoption::Services::FavoriteListUser
-          .new.call({
-                      session_id: session[:watching]['session_id'], animal_id:
-                    })
-        # don't store animal_obj_list to cookies, it's too big
-        session[:watching]['animal_obj_list'] = animal_obj_list.value![:animals]
-
-        view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list.value![:animals])
-        routing.is do
-          view 'favorite', locals: {
-            view_obj:
-          }
-        end
-      end
-
-      routing.on 'user/favorite-list' do
-        routing.is do
-          animal_obj_list = session[:watching]['animal_obj_list']
-          view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(animal_obj_list)
-          view 'favorite', locals: {
-            view_obj:
-          }
-        end
-      end
-
-      routing.on 'next-keeper' do
-        routing.is do
-          view 'next-keeper'
-        end
       end
 
       routing.on 'found' do
