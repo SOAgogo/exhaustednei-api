@@ -15,8 +15,20 @@ module PetAdoption
 
       def self.find(animal_info)
         kind = animal_info['animal_kind']
+        kind = animal_info.kind if kind.nil?
         animal = DataMapper.new(animal_info).build_dog_entity if kind == '狗'
         animal = DataMapper.new(animal_info).build_cat_entity if kind == '貓'
+        if %w[貓 狗].include?(kind)
+          [animal, true]
+        else
+          [animal, false]
+        end
+      end
+
+      def self.db_find(animal_obj_db)
+        kind = animal_obj_db.kind
+        animal = DataMapper.new(animal_obj_db).build_dog_entity if kind == '狗'
+        animal = DataMapper.new(animal_obj_db).build_cat_entity if kind == '貓'
         if %w[貓 狗].include?(kind)
           [animal, true]
         else
@@ -86,46 +98,68 @@ module PetAdoption
         private
 
         def origin_id
+          return @data.origin_id if @data['animal_id'].nil?
+
           @data['animal_id']
         end
 
         def kind
+          return @data.kind if @data['animal_kind'].nil?
+
           @data['animal_kind']
         end
 
         def species
-          @data['animal_Variety'].gsub(/\s+/, '')
+          return @data.species if @data['animal_Variety'].nil?
+
+          @data['animal_Variety']&.gsub(/\s+/, '')
         end
 
         def age
+          return @data.age if @data['animal_age'].nil?
+
           @data['animal_age']
         end
 
         def color
+          return @data.color if @data['animal_colour'].nil?
+
           @data['animal_colour']
         end
 
         def sex
+          return @data.sex if @data['animal_sex'].nil?
+
           @data['animal_sex']
         end
 
         def sterilized
+          return @data.sterilized if @data['animal_sterilization'].nil?
+
           @data['animal_sterilization'] == 'T'
         end
 
         def bodytype
+          return @data.bodytype if @data['animal_bodytype'].nil?
+
           @data['animal_bodytype']
         end
 
         def vaccinated
+          return @data.vaccinated if @data['animal_bacterin'].nil?
+
           @data['animal_bacterin'] == 'T'
         end
 
         def image_url
+          return @data.image_url if @data['album_file'].nil?
+
           @data['album_file']
         end
 
         def registration_date
+          return @data.registration_date unless @data['animal_opendate']
+
           if @data['animal_opendate'] == ''
             Time.parse(@data['animal_createtime'])
           else

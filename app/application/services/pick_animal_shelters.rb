@@ -28,7 +28,7 @@ module PetAdoption
       def select_animal(input)
         animal_obj_list = PetAdoption::Repository::Animals
           .select_animal_by_shelter_name_kind(input[:animal_kind],
-                                         input[:shelter_name])
+                                              input[:shelter_name])
 
         Success(animal_obj_list:)
       rescue StandardError => e
@@ -38,6 +38,44 @@ module PetAdoption
       def decode_chinese_words(input)
         animal_obj_list = PetAdoption::Views::ChineseWordsCanBeEncoded.to_decode_hash(input[:animal_obj_list])
         Success(animal_obj_list:)
+      rescue StandardError => e
+        Failure(e.message)
+      end
+    end
+
+    # class PickAnimalByOriginID`
+    class PickAnimalByOriginID
+      include Dry::Transaction
+
+      step :select_animal
+      step :create_animal
+      step :calculate_similarity
+
+      private
+
+      def select_animal(input)
+        animal_obj = PetAdoption::Repository::Animals
+          .find_animal(input[:input][0])
+
+        input = [animal_obj, input[:input][1], input[:input][2]]
+        Success(input:)
+      rescue StandardError => e
+        Failure(e.message)
+      end
+
+      def create_animal(input)
+        animal_obj, creation_or_not = PetAdoption::Mapper::AnimalMapper.find(input[:input][0])
+        Failure('your animal information cant be created') unless creation_or_not
+        input = [animal_obj, input[:input][1], input[:input][2]]
+        Success(input:) if creation_or_not
+      rescue StandardError => e
+        Failure(e.message)
+      end
+
+      def calculate_similarity(input)
+        animal_obj = input[:input][0]
+        score = animal_obj.similarity_checking(input[:input][1], input[:input][2][0])
+        Success(score:)
       rescue StandardError => e
         Failure(e.message)
       end

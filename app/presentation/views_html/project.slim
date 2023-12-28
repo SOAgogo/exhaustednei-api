@@ -2,7 +2,6 @@ div.gallery {
   display: flex
 }
 
-
   body
   div.gallery
       - view_obj.each do |_,obj| 
@@ -36,34 +35,25 @@ div.gallery {
                       button.button type="submit"
                         | Add to favorite list
                   p
-                      form.count-point-form[action="/user/count-point" method="POST" data-animal-id="#{obj['origin_id']}"]
-                        button.button type="button" class="count-point-btn"
-                          | Count the score of the animal
-                      span.result-message
-                  
-javascript.
-  :plain
-    $(document).ready(function() {
-      // Handle click on count-point button
-      $('.count-point-btn').click(function() {
-        var animalId = $(this).closest('form').data('animal-id');
-  
-        $.ajax({
-          type: 'POST',
-          url: '/user/count-point',
-          data: { animalId: animalId },
-          success: function(response) {
-            // Update the result message
-            $(this).siblings('.result-message').text(response.score);
-          },
-          error: function(error) {
-            console.error('Error:', error);
-          }
-        });
-      });
-    });    
-          
-      
+                    button.button type="button" class="count-point-btn" data-animal-id="#{obj['origin_id'].to_s}" onclick="sendAnimalScoreRequest(#{obj['origin_id'].to_s})"
+                      | Count the score of the animal
+                    
+                    p class="card-text" id="#{obj['origin_id'].to_s}"
+                      
 
-
-
+javascript:
+  function sendAnimalScoreRequest(animalId) {
+    $.ajax({
+      type: 'POST',
+      url: '/user/count-animal-score',
+      data: { animalId: animalId },
+      dataType: 'json',
+      success: function(response) {
+        console.log('Success:', response.score);
+        $('#' + animalId).text('Score: ' + response.score);
+      },
+      error: function(error) {
+        console.error('Error:', error);
+      }
+    });
+  }

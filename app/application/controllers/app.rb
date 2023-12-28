@@ -91,12 +91,14 @@ module PetAdoption
 
         routing.on String, String do |animal_kind, shelter_name|
           ak_ch = animal_kind == 'dog' ? '狗' : '貓'
+
           shelter_name = URI.decode_www_form_component(shelter_name)
           animal_kind = URI.decode_www_form_component(ak_ch)
           begin
             response = Services::SelectAnimal.new.call({ animal_kind:, shelter_name: })
 
             view_obj = response.value![:animal_obj_list]
+
             view 'project', locals: {
               view_obj:
             }
@@ -106,6 +108,23 @@ module PetAdoption
             routing.redirect '/home'
           end
         end
+      end
+
+      routing.post 'user/count-animal-score' do
+        routing.is do
+          selected_keys = %w[name email phone address birthdate]
+          user_preference = session[:watching].except(*selected_keys).transform_keys(&:to_sym)
+          user_preference[:sterilized] = user_preference[:sterilized] == 'yes'
+          user_preference[:vaccinated] = user_preference[:vaccinated] == 'yes'
+          feature_user_want_ratio = [age: 1, sterilized: 1, bodytype: 1, sex: 1, vaccinated: 1, species: 1, color: 1]
+          input = [routing.params['animalId'].to_i, user_preference, feature_user_want_ratio]
+
+          response = Services::PickAnimalByOriginID.new.call({ input: })
+
+          return response.value!
+        end
+      rescue StandardError
+        flash[:error] = 'Could not count the score.'
       end
 
       routing.on 'user/add-favorite-list', String do |animal_id|
@@ -151,8 +170,8 @@ module PetAdoption
           finder_info[:location] = "#{routing.params['location']},#{finder_info[:county]}"
           finder_info[:file] = uploaded_file
           finder_info[:number] = routing.params['number'].to_i
-          res = Services::FinderUploadImages.new.call({ finder_info: })
 
+          res = Services::FinderUploadImages.new.call({ finder_info: })
 
           view 'found', locals: { output: output_view }
         end

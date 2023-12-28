@@ -5,8 +5,8 @@ module PetAdoption
   module Repository
     # Repository for Members
     class Animals
-      def self.find_all_animal
-        Database::ProjectOrm::AnimalOrm.all.map { |db_project| rebuild_entity(db_project) }
+      def self.find_animal(origin_id)
+        Database::ProjectOrm::AnimalOrm.where(origin_id:).first
       end
 
       def self.web_page_cover

@@ -3,7 +3,6 @@
 require 'dry-types'
 require 'dry-struct'
 require_relative '../entities/animals'
-require_relative 'user_donations'
 require_relative '../lib/time_difference_calculator'
 module PetAdoption
   module Value

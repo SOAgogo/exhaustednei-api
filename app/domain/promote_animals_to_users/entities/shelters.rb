@@ -4,7 +4,7 @@ require 'dry-types'
 require 'dry-struct'
 require_relative 'animals'
 require_relative '../values/shelter_info_stats'
-require_relative '../lib/shelter_capacity'
+require_relative '../lib/shelter_capacity_counter'
 require 'pry'
 
 module PetAdoption
