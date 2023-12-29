@@ -38,11 +38,15 @@ module PetAdoption
 
       # GET /
       routing.root do
-        # session[:watching] ||= {}
-        # routing.redirect '/home' if session[:watching]['session_id']
-        # flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
-        view('googlemap')
-        # view('signup')
+        session[:watching] ||= {}
+        routing.redirect '/home' if session[:watching]['session_id']
+        flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
+
+        # view 'googlemap'
+        # , locals: {
+        #   hash_a:
+        # }
+        view('signup')
       end
 
       routing.post 'signup' do
@@ -133,24 +137,30 @@ module PetAdoption
         flash[:error] = 'Could not count the score.'
       end
 
+      routing.post 'finder/recommend-vets' do
+        uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
+
+        selected_keys = %w[name email phone address]
+        finder_info = session[:watching].slice(*selected_keys).transform_keys(&:to_sym)
+        finder_info[:county] = finder_info[:address][0..1]
+        finder_info.delete(:address)
+        finder_info[:location] = "#{routing.params['location']},#{finder_info[:county]}"
+        finder_info[:file] = uploaded_file
+        finder_info[:number] = routing.params['number'].to_i
+        finder_info[:distance] = routing.params['distance'].to_i
+
+        res = Services::FinderUploadImages.new.call({ finder_info: })
+
+        location_data = PetAdoption::Views::Clinic.new(res.value![:finder])
+
+        view 'googlemap', locals: { location_data: }
+      rescue StandardError
+        flash[:error] = 'Could not find the vets. Please try again.'
+        routing.redirect '/found'
+      end
+
       routing.on 'found' do
-        routing.post do
-          uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
-
-          selected_keys = %w[name email phone address]
-          finder_info = session[:watching].slice(*selected_keys).transform_keys(&:to_sym)
-          finder_info[:county] = finder_info[:address][0..1]
-          finder_info.delete(:address)
-          finder_info[:location] = "#{routing.params['location']},#{finder_info[:county]}"
-          finder_info[:file] = uploaded_file
-          finder_info[:number] = routing.params['number'].to_i
-          finder_info[:distance] = routing.params['distance'].to_i
-          res = Services::FinderUploadImages.new.call({ finder_info: })
-
-          binding.pry
-          view 'found', locals: { output: output_view }
-        end
-        view 'found', locals: { output: nil }
+        view 'found'
       end
 
       routing.on 'missing' do

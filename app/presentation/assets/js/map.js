@@ -1,103 +1,75 @@
-async function initMap() {
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the map element
+  const mapElement = document.getElementById('map');
+
+  // Retrieve the data attribute
+  const locationData = JSON.parse(mapElement.dataset.location);
+
+  // Now you can use the locationData in your JavaScript
+  console.log(locationData);
+
+  initMap(locationData);
+  // Initialize your map or do other operations with the data
+});
+
+
+async function initMap(locationData) {
+  console.log(locationData);
   // Request needed libraries.
   const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
-    "marker",
-  );
+
   const map = new Map(document.getElementById("map"), {
     zoom: 12,
-    center: { lat: 24.79922, lng: 120.99708 },
-    // mapId: "4504f8b37365c3d0",
+    center: { lat: locationData[0].latitude, lng: locationData[0].longitude },
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
-  // Set LatLng and title text for the markers. The first marker (Boynton Pass)
-  // receives the initial focus when tab is pressed. Use arrow keys to
-  // move between markers; press tab again to cycle through the map controls.
-  const tourStops = [
-    {
-      position: { lat: 25.03457, lng: 121.56361},
-      title: "Taipei 101",
-      content: "The tallest building in Taiwan",
-    },
-    {
-      position: { lat: 24.79922, lng: 120.99708 },
-      title: "national tsih-hua university",
-      content: "my university",
-    },
-    // {
-    //   position: { lat: 24.79922, lng: 120.99708 },
-    //   title: "Chapel of the Holy Cross",
-    // },
-    // {
-    //   position: { lat: 24.79922, lng: 120.99708 },
-    //   title: "Red Rock Crossing",
-    // },
-    // {
-    //   position: { lat: 24.79922, lng: 120.99708 },
-    //   title: "Bell Rock",
-    // },
-  ];
-  // Create an info window to share between markers.
-  const infoWindow = new InfoWindow();
+
 
   // Initial size of the marker icon
-  const initialSize = new google.maps.Size(21, 21);
-
-  // Create the markers.
-  tourStops.forEach(({ position, title,content }, i) => {
-  // tourStops.forEach((stop), i) => {
+  const initialSize = new google.maps.Size(35, 35);
   
-    const pin = new PinElement({
-      glyph: `${i + 1}`,
-      // content: content
-    });
 
-    console.log(content);
-
+  locationData.forEach((stop, i) => {
+    console.log(stop);
     const marker = new google.maps.Marker({
-      // position,
-      position: stop.position,
+      position: {lat:stop.latitude, lng:stop.longitude},
       map,
-      icon:{
-        url: 'https://soapicture.s3.ap-northeast-2.amazonaws.com/uploadsspec/test_s3_upload_image/Alaskan_malamute.jpg',
+      icon: {
+        url: 'https://soapicture.s3.ap-northeast-2.amazonaws.com/uploadsspec/test_s3_upload_image/veterinarian.png',
         anchor: new google.maps.Point(0, 0),
         scaledSize: initialSize,
       },
-      title: `${i + 1}. ${title}  ${content}`,
-      
-      // content: pin.element,
+      title: `${i + 1}. ${stop.name}`,
+      content: `
+        <div>Address: ${stop.address}</div>
+        <div>Open Time: ${stop.open_time}</div>
+        <div>Rating: ${stop.rating} (${stop.total_ratings} ratings)</div>
+        <div>Road: ${stop.which_road}</div>
+      `,
     });
-    // Add a click listener for each marker, and set up the info window.
-    marker.addListener("click", ({ domEvent, latLng }) => {
-      const { target } = domEvent;
-
-      infoWindow.close();
-      infoWindow.setContent(
-        marker.title,
-      );
-
-      infoWindow.open(marker.map, marker);
+  
+    // Add a click event listener to display the title and content with newline when the marker is clicked
+    google.maps.event.addListener(marker, 'click', function () {
+      const infoWindow = new google.maps.InfoWindow({
+        content:`<div><strong>${marker.title}</strong></div><div>${marker.content.replace(/\n/g, '<br>')}</div>`,
+      });
+      infoWindow.open(map, marker);
     });
 
     google.maps.event.addListener(map, 'zoom_changed', function () {
       // Get the current zoom level
       const zoomLevel = map.getZoom();
+      
     
-      // Calculate the scaled size based on the zoom level
-      const scaleFactor = Math.pow(2, zoomLevel - 15); // You may need to adjust the base value (12) based on your needs
-      const scaledSize = new google.maps.Size(
-        initialSize.width * scaleFactor,
-        initialSize.height * scaleFactor
-      );
+      // Calculate the new size based on the zoom level
+      const newWidth = initialSize.width * zoomLevel;
+      const newHeight = initialSize.height * zoomLevel;
     
-      // Update the marker icon with the new scaled size
+      // Update the scaledSize property of the marker's icon
       marker.setIcon({
-        url: 'https://soapicture.s3.ap-northeast-2.amazonaws.com/uploadsspec/test_s3_upload_image/Alaskan_malamute.jpg',
-        anchor: new google.maps.Point(0, 0), // Adjust anchor if needed
-        scaledSize: scaledSize,
+        ...marker.getIcon(),
+        scaledSize: new google.maps.Size(newWidth, newHeight),
       });
     });
   });
 }
-
-initMap();

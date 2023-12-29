@@ -47,6 +47,8 @@ module PetAdoption
       def find_the_vets(input)
         finder_mapper = input[:input][0]
         finder = finder_mapper.build_entity(input[:input][2], input[:input][1])
+        raise StandardError, 'Sorry, in this moment, there is no vet nearby you' if finder.vet_info.vet_info.empty?
+
         Success(finder:)
       rescue StandardError
         Failure('Sorry, in this moment, there is no vet nearby you')
