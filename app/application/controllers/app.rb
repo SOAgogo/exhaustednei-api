@@ -19,9 +19,11 @@ module PetAdoption
     plugin :all_verbs # allows HTTP verbs beyond GET/POST (e.g., DELETE)
     plugin :render, engine: 'slim', views: 'app/presentation/views_html'
     plugin :public, root: 'app/presentation/public'
-    plugin :assets, path: 'app/presentation/assets',
-                    css: ['style.css', 'googlemaps.css'],
-                    js: 'map.js'
+    plugin :assets, path: 'app/presentation/assets', group_subdirs: false,
+                    css: 'style.css',
+                    js: {
+                      map: ['map.js']
+                    }
 
     plugin :common_logger, $stderr
     plugin :json
@@ -36,11 +38,11 @@ module PetAdoption
 
       # GET /
       routing.root do
-        session[:watching] ||= {}
-        routing.redirect '/home' if session[:watching]['session_id']
-        flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
-        # view('googlemap')
-        view('signup')
+        # session[:watching] ||= {}
+        # routing.redirect '/home' if session[:watching]['session_id']
+        # flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
+        view('googlemap')
+        # view('signup')
       end
 
       routing.post 'signup' do
@@ -95,12 +97,16 @@ module PetAdoption
           shelter_name = URI.decode_www_form_component(shelter_name)
           animal_kind = URI.decode_www_form_component(ak_ch)
           begin
-            response = Services::SelectAnimal.new.call({ animal_kind:, shelter_name: })
+            get_all_animals_in_shelter = Services::SelectAnimal.new.call({ animal_kind:, shelter_name: })
 
-            view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(response.value![:animal_obj_list])
-
+            crawded_ratio = Services::ShelterCapacityCounter.new.call({ shelter_name: }).value![:output]
+            view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(
+              get_all_animals_in_shelter.value![:animal_obj_list]
+            )
             view 'project', locals: {
-              view_obj:
+              view_obj:,
+              crawded_ratio:,
+              shelter_name:
             }
           rescue StandardError
             # App.logger.error err.backtrace.join("DB can't find the results\n")
@@ -138,9 +144,10 @@ module PetAdoption
           finder_info[:location] = "#{routing.params['location']},#{finder_info[:county]}"
           finder_info[:file] = uploaded_file
           finder_info[:number] = routing.params['number'].to_i
-
+          finder_info[:distance] = routing.params['distance'].to_i
           res = Services::FinderUploadImages.new.call({ finder_info: })
 
+          binding.pry
           view 'found', locals: { output: output_view }
         end
         view 'found', locals: { output: nil }

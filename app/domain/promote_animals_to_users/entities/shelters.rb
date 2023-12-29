@@ -40,7 +40,7 @@ module PetAdoption
       end
 
       def capacity_ratio
-        shelter_stats.animal_num / shelter_capacity(shelter_info.name[0..2])
+        (shelter_stats.animal_num.to_f / shelter_capacity(shelter_info.name[0..2])) * 100
       end
     end
   end

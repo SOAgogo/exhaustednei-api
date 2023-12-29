@@ -20,7 +20,7 @@ module PetAdoption
         popular_vet = open_now(vet_info)
         [] if popular_vet.nil?
         # normalize the scores
-        # popular_vet.max_by { |vet| vet[:rating] * vet[:total_ratings] / average_ratings }
+
         popular_vet.sort_by { |vet| vet[:rating] * vet[:total_ratings] / average_ratings }[0...top]
       end
     end

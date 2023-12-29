@@ -118,3 +118,71 @@ button.btn.btn-missing {
     align-items: center;}
 
 
+/*
+copy from https://developers.google.com/maps/documentation/javascript/examples/advanced-markers-html#maps_advanced_markers_html-html
+*/
+#map {
+  height: 700px;
+  width: 100%;
+}
+
+
+:root {
+  --building-color: #FF9800;
+  --house-color: #0288D1;
+  --shop-color: #7B1FA2;
+  --warehouse-color: #558B2F;
+}
+
+/*
+ * Optional: Makes the sample page fill the window.
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map.
+ */
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+
+.customMarker {
+  position:absolute;
+  cursor:pointer;
+  background:#424242;
+  width:100px;
+  height:100px;
+  /* -width/2 */
+  margin-left:-50px;
+  /* -height + arrow */
+  margin-top:-110px;
+  border-radius:10px;
+  padding:0px;
+}
+.customMarker:after {
+  content:"";
+  position: absolute;
+  bottom: -10px;
+  left: 40px;
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: #424242 transparent;
+  display: block;
+  width: 0;
+}
+.customMarker img {
+  width:90px;
+  height:90px;
+  margin:5px;
+  border-radius:10px;
+}
+
+

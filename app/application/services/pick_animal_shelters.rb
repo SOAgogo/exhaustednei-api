@@ -73,5 +73,33 @@ module PetAdoption
         Failure(e.message)
       end
     end
+
+    # class ShelterCapacityCounter`
+    class ShelterCapacityCounter
+      include Dry::Transaction
+
+      step :create_shelter
+      step :calculate_capacity_ratio
+
+      private
+
+      def create_shelter(input)
+        shelter_obj = Repository::Shelters.find_shelter_by_name(input[:shelter_name])
+
+        Success(shelter_obj:)
+      rescue StandardError => e
+        Failure(e.message)
+      end
+
+      def calculate_capacity_ratio(input)
+        capacity_ratio = input[:shelter_obj].capacity_ratio # float
+        old_animal_num = input[:shelter_obj].shelter_stats.stay_too_long_animals # int
+        severity = input[:shelter_obj].shelter_stats.severity_of_old_animals  # string
+        output = [capacity_ratio, old_animal_num, severity]
+        Success(output:)
+      rescue StandardError => e
+        Failure(e.message)
+      end
+    end
   end
 end

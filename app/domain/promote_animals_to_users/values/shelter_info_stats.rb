@@ -32,7 +32,7 @@ module PetAdoption
       attr_reader :animal_obj_list, :cat_num, :dog_num
 
       def initialize(animal_obj_list)
-        @animal_obj_list = animal_obj_list
+        @animal_obj_list = animal_obj_list.values
         @cat_num = calculate_cat_num
         @dog_num = calculate_dog_num
       end
@@ -45,7 +45,7 @@ module PetAdoption
       end
 
       def calculate_cat_num
-        cat_num = @animal_obj_list.reduce(0) do |sum, (_, animal_obj)|
+        cat_num = @animal_obj_list.reduce(0) do |sum, animal_obj|
           sum + (animal_obj.instance_of?(PetAdoption::Entity::Cat) ? 1 : 0)
         end
         0 if cat_num.nil?
@@ -53,7 +53,7 @@ module PetAdoption
       end
 
       def calculate_dog_num
-        dog_num = @animal_obj_list.reduce(0) do |sum, (_, animal_obj)|
+        dog_num = @animal_obj_list.reduce(0) do |sum, animal_obj|
           sum + (animal_obj.instance_of?(PetAdoption::Entity::Dog) ? 1 : 0)
         end
         0 if dog_num.nil?
@@ -65,16 +65,16 @@ module PetAdoption
       end
 
       def stay_too_long_animals
-        old_animal_num = @animal_obj_list.reduce(0) do |sum, (_, animal_obj)|
+        old_animal_num = @animal_obj_list.reduce(0) do |sum, animal_obj|
           # animal stay over 1000 days is too old
-          calculate_time_difference(animal_obj) > 1000 ? sum + 1 : 0
+          calculate_time_difference(animal_obj) > 500 ? sum + 1 : 0
         end
         0 if old_animal_num.nil?
         old_animal_num
       end
 
       def severity_of_old_animals
-        ratio = stay_too_long_animals / animal_num * 100
+        ratio = (stay_too_long_animals.to_f / animal_num) * 100
         'severe' if ratio > 50
 
         'moderate' if ratio > 30

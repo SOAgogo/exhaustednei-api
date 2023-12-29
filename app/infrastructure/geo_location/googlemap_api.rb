@@ -57,7 +57,9 @@ module PetAdoption
         # nearby search api
         res = `curl -L -X GET '#{DISTANCE_SEARCH_SOURCE}?location=#{location}&radius=#{distance}&type=#{type}&keyword=#{keyword}&key=#{App.config.MAP_TOKEN}'` # rubocop:disable Layout/LineLength
 
-        return nil, Errors::SearchDistanceTooShort if res == '' || res.include?('ZERO_RESULTS')
+        if res == '' || res.include?('ZERO_RESULTS') || res.include?('INVALID_REQUEST')
+          return nil, Errors::SearchDistanceTooShort
+        end
 
         res = JSON.parse(res)['results']
 

@@ -22,24 +22,19 @@ module PetAdoption
         rebuild_entity(db_record)
       end
 
-      def self.create(entity)
-        raise 'Shelter already exists' if find(entity)
-
-        # return shelter obj
-        db_project = PersistShelter.new(entity).call
-
-        rebuild_entity(db_project)
-      end
-
       def self.rebuild_entity(db_record)
         return nil unless db_record
 
         db_animals = Animals.find_full_animals_in_shelter(db_record.name)
 
+        selected_keys = %i[origin_id name address phone_number]
+        # broken here
         PetAdoption::Entity::Shelter.new(
-          db_record.to_hash.merge(
-            animal_object_list: Animals.rebuild_many(db_animals)
-          )
+          # db_record.to_hash.merge(
+          #   animal_object_list: Animals.rebuild_many(db_animals)
+          # )
+          db_record.to_hash.slice(*selected_keys),
+          Animals.rebuild_many(db_animals)
         )
       end
 

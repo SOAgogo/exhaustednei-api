@@ -5,6 +5,14 @@ module PetAdoption
   module Repository
     # Repository for Members
     class Animals
+      def self.error_message(db_record)
+        return unless db_record.empty?
+
+        DBError.new('DB error', 'DB cant find your data').tap do |rsp|
+          raise(rsp.error)
+        end
+      end
+
       def self.find_animal(origin_id)
         Database::ProjectOrm::AnimalOrm.where(origin_id:).first
       end
@@ -25,6 +33,12 @@ module PetAdoption
       def self.find_full_animals_in_shelter(shelter_name)
         Database::ProjectOrm::AnimalOrm.graph(:shelters, id: :shelter_id)
           .where(name: shelter_name).all
+      end
+
+      def self.find_all_animals_in_shelter(shelter_name)
+        db_record = find_full_animals_in_shelter(shelter_name)
+        error_message(db_record)
+        rebuild_many(db_record)
       end
 
       # rubocop:disable Metrics/MethodLength,Lint/MissingCopEnableDirective
@@ -65,21 +79,14 @@ module PetAdoption
       def self.select_animal_by_shelter_name_kind(animal_kind, shelter_name)
         db_record = Database::ProjectOrm::AnimalOrm.graph(:shelters, id: :shelter_id)
           .where(kind: animal_kind, name: shelter_name).all
-        if db_record.empty?
-          DBError.new('DB error', 'DB cant find your data').tap do |rsp|
-            raise(rsp.error)
-          end
-        end
+
+        error_message(db_record)
         rebuild_many(db_record)
       end
 
       def self.select_animals_by_shelter(shelter_name)
         db_record = find_full_animals_in_shelter(shelter_name)
-        if db_record.empty?
-          DBError.new('DB error', 'DB cant find your data').tap do |rsp|
-            raise(rsp.error)
-          end
-        end
+        error_message(db_record)
         rebuild_many_without_id(shelter_name, db_record)
       end
 

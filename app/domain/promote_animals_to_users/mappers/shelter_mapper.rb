@@ -2,7 +2,7 @@
 
 require_relative '../entities/shelters'
 require_relative '../entities/animals'
-
+require 'pry'
 module PetAdoption
   module Mapper
     # class Info::ShelterMapper`
