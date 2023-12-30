@@ -7,7 +7,7 @@ ruby File.read('.ruby-version').strip
 gem 'figaro', '~> 1.2'
 gem 'pry'
 gem 'rake', '~> 13.0'
-gem 'rexml', '~> 3.2'
+gem 'libxml-ruby', '~> 3.1'
 
 # PRESENTATION LAYER
 gem 'slim', '~> 5.0'
