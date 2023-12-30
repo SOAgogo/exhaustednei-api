@@ -4,7 +4,6 @@ require_relative 'test_helper'
 require_relative '../../../../app/application/controllers/app'
 require_relative '../../../helpers/database_helper'
 require 'json'
-require 'pry'
 
 BASE_URL = PetAdoption::Storage::BASE_URL
 BUCKET_NAME = PetAdoption::Storage::BUCKET_NAME
@@ -40,7 +39,7 @@ describe 'Check how many surronding animals' do
         '清水斷崖'
       )
       @keeper3 = PetAdoption::LossingPets::KeeperMapper.new(
-        { hair: 'long', body_type: 'big', kind: 'tog' },
+        { hair: 'long', body_type: 'big', kind: 'dog' },
         { name: 'user4', user_email: 'oty@gmail.com', phone_number: '08-1123212', county: '台中' },
         '逢甲夜市'
       )

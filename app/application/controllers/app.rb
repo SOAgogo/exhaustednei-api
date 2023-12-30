@@ -22,7 +22,8 @@ module PetAdoption
     plugin :assets, path: 'app/presentation/assets', group_subdirs: false,
                     css: 'style.css',
                     js: {
-                      map: ['map.js']
+                      map: ['map.js'],
+                      keeper: ['keeper.js']
                     }
 
     plugin :common_logger, $stderr
@@ -42,10 +43,6 @@ module PetAdoption
         routing.redirect '/home' if session[:watching]['session_id']
         flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
 
-        # view 'googlemap'
-        # , locals: {
-        #   hash_a:
-        # }
         view('signup')
       end
 
@@ -120,6 +117,38 @@ module PetAdoption
         end
       end
 
+      routing.on 'found' do
+        view 'found'
+      end
+
+      routing.post 'finder/recommend-vets' do
+        uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
+
+        selected_keys = %w[name email phone address]
+        finder_info = session[:watching].slice(*selected_keys).transform_keys(&:to_sym)
+        # finder_info[:county] = finder_info[:address][0..1]
+        finder_info[:county] = routing.params['county']
+        finder_info.delete(:address)
+        finder_info[:location] = "#{routing.params['location']},#{finder_info[:county]}"
+        finder_info[:file] = uploaded_file
+        finder_info[:number] = routing.params['number'].to_i
+        finder_info[:distance] = routing.params['distance'].to_i
+
+        res = Services::FinderUploadImages.new.call({ finder_info: })
+
+        instructions = PetAdoption::Views::TakeCareInfo.new(res.value![:finder])
+        location_data = PetAdoption::Views::Clinic.new(res.value![:finder])
+
+        view 'finder', locals: { location_data:, instructions: }
+      rescue StandardError
+        flash[:error] = 'Could not find the vets. Please try again.'
+        routing.redirect '/found'
+      end
+
+      routing.on 'adopt' do
+        view 'adopt'
+      end
+
       routing.post 'user/count-animal-score' do
         routing.is do
           selected_keys = %w[name email phone address birthdate]
@@ -135,42 +164,6 @@ module PetAdoption
         end
       rescue StandardError
         flash[:error] = 'Could not count the score.'
-      end
-
-      routing.post 'finder/recommend-vets' do
-        uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
-
-        selected_keys = %w[name email phone address]
-        finder_info = session[:watching].slice(*selected_keys).transform_keys(&:to_sym)
-        finder_info[:county] = finder_info[:address][0..1]
-        finder_info.delete(:address)
-        finder_info[:location] = "#{routing.params['location']},#{finder_info[:county]}"
-        finder_info[:file] = uploaded_file
-        finder_info[:number] = routing.params['number'].to_i
-        finder_info[:distance] = routing.params['distance'].to_i
-
-        res = Services::FinderUploadImages.new.call({ finder_info: })
-
-        location_data = PetAdoption::Views::Clinic.new(res.value![:finder])
-
-        view 'googlemap', locals: { location_data: }
-      rescue StandardError
-        flash[:error] = 'Could not find the vets. Please try again.'
-        routing.redirect '/found'
-      end
-
-      routing.on 'found' do
-        view 'found'
-      end
-
-      routing.on 'missing' do
-        routing.post do
-          view 'missing'
-        end
-      end
-
-      routing.on 'adopt' do
-        view 'adopt'
       end
 
       routing.post 'promote-user-animals' do
@@ -192,6 +185,36 @@ module PetAdoption
         output_view = PetAdoption::Views::AnimalPromotion.new(prefer_animals)
 
         view 'recommendation', locals: { output: output_view }
+      end
+
+      routing.on 'missing' do
+        view 'missing'
+      end
+
+      routing.post 'keeper/contact-finders' do
+        uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
+
+        selected_keys = %w[name email phone address]
+        keeper_info = session[:watching].slice(*selected_keys).transform_keys(&:to_sym)
+        keeper_info[:county] = keeper_info[:address][0..1]
+        keeper_info.delete(:address)
+
+        keeper_info[:location] = routing.params['location']
+        keeper_info[:file] = uploaded_file
+        keeper_info[:bodytype] = routing.params['bodytype']
+        keeper_info[:hair] = routing.params['hair']
+        keeper_info[:species] = routing.params['species']
+        keeper_info[:searchcounty] = routing.params['searchcounty'] == 'yes'
+        keeper_info[:distance] = routing.params['distance'].to_i
+
+        res = Services::KeeperUploadImages.new.call({ keeper_info: })
+
+        information = PetAdoption::Views::LossingPets.new(res.value![:keeper])
+
+        view 'keeper', locals: { information: }
+      rescue StandardError
+        flash[:error] = 'Sorry, in this moment, there is no lossing pet nearby you'
+        routing.redirect '/missing'
       end
     end
   end

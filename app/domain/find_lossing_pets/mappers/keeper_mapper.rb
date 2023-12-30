@@ -68,9 +68,10 @@ module PetAdoption
 
       def find_possible_lossing_pets(how_far_the_pets_lost, according_to_your_county)
         lost_animals = lossing_animals(according_to_your_county)
+        binding.pry
 
         lost_animals.each_with_object([]) do |animal, acc|
-          animal = animal.to_hash.except(:created_at, :updated_at)
+          animal = animal.to_hash.except(:created_at, :updated_at, :id, :address)
           distance = distance_between_the_point_and_current_location([animal[:latitude],
                                                                       animal[:longtitude]])
           animal[:distance] = distance

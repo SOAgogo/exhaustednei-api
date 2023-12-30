@@ -22,8 +22,8 @@ module PetAdoption
         lossing_animals_list.each_with_object({}) do |info, hash|
           hash[info[:name]] = PetAdoption::Values::ContactInfo.new(
             name: info[:name],
-            phone_number: info[:phone_number],
-            user_email: info[:user_email],
+            phone: info[:phone],
+            email: info[:email],
             county: info[:county]
           )
         end
