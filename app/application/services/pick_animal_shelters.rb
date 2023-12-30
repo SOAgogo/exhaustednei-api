@@ -92,9 +92,9 @@ module PetAdoption
       end
 
       def calculate_capacity_ratio(input)
-        capacity_ratio = input[:shelter_obj].capacity_ratio # float
-        old_animal_num = input[:shelter_obj].shelter_stats.stay_too_long_animals # int
-        severity = input[:shelter_obj].shelter_stats.severity_of_old_animals  # string
+        capacity_ratio = input[:shelter_obj].capacity_ratio
+        old_animal_num = input[:shelter_obj].shelter_stats.stay_too_long_animals
+        severity = input[:shelter_obj].shelter_stats.severity_of_old_animals
         output = [capacity_ratio, old_animal_num, severity]
         Success(output:)
       rescue StandardError => e

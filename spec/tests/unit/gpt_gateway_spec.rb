@@ -27,9 +27,6 @@ describe 'Test Gpt API' do
     end
     it 'it should provide the key words as same as user inputs' do
       @messages['queries'].each_with_index do |message, index|
-        # Expected "The tallest building in the United Kingdom is The Shard, which stands at a height of 309.6 meters (1,016 feet)." to include # encoding: US-ASCII
-        # valid: true
-        # "310"
         output = PetAdoption::GptConversation::Conversation.new(message['query']).generate_words
         correct = @answers[index]['tallest_building'].values
         correct.each do |value|

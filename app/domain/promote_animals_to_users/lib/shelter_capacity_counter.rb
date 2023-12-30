@@ -40,7 +40,7 @@ module PetAdoption
           330
         when '花蓮縣'
           350
-        when '臺東縣'
+        when '臺東縣' # rubocop:disable Lint/DuplicateBranch
           120
         when '澎湖縣'
           418

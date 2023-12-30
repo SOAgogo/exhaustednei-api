@@ -43,7 +43,8 @@ describe 'Tests Animal API ' do
 
     ## TODO: right number
     it 'HAPPY: shelter should promote some animals to user according to the users preference' do
-      feature_condition = { species: '混種犬', animal_age: 'ADULT', color: '黑色', sex: 'F', sterilized: true, vaccinated: false,
+      feature_condition = { species: '混種犬', animal_age: 'ADULT', color: '黑色',
+                            sex: 'F', sterilized: true, vaccinated: false,
                             bodytype: 'MEDIUM' }
       feature_user_want_ratio = [0.2, 0.2, 0.1, 0.3, 0.1, 0.05, 0.05]
 

@@ -28,8 +28,8 @@ module PetAdoption
 
       # set where the animal is lost
 
-      def build_entity(how_far_the_pets_lost, according_to_your_county)
-        lossing_pets = find_possible_lossing_pets(how_far_the_pets_lost, according_to_your_county)
+      def build_entity(how_far_the_pets_lost, according_to_your_county, county)
+        lossing_pets = find_possible_lossing_pets(how_far_the_pets_lost, according_to_your_county, county)
         Entity::Keepers.new(lossing_pets, @animal_information, @user_info)
       end
 
@@ -58,17 +58,16 @@ module PetAdoption
         @users.create_db_entity(user_information)
       end
 
-      def lossing_animals(according_to_your_county = false) # rubocop:disable Style/OptionalBooleanParameter
+      def lossing_animals(county, according_to_your_county)
         if according_to_your_county
-          @users.find_all_animals_in_county
+          @users.find_all_animals_in_county(county)
         else
           @users.find_all_animals
         end
       end
 
-      def find_possible_lossing_pets(how_far_the_pets_lost, according_to_your_county)
-        lost_animals = lossing_animals(according_to_your_county)
-        binding.pry
+      def find_possible_lossing_pets(how_far_the_pets_lost, according_to_your_county, county)
+        lost_animals = lossing_animals(county, according_to_your_county)
 
         lost_animals.each_with_object([]) do |animal, acc|
           animal = animal.to_hash.except(:created_at, :updated_at, :id, :address)

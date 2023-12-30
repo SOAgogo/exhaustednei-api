@@ -196,8 +196,8 @@ module PetAdoption
 
         selected_keys = %w[name email phone address]
         keeper_info = session[:watching].slice(*selected_keys).transform_keys(&:to_sym)
-        keeper_info[:county] = keeper_info[:address][0..1]
         keeper_info.delete(:address)
+        keeper_info[:county] = routing.params['county']
 
         keeper_info[:location] = routing.params['location']
         keeper_info[:file] = uploaded_file

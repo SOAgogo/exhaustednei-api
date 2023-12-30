@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 ruby File.read('.ruby-version').strip
 
@@ -12,10 +13,12 @@ gem 'slim', '~> 5.0'
 
 # APPLICATION LAYER
 # Web application related
+gem 'activerecord', '~> 5.0', '>= 5.0.0.1'
+gem 'aws-sdk-s3', '~> 1.141'
+gem 'execjs'
 gem 'puma', '~> 6.0'
 gem 'rack-session', '~> 0.3'
 gem 'roda', '~> 3.0'
-gem 'aws-sdk-s3', '~> 1.141'
 
 # Controllers and services
 gem 'dry-monads', '~> 1.4'
@@ -29,14 +32,11 @@ gem 'dry-types', '~> 1.0'
 
 # INFRASTRUCTURE LAYER
 # Networking
-gem 'http', '~> 5.0'
 gem 'geocoder', '~> 1.3', '>= 1.3.7'
-# gem 'geokit', '~> 1.13'
 gem 'google-maps', '~> 3.0.7'
-gem 'open-uri', '~> 0.1'
-gem 'activerecord', '~> 5.0', '>= 5.0.0.1'
-gem 'execjs'
+gem 'http', '~> 5.0'
 
+gem 'open-uri', '~> 0.1'
 
 # Database
 gem 'hirb'

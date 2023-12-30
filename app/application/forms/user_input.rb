@@ -16,7 +16,6 @@ module PetAdoption
         required(:sterilized).filled(:string)
         required(:vaccinated).filled(:string)
         required(:bodytype).filled(:string)
-
       end
 
       EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

@@ -38,7 +38,8 @@ describe 'Test Animal API' do
       # Perform the request
       response = JSON.parse(http.request(request).body)[0]
 
-      shelter = PetAdoption::Repository::For.kclass(PetAdoption::Entity::Shelter).find_shelter_by_name(response['shelter_name'])
+      shelter = PetAdoption::Repository::For.kclass(PetAdoption::Entity::Shelter)
+        .find_shelter_by_name(response['shelter_name'])
 
       # NoMethodError: undefined method `origin_id' for nil:NilClass
       _(response['animal_shelter_pkid']).must_equal(shelter.origin_id)

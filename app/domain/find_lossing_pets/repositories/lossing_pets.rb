@@ -28,8 +28,8 @@ module PetAdoption
         Database::ProjectOrm::LossingPetsOrm.lost_animals_create(user_information)
       end
 
-      def find_all_animals_in_county
-        Database::ProjectOrm::LossingPetsOrm.find_all_lost_animals_in_county(@google_map.county)
+      def find_all_animals_in_county(county)
+        Database::ProjectOrm::LossingPetsOrm.find_all_lost_animals_in_county(county)
       end
 
       def find_all_animals
