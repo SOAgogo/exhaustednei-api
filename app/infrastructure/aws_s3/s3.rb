@@ -11,12 +11,13 @@ module PetAdoption
     BUCKET_NAME = 'soapicture'
     # class S3
     class S3
-      @@secrets = YAML.load_file('config/secrets.yml') # rubocop:disable Style/ClassVars
+      # @@secrets = YAML.load_file('config/secrets.yml')
       def self.s3_init
-        access_key_id = @@secrets['access_key_id']
-        secret_key_id = @@secrets['secret_key_id']
+        # access_key_id = @@secrets['access_key_id']
+        # secret_key_id = @@secrets['secret_key_id']
+        access_key_id = ENV.fetch('S3_Access_Key', nil)
+        secret_key_id = ENV.fetch('S3_Secret_Key', nil)
         # Access the keys
-
         Aws.config.update(
           region: 'ap-northeast-2',
           credentials: Aws::Credentials.new(access_key_id, secret_key_id)
