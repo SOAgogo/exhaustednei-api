@@ -112,7 +112,7 @@ module PetAdoption
       end
 
       def self.store_several(animal_obj_list)
-        animal_obj_list.map do |_, animal_obj|
+        animal_obj_list.map do |animal_obj|
           db_find_or_create(animal_obj)
         end
       end

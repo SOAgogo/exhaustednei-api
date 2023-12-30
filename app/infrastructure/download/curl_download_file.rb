@@ -28,7 +28,7 @@ module PetAdoption
           puts 'Error downloading the file.'
         end
         puts 'parse the json file, it may take a while...'
-        JSON.parse(File.read('spec/fixtures/DogCat_results.json'))[0..10_000]
+        JSON.parse(File.read('spec/fixtures/DogCat_results.json'))[0..1000]
       end
     end
   end
