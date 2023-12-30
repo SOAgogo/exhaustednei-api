@@ -31,8 +31,7 @@ module PetAdoption
 
       use Rack::Session::Cookie, {
         secret: config.SESSION_SECRET,
-        # expire_after: 60 * 60 * 24 * 730
-        expire_after: 120
+        expire_after: 300
       }
       # Database Setup
       @db = Sequel.connect(ENV.fetch('DATABASE_URL'))
