@@ -19,7 +19,7 @@ module PetAdoption
       def fetch_useful_information_for_finding_vets(res)
         res.map do |result|
           { name: result['name'],
-            open_time: result['opening_hours'],
+            open_time: result['opening_hours']['open_now'],
             which_road: result['vicinity'],
             address: result['plus_code']['compound_code'],
             longitude: result['geometry']['location']['lng'],

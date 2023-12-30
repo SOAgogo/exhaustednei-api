@@ -42,7 +42,7 @@ async function initMap(locationData) {
       title: `${i + 1}. ${stop.name}`,
       content: `
         <div>Address: ${stop.address}</div>
-        <div>Open Time: ${stop.open_time}</div>
+        <div>Open Time: open now? ${stop.open_time}</div>
         <div>Rating: ${stop.rating} (${stop.total_ratings} ratings)</div>
         <div>Road: ${stop.which_road}</div>
       `,

@@ -13,8 +13,6 @@ module PetAdoption
     class S3
       # @@secrets = YAML.load_file('config/secrets.yml')
       def self.s3_init
-        # access_key_id = @@secrets['access_key_id']
-        # secret_key_id = @@secrets['secret_key_id']
         access_key_id = ENV.fetch('S3_Access_Key', nil)
         secret_key_id = ENV.fetch('S3_Secret_Key', nil)
         # Access the keys
@@ -28,7 +26,7 @@ module PetAdoption
         S3.s3_init
         @s3 = Aws::S3::Client.new(region: 'ap-northeast-2',
                                   credentials: Aws::Credentials.new(
-                                    @@secrets['access_key_id'], @@secrets['secret_key_id']
+                                    ENV.fetch('S3_Access_Key', nil), ENV.fetch('S3_Secret_Key', nil)
                                   ))
       end
 

@@ -11,7 +11,7 @@ module PetAdoption
       end
 
       def open_now(vet_info)
-        popular_vet = vet_info.select { |vet| vet[:open_time]['open_now'] }
+        popular_vet = vet_info.select { |vet| vet[:open_time] }
         popular_vet = vet_info.select { |vet| vet[:total_ratings] >= 50 } if popular_vet.empty?
         popular_vet = popular_vet.select { |vet| vet[:total_ratings] >= 50 } unless popular_vet.empty?
 
