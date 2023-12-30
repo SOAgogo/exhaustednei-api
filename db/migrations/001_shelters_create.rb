@@ -13,7 +13,6 @@ Sequel.migration do
       String :phone_number
       Integer :cat_num, null: false
       Integer :dog_num, null: false
-      Integer :donate_money, null: false
       DateTime :created_at
       DateTime :updated_at
     end
