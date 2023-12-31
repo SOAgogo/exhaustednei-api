@@ -8,7 +8,7 @@ div.gallery {
   | Shelter information:
   ul
     li How crowded  is this shelter(animal number divided by maximum commodations): #{crawded_ratio[0].to_s}
-    li How many old animals live here: #{crawded_ratio[1].to_s}
+    li How many old animals live here(stayed over 150 days): #{crawded_ratio[1].to_s}
     li Are there too many old animals living here? #{crawded_ratio[2].to_s}
   div.gallery
       - view_obj.animal_obj_list.each do |obj| 

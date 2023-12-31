@@ -67,7 +67,7 @@ module PetAdoption
       def stay_too_long_animals
         old_animal_num = @animal_obj_list.reduce(0) do |sum, animal_obj|
           # animal stay over 100 days is too old
-          calculate_time_difference(animal_obj) > 100 ? sum + 1 : 0
+          calculate_time_difference(animal_obj) > 150 ? sum + 1 : 0
         end
         0 if old_animal_num.nil?
         old_animal_num
@@ -75,9 +75,9 @@ module PetAdoption
 
       def severity_of_old_animals
         ratio = (stay_too_long_animals.to_f / animal_num) * 100
-        'severe' if ratio > 50
+        return 'severe' if ratio.to_i > 50
 
-        'moderate' if ratio > 30
+        return 'moderate' if ratio.to_i > 30
 
         'mild'
       end

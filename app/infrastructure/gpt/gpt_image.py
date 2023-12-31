@@ -25,7 +25,7 @@ if len(sys.argv) == 2:
           ],
         }
       ],
-      max_tokens=300,
+      max_tokens=4096,
     )
     print(response.choices[0])
 elif len(sys.argv) == 3:
