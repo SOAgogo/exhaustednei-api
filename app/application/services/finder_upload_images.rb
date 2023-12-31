@@ -15,7 +15,6 @@ module PetAdoption
       private
 
       def create_finder_mapper(input)
-        binding.pry
         finder_mapper = PetAdoption::LossingPets::FinderMapper.new(
           input[:finder_info].except(:location, :file, :number, :distance),
           input[:finder_info][:location]
@@ -28,7 +27,6 @@ module PetAdoption
       end
 
       def upload_image(input)
-        binding.pry
         finder_mapper = input[:input][0]
         finder_mapper.upload_image(input[:input][1])
         input = [finder_mapper, input[:input][2], input[:input][3]]
@@ -38,7 +36,6 @@ module PetAdoption
       end
 
       def store_upload_record(input)
-        binding.pry
         finder_mapper = input[:input][0]
         finder_mapper.store_user_info
         input = [finder_mapper, input[:input][1], input[:input][2]]
@@ -48,7 +45,6 @@ module PetAdoption
       end
 
       def find_the_vets(input)
-        binding.pry
         finder_mapper = input[:input][0]
 
         finder = finder_mapper.build_entity(input[:input][2], input[:input][1])
