@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'open3'
-require_relative '../lib/star_sign'
 
 module PetAdoption
   module GptConversation
@@ -33,18 +32,12 @@ module PetAdoption
 
     # class ImageConversation`
     class ImageConversation
-      include StarSign::Predict
       def initialize
         @image_path = ''
       end
 
       def image_path(image_path)
         @image_path = image_path
-      end
-
-      def generate_words_by_star_sign(birth_date)
-        star_sign = which_star_sign(birth_date)
-        `python app/infrastructure/gpt/gpt_image.py "#{@image_path}" "#{star_sign}"`
       end
 
       def generate_words_for_takecare_instructions
