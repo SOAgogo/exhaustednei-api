@@ -65,6 +65,7 @@ group :test do
   gem 'watir', '~> 7.0'
   # gem 'webdrivers', '~> 5.0'
   gem 'selenium-webdriver', '~> 4.11'
+  gem 'rspec'
 end
 
 # Development
@@ -74,3 +75,7 @@ group :development do
   gem 'rerun', '~> 0.0'
   gem 'rubocop', '~> 1.0'
 end
+
+gem 'rack-test'
+gem 'multi_json', '~> 1.15'
+gem 'roar', '~> 1.1'

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'pry'
 module PetAdoption
   module Services
     DB_ERR_MSG = 'Having trouble accessing the database'
@@ -164,8 +164,11 @@ module PetAdoption
         severity = Response::Severity.new(old_animal_num, severity)
         Success(Response::ApiResult.new(status: :ok, message: severity))
       rescue StandardError => e
-        Failure(e.message)
+        Failure(Response::ApiResult.new(status: :not_found, message: e.to_s))
+
       end
     end
+
+    
   end
 end
