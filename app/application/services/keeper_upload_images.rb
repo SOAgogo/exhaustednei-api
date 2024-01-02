@@ -15,7 +15,8 @@ module PetAdoption
       private
 
       def create_keeper_mapper(input) # rubocop:disable Metrics/MethodLength
-        input = input[:keeper_info]
+        input = input[:req].call.value!
+
         keeper_mapper = PetAdoption::LossingPets::KeeperMapper.new(
           input.slice(:hair, :bodytype, :species),
           input.slice(:name, :email, :phone, :county),
@@ -48,13 +49,16 @@ module PetAdoption
 
       def create_keeper_info(input)
         keeper_mapper = input[:input][0]
+
         keeper = keeper_mapper.build_entity(input[:input][1], input[:input][2], input[:input][3])
 
         if keeper.lossing_animals_list.empty?
           raise StandardError, 'Sorry, in this moment, there is no lossing pet nearby you'
         end
 
-        Success(keeper:)
+        res = Response::FinderInfo.new(keeper.lossing_animals_list)
+
+        Success(Response::ApiResult.new(status: :ok, message: res))
       end
     end
   end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'pry'
 module PetAdoption
   module Services
@@ -165,10 +166,7 @@ module PetAdoption
         Success(Response::ApiResult.new(status: :ok, message: severity))
       rescue StandardError => e
         Failure(Response::ApiResult.new(status: :not_found, message: e.to_s))
-
       end
     end
-
-    
   end
 end

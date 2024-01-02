@@ -172,35 +172,32 @@ module PetAdoption
           end
         end
 
+        routing.on 'keeper' do
+          routing.on 'contact-finders' do
+            routing.post do
+              input = routing.params
 
+              req = Request::KeeperContact.new(input)
 
-        
-      end
+              res = Services::KeeperUploadImages.new.call({ req: })
 
-      routing.post 'keeper/contact-finders' do
-        uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
+              if res.failure?
+                failed = Representer::HttpResponse.new(res.failure)
+                routing.halt failed.http_status_code, failed.to_json
+              end
 
-        selected_keys = %w[name email phone address]
-        keeper_info = session[:watching].slice(*selected_keys).transform_keys(&:to_sym)
-        keeper_info.delete(:address)
-        keeper_info[:county] = routing.params['county']
+              http_response = Representer::HttpResponse.new(res.value!)
+              response.status = http_response.http_status_code
 
-        keeper_info[:location] = routing.params['location']
-        keeper_info[:file] = uploaded_file
-        keeper_info[:bodytype] = routing.params['bodytype']
-        keeper_info[:hair] = routing.params['hair']
-        keeper_info[:species] = routing.params['species']
-        keeper_info[:searchcounty] = routing.params['searchcounty'] == 'yes'
-        keeper_info[:distance] = routing.params['distance'].to_i
-
-        res = Services::KeeperUploadImages.new.call({ keeper_info: })
-
-        information = PetAdoption::Views::LossingPets.new(res.value![:keeper])
-
-        view 'keeper', locals: { information: }
-      rescue StandardError
-        flash[:error] = 'Sorry, in this moment, there is no lossing pet nearby you'
-        routing.redirect '/missing'
+              Representer::PotentialFinderRepresenter.new(
+                res.value!.message
+              ).to_json
+            rescue StandardError
+              flash[:error] = 'Sorry, in this moment, there is no lossing pet nearby you'
+              routing.redirect '/missing'
+            end
+          end
+        end
       end
     end
   end

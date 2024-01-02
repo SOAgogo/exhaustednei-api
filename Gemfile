@@ -77,5 +77,4 @@ group :development do
 end
 
 gem 'rack-test'
-gem 'multi_json', '~> 1.15'
-gem 'roar', '~> 1.1'
+
