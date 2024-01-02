@@ -15,180 +15,166 @@ module PetAdoption
   # rubocop:disable Metrics/ClassLength
   class App < Roda
     plugin :halt
-    plugin :flash
     plugin :all_verbs # allows HTTP verbs beyond GET/POST (e.g., DELETE)
-    plugin :render, engine: 'slim', views: 'app/presentation/views_html'
-    plugin :public, root: 'app/presentation/public'
-    plugin :assets, path: 'app/presentation/assets', group_subdirs: false,
-                    css: 'style.css',
-                    js: {
-                      map: ['map.js'],
-                      keeper: ['keeper.js']
-                    }
 
-    plugin :common_logger, $stderr
     plugin :json
 
     # use Rack::MethodOverride
 
     route do |routing|
-      routing.assets # load CSS
-      response['Content-Type'] = 'text/html; charset=utf-8'
-      routing.public # load static files
-      session[:map_key] = App.config.MAP_TOKEN
+      response['Content-Type'] = 'application/json'
 
       # GET /
       routing.root do
-        session[:watching] ||= {}
-        routing.redirect '/home' if session[:watching]['session_id']
-        flash.now[:notice] = 'Welcome web page' unless session[:watching]['session_id']
+        message = "PetAdoption API v1 at /api/v1/ in #{App.environment} mode"
 
-        view('signup')
+        result_response = Representer::HttpResponse.new(
+          Response::ApiResult.new(status: :ok, message:)
+        )
+
+        response.status = result_response.http_status_code
+        result_response.to_json
       end
 
-      routing.post 'signup' do
-        # session_id = SecureRandom.uuid
-        # routing.params.merge!('session_id' => session_id)
+      routing.on 'api/v1' do
+        routing.on 'shelters' do
+          routing.on 'crowdedness' do
+            routing.on String do |shelter_name|
+              routing.get do
+                shelter_name = Request::ShelterCrowdedness.new(shelter_name)
 
-        url_request = Forms::UserDataValidator.new.call(routing.params.transform_keys(&:to_sym))
-        if url_request.failure?
-          session[:watching] = {}
-          flash[:error] = Forms::HumanReadAble.error(url_request.errors.to_h)
-          routing.redirect '/'
-        end
+                crawded_ratio = Services::ShelterCapacityCounter.new.call({ shelter_name: })
+                if crawded_ratio.failure?
+                  failed = Representer::HttpResponse.new(crawded_ratio.failure)
+                  routing.halt failed.http_status_code, failed.to_json
+                end
 
-        session[:watching] = routing.params
-        routing.redirect '/home'
-      end
+                http_response = Representer::HttpResponse.new(crawded_ratio.value!)
+                response.status = http_response.http_status_code
 
-      routing.on 'home' do
-        routing.is do
-          animal_pic = Services::PickAnimalCover.new.call
-          cover_page = PetAdoption::Views::Picture.new(animal_pic.value![:cover]).cover
-          view 'home', locals: { image_url: cover_page }
-        rescue StandardError
-          # App.logger.error e.backtrace.join("DB can't show COVER PAGE\n")
-          flash[:error] = 'Could not find the cover page.'
-        end
-      end
-
-      routing.on 'animal' do
-        routing.is do
-          routing.post do
-            begin
-              animal_kind = routing.params['animal_kind'].downcase
-              shelter_name = routing.params['shelter_name']
-              if animal_kind != 'dog' && animal_kind != 'cat'
-                flash[:error] = 'Please select animal kind correctly.'
-                routing.redirect '/home'
+                Representer::ShelterCrowdedness.new(
+                  crawded_ratio.value!.message
+                ).to_json
               end
-              if shelter_name.nil?
-                flash[:error] = 'Dont leave shelter name blank.'
-                routing.redirect '/home'
-              end
-              sn_ch = URI.decode_www_form_component(shelter_name)
             end
-            routing.redirect "animal/#{animal_kind}/#{sn_ch}"
+          end
+
+          routing.on 'oldanimals' do
+            routing.on String do |shelter_name|
+              routing.get do
+                shelter_name = Request::ShelterCrowdedness.new(shelter_name)
+
+                severity = Services::ExtentOfTooManyOldAnimals.new.call({ shelter_name: })
+                if severity.failure?
+                  failed = Representer::HttpResponse.new(severity.failure)
+                  routing.halt failed.http_status_code, failed.to_json
+                end
+
+                http_response = Representer::HttpResponse.new(severity.value!)
+                response.status = http_response.http_status_code
+
+                Representer::ShelterTooOldAnimals.new(
+                  severity.value!.message
+                ).to_json
+              end
+            end
+          end
+
+          routing.on String, String do |animal_kind, shelter_name|
+            routing.get do
+              animal_request = Request::AnimalLister.new(animal_kind, shelter_name)
+
+              get_all_animals_in_shelter = Services::SelectAnimal.new.call({ animal_request: })
+
+              if get_all_animals_in_shelter.failure?
+                failed = Representer::HttpResponse.new(get_all_animals_in_shelter.failure)
+                routing.halt failed.http_status_code, failed.to_json
+              end
+
+              http_response = Representer::HttpResponse.new(get_all_animals_in_shelter.value!)
+              response.status = http_response.http_status_code
+
+              Representer::ShelterAnimals.new(
+                get_all_animals_in_shelter.value!.message
+              ).to_json
+            end
           end
         end
 
-        routing.on String, String do |animal_kind, shelter_name|
-          ak_ch = animal_kind == 'dog' ? '狗' : '貓'
+        # POST /api/v1/
+        routing.on 'finder' do
+          routing.on 'recommend-vets' do
+            routing.post do
+              request_body = request.params
 
-          shelter_name = URI.decode_www_form_component(shelter_name)
-          animal_kind = URI.decode_www_form_component(ak_ch)
-          begin
-            get_all_animals_in_shelter = Services::SelectAnimal.new.call({ animal_kind:, shelter_name: })
+              request = Requests::VetRecommendation.new(request_body)
 
-            crawded_ratio = Services::ShelterCapacityCounter.new.call({ shelter_name: }).value![:output]
-            view_obj = PetAdoption::Views::ChineseWordsCanBeEncoded.new(
-              get_all_animals_in_shelter.value![:animal_obj_list]
-            )
-            view 'project', locals: {
-              view_obj:,
-              crawded_ratio:,
-              shelter_name:
-            }
+              res = Services::FinderUploadImages.new.call({ request: })
+
+              if res.failure?
+                failed = Representer::HttpResponse.new(res.failure)
+                routing.halt failed.http_status_code, failed.to_json
+              end
+
+              http_response = Representer::HttpResponse.new(res.value!)
+              response.status = http_response.http_status_code
+              Representer::VetRecommeandation.new(
+                res.value!.message
+              ).to_json
+            rescue StandardError
+              Failure(Response::ApiResult.new(status: :bad_request, message: 'Cannot find any clinic nearby'))
+            end
+          end
+        end
+
+        routing.on 'user' do
+          routing.on 'count-animal-score' do
+            routing.post do
+              score_request = Request::AnimalScore.new(routing.params)
+
+              score_response = Services::PickAnimalByOriginID.new.call({ score_request: })
+              if score_response.failure?
+                failed = Representer::HttpResponse.new(score_response.failure)
+                routing.halt failed.http_status_code, failed.to_json
+              end
+
+              http_response = Representer::HttpResponse.new(score_response.value!)
+              response.status = http_response.http_status_code
+
+              Representer::AnimalScore.new(
+                score_response.value!.message
+              ).to_json
+            end
           rescue StandardError
-            # App.logger.error err.backtrace.join("DB can't find the results\n")
-            flash[:error] = 'Could not find the results.'
-            routing.redirect '/home'
+            Failure(Response::ApiResult.new(status: :cannot_process, message: 'Cannot count the score'))
           end
         end
-      end
 
-      routing.on 'found' do
-        view 'found'
-      end
+        routing.on 'promote-user-animals' do
+          routing.post do
+            input = routing.params
 
-      routing.post 'finder/recommend-vets' do
-        uploaded_file = routing.params['file0'][:tempfile].path if routing.params['file0'].is_a?(Hash)
+            req = Request::PromoteUserAnimals.new(input)
 
-        selected_keys = %w[name email phone address]
-        finder_info = session[:watching].slice(*selected_keys).transform_keys(&:to_sym)
-        # finder_info[:county] = finder_info[:address][0..1]
-        finder_info[:county] = routing.params['county']
-        finder_info.delete(:address)
-        finder_info[:location] = "#{routing.params['location']},#{finder_info[:county]}"
-        finder_info[:file] = uploaded_file
-        finder_info[:number] = routing.params['number'].to_i
-        finder_info[:distance] = routing.params['distance'].to_i
+            output = Services::PromoteUserAnimals.new.call({ req: })
 
-        res = Services::FinderUploadImages.new.call({ finder_info: })
+            if output.failure?
+              failed = Representer::HttpResponse.new(output.failure)
+              routing.halt failed.http_status_code, failed.to_json
+            end
 
-        instructions = PetAdoption::Views::TakeCareInfo.new(res.value![:finder])
-        location_data = PetAdoption::Views::Clinic.new(res.value![:finder])
+            http_response = Representer::HttpResponse.new(output.value!)
+            response.status = http_response.http_status_code
 
-        view 'finder', locals: { location_data:, instructions: }
-      rescue StandardError
-        flash[:error] = 'Could not find the vets. Please try again.'
-        routing.redirect '/found'
-      end
-
-      routing.on 'adopt' do
-        view 'adopt'
-      end
-
-      routing.post 'user/count-animal-score' do
-        routing.is do
-          selected_keys = %w[name email phone address birthdate]
-          user_preference = session[:watching].except(*selected_keys).transform_keys(&:to_sym)
-          user_preference[:sterilized] = user_preference[:sterilized] == 'yes'
-          user_preference[:vaccinated] = user_preference[:vaccinated] == 'yes'
-          feature_user_want_ratio = [age: 1, sterilized: 1, bodytype: 1, sex: 1, vaccinated: 1, species: 1, color: 1]
-          input = [routing.params['animalId'].to_i, user_preference, feature_user_want_ratio]
-
-          response = Services::PickAnimalByOriginID.new.call({ input: })
-
-          return response.value!
-        end
-      rescue StandardError
-        flash[:error] = 'Could not count the score.'
-      end
-
-      routing.post 'promote-user-animals' do
-        keys_to_exclude = %w[name email phone birthdate address]
-        user_preference = session[:watching].except(*keys_to_exclude)
-        county = session[:watching]['address'][0..2]
-
-        user_preference['county'] = county if routing.params['searchcounty'] == 'yes'
-
-        input = [user_preference, routing.params]
-        output = Services::PromoteUserAnimals.new.call(input)
-        prefer_animals = output.value![:sorted_animals]
-
-        if output.failure?
-          flash[:error] = 'Recommendation failed, please try again.'
-          routing.redirect '/adopt'
+            Representer::AllAnimalRecommendation.new(
+              output.value!.message
+            ).to_json
+          end
         end
 
-        output_view = PetAdoption::Views::AnimalPromotion.new(prefer_animals)
 
-        view 'recommendation', locals: { output: output_view }
-      end
 
-      routing.on 'missing' do
-        view 'missing'
+        
       end
 
       routing.post 'keeper/contact-finders' do
@@ -215,19 +201,6 @@ module PetAdoption
       rescue StandardError
         flash[:error] = 'Sorry, in this moment, there is no lossing pet nearby you'
         routing.redirect '/missing'
-      end
-
-      routing.on 'shelter_statistics' do
-        routing.is do
-          # stats_output = Services::ShelterStatistics.new.call
-          shelter = PetAdoption::ShelterInfo::ShelterInfoMapper.new('臺中市動物之家南屯園區').build_entity
-
-          output = { 'sterilization' => shelter.count_num_sterilizations,
-                     'no_sterilizations' => shelter.count_num_no_sterilizations,
-                     'for_bacterin' => shelter.count_num_animal_bacterin,
-                     'no_bacterin' => shelter.count_num_animal_no_bacterin }
-          view 'shelter_info', locals: { output: }
-        end
       end
     end
   end

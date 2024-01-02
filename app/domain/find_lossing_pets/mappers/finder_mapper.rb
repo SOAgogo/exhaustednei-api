@@ -16,10 +16,12 @@ module PetAdoption
         @users = PetAdoption::Repositories::Users.new(user_info[:county], landmark)
       end
 
-      def fetch_useful_information_for_finding_vets(res)
+      def fetch_useful_information_for_finding_vets(res) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
         res.map do |result|
+          open_info = result['opening_hours'].nil? ? false : result['opening_hours']['open_now']
           { name: result['name'],
-            open_time: result['opening_hours']['open_now'],
+            # open_time: result['opening_hours']['open_now'],
+            open_time: open_info,
             which_road: result['vicinity'],
             address: result['plus_code']['compound_code'],
             longitude: result['geometry']['location']['lng'],

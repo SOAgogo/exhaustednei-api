@@ -26,6 +26,10 @@ module PetAdoption
           'origin_id' => @feature.origin_id }
       end
 
+      def animalinfo
+        @feature
+      end
+
       def to_attr_hash
         @feature.to_attr_hash
       end

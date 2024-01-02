@@ -22,6 +22,9 @@ module PetAdoption
           config.authentication_mode = Google::Maps::Configuration::API_KEY
           config.api_key = App.config.MAP_TOKEN
         end
+        Geocoder.configure(
+          timeout: 10
+        )
       end
       # include PetAdoption::ChineseTranslator::Util
 

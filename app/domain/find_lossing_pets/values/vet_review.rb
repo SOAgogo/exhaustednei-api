@@ -4,10 +4,11 @@ module PetAdoption
   module Value
     # DonationCalculator
     class PetReview
-      attr_reader :vet_info
+      attr_reader :vet_info, :clinic_info
 
       def initialize(vet_info, top)
         @vet_info = give_average_rating(vet_info, top)
+        @clinic_info = create_clnic
       end
 
       def open_now(vet_info)
@@ -25,6 +26,21 @@ module PetAdoption
         # normalize the scores
 
         popular_vet.sort_by { |vet| vet[:rating] * vet[:total_ratings] / average_ratings }[0...top]
+      end
+
+      def create_clnic # rubocop:disable Metrics/MethodLength
+        vet_info.map do |vet|
+          Values::ClinicReview.new(
+            name: vet[:name],
+            open_time: vet[:open_time],
+            which_road: vet[:which_road],
+            address: vet[:address],
+            longitude: vet[:longitude],
+            latitude: vet[:latitude],
+            rating: vet[:rating],
+            total_ratings: vet[:total_ratings]
+          )
+        end
       end
     end
   end

@@ -11,12 +11,12 @@ gem 'libxml-ruby', '~> 3.1'
 
 # PRESENTATION LAYER
 gem 'slim', '~> 5.0'
+gem 'multi_json', '~> 1.15'
+gem 'roar', '~> 1.1'
 
 # APPLICATION LAYER
 # Web application related
-gem 'activerecord', '~> 5.0', '>= 5.0.0.1'
 gem 'aws-sdk-s3', '~> 1.141'
-gem 'execjs'
 gem 'puma', '~> 6.0'
 gem 'rack-session', '~> 0.3'
 gem 'roda', '~> 3.0'
