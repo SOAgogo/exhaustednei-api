@@ -61,6 +61,8 @@ module PetAdoption
         aws_s3 = Aws::S3::Resource.new
         aws_s3.bucket(BUCKET_NAME).object(object_key).upload_file(uploaded_file,
                                                                   content_type: 'image/png;image/jpg;image/jpeg')
+      rescue StandardError => e
+        raise e.message
       end
     end
   end

@@ -36,6 +36,7 @@ module PetAdoption
         result_response.to_json
       end
 
+      # ok
       routing.on 'api/v1' do
         routing.on 'shelters' do
           routing.on 'crowdedness' do
@@ -59,6 +60,7 @@ module PetAdoption
             end
           end
 
+          # ok
           routing.on 'oldanimals' do
             routing.on String do |shelter_name|
               routing.get do
@@ -80,6 +82,7 @@ module PetAdoption
             end
           end
 
+          # ok
           routing.on String, String do |animal_kind, shelter_name|
             routing.get do
               animal_request = Request::AnimalLister.new(animal_kind, shelter_name)
@@ -127,6 +130,7 @@ module PetAdoption
           end
         end
 
+        # ok
         routing.on 'user' do
           routing.on 'count-animal-score' do
             routing.post do
@@ -150,6 +154,7 @@ module PetAdoption
           end
         end
 
+        # ok
         routing.on 'promote-user-animals' do
           routing.post do
             input = routing.params
