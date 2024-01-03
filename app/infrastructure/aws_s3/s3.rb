@@ -8,23 +8,26 @@ module PetAdoption
   module Storage
     # class Info::Project`
     BASE_URL = 'https://soapicture.s3.ap-northeast-2.amazonaws.com'
-    BUCKET_NAME = 'soapicture'
+    BUCKET_NAME = ENV.fetch('S3_Bucket_Name', nil)
+    REGION = ENV.fetch('S3_Region', nil)
+
     # class S3
     class S3
       # @@secrets = YAML.load_file('config/secrets.yml')
       def self.s3_init
         access_key_id = ENV.fetch('S3_Access_Key', nil)
         secret_key_id = ENV.fetch('S3_Secret_Key', nil)
+
         # Access the keys
         Aws.config.update(
-          region: 'ap-northeast-2',
+          region: REGION,
           credentials: Aws::Credentials.new(access_key_id, secret_key_id)
         )
       end
 
       def initialize
         S3.s3_init
-        @s3 = Aws::S3::Client.new(region: 'ap-northeast-2',
+        @s3 = Aws::S3::Client.new(region: REGION,
                                   credentials: Aws::Credentials.new(
                                     ENV.fetch('S3_Access_Key', nil), ENV.fetch('S3_Secret_Key', nil)
                                   ))
