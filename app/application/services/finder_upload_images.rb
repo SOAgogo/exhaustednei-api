@@ -60,7 +60,9 @@ module PetAdoption
 
         finder = finder_mapper.build_entity(input[:input][2], input[:input][1])
 
-        return Failure('Sorry, in this moment, there is no vet nearby you') if finder.vet_info.vet_info.empty?
+        if finder.vet_info.vet_info.empty?
+          return Failure(Response::ApiResult.new(status: :no_content, message: 'there is no vet nearby you'))
+        end
 
         clinic_result = Response::ClinicRecommendation.new(finder.vet_info.clinic_info,
                                                            finder.take_care_info.instruction)

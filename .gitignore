@@ -13,7 +13,6 @@ requirements.txt
 runtime.txt
 .buikdpacks
 spec/tests/unit/test_messages/* 
-spec/test_s3_upload_image/*
 spec/fixtures/cassettes/*
 spec/tests/unit/picture_messages/* 
 app/infrastructure/gpt/.env

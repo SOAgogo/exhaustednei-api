@@ -5,10 +5,8 @@ require 'slim'
 require 'slim/include'
 require 'json'
 require 'uri'
-require 'securerandom'
-require 'fileutils'
 require 'open3'
-require 'pry'
+
 module PetAdoption
   # for controller part
 
@@ -124,8 +122,6 @@ module PetAdoption
               Representer::VetRecommeandation.new(
                 res.value!.message
               ).to_json
-            rescue StandardError
-              Failure(Response::ApiResult.new(status: :bad_request, message: 'Cannot find any clinic nearby'))
             end
           end
         end
@@ -149,8 +145,6 @@ module PetAdoption
                 score_response.value!.message
               ).to_json
             end
-          rescue StandardError
-            Failure(Response::ApiResult.new(status: :cannot_process, message: 'Cannot count the score'))
           end
         end
 
@@ -197,9 +191,6 @@ module PetAdoption
               Representer::PotentialFinderRepresenter.new(
                 res.value!.message
               ).to_json
-            rescue StandardError
-              flash[:error] = 'Sorry, in this moment, there is no lossing pet nearby you'
-              routing.redirect '/missing'
             end
           end
         end
