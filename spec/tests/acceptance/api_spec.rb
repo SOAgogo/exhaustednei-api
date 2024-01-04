@@ -3,7 +3,7 @@
 require_relative '../../helpers/init_database_data_helper'
 require_relative '../../helpers/vcr_helper'
 require_relative '../../helpers/database_helper'
-require_relative '../integration/layers/spec_helper.rb'
+require_relative '../integration/layers/test_helper'
 
 require 'rack/test'
 

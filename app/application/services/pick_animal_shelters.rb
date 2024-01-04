@@ -113,7 +113,7 @@ module PetAdoption
         if shelter_obj
           Success(shelter_obj:)
         else
-          Failure('shelter not found')
+          Failure(Response::ApiResult.new(status: :not_found, message: DB_ERR_MSG))
         end
       rescue StandardError => e
         App.logger.error("ERROR: #{e.inspect}")

@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'test_helper'
-require_relative '../../../../app/application/controllers/app'
+# require_relative 'test_helper'
 require_relative '../../../helpers/database_helper'
-require 'json'
+# require 'json'
 
-BASE_URL = PetAdoption::Storage::BASE_URL
-BUCKET_NAME = PetAdoption::Storage::BUCKET_NAME
+# BASE_URL = PetAdoption::Storage::BASE_URL
+# BUCKET_NAME = PetAdoption::Storage::BUCKET_NAME
 describe 'Check how many surronding animals' do
   # run testing=true bundle exec rake run first before running this test
   VCR.configure do |c|

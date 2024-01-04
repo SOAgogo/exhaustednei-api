@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'test_helper'
-require 'pry'
+# require 'pry'
 
 describe 'Tests Animal API ' do
   VCR.configure do |c|

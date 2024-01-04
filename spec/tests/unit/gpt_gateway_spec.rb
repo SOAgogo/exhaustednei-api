@@ -4,7 +4,7 @@
 require_relative '../../helpers/vcr_helper'
 require 'uri'
 require 'json'
-require 'pry'
+
 
 describe 'Test Gpt API' do
   VcrHelper.setup_vcr

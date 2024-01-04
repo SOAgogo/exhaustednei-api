@@ -5,7 +5,6 @@
 require_relative '../../helpers/vcr_helper'
 require 'uri'
 require 'json'
-require_relative '../../app/domain/promote_animals_to_users/repositories/for'
 
 describe 'Test Animal API' do
   VcrHelper.setup_vcr

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../layers/spec_helper'
 require_relative '../../../helpers/database_helper'
 require 'securerandom'
 
