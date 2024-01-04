@@ -47,6 +47,9 @@ module PetAdoption
         @users.upload_image_to_s3(image_path)
         images_url("#{base_url}/#{object}")
         @users.s3.make_image_public(object)
+      end
+
+      def img_recognition
         @users.image_classification.run(@s3_images_url)
       end
 
