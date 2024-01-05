@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
 module PetAdoption
   module Services
     DB_ERR_MSG = 'Having trouble accessing the database'

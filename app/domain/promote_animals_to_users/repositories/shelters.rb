@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'animals'
-require 'pry'
 
 module PetAdoption
   module Repository

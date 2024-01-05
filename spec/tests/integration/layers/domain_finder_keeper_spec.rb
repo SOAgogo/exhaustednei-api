@@ -3,7 +3,6 @@
 # require_relative 'test_helper'
 require_relative '../../../helpers/database_helper'
 require 'json'
-# require 'pry'
 
 # BASE_URL = PetAdoption::Storage::BASE_URL
 # BUCKET_NAME = PetAdoption::Storage::BUCKET_NAME

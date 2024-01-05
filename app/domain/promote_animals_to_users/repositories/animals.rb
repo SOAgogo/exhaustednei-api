@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
 module PetAdoption
   module Repository
     # Repository for Members

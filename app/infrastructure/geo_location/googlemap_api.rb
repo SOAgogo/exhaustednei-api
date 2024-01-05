@@ -4,7 +4,6 @@ require 'uri'
 require 'net/http'
 require 'google-maps'
 require 'geocoder'
-require 'pry'
 
 module PetAdoption
   module GeoLocation
