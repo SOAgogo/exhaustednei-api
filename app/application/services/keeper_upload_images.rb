@@ -15,6 +15,7 @@ module PetAdoption
       private
 
       def validate_input(input)
+        # puts 'validate_input'
         request = input[:req].call
         request_value = request.value!
         if request_value[:file].nil? || request_value[:distance].nil? || request_value[:searchcounty].nil?
@@ -32,6 +33,7 @@ module PetAdoption
           input[:location]
         )
 
+        # puts 'create keeper mapper'
         input = [keeper_mapper, input[:file], input[:distance], input[:searchcounty], input[:county]]
 
         Success(input)
@@ -44,6 +46,7 @@ module PetAdoption
         keeper_mapper.images_url(input[1])
         keeper_mapper.image_recoginition
         keeper_mapper.store_user_info
+        # puts 'set keeper mapper'
         input = [keeper_mapper, input[2], input[3], input[4]]
         Success(input:)
       rescue StandardError => e
@@ -60,6 +63,7 @@ module PetAdoption
                                                  message: 'no animal found'))
         end
 
+        # puts 'create keeper info'
         res = Response::FinderInfo.new(keeper.lossing_animals_list)
 
         Success(Response::ApiResult.new(status: :ok, message: res))
