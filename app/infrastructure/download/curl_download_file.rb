@@ -22,13 +22,13 @@ module PetAdoption
         system("curl -o #{File.join(FILE_PATH)} #{API_PATH}")
 
         # Check the exit status of the command
-        if $CHILD_STATUS.success?
-          puts 'File downloaded successfully.'
-        else
-          puts 'Error downloading the file.'
-        end
-        puts 'parse the json file, it may take a while...'
-        JSON.parse(File.read('spec/fixtures/DogCat_results.json'))[0..10_000]
+        # if $CHILD_STATUS.success?
+        #   puts 'File downloaded successfully.'
+        # else
+        #   puts 'Error downloading the file.'
+        # end
+        # puts 'parse the json file, it may take a while...'
+        JSON.parse(File.read('spec/fixtures/DogCat_results.json'))[0..5000]
       end
     end
   end
