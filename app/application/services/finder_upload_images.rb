@@ -15,6 +15,7 @@ module PetAdoption
       private
 
       def validate_input(input)
+        puts 'validate_input'
         request = input[:request].call
         request_value = request.value!
         if request_value[:file].nil? || request_value[:number].nil? || request_value[:distance].nil?
@@ -30,6 +31,7 @@ module PetAdoption
           request[:location]
         )
 
+        puts 'create finder mapper'
         input = [finder_mapper, request[:file], request[:number], request[:distance]]
 
         Success(input)
@@ -44,6 +46,7 @@ module PetAdoption
         finder_mapper.store_user_info
         input = [finder_mapper, input[2], input[3]]
 
+        puts 'set finder mapper'
         Success(input:)
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: 'system error'))
@@ -58,10 +61,13 @@ module PetAdoption
           return Failure(Response::ApiResult.new(status: :no_content, message: 'there is no vet nearby you'))
         end
 
+        puts 'find the vets'
         clinic_result = Response::ClinicRecommendation.new(finder.vet_info.clinic_info,
                                                            finder.take_care_info.instruction)
 
-        Success(Response::ApiResult.new(status: :ok, message: clinic_result))
+        puts 'get the response'
+        Success(Response::ApiResult.new(status: :ok,
+                                        message: clinic_result))
       rescue StandardError
         Failure(Response::ApiResult.new(status: :bad_request, message: 'Cannot find any clinic nearby'))
       end

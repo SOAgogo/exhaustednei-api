@@ -109,6 +109,7 @@ module PetAdoption
               request_body = routing.params
 
               request = Requests::VetRecommendation.new(request_body)
+              puts 'create request'
 
               res = Services::FinderUploadImages.new.call({ request: })
 
@@ -117,6 +118,7 @@ module PetAdoption
                 routing.halt failed.http_status_code, failed.to_json
               end
 
+              puts 'get the response'
               http_response = Representer::HttpResponse.new(res.value!)
               response.status = http_response.http_status_code
               Representer::VetRecommeandation.new(
