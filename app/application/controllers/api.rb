@@ -106,7 +106,7 @@ module PetAdoption
         routing.on 'finder' do
           routing.on 'recommend-vets' do
             routing.post do
-              request_body = request.params
+              request_body = routing.params
 
               request = Requests::VetRecommendation.new(request_body)
 

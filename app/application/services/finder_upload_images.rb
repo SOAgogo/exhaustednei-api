@@ -9,8 +9,7 @@ module PetAdoption
       include Dry::Transaction
       step :validate_input
       step :create_finder_mapper
-      step :upload_image
-      step :store_upload_record
+      step :seting_finder_info
       step :find_the_vets
 
       private
@@ -30,29 +29,24 @@ module PetAdoption
           request.except(:location, :file, :number, :distance),
           request[:location]
         )
-        input = [finder_mapper, request[:file], request[:number],
-                 request[:distance]]
-        Success(input:)
-      rescue StandardError => e
-        Failure(e.message)
+
+        input = [finder_mapper, request[:file], request[:number], request[:distance]]
+
+        Success(input)
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: 'system error'))
       end
 
-      def upload_image(input)
-        finder_mapper = input[:input][0]
-        finder_mapper.upload_image(input[:input][1])
-        input = [finder_mapper, input[:input][2], input[:input][3]]
-        Success(input:)
-      rescue StandardError => e
-        Failure(e.message)
-      end
-
-      def store_upload_record(input)
-        finder_mapper = input[:input][0]
+      def seting_finder_info(input)
+        finder_mapper = input[0]
+        finder_mapper.images_url(input[1])
+        finder_mapper.image_recoginition
         finder_mapper.store_user_info
-        input = [finder_mapper, input[:input][1], input[:input][2]]
+        input = [finder_mapper, input[2], input[3]]
+
         Success(input:)
-      rescue StandardError => e
-        Failure(e.message)
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :internal_error, message: 'system error'))
       end
 
       def find_the_vets(input) # rubocop:disable Metrics/AbcSize
@@ -60,7 +54,7 @@ module PetAdoption
 
         finder = finder_mapper.build_entity(input[:input][2], input[:input][1])
 
-        if finder.vet_info.vet_info.empty?
+        if finder.vet_info.clinic_info.empty?
           return Failure(Response::ApiResult.new(status: :no_content, message: 'there is no vet nearby you'))
         end
 

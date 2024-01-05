@@ -15,7 +15,6 @@ module PetAdoption
         @google_map = PetAdoption::GeoLocation::GoogleMapApi.new(county, landmark)
         @image_conversation = PetAdoption::GptConversation::ImageConversation.new
         @image_classification = PetAdoption::GptConversation::SpeicesIndentifier.new
-        @s3 = PetAdoption::Storage::S3.new
       end
 
       # user_info is a hash with name,phone_number,county
@@ -38,10 +37,6 @@ module PetAdoption
 
       def find_user_info_by_image_url(s3_image_url)
         Database::ProjectOrm::LossingPetsOrm.find_user_info_by_image_url(s3_image_url)
-      end
-
-      def s3_image_uploaded_or_not?(image_path)
-        Database::ProjectOrm::LossingPetsOrm.s3_image_uploaded_or_not(image_path)
       end
 
       def find_veterinary(how_far_from_your_location, top_ratings = 5)

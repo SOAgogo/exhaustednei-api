@@ -18,7 +18,7 @@ module PetAdoption
         req[:location] = "#{URI.decode_www_form_component(req[:location])},#{req[:county]}"
         req[:name] = URI.decode_www_form_component(req[:name])
         req[:distance] = req[:distance].to_i
-        req[:searchcounty] = req[:searchcounty] == 'true'
+        req[:searchcounty] = req[:searchcounty] == 'yes'
         req
       end
 

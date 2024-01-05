@@ -35,20 +35,7 @@ module PetAdoption
         @s3_images_url = image_path
       end
 
-      def image_name_duplicate?(base_url, object)
-        s3_url = "#{base_url}/#{object}"
-        true if users.s3_image_uploaded_or_not?(s3_url)
-        false
-      end
-
-      # first upload_image and then store_user_info
-      def upload_image(image_path)
-        base_url, object = PetAdoption::Storage::S3.object_url(image_path)
-        raise Errors::DuplicateS3FileName if image_name_duplicate?(base_url, object)
-
-        @users.upload_image_to_s3(image_path)
-        images_url("#{base_url}/#{object}")
-        @users.s3.make_image_public(object)
+      def image_recoginition
         @users.image_classification.run(@s3_images_url)
       end
 

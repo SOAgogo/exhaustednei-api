@@ -7,44 +7,47 @@ module PetAdoption
     # class ImageRecognition`
     class KeeperUploadImages
       include Dry::Transaction
+      step :validate_input
       step :create_keeper_mapper
-      step :upload_image
-      step :store_upload_record
+      step :setting_keeper_info
       step :create_keeper_info
 
       private
 
-      def create_keeper_mapper(input) # rubocop:disable Metrics/MethodLength
-        input = input[:req].call.value!
+      def validate_input(input)
+        request = input[:req].call
+        request_value = request.value!
+        if request_value[:file].nil? || request_value[:distance].nil? || request_value[:searchcounty].nil?
+          Failure('Please upload a photo and fill in the distance and the county')
+        end
+        Success(request)
+      end
+
+      def create_keeper_mapper(input)
+        input = input.value!
 
         keeper_mapper = PetAdoption::LossingPets::KeeperMapper.new(
           input.slice(:hair, :bodytype, :species),
           input.slice(:name, :email, :phone, :county),
           input[:location]
         )
-        input = [keeper_mapper, input[:file], input[:distance],
-                 input[:searchcounty], input[:county]]
-        Success(input:)
+
+        input = [keeper_mapper, input[:file], input[:distance], input[:searchcounty], input[:county]]
+
+        Success(input)
       rescue StandardError => e
         Failure(e.message)
       end
 
-      def upload_image(input)
-        keeper_mapper = input[:input][0]
-        keeper_mapper.upload_image(input[:input][1])
-        input = [keeper_mapper, input[:input][2], input[:input][3], input[:input][4]]
-        Success(input:)
-      rescue StandardError => e
-        Failure(e.message)
-      end
-
-      def store_upload_record(input)
-        keeper_mapper = input[:input][0]
+      def setting_keeper_info(input)
+        keeper_mapper = input[0]
+        keeper_mapper.images_url(input[1])
+        keeper_mapper.image_recoginition
         keeper_mapper.store_user_info
-        input = [keeper_mapper, input[:input][1], input[:input][2], input[:input][3]]
+        input = [keeper_mapper, input[2], input[3], input[4]]
         Success(input:)
       rescue StandardError => e
-        Failure(e.message)
+        Failure(Response::ApiResult.new(status: :internal_error, message: e.message))
       end
 
       def create_keeper_info(input) # rubocop:disable Metrics/AbcSize
@@ -60,6 +63,8 @@ module PetAdoption
         res = Response::FinderInfo.new(keeper.lossing_animals_list)
 
         Success(Response::ApiResult.new(status: :ok, message: res))
+      rescue StandardError
+        Failure(Response::ApiResult.new(status: :bad_request, message: 'Cannot find any lost animal nearby'))
       end
     end
   end
