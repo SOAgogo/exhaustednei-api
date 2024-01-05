@@ -104,7 +104,7 @@ module PetAdoption
 
         # POST /api/v1/
         routing.on 'finder' do
-          routing.on 'recommend-vets' do
+          routing.on 'vets' do
             routing.post do
               request_body = routing.params
 
@@ -172,7 +172,7 @@ module PetAdoption
         end
 
         routing.on 'keeper' do
-          routing.on 'contact-finders' do
+          routing.on 'contact' do
             routing.post do
               input = routing.params
 
