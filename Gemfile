@@ -21,6 +21,11 @@ gem 'puma', '~> 6.0'
 gem 'rack-session', '~> 0.3'
 gem 'roda', '~> 3.0'
 
+# Asynchronicity
+gem 'concurrent-ruby', '~> 1.1'
+gem 'aws-sdk-sqs', '~> 1.48'
+gem 'shoryuken', '~> 5.3'
+
 # Caching
 gem 'rack-cache', '~> 1.13'
 gem 'redis', '~> 4.8'
