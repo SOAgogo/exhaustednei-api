@@ -46,7 +46,7 @@ module PetAdoption
         keeper_mapper.images_url(input[1])
         keeper_mapper.image_recoginition
         keeper_mapper.store_user_info
-        # puts 'set keeper mapper'
+        puts 'set keeper mapper'
         input = [keeper_mapper, input[2], input[3], input[4]]
         Success(input:)
       rescue StandardError => e
