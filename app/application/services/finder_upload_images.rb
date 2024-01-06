@@ -61,11 +61,7 @@ module PetAdoption
           return Failure(Response::ApiResult.new(status: :no_content, message: 'there is no vet nearby you'))
         end
 
-        # puts 'find the vets'
-        clinic_result = Response::ClinicRecommendation.new(finder.vet_info.clinic_info,
-                                                           finder.take_care_info.instruction)
-
-        # puts 'get the response'
+        clinic_result = Response::ClinicRecommendation.new(finder.vet_info.clinic_info, finder.take_care_info.instruction)
         Success(Response::ApiResult.new(status: :ok,
                                         message: clinic_result))
       rescue StandardError

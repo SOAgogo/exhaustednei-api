@@ -59,8 +59,6 @@ module PetAdoption
         return nil, err if err
 
         [fetch_useful_information_for_finding_vets(res), nil]
-        # rescue GeoLocation::GoogleMapApi::Errors::SearchDistanceTooShort => e
-        #   puts e.message
       end
 
       def give_some_take_care_pets_information
@@ -68,6 +66,7 @@ module PetAdoption
         fetch_take_care_pets_information(res)
       end
 
+      # TODO: paralleize doing the recognition and the google map api
       def build_entity(how_far_from_here = 500, top_ratings = 3)
         vet_info, err = recommends_some_vets(how_far_from_here, top_ratings, 'clinic', 'veterinary')
         raise err unless err.nil?
