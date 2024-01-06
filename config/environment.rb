@@ -5,12 +5,14 @@ require 'roda'
 require 'logger'
 require 'rack/session'
 require 'sequel'
+require 'rack/cache'
+require 'redis-rack-cache'
 
 module PetAdoption
   # Configuration for the App
   class App < Roda
     plugin :environments
-    configure do
+    configure do # rubocop:disable Metrics/BlockLength
       # Environment variables setup
       Figaro.application = Figaro::Application.new(
         environment:,
@@ -22,6 +24,17 @@ module PetAdoption
       # for testing and development, use sqlite
       configure :development, :test do
         ENV['DATABASE_URL'] = "sqlite://#{config.DB_FILENAME}"
+        use Rack::Cache,
+            verbose: true,
+            metastore: 'file:_cache/rack/meta',
+            entitystore: 'file:_cache/rack/body'
+      end
+
+      configure :production do
+        use Rack::Cache,
+            verbose: true,
+            metastore: "#{config.REDISCLOUD_URL}/0/metastore",
+            entitystore: "#{config.REDISCLOUD_URL}/0/entitystore"
       end
 
       configure :test do

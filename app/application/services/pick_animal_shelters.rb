@@ -82,6 +82,7 @@ module PetAdoption
         animal_obj = input[:input][0]
         score = animal_obj.similarity_checking(input[:input][1], input[:input][2])
         score_response = Response::AnimalScores.new(score)
+
         Success(Response::ApiResult.new(status: :ok, message: score_response))
       rescue StandardError => e
         Failure(e.message)

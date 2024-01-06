@@ -14,8 +14,8 @@ module PetAdoption
   class App < Roda
     plugin :halt
     plugin :all_verbs # allows HTTP verbs beyond GET/POST (e.g., DELETE)
-
     plugin :json
+    plugin :caching
 
     # use Rack::MethodOverride
 
@@ -40,6 +40,7 @@ module PetAdoption
           routing.on 'crowdedness' do
             routing.on String do |shelter_name|
               routing.get do
+                response.cache_control public: true, max_age: 300
                 shelter_name = Request::ShelterCrowdedness.new(shelter_name)
 
                 crawded_ratio = Services::ShelterCapacityCounter.new.call({ shelter_name: })
@@ -62,6 +63,7 @@ module PetAdoption
           routing.on 'oldanimals' do
             routing.on String do |shelter_name|
               routing.get do
+                response.cache_control public: true, max_age: 300
                 shelter_name = Request::ShelterCrowdedness.new(shelter_name)
 
                 severity = Services::ExtentOfTooManyOldAnimals.new.call({ shelter_name: })
@@ -83,6 +85,7 @@ module PetAdoption
           # ok
           routing.on String, String do |animal_kind, shelter_name|
             routing.get do
+              response.cache_control public: true, max_age: 300
               animal_request = Request::AnimalLister.new(animal_kind, shelter_name)
 
               get_all_animals_in_shelter = Services::SelectAnimal.new.call({ animal_request: })
@@ -109,7 +112,6 @@ module PetAdoption
               request_body = routing.params
 
               request = Requests::VetRecommendation.new(request_body)
-              # puts 'create request'
 
               res = Services::FinderUploadImages.new.call({ request: })
 
@@ -118,7 +120,6 @@ module PetAdoption
                 routing.halt failed.http_status_code, failed.to_json
               end
 
-              # puts 'get the response'
               http_response = Representer::HttpResponse.new(res.value!)
               response.status = http_response.http_status_code
               Representer::VetRecommeandation.new(
