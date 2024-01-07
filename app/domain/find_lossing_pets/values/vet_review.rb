@@ -37,7 +37,7 @@ module PetAdoption
             address: vet[:address],
             longitude: vet[:longitude],
             latitude: vet[:latitude],
-            rating: vet[:rating],
+            rating: vet[:rating].to_f,
             total_ratings: vet[:total_ratings]
           )
         end
