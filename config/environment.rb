@@ -44,14 +44,14 @@ module PetAdoption
 
       use Rack::Session::Cookie, {
         secret: config.SESSION_SECRET,
-        expire_after: 60
+        expire_after: 60 * 60 * 24 * 7 # one week
       }
       # Database Setup
       @db = Sequel.connect(ENV.fetch('DATABASE_URL'))
       def self.db = @db # rubocop:disable Style/TrivialAccessors
 
-      # @logger = Logger.new($stderr)
-      @logger = Logger.new($stdout)
+      @logger = Logger.new($stderr)
+      # @logger = Logger.new($stdout)
       class << self
         attr_reader :logger
       end
