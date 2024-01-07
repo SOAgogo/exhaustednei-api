@@ -112,7 +112,6 @@ module PetAdoption
               request_body = routing.params
 
               request = Requests::VetRecommendation.new(request_body)
-              puts 'request: #{request}'
 
               res = Services::FinderUploadImages.new.call({ request: })
 
