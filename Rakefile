@@ -244,8 +244,8 @@ namespace :queues do
     require_relative 'config/environment' # load config info
     @api = PetAdoption::App
     @sqs = Aws::SQS::Client.new(
-      access_key_id: @api.config.AWS_ACCESS_KEY_ID,
-      secret_access_key: @api.config.AWS_SECRET_ACCESS_KEY,
+      access_key_id: @api.config.S3_Access_Key,
+      secret_access_key: @api.config.S3_Secret_Key,
       region: @api.config.AWS_REGION
     )
     @q_name = @api.config.CLONE_QUEUE

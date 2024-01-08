@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../entities/animals'
-require_relative '../entities/county_shelters'
 require_relative '../lib/types'
 
 # create an animal object instance
