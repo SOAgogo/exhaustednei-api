@@ -2,6 +2,7 @@
 
 require_relative '../lib/distance_calculator'
 require_relative '../repositories/lossing_pets'
+require 'concurrent'
 
 module PetAdoption
   module LossingPets
@@ -53,16 +54,21 @@ module PetAdoption
         end
       end
 
+      def concurrent_find_animals(lost_animals, how_far_the_pets_lost)
+        lost_animals.map do |animal|
+          Concurrent::Promise.execute do
+            animal = animal.to_hash.except(:created_at, :updated_at, :id, :address)
+            distance = distance_between_the_point_and_current_location([animal[:latitude], animal[:longtitude]])
+
+            animal[:distance] = distance
+            animal if distance <= how_far_the_pets_lost
+          end.value
+        end
+      end
+
       def find_possible_lossing_pets(how_far_the_pets_lost, according_to_your_county, county)
         lost_animals = lossing_animals(county, according_to_your_county)
-
-        lost_animals.each_with_object([]) do |animal, acc|
-          animal = animal.to_hash.except(:created_at, :updated_at, :id, :address)
-          distance = distance_between_the_point_and_current_location([animal[:latitude],
-                                                                      animal[:longtitude]])
-          animal[:distance] = distance
-          acc << animal if distance <= how_far_the_pets_lost
-        end
+        concurrent_find_animals(lost_animals, how_far_the_pets_lost)
       end
     end
   end

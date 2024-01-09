@@ -114,6 +114,9 @@ module PetAdoption
               request = Requests::VetRecommendation.new(request_body)
 
               res = Services::FinderUploadImages.new.call({ request: })
+              binding.pry
+
+              puts "api, app.rb, post: #{res.inspect}"
 
               if res.failure?
                 failed = Representer::HttpResponse.new(res.failure)

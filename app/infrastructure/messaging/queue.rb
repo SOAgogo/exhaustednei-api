@@ -20,7 +20,9 @@ module PetAdoption
       end
 
       def send(message)
-        @queue.send_message(message_body: message)
+        puts "infrastucture/queue send, message: #{message}"
+        response = @queue.send_message(message_body: message)
+        puts "Send message response: #{response.inspect}"
       end
 
       def poll

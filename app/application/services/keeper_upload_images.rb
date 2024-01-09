@@ -57,13 +57,20 @@ module PetAdoption
         keeper = keeper_mapper.build_entity(input[:input][1], input[:input][2], input[:input][3])
 
         if keeper.lossing_animals_list.empty?
-          return Failure(Response::ApiResult.new(status: :no_content,
-                                                 message: 'no animal found'))
+          return Failure(Response::ApiResult.new(status: :no_content, message: 'no animal found'))
+
         end
 
-        res = Response::FinderInfo.new(keeper.lossing_animals_list)
+        binding.pry
+        res = Response::FinderInfo.new(finders: keeper.lossing_animals_list)
+          .then { Representer::VetRecommeandation.new(_1) }
+          .then(&:to_json)
 
-        Success(Response::ApiResult.new(status: :ok, message: res))
+        Messaging::Queue.new(App.config.STAYTIME_QUEUE_URL, App.config).send(res)
+
+        Success(Response::ApiResult.new(status: :processing, message: 'processing your request'))
+
+        # Success(Response::ApiResult.new(status: :ok, message: res))
       rescue StandardError
         Failure(Response::ApiResult.new(status: :bad_request, message: 'Cannot find any lost animal nearby'))
       end

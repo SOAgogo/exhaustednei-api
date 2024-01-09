@@ -66,13 +66,15 @@ module PetAdoption
         fetch_take_care_pets_information(res)
       end
 
-      # TODO: paralleize doing the recognition and the google map api
-      def build_entity(how_far_from_here = 500, top_ratings = 3)
-        vet_info, err = recommends_some_vets(how_far_from_here, top_ratings, 'clinic', 'veterinary')
-        raise err unless err.nil?
 
-        take_care_info = give_some_take_care_pets_information
-        Entity::Finders.new(take_care_info, @contact_info, vet_info, top_ratings)
+      # TODO: parallize doing the recognition and the google map api
+      def build_entity(useful_info, take_care_info)
+        # two worker queues for recommends_some_vets and give_some_take_care_pets_information
+        # vet_info, err = recommends_some_vets(how_far_from_here, top_ratings, 'clinic', 'veterinary')
+        # raise err unless err.nil?
+
+        # take_care_info = give_some_take_care_pets_information
+        Entity::Finders.new(take_care_info, @contact_info, useful_info[0], top_ratings)
       end
     end
   end
