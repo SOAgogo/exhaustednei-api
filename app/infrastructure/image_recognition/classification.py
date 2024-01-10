@@ -3,7 +3,6 @@ from roboflow import Roboflow
 import os
 import json
 
-
 def predict_dog_breed(image_url):
     # Replace 'tvNfa4TcFQ57IGJvtQ9q' with your actual Roboflow API key
     rf = Roboflow(api_key="tvNfa4TcFQ57IGJvtQ9q")
@@ -17,7 +16,7 @@ def predict_dog_breed(image_url):
     # Infer on an image hosted elsewhere
 
     # Assuming your code is in the home directory
-    predictions = model.predict(image_url, hosted=False).json()
+    predictions = model.predict(image_url, hosted=True).json()
     output = predictions['predictions'][0]['predictions'][0]
     # Assuming your output string
     # Define a regular expression pattern to match the desired string
@@ -46,7 +45,7 @@ def predict_cat_breed(image_url):
 
     # Assuming your code is in the home directory
 
-    predictions = model.predict(image_url).json()
+    predictions = model.predict(image_url,hosted=True).json()
         
     output = [{'class': item['class'], 'confidence': item['confidence']} for item in predictions['predictions'] if item['confidence'] >= 0.5]
 
@@ -72,7 +71,7 @@ def predict_dog_or_cat(image_url):
     # Infer on an image hosted elsewhere
 
     # Assuming your code is in the home directory
-    predictions = model.predict(image_url).json()
+    predictions = model.predict(image_url,hosted=True).json()
     output = predictions['predictions'][0]['predictions'][0]['class']
     # Assuming your output string
     # Define a regular expression pattern to match the desired string
