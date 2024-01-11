@@ -123,30 +123,10 @@ module PetAdoption
               end
 
               rsp = Services::FinderReport.new.call
-              binding.pry
               http_response = Representer::HttpResponse.new(rsp.value!)
               response.status = http_response.http_status_code
               return rsp.value!.message
-              # Representer::VetRecommeandation.new(
-              #   rsp.value!.message
-              # ).to_json
             end
-
-            # routing.get do
-            #   puts "examine data is correct: #{res.inspect}"
-            #   binding.pry
-            #   res = Services::FinderReport.new.call
-
-            #   if res.failure?
-            #     failed = Representer::HttpResponse.new(res.failure)
-            #     routing.halt failed.http_status_code, failed.to_json
-            #   end
-            #   http_response = Representer::HttpResponse.new(res.value!)
-            #   response.status = http_response.http_status_code
-            #   Representer::VetRecommeandation.new(
-            #     res.value!.message
-            #   ).to_json
-            # end
           end
         end
 

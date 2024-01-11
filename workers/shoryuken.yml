@@ -2,3 +2,4 @@ queues:
   - https://sqs.us-east-1.amazonaws.com/260347080257/soa
   - https://sqs.us-east-1.amazonaws.com/260347080257/soa2
   - https://sqs.us-east-1.amazonaws.com/260347080257/soa3
+  - https://sqs.us-east-1.amazonaws.com/260347080257/soa4
