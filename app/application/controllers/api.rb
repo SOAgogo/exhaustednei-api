@@ -49,6 +49,11 @@ module PetAdoption
                   routing.halt failed.http_status_code, failed.to_json
                 end
 
+                # Publish the API response to a Faye channel
+                sockets.each do |client_ws|
+                  client_ws.send(JSON.dump(channel: '/api_response', data: crowded_ratio.value!.message))
+                end
+
                 http_response = Representer::HttpResponse.new(crawded_ratio.value!)
                 response.status = http_response.http_status_code
 
@@ -112,7 +117,10 @@ module PetAdoption
               request_body = routing.params
 
               request = Requests::VetRecommendation.new(request_body)
-              res = Services::FinderUploadImages.new.call({ request: })
+
+              request_id = [request.env, request.path, Time.now.to_f].hash
+
+              res = Services::FinderUploadImages.new.call({ request: , request_id: })
 
               if res.failure?
                 failed = Representer::HttpResponse.new(res.failure)

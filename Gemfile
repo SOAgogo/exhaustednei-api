@@ -9,6 +9,9 @@ gem 'pry'
 gem 'rake', '~> 13.0'
 gem 'libxml-ruby'
 
+# Gemfile
+gem 'roda-websockets'
+
 # PRESENTATION LAYER
 gem 'slim', '~> 5.0'
 gem 'multi_json', '~> 1.15'
