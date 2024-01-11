@@ -231,7 +231,7 @@ namespace :cache do
       print 'Are you sure you wish to wipe the production cache? (y/n) '
       if $stdin.gets.chomp.downcase == 'y'
         puts 'Deleting production cache'
-        wiped = CodePraise::Cache::Client.new(@api.config).wipe
+        wiped = PetAdoption::Cache::RedisCache.new(@api.config).wipe
         wiped.each { |key| puts "Wiped: #{key}" }
       end
     end
