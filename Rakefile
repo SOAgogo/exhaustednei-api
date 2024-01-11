@@ -213,7 +213,7 @@ namespace :cache do
     desc 'Lists production cache'
     task :production => :config do
       puts 'Finding production cache'
-      keys = PetAdoption::RedisCache::Client.new(@api.config).keys
+      keys = PetAdoption::RedisCache.new(@api.config).keys
       puts 'No keys found' if keys.none?
       keys.each { |key| puts "Key: #{key}" }
     end
