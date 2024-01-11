@@ -54,6 +54,9 @@ module PetAdoption
       def create_keeper_info(input) # rubocop:disable Metrics/AbcSize
         keeper_mapper = input[:input][0]
 
+        # [1]: distance,  [2]: according_to_your_county, [3]: county
+        #1. At the same time, do build_entity and image_recoginition
+        #2. store_user_info
         keeper = keeper_mapper.build_entity(input[:input][1], input[:input][2], input[:input][3])
 
         if keeper.lossing_animals_list.empty?

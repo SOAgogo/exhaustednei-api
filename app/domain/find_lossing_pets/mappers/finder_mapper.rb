@@ -54,8 +54,8 @@ module PetAdoption
         end
       end
 
-      def recommends_some_vets(how_far_from_here, top_ratings, type, keyword)
-        res, err = users.google_map.find_most_recommendations(how_far_from_here, top_ratings, type, keyword)
+      def recommends_some_vets(how_far_from_here, top_ratings)
+        res, err = users.google_map.find_most_recommendations(how_far_from_here, top_ratings, 'clinic', 'veterinary')
         return nil, err if err
 
         [fetch_useful_information_for_finding_vets(res), nil]
@@ -65,7 +65,6 @@ module PetAdoption
         res = users.take_care_instructions(@s3_images_url)
         fetch_take_care_pets_information(res)
       end
-
 
       # TODO: parallize doing the recognition and the google map api
       def build_entity(useful_info, take_care_info)

@@ -5,11 +5,10 @@ require_app
 
 require 'figaro'
 require 'shoryuken'
-require 'pry'
 
 module Background
   # Background worker does image recognition
-  class FinderWorker
+  class StorefinderWorker
     # Environment variables setup
 
     Figaro.application = Figaro::Application.new(
@@ -25,46 +24,35 @@ module Background
       region: config.SQS_REGION
     )
 
-    puts "worker, access_key_id: #{config.S3_Access_Key},
+    puts "worker3, access_key_id: #{config.S3_Access_Key},
     secret_access_key: #{config.S3_Secret_Key},
     region: #{config.SQS_REGION}"
 
     include Shoryuken::Worker
     Shoryuken.sqs_client_receive_message_opts = { wait_time_seconds: 20 }
-    shoryuken_options queue: config.QUEUE_1_URL, auto_delete: true
-    puts "worker1, URL1: #{config.QUEUE_1_URL}"
+    shoryuken_options queue: config.QUEUE_3_URL, auto_delete: true
+    puts "worker3, URL3: #{config.QUEUE_3_URL}"
 
     def perform(_sqs_msg, request)
-      puts 'finder_handler.rb start'
+      puts 'store_finder_info.rb start'
       request = JSON.parse(request).transform_keys(&:to_sym)
       finder_mapper = create_finder_mapper(request)
-      finder_mapper = finder_settings(finder_mapper, request)
-      data, err = finder_mapper.recommends_some_vets(request[:distance], request[:number])
+      finder_mapper.images_url(request[:file])
+      finder_mapper.image_recoginition
+      finder_mapper.store_user_info
 
-      raise StandardError if err
-
-      PetAdoption::Cache::RedisCache.new(self.class.config).set('vets', data.to_json)
+      puts 'finish store_finder_info.rb'
     rescue StandardError
-      puts 'error: no vet nearby you'
+      puts 'error: DB error '
     end
 
     private
 
-    # def report_failure(finder)
-    #   return unless finder.vet_info.clinic_info.empty?
-
-    #   Failure(Response::ApiResult.new(status: :no_content, message: 'there is no vet nearby you'))
-    # end
     def create_finder_mapper(request)
       PetAdoption::LossingPets::FinderMapper.new(
         request.slice(:name, :email, :phone, :county),
         request[:location]
       )
-    end
-
-    def finder_settings(finder_mapper, request)
-      finder_mapper.images_url(request[:file])
-      finder_mapper
     end
   end
 end

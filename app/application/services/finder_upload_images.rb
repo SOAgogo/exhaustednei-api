@@ -12,15 +12,15 @@ module PetAdoption
       end
       include Dry::Transaction
       step :validate_input
-      step :create_finder_mapper
-      # step :seting_finder_info
-      # step :find_the_vets
+      step :create_finder_mapper_request
 
       private
 
       PROCESSING_MSG = 'upload success and processing'
+      SUCCESS_MSG = 'upload success and get result'
 
       def validate_input(input)
+        # binding.pry
         request = input[:request].call
         request_value = request.value!
         if request_value[:file].nil? || request_value[:number].nil? || request_value[:distance].nil?
@@ -29,60 +29,44 @@ module PetAdoption
         Success(request)
       end
 
-      def create_finder_mapper(input)
+      def create_finder_mapper_request(input)
         request = input.value!
+        # check value
+        # take_care_info, vet_check = cache_check_helper
+        # if !take_care_info.nil? && !vet_check.nil?
+        #   rsp = representation(take_care_info, vet_check)
+        #   return Success(Response::ApiResult.new(status: :ok, message: SUCCESS_MSG, data: rsp))
+        # end
 
-        Messaging::Queue.new(App.config.CLONE_QUEUE_URL, App.config).send(request.to_json)
-        finder_mapper = PetAdoption::LossingPets::FinderMapper.new(
-          request.except(:location, :file, :number, :distance),
-          request[:location]
-        )
-        
+        # send to queue
+        send_to_queue(request)
 
-        # read the response from cache
-
-
-        # input = [finder_mapper, request[:file], request[:number], request[:distance]]
-
-        Failure(Response::ApiResult.new(
-                  status: :processing,
-                  message: PROCESSING_MSG_EP
-                ))
+        Success(Response::ApiResult.new(status: :processing, message: PROCESSING_MSG))
       rescue StandardError
         Failure(Response::ApiResult.new(status: :internal_error, message: 'system error'))
       end
 
-      # def seting_finder_info(input)
-      #   finder_mapper = input[0]
-      #   finder_mapper.images_url(input[1])
-      #   finder_mapper.image_recoginition
-      #   finder_mapper.store_user_info
-      #   input = [finder_mapper, input[2], input[3]]
-
-      #   Success(input:)
-      # rescue StandardError
-      #   Failure(Response::ApiResult.new(status: :internal_error, message: 'system error'))
+      # helper function for cache data check
+      # def cache_check_helper
+      #   cache = PetAdoption::Cache::RedisCache.new(App.config)
+      #   resp = [cache.get('take_care_info'), cache.get('vets')]
+      #   cache.del('take_care_info')
+      #   cache.del('vets')
+      #   resp
       # end
 
-      # def find_the_vets(input)
-      #   finder_mapper = input[:input][0]
+      def send_to_queue(request)
+        queues = [App.config.QUEUE_1_URL, App.config.QUEUE_2_URL, App.config.QUEUE_3_URL]
+        queues.each do |queue_url|
+          Messaging::Queue.new(queue_url, App.config).send(request.to_json)
+        end
+      end
 
-      #   # finder = finder_mapper.build_entity(input[:input][2], input[:input][1])
-      #   message = [finder_mapper, input[:input][2], input[:input][1]].to_json
+      # def representation(take_care_info, vet_check)
       #   binding.pry
-
-      #   # Messaging::Queue.new(Api.config.SQS_QUEUE_URL).send(message)
-
-      #   if finder.vet_info.clinic_info.empty?
-      #     return Failure(Response::ApiResult.new(status: :no_content, message: 'there is no vet nearby you'))
-      #   end
-
-      #   clinic_result = Response::ClinicRecommendation.new(finder.vet_info.clinic_info,
-      #                                                      finder.take_care_info.instruction)
-
-      #   Success(Response::ApiResult.new(status: :ok, message: clinic_result))
-      # rescue StandardError
-      #   Failure(Response::ApiResult.new(status: :bad_request, message: 'Cannot find any clinic nearby'))
+      #   PetAdoption::Representer::VetRecommeandation.new(
+      #     PetAdoption::Response::ClinicRecommendation.new
+      #   ).from_json(take_care_info, vet_check)
       # end
     end
   end

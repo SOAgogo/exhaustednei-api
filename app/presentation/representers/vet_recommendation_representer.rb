@@ -9,7 +9,7 @@ module PetAdoption
     class VetRecommeandation < Roar::Decorator
       include Roar::JSON
 
-      collection :clinics, extend: Representer::AnimalClinic, class: Struct
+      collection :clinics, extend: Representer::AnimalClinic, class: OpenStruct
       property :take_care_info
     end
   end
