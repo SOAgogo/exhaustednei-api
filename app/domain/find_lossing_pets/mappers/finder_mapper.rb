@@ -66,7 +66,6 @@ module PetAdoption
         fetch_take_care_pets_information(res)
       end
 
-      # TODO: parallize doing the recognition and the google map api
       def build_entity(useful_info, take_care_info)
         # two worker queues for recommends_some_vets and give_some_take_care_pets_information
         # vet_info, err = recommends_some_vets(how_far_from_here, top_ratings, 'clinic', 'veterinary')
