@@ -7,7 +7,7 @@ ruby File.read('.ruby-version').strip
 gem 'figaro', '~> 1.2'
 gem 'pry'
 gem 'rake', '~> 13.0'
-gem 'libxml-ruby'
+gem 'libxml-ruby', '~> 3.1'
 
 # Gemfile
 gem 'roda-websockets'

@@ -7,6 +7,7 @@ require 'rack/session'
 require 'sequel'
 require 'rack/cache'
 require 'redis-rack-cache'
+require 'pry'
 
 module PetAdoption
   # Configuration for the App
@@ -31,6 +32,7 @@ module PetAdoption
       end
 
       configure :production do
+        ENV['DATABASE_URL'] = "sqlite://#{config.DB_FILENAME}"
         use Rack::Cache,
             verbose: true,
             metastore: "#{config.REDISCLOUD_URL}/0/metastore",
