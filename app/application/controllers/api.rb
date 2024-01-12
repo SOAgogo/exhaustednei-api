@@ -122,16 +122,17 @@ module PetAdoption
 
               res = Services::FinderUploadImages.new.call({ request: , request_id: })
 
+              puts "api, app.rb, post: #{res.inspect}"
+
               if res.failure?
                 failed = Representer::HttpResponse.new(res.failure)
                 routing.halt failed.http_status_code, failed.to_json
               end
 
-              http_response = Representer::HttpResponse.new(res.value!)
+              rsp = Services::FinderReport.new.call
+              http_response = Representer::HttpResponse.new(rsp.value!)
               response.status = http_response.http_status_code
-              Representer::VetRecommeandation.new(
-                res.value!.message
-              ).to_json
+              return rsp.value!.message
             end
           end
         end

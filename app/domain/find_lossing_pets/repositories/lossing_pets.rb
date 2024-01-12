@@ -47,10 +47,6 @@ module PetAdoption
         @image_conversation.image_path(s3_images_url)
         @image_conversation.generate_words_for_takecare_instructions
       end
-
-      def upload_image_to_s3(image_path)
-        PetAdoption::Storage::S3.upload_image_to_s3(image_path)
-      end
     end
   end
 end

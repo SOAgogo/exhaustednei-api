@@ -1,0 +1,58 @@
+# frozen_string_literal: true
+
+require_relative '../require_app'
+require_app
+
+require 'figaro'
+require 'shoryuken'
+
+module Background
+  # Background worker does image recognition
+  class StorefinderWorker
+    # Environment variables setup
+
+    Figaro.application = Figaro::Application.new(
+      environment: ENV['RACK_ENV'] || 'development',
+      path: File.expand_path('config/secrets.yml')
+    )
+    Figaro.load
+    def self.config = Figaro.env
+
+    Shoryuken.sqs_client = Aws::SQS::Client.new(
+      access_key_id: config.S3_Access_Key,
+      secret_access_key: config.S3_Secret_Key,
+      region: config.SQS_REGION
+    )
+
+    puts "worker3, access_key_id: #{config.S3_Access_Key},
+    secret_access_key: #{config.S3_Secret_Key},
+    region: #{config.SQS_REGION}"
+
+    include Shoryuken::Worker
+    Shoryuken.sqs_client_receive_message_opts = { wait_time_seconds: 20 }
+    shoryuken_options queue: config.QUEUE_3_URL, auto_delete: true
+    puts "worker3, URL3: #{config.QUEUE_3_URL}"
+
+    def perform(_sqs_msg, request)
+      puts 'store_finder_info.rb start'
+      request = JSON.parse(request).transform_keys(&:to_sym)
+      finder_mapper = create_finder_mapper(request)
+      finder_mapper.images_url(request[:file])
+      finder_mapper.image_recoginition
+      finder_mapper.store_user_info
+
+      puts 'finish store_finder_info.rb'
+    rescue StandardError
+      puts 'error: DB error '
+    end
+
+    private
+
+    def create_finder_mapper(request)
+      PetAdoption::LossingPets::FinderMapper.new(
+        request.slice(:name, :email, :phone, :county),
+        request[:location]
+      )
+    end
+  end
+end
