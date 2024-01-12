@@ -32,7 +32,7 @@ module PetAdoption
       end
 
       configure :production do
-        ENV['DATABASE_URL'] = "sqlite://#{config.DB_FILENAME}"
+        #ENV['DATABASE_URL'] = "sqlite://#{config.DB_FILENAME}"
         use Rack::Cache,
             verbose: true,
             metastore: "#{config.REDISCLOUD_URL}/0/metastore",
