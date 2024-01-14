@@ -5,6 +5,7 @@ require_app
 
 require 'figaro'
 require 'shoryuken'
+require_relative 'job_reporter'
 require 'pry'
 
 module Background
@@ -36,11 +37,16 @@ module Background
 
     def perform(_sqs_msg, request)
       puts 'finder_handler.rb start'
+      job = PetAdoptoion::Background::JobReporter.new(request, self.class.config)
+      puts 'finder_handler.rb response job'
+      job.report_each_second(3) { PetAdoption::MAPSMonitor.starting_percent }
       request = JSON.parse(request).transform_keys(&:to_sym)
       finder_mapper = create_finder_mapper(request)
       finder_mapper = finder_settings(finder_mapper, request)
+      job.report_each_second(4) { PetAdoption::MAPSMonitor.vets_recommendation_percent }
       data, err = finder_mapper.recommends_some_vets(request[:distance], request[:number])
 
+      job.report_each_second(8) { PetAdoption::MAPSMonitor.finish_percent }
       raise StandardError if err
 
       PetAdoption::Cache::RedisCache.new(self.class.config).set('vets', data.to_json)

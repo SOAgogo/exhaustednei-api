@@ -87,8 +87,13 @@ module PetAdoption
             routing.get do
               response.cache_control public: true, max_age: 300
               animal_request = Request::AnimalLister.new(animal_kind, shelter_name)
+              request_id = [request.env, request.path, Time.now.to_f].hash
 
-              get_all_animals_in_shelter = Services::SelectAnimal.new.call({ animal_request: })
+              get_all_animals_in_shelter = Services::SelectAnimal.new.call({
+                animal_request:,
+                request_id: request_id,
+                config: App.config
+              })
 
               if get_all_animals_in_shelter.failure?
                 failed = Representer::HttpResponse.new(get_all_animals_in_shelter.failure)
@@ -111,9 +116,17 @@ module PetAdoption
             routing.post do
               request_body = routing.params
 
-              request = Requests::VetRecommendation.new(request_body)
+              request_id = [request.env, request.path, Time.now.to_f].hash
+              finder_req = Requests::VetRecommendation.new(
+                request_body,
+                request
+              )
 
-              res = Services::FinderUploadImages.new.call({ request: })
+              res = Services::FinderUploadImages.new.call(
+                requested: finder_req,
+                request_id: request_id,
+                config: App.config
+              )
 
               puts "api, app.rb, post: #{res.inspect}"
 

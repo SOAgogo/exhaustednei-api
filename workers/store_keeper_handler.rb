@@ -5,6 +5,7 @@ require_app
 
 require 'figaro'
 require 'shoryuken'
+require_relative 'job_reporter'
 
 module Background
   # Background worker does image recognition
@@ -35,11 +36,12 @@ module Background
 
     def perform(_sqs_msg, request)
       puts 'store_keeper_info.rb start'
+      job = PetAdoptoion::Background::JobReporter.new(request, self.class.config)
+      job.report_each_second(3) { PetAdoption::GPTMonitor.starting_percent }
       request = JSON.parse(request).transform_keys(&:to_sym)
-      keeper_mapper = create_keeper_mapper(request)
-      keeper_mapper.images_url(request[:file])
-      keeper_mapper.image_recoginition
-      keeper_mapper.store_user_info
+      job.report_each_second(4) { PetAdoption::GPTMonitor.image_processing_percent }
+      store_keeper_info(request)
+      job.report_each_second(10) { PetAdoption::GPTMonitor.finish_percent }
 
       puts 'finish store_keeper_info.rb'
     rescue StandardError
@@ -54,6 +56,13 @@ module Background
         request.slice(:name, :email, :phone, :county),
         request[:location]
       )
+    end
+
+    def store_keeper_info(request)
+      keeper_mapper = create_keeper_mapper(request)
+      keeper_mapper.images_url(request[:file])
+      keeper_mapper.image_recoginition
+      keeper_mapper.store_user_info
     end
   end
 end

@@ -31,6 +31,9 @@ gem 'rack-cache', '~> 1.13'
 gem 'redis', '~> 4.8'
 gem 'redis-rack-cache', '~> 2.2'
 
+# WORKER
+gem 'faye', '~> 1.4'
+
 # Controllers and services
 gem 'dry-monads', '~> 1.4'
 gem 'dry-transaction', '~> 0.13'

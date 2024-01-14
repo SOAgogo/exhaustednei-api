@@ -31,6 +31,7 @@ module PetAdoption
       end
 
       configure :production do
+        puts 'RUNNING IN PRODUCTION MODE'
         use Rack::Cache,
             verbose: true,
             metastore: "#{config.REDISCLOUD_URL}/0/metastore",
@@ -39,7 +40,6 @@ module PetAdoption
 
       configure :test do
         ENV['testing'] = 'true'
-        ENV['TESTING_FILE'] = config.TESTING_FILE.to_s
       end
 
       use Rack::Session::Cookie, {

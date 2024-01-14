@@ -44,6 +44,11 @@ module PetAdoption
         queues.each do |queue_url|
           Messaging::Queue.new(queue_url, App.config).send(request.to_json)
         end
+
+        Success(Response::ApiResult.new(
+                  status: :processing,
+                  message: { request_id: input[:request_id], msg: PROCESSING_MSG }
+                ))
       end
     end
   end

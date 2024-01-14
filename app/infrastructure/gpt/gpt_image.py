@@ -6,6 +6,8 @@ load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=openai_api_key)
 
+
+    
 if len(sys.argv) == 2:
     image_path = sys.argv[1]
     # image_path = 'https://www.niusnews.com/upload/imgs/default/202207_Jennie/0701cat/03.JPG'

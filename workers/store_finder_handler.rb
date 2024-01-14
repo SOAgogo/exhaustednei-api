@@ -2,7 +2,7 @@
 
 require_relative '../require_app'
 require_app
-
+require_relative 'job_reporter'
 require 'figaro'
 require 'shoryuken'
 
@@ -34,25 +34,31 @@ module Background
     puts "worker3, URL3: #{config.QUEUE_3_URL}"
 
     def perform(_sqs_msg, request)
-      puts 'store_finder_info.rb start'
+      job = PetAdoptoion::Background::JobReporter.new(request, self.class.config)
+      job.report_each_second(3) { GPTMonitor.starting_percent }
       request = JSON.parse(request).transform_keys(&:to_sym)
-      finder_mapper = create_finder_mapper(request)
-      finder_mapper.images_url(request[:file])
-      finder_mapper.image_recoginition
-      finder_mapper.store_user_info
-
-      puts 'finish store_finder_info.rb'
+      finder_mapper = create_finder_mapper(request, request[:file])
+      job.report_each_second(5) { GPTMonitor.image_processing_percent }
+      find_your_vets(finder_mapper)
+      job.report_each_second(10) { GPTMonitor.finish_percent }
     rescue StandardError
-      puts 'error: DB error '
+      puts 'ImageRecognition EXISTS -- ignoring request'
     end
 
     private
 
-    def create_finder_mapper(request)
-      PetAdoption::LossingPets::FinderMapper.new(
+    def create_finder_mapper(request, image_url)
+      finder_mapper = PetAdoption::LossingPets::FinderMapper.new(
         request.slice(:name, :email, :phone, :county),
         request[:location]
       )
+      finder_mapper.images_url(image_url)
+      finder_mapper
+    end
+
+    def find_your_vets(finder_mapper)
+      finder_mapper.image_recoginition
+      finder_mapper.store_user_info
     end
   end
 end
