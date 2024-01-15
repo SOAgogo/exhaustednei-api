@@ -8,11 +8,13 @@ module PetAdoption
     # Request for vet recommendation
     class VetRecommendation
       include Dry::Monads::Result::Mixin
-      def initialize(params)
+      def initialize(params, request)
         @params = VetRecommendation.decode(params).transform_keys(&:to_sym)
+        @request = request
       end
 
       def call
+        # hash in success
         Success(
           @params
         )

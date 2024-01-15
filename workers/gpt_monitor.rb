@@ -17,7 +17,7 @@ module PetAdoption
       CLONE_PROGRESS['ImageProcessing'].to_s
     end
 
-    def self.finished_percent
+    def self.finish_percent
       CLONE_PROGRESS['FINISHED'].to_s
     end
   end

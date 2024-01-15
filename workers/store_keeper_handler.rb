@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../require_app'
+require_relative 'gpt_monitor'
 require_app
 
 require 'figaro'
@@ -36,12 +37,13 @@ module Background
 
     def perform(_sqs_msg, request)
       puts 'store_keeper_info.rb start'
-      job = PetAdoptoion::Background::JobReporter.new(request, self.class.config)
-      job.report_each_second(3) { PetAdoption::GPTMonitor.starting_percent }
+      # job = PetAdoptoion::Background::JobReporter.new(request, self.class.config)
+      job = PetAdoptoion::Background::JobReporter.new(request, StorekeeperWorker.config)
+      job.report_each_second(1) { PetAdoption::GPTMonitor.starting_percent }
       request = JSON.parse(request).transform_keys(&:to_sym)
-      job.report_each_second(4) { PetAdoption::GPTMonitor.image_processing_percent }
+      job.report_each_second(8) { PetAdoption::GPTMonitor.image_processing_percent }
       store_keeper_info(request)
-      job.report_each_second(10) { PetAdoption::GPTMonitor.finish_percent }
+      job.report_each_second(2) { PetAdoption::GPTMonitor.finish_percent }
 
       puts 'finish store_keeper_info.rb'
     rescue StandardError

@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require_relative '../require_app'
-require_app
 require_relative 'job_reporter'
+require_relative 'gpt_monitor'
+require_app
 require 'figaro'
 require 'shoryuken'
-
+require 'json'
 module Background
   # Background worker does image recognition
   class StorefinderWorker
@@ -34,13 +35,14 @@ module Background
     puts "worker3, URL3: #{config.QUEUE_3_URL}"
 
     def perform(_sqs_msg, request)
-      job = PetAdoptoion::Background::JobReporter.new(request, self.class.config)
-      job.report_each_second(3) { GPTMonitor.starting_percent }
+      # job = PetAdoptoion::Background::JobReporter.new(request, self.class.config)
+      job = PetAdoptoion::Background::JobReporter.new(request, StorefinderWorker.config)
+      job.report_each_second(1) { GPTMonitor.starting_percent }
       request = JSON.parse(request).transform_keys(&:to_sym)
       finder_mapper = create_finder_mapper(request, request[:file])
-      job.report_each_second(5) { GPTMonitor.image_processing_percent }
+      job.report_each_second(8) { GPTMonitor.image_processing_percent }
       find_your_vets(finder_mapper)
-      job.report_each_second(10) { GPTMonitor.finish_percent }
+      job.report_each_second(2) { GPTMonitor.finish_percent }
     rescue StandardError
       puts 'ImageRecognition EXISTS -- ignoring request'
     end

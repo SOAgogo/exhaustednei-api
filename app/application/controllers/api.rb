@@ -90,10 +90,10 @@ module PetAdoption
               request_id = [request.env, request.path, Time.now.to_f].hash
 
               get_all_animals_in_shelter = Services::SelectAnimal.new.call({
-                animal_request:,
-                request_id: request_id,
-                config: App.config
-              })
+                                                                             animal_request:,
+                                                                             request_id:,
+                                                                             config: App.config
+                                                                           })
 
               if get_all_animals_in_shelter.failure?
                 failed = Representer::HttpResponse.new(get_all_animals_in_shelter.failure)
@@ -124,21 +124,20 @@ module PetAdoption
 
               res = Services::FinderUploadImages.new.call(
                 requested: finder_req,
-                request_id: request_id,
+                request_id:,
                 config: App.config
               )
-
-              puts "api, app.rb, post: #{res.inspect}"
 
               if res.failure?
                 failed = Representer::HttpResponse.new(res.failure)
                 routing.halt failed.http_status_code, failed.to_json
               end
 
-              rsp = Services::FinderReport.new.call
-              http_response = Representer::HttpResponse.new(rsp.value!)
-              response.status = http_response.http_status_code
-              return rsp.value!.message
+              if res.value!.status == :processing
+                http_response = Representer::HttpResponse.new(res.value!)
+                response.status = http_response.http_status_code
+                return http_response.to_json
+              end
             end
           end
         end

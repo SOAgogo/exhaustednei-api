@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 require_relative '../require_app'
+require_relative 'maps_monitor'
 require_app
 
 require 'figaro'
 require 'shoryuken'
 require_relative 'job_reporter'
+require 'json'
 require 'pry'
 
 module Background
@@ -36,18 +38,20 @@ module Background
     puts "worker1, URL1: #{config.QUEUE_1_URL}"
 
     def perform(_sqs_msg, request)
-      puts 'finder_handler.rb start'
-      job = PetAdoptoion::Background::JobReporter.new(request, self.class.config)
-      puts 'finder_handler.rb response job'
-      job.report_each_second(3) { PetAdoption::MAPSMonitor.starting_percent }
+      puts 'start the finder job'
+      job = PetAdoptoion::Background::JobReporter.new(request, FinderWorker.config)
+      job.report_each_second(1) { PetAdoption::MAPSMonitor.starting_percent }
+
       request = JSON.parse(request).transform_keys(&:to_sym)
-      finder_mapper = create_finder_mapper(request)
-      finder_mapper = finder_settings(finder_mapper, request)
-      job.report_each_second(4) { PetAdoption::MAPSMonitor.vets_recommendation_percent }
+      finder_mapper = finder_settings(request)
+
+      job.report_each_second(10) { PetAdoption::MAPSMonitor.vets_recommendation_percent }
       data, err = finder_mapper.recommends_some_vets(request[:distance], request[:number])
 
-      job.report_each_second(8) { PetAdoption::MAPSMonitor.finish_percent }
-      raise StandardError if err
+      job.report_each_second(2) { PetAdoption::MAPSMonitor.finish_percent }
+      puts 'finish the finder job'
+
+      raise StandardError unless err.nil?
 
       PetAdoption::Cache::RedisCache.new(self.class.config).set('vets', data.to_json)
     rescue StandardError
@@ -63,7 +67,8 @@ module Background
       )
     end
 
-    def finder_settings(finder_mapper, request)
+    def finder_settings(request)
+      finder_mapper = create_finder_mapper(request)
       finder_mapper.images_url(request[:file])
       finder_mapper
     end

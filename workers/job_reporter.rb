@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'progress_publisher'
+require 'json'
 require 'pry'
 
 module PetAdoptoion
@@ -10,9 +11,8 @@ module PetAdoptoion
     class JobReporter
       def initialize(request_json, config)
         req = JSON.parse(request_json)
-        # @token = req[0]
-        # @id = req[1]
-        @publisher = PetAdoption::Background::ProgressPublisher.new(config, req[2])
+        @finder_info = req.except('request_id')
+        @publisher = PetAdoption::Background::ProgressPublisher.new(config, req['request_id'])
       end
 
       def report(msg)

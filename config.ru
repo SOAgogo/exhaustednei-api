@@ -3,6 +3,5 @@
 require 'faye'
 require_relative 'require_app'
 require_app
-
 use Faye::RackAdapter, mount: '/faye', timeout: 25
 run PetAdoption::App.freeze.app

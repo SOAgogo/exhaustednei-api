@@ -246,9 +246,9 @@ namespace :queues do
     @sqs = Aws::SQS::Client.new(
       access_key_id: @api.config.S3_Access_Key,
       secret_access_key: @api.config.S3_Secret_Key,
-      region: @api.config.AWS_REGION
+      region: @api.config.S3_Region
     )
-    @q_name = @api.config.CLONE_QUEUE
+    @q_name = @api.config.QUEUE_1
     @q_url = @sqs.get_queue_url(queue_name: @q_name).queue_url
 
     puts "Environment: #{@api.environment}"

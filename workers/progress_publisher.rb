@@ -27,7 +27,7 @@ module PetAdoption
       private
 
       def message_body(message)
-        { channel: "/#{@channel_id}",
+        { channel: "/#{@finder_id}",
           data: message }.to_json
       end
     end
